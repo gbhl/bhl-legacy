@@ -1,0 +1,73 @@
+################################################################################
+#
+# File        	: grabby.sh
+# Usage		: ./grabby.sh 
+# Author      	: phil.cryer@mobot.org
+# Date        	: 2009-10-10
+# Source	: http://code.google.com/p/bhl-bits/
+# Description 	: a generic bash script to perform batch downloads of Internet
+#		  Archive (archive.org) materials, as listed in todo.txt
+# Requires	: BASH, wget
+#
+################################################################################
+
+----------------------------------------
+Install and use
+----------------------------------------
+* ensure you have BASH and wget installed and in your $PATH
+
+* extract downloaded files
+	tar -xf grabby.sh
+
+* change in to newly created directory
+	cd grabby
+
+* change permissions on the script
+	chmod 755 grabby.sh
+
+* populate the todo.txt file with items you want to donload from IA
+	NOTE: look at the sample todo.txt file as an example
+	      and read below for ideas on how to populate it
+
+* run the script
+	./grabby.sh
+
+All files will be downloaded into the current directory, following the format:
+	$BOOK_ID/files
+
+
+----------------------------------------
+Defining items to download
+----------------------------------------
+* To define items in todo.txt, you just need to determine the IA identifiers
+of the items you need to download. If you go to Internet Archive, you can 
+search specifically inside all BHL holdings from this page:
+http://www.archive.org/details/biodiversity
+
+So say you want to search for Australia, the page would return this:
+http://www.archive.org/search.php?query=australia%20AND%20collection:biodiversity
+
+Hover your cursor over the found titles, the directory name is the identifier,
+this is what you want for the download list you put in the todo.txt file.  
+
+For example, the first one is:
+	http://www.archive.org/details/handbooktobirdso01gou
+
+So the identifier is:
+	handbooktobirdso01gou
+
+Put that in the todo.txt file (one per line) and you're ready to go.
+
+* Plus, if that's all you need to get started, you could grab that entire page, 
+extract the identifiers and drop them into a todo.txt ready for the script to 
+download:
+wget http://www.archive.org/search.php?query=australia%20AND%20collection:biodiversity; cut -d"\"" -f14 search.php\?query\=australia\ AND\ collection\:biodiversity | grep "/details" | cut -d"/" -f3 > todo.txt
+
+
+----------------------------------------
+MISC
+----------------------------------------
+* if your script fails before everything is downloaded, you can re-run it, and
+it will automatically resume, only downloading the missing bits from your list
+
+################################################################################
