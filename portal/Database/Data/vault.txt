@@ -1,0 +1,14 @@
+1	ServerName	botanicus1	botanicus1	\\ServerName\PrimeOCR\botanicus1
+2	ServerName	botanicus2	botanicus2	\\ServerName\PrimeOCR\botanicus2
+3	ServerName	botanicus3	botanicus3	\\ServerName\PrimeOCR\botanicus3
+5	ServerName	botanicus4	botanicus4	\\ServerName\PrimeOCR\botanicus4
+6	ServerName	botanicus5	botanicus5	\\ServerName\PrimeOCR\botanicus5
+7	ServerName	botanicus6	botanicus6	\\ServerName\PrimeOCR\botanicus6
+8	ServerName	botanicus7	botanicus7	\\ServerName\PrimeOCR\botanicus7
+9	ServerName	botanicus8	botanicus8	\\ServerName\PrimeOCR\botanicus8
+10	ServerName	botanicus9	botanicus9	\\ServerName\PrimeOCR\botanicus9
+11	ServerName	bhl1	bhl1	\\ServerName\bhl1
+12	ServerName	botanicus10	botanicus10	\\ServerName\PrimeOCR\botanicus10
+13	ServerName	botanicus11	botanicus11	\\ServerName\PrimeOCR\botanicus11
+14	ServerName	bhl2	bhl2	\\ServerName\bhl2
+15	ServerName	botanicus13	botanicus13	\\ServerName\PrimeOCR\botanicus13

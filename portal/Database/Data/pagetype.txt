@@ -1,0 +1,14 @@
+1	Title Page	Title Page
+2	Text	Page of Text
+3	Illustration	Page of Illustration
+4	Verso	Left reverse side
+5	Recto	Right reverse side
+6	Blank	Blank
+7	Index	Index
+8	Cover	Front or Back Cover
+9	Appendix	Appendix
+10	Map	Map
+11	Table of Contents	Used to denote pages for Table of Contents
+12	Article Start	Used to denote the beginning page of an article
+13	Article End	Used to denote the end page of an article
+14	Foldout	Foldout

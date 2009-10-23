@@ -1,0 +1,36 @@
+1	913	1	Fauna und flora des golfes von Neapel ;		19	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+2	927	1	Ray Society (Series) ;		no. 85, 89, 98, 103, 104	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5372	952	2	Connecticut.  Geological and natural history survey.  Bulletin		no. 2	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+4	953	11	Microscopy			1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5	954	1	Fieldiana.	Botany ;	v. 8, no. 1	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5373	954	20	Publication (Field Museum of Natural History) ;		277.	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+7	955	1	Fieldiana.	Botany.	v. 36, no. 2	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5374	955	2	Publication / Field Museum of Natural History ;		1157	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+9	956	1	Fieldiana.	Botany.	vol.2, no.5	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5375	956	20	Publication (Field Columbian Museum),		118	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+11	958	1	Fieldiana.	Botany.	v. 36, no. 12	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5376	958	2	Publication / Field Museum of Natural History ;		1225	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+5377	959	2	Library of famous books by famous authors			1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+14	960	1	Fieldiana.	Botany.	v. 34, no. 4	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5378	960	2	Publication / Field Museum of Natural History ;		v. 1131	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+16	962	1	Fieldiana.	Zoology ;	v. 13, pt. 2, no. 1	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+17	962	1	Publication (Field Museum of Natural History : 1909) ;		197	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5379	962	20	Publication (Field Museum of Natural History : 1909).	Zoological series ;	v. 13, pt. 2, no. 1	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+18	963	1	Fieldiana.	Zoology;	v. 13, pt. 2, no. 2	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5380	963	2	Publications / Field Museum of Natural History, ISSN 0097-5753 ;		203	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+5381	964	20	Memoirs of the American Association for the Advancement of Science ;		v. 1.	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+5382	965	20	Monographs of the United States Geological Survey.		v.40.	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+22	968	1	Fieldiana.	Botany.	v. 32, no. 15	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5383	968	2	Publication / Field Museum of Natural History ;		1103	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+24	972	1	Fieldiana.	Botany.	32, no. 2	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5384	972	2	Publication / Field Museum of Natural History ;		v. 1053	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+26	974	1	Fieldiana.	Botany.	v. 38, no. 1	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5385	974	2	Publication / Field Museum of Natural History ;		1215	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+28	977	5	Ottawa Field-Naturalists' Club. Transactions.			1	12916	2008-07-18 08:43:34	2009-05-03 00:00:29			
+29	977	11	Canadian field-naturalist.			1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+30	991	1	American anatomical memoirs ;		no.9, February, 1919	1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5386	997	2	His Guides for vertebrate dissection			1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+33	1000	3	Massachusetts. Commissioners on Inland Fisheries and Game. Report of the Commissioners on Inland Fisheries and Game,			1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+34	1000	11	Massachusetts. Division of Fisheries and Game. Annual report - Division of Fisheries and Game,			1		2008-07-18 08:43:34	2008-07-18 08:43:34			
+5387	1000	2	Public document		no. 25	1		2008-08-21 13:04:50	2008-08-21 13:04:50			
+5388	1000	20	Public document (Massachusetts)			1		2008-08-21 13:04:50	2008-08-21 13:04:50			

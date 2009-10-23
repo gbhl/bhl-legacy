@@ -1,0 +1,5 @@
+10	Pending   
+20	Processing
+30	Generated 
+40	Error     
+50	Declined  

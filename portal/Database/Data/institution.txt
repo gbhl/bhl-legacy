@@ -1,0 +1,121 @@
+HUH	Harvard University Herbarium			1
+KEW	Royal Botanic Gardens at Kew			1
+MO	Missouri Botanical Garden	Currently the default for all Titles and Items.	http://www.mobot.org	1
+SI	Smithsonian Institution Libraries		http://www.sil.si.edu	1
+FARLOW	Farlow Reference Library of Cryptogamic Botany		http://www.huh.harvard.edu/libraries/Farlowarc.htm	0
+NHM	Natural History Museum, London		http://www.nhm.ac.uk/research-curation/library/index.html	1
+FIELD	The Field Museum		http://www.fieldmuseum.org/research_collections/library/default.htm	1
+NYBG	New York Botanical Garden		http://library.nybg.org/	1
+UIUC	University of Illinois Urbana Champaign			1
+MBLWHOI	MBLWHOI Library		http://www.mblwhoilibrary.org/	1
+BOS	Boston Public Library		http://www.bpl.org	0
+MTSTL	Montana State Library		http://msl.state.mt.us/	0
+HUMCZ	Harvard University, MCZ, Ernst Mayr Library		http://library.mcz.harvard.edu/	1
+AMNH	American Museum of Natural History Library		http://library.amnh.org	1
+BHLE	BHL-Europe			0
+ALPL	Abraham Lincoln Presidential Library	From non-'biodiversity' IA collection		0
+ACPLGC	Allen County Public Library Genealogy Center	From non-'biodiversity' IA collection		0
+ASCYUL	ASC - York University Libraries	From non-'biodiversity' IA collection		0
+BLEIU	Booth Library, Eastern Illinois University	From non-'biodiversity' IA collection		0
+BCL	Boston College Libraries	From non-'biodiversity' IA collection		0
+BUL	Brandeis University Libraries	From non-'biodiversity' IA collection		0
+BROCK	Brock University	From non-'biodiversity' IA collection		0
+BROWNUL	Brown University Library	From non-'biodiversity' IA collection		0
+CAS	California Academy of Sciences	From non-'biodiversity' IA collection		0
+CASL	California Academy of Sciences Library	From non-'biodiversity' IA collection		0
+CDFG	California Department of Fish and Game	From non-'biodiversity' IA collection		0
+CANADIANA	Canadiana.org	From non-'biodiversity' IA collection		0
+CTCUMD	Claire T. Carney Library, University of Massachusetts Dartmouth	From non-'biodiversity' IA collection		0
+COLUMBIAUL	Columbia University Libraries	From non-'biodiversity' IA collection		0
+DANMURPHY	Dan Murphy	From non-'biodiversity' IA collection		0
+DHHLOCAD	Dorothy H. Hoover Library, Ontario College of Art & Design	From non-'biodiversity' IA collection		0
+DUKEUL	Duke University Libraries	From non-'biodiversity' IA collection		0
+ESUT	Earth Sciences - University of Toronto	From non-'biodiversity' IA collection		0
+ECLNUCC	Education Centre Library, Nipissing University/ Canadore College	From non-'biodiversity' IA collection		0
+EUT	Emmanuel - University of Toronto	From non-'biodiversity' IA collection		0
+ESLS	Environmental Services & Library Systems	From non-'biodiversity' IA collection		0
+FAOROA	FAO Regional Office for Africa	From non-'biodiversity' IA collection		0
+FISHERUT	Fisher - University of Toronto	From non-'biodiversity' IA collection		0
+FROSTYUL	Frost - York University Libraries	From non-'biodiversity' IA collection		0
+GERSTEINUT	Gerstein - University of Toronto	From non-'biodiversity' IA collection		0
+GHENT	Ghent University	From non-'biodiversity' IA collection		0
+HARVARD	Harvard University	From non-'biodiversity' IA collection		0
+IA	Internet Archive	From non-'biodiversity' IA collection		0
+JALBPL	John Adams Library at the Boston Public Library	From non-'biodiversity' IA collection		0
+KELLYUT	Kelly - University of Toronto	From non-'biodiversity' IA collection		0
+LCHS	Lancaster County Historical Society	From non-'biodiversity' IA collection		0
+LLUNCCH	Law Library, University of North Carolina at Chapel Hill	From non-'biodiversity' IA collection		0
+LPLPL	Lawrence Public Library / Prelinger Library	From non-'biodiversity' IA collection		0
+LCCCNGRREE	Lewis & Clark Community College and the National Great Rivers Research and Education Center	From non-'biodiversity' IA collection		0
+LACBAC	Library and Archives Canada - Bibliothèque et Archives Canada	From non-'biodiversity' IA collection		0
+LC	Library of Congress	From non-'biodiversity' IA collection		0
+LBEEBE	Lucius Beebe Memorial Library	From non-'biodiversity' IA collection		0
+MISSUT	Mississauga - University of Toronto	From non-'biodiversity' IA collection		0
+MITL	MIT Libraries	From non-'biodiversity' IA collection		0
+MUGARBU	Mugar Memorial Library, Boston University	From non-'biodiversity' IA collection		0
+MUSICUT	Music - University of Toronto	From non-'biodiversity' IA collection		0
+NLM	National Library of Medicine	From non-'biodiversity' IA collection		0
+NLSCOTLAND	National Library of Scotland	From non-'biodiversity' IA collection		0
+NYIDDISHBC	National Yiddish Book Center	From non-'biodiversity' IA collection		0
+NCSUL	NCSU Libraries	From non-'biodiversity' IA collection		0
+NCC	New College of California	From non-'biodiversity' IA collection		0
+NYPL	New York Public Library	From non-'biodiversity' IA collection		0
+NEUSNELL	Northeastern University, Snell Library	From non-'biodiversity' IA collection		0
+OISEUT	OISE - University of Toronto	From non-'biodiversity' IA collection		0
+OMNRL	Ontario Ministry of Natural Resources Library	From non-'biodiversity' IA collection		0
+OME	Ontario Ministry of the Environment	From non-'biodiversity' IA collection		0
+OXFORD	Oxford University	From non-'biodiversity' IA collection		0
+PENNST	Penn State University	From non-'biodiversity' IA collection		0
+PIMSUT	PIMS - University of Toronto	From non-'biodiversity' IA collection		0
+PRATTUT	Pratt - University of Toronto	From non-'biodiversity' IA collection		0
+PRELINGER	Prelinger Library	From non-'biodiversity' IA collection		0
+PTSL	Princeton Theological Seminary Library	From non-'biodiversity' IA collection		0
+PRINCETON	Princeton University	From non-'biodiversity' IA collection		0
+GUTENBERG	Project Gutenberg	From non-'biodiversity' IA collection		0
+WULWDJSCML	Queen's University Library, W.D. Jordan Special Collections and Music Library	From non-'biodiversity' IA collection		0
+REGISUT	Regis - University of Toronto	From non-'biodiversity' IA collection		0
+RLGETTY	Research Library, The Getty Research Institute	From non-'biodiversity' IA collection		0
+ROBARTSUT	Robarts - University of Toronto	From non-'biodiversity' IA collection		0
+ROMUT	ROM - University of Toronto	From non-'biodiversity' IA collection		0
+RYERSON	Ryerson University	From non-'biodiversity' IA collection		0
+RYERSONLSC	Ryerson University Library Special Collections	From non-'biodiversity' IA collection		0
+SMCC	Saint Mary's College of California	From non-'biodiversity' IA collection		0
+STLBU	School of Theology Library, Boston University	From non-'biodiversity' IA collection		0
+SCOTTYORK	Scott - York University Libraries	From non-'biodiversity' IA collection		0
+SLMASS	State Library of Massachusetts	From non-'biodiversity' IA collection		0
+BANCROFT	The Bancroft Library	From non-'biodiversity' IA collection		0
+JHUSL	The Johns Hopkins University Sheridan Libraries	From non-'biodiversity' IA collection		0
+UWOUA	The University of Western Ontario, The University Archives	From non-'biodiversity' IA collection		0
+TISCH	Tisch Library	From non-'biodiversity' IA collection		0
+TPLNYC	Toronto Public Library : North York Central	From non-'biodiversity' IA collection		0
+TPLTRL	Toronto Public Library : Toronto Reference Library	From non-'biodiversity' IA collection		0
+TPLRRL	Toronto Public Library: Research and Reference Libraries	From non-'biodiversity' IA collection		0
+TRINITYUT	Trinity College - University of Toronto	From non-'biodiversity' IA collection		0
+TUFTS	Tufts University	From non-'biodiversity' IA collection		0
+USDTTL	U.S. Dept. of the Treasury, Treasury Library	From non-'biodiversity' IA collection		0
+USGPRINT	U.S. Government Printing Office	From non-'biodiversity' IA collection		0
+UMAMHERST	UMass Amherst Libraries	From non-'biodiversity' IA collection		0
+UMMSOUTTER	Univ. of Mass Medical School, Lamar Soutter Library	From non-'biodiversity' IA collection		0
+UDL	Universal Digital Library	From non-'biodiversity' IA collection		0
+ULUNCCH	University Library, University of North Carolina at Chapel Hill	From non-'biodiversity' IA collection		0
+UC	University of California	From non-'biodiversity' IA collection		0
+UCB	University of California Berkeley	From non-'biodiversity' IA collection		0
+UCL	University of California Libraries	From non-'biodiversity' IA collection		0
+UCONNL	University of Connecticut Libraries	From non-'biodiversity' IA collection		0
+UFSMATHERS	University of Florida, George A. Smathers Libraries	From non-'biodiversity' IA collection		0
+UIC	University of Illinois at Chicago	From non-'biodiversity' IA collection		0
+UMICH	University of Michigan	From non-'biodiversity' IA collection		0
+UNHL	University of New Hampshire Library	From non-'biodiversity' IA collection		0
+UNCCH	University of North Carolina at Chapel Hill	From non-'biodiversity' IA collection		0
+UOTTAWA	University of Ottawa	From non-'biodiversity' IA collection		0
+UPITTLS	University of Pittsburgh Library System	From non-'biodiversity' IA collection		0
+UTEXAS	University of Texas	From non-'biodiversity' IA collection		0
+UT	University of Toronto	From non-'biodiversity' IA collection		0
+UTCRRS	University of Toronto - CRRS Library for Renaissance Studies	From non-'biodiversity' IA collection		0
+UTONTARIO	University of Toronto- Ontario Institute for Studies in Education	From non-'biodiversity' IA collection		0
+UVIRGINIA	University of Virginia	From non-'biodiversity' IA collection		0
+UWISCMAD	University of Wisconsin - Madison	From non-'biodiversity' IA collection		0
+UNKNOWN	Unknown	From non-'biodiversity' IA collection		0
+WFLVM	Webster Family Library of Veterinary Medicine	From non-'biodiversity' IA collection		0
+WELLESLEYL	Wellesley College Library	From non-'biodiversity' IA collection		0
+WILLIAMSL	Williams College Libraries	From non-'biodiversity' IA collection		0

@@ -1,0 +1,1810 @@
+0	0	Dan Murphy	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	FAO Regional Office for Africa	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Ghent University	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Harvard University	Items Scanned	94	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Harvard University Herbarium	Items Scanned	2	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	Harvard University Herbarium	Pages Created	410	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	Internet Archive	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Lawrence Public Library / Prelinger Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Missouri Botanical Garden	Items Created	456	2008-11-03 14:13:29	2009-06-29 05:08:02
+0	0	Missouri Botanical Garden	Items Scanned	993	2008-11-03 14:13:29	2009-09-21 13:40:49
+0	0	Missouri Botanical Garden	Pages Created	344549	2008-11-03 14:13:29	2009-07-13 05:04:58
+0	0	Missouri Botanical Garden	Titles Created	83	2008-11-03 14:13:29	2009-06-29 05:08:02
+0	0	Natural History Museum, London	Items Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	Natural History Museum, London	Pages Created	165	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	Natural History Museum, London	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	New York Botanical Garden	Items Created	37	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	New York Botanical Garden	Pages Created	4216	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	New York Botanical Garden	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	New York Public Library	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Oxford University	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Prelinger Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Princeton University	Items Scanned	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Saint Mary's College of California	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Smithsonian Institution Libraries	Items Created	64	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	Smithsonian Institution Libraries	Items Scanned	127	2008-11-03 14:13:29	2009-07-13 05:04:58
+0	0	Smithsonian Institution Libraries	Pages Created	28103	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	Smithsonian Institution Libraries	Titles Created	5	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	The Field Museum	Items Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	The Field Museum	Pages Created	172	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	The Field Museum	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	Universal Digital Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	University of California	Items Scanned	24	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	University of California Libraries	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	University of Illinois Urbana Champaign	Items Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	University of Illinois Urbana Champaign	Items Scanned	102	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	University of Illinois Urbana Champaign	Pages Created	17	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	University of Illinois Urbana Champaign	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+0	0	University of Michigan	Items Scanned	108	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	University of Ottawa	Items Scanned	32	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	University of Wisconsin - Madison	Items Scanned	17	2009-09-21 13:40:49	2009-09-21 13:40:49
+0	0	Unknown	Items Scanned	839	2009-09-21 13:40:49	2009-09-21 13:40:49
+1899	12	Smithsonian Institution Libraries	Items Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2001	12	University of Illinois Urbana Champaign	Items Scanned	3	2008-11-03 14:13:29	2008-11-03 14:13:29
+2002	1	American Museum of Natural History Library	Items Scanned	1	2009-03-30 05:14:02	2009-03-30 05:14:02
+2002	1	Natural History Museum, London	Items Scanned	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2005	1	University of Michigan	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	2	University of Michigan	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	3	Harvard University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	3	University of Michigan	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	4	Harvard University	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	5	Harvard University	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	5	University of Michigan	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	6	Harvard University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	6	University of Michigan	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	8	University of Michigan	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	9	Harvard University	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	9	University of Michigan	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	10	Harvard University	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	10	New York Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	10	University of Michigan	Items Scanned	83	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	11	Harvard University	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	11	University of Michigan	Items Scanned	45	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	12	Harvard University	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2005	12	University of Michigan	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	1	Harvard University	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	1	New York Public Library	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	1	Smithsonian Institution Libraries	Items Scanned	16	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	1	University of Michigan	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	2	New York Public Library	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	2	University of Michigan	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	3	Harvard University	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	3	New York Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	3	Smithsonian Institution Libraries	Items Scanned	6	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	3	University of California Libraries	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	3	University of Michigan	Items Scanned	26	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	4	New York Public Library	Items Scanned	22	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	4	Oxford University	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	4	Smithsonian Institution Libraries	Items Scanned	20	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	4	University of California Libraries	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	4	University of Michigan	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	5	Harvard University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	5	Missouri Botanical Garden	Items Created	1012	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	5	Missouri Botanical Garden	Pages Created	242556	2008-11-03 14:13:29	2009-06-01 05:13:00
+2006	5	Missouri Botanical Garden	Titles Created	222	2008-11-03 14:13:29	2008-11-17 05:06:27
+2006	5	New York Public Library	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	5	Oxford University	Items Scanned	46	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	5	Robarts - University of Toronto	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	5	Smithsonian Institution Libraries	Items Created	4	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	5	Smithsonian Institution Libraries	Titles Created	2	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	5	University of California Libraries	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	5	University of Michigan	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	6	Harvard University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	6	Kelly - University of Toronto	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	6	Missouri Botanical Garden	Items Created	4	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	6	Missouri Botanical Garden	Pages Created	63492	2008-11-03 14:13:29	2009-04-27 05:20:26
+2006	6	Missouri Botanical Garden	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	6	New York Public Library	Items Scanned	21	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	6	Oxford University	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	6	Robarts - University of Toronto	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	6	University of California Libraries	Items Scanned	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	6	University of Michigan	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	7	Fisher - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	7	Kelly - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	7	Missouri Botanical Garden	Items Created	11	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	7	Missouri Botanical Garden	Pages Created	29441	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	7	Missouri Botanical Garden	Titles Created	2	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	7	New York Public Library	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	7	Oxford University	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	7	Robarts - University of Toronto	Items Scanned	35	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	7	Smithsonian Institution Libraries	Pages Created	3247	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	7	University of California Libraries	Items Scanned	73	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	7	University of Michigan	Items Scanned	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	Emmanuel - University of Toronto	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	Gerstein - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	Harvard University	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	Harvard University Herbarium	Items Created	2	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	8	Harvard University Herbarium	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	8	Kelly - University of Toronto	Items Scanned	15	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	Missouri Botanical Garden	Items Created	100	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	8	Missouri Botanical Garden	Pages Created	27665	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	8	Missouri Botanical Garden	Titles Created	12	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	8	New York Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	Oxford University	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	Pratt - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	Regis - University of Toronto	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	Robarts - University of Toronto	Items Scanned	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	Smithsonian Institution Libraries	Items Created	52	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	8	Smithsonian Institution Libraries	Pages Created	25804	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	8	Smithsonian Institution Libraries	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	8	Trinity College - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	University of California Libraries	Items Scanned	69	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	8	University of Michigan	Items Scanned	16	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	9	Emmanuel - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	9	Harvard University	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	9	Kelly - University of Toronto	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	9	Missouri Botanical Garden	Items Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	9	Missouri Botanical Garden	Items Scanned	10	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	9	Missouri Botanical Garden	Pages Created	7416	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	9	Missouri Botanical Garden	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	9	New York Public Library	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	9	Oxford University	Items Scanned	34	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	9	Robarts - University of Toronto	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	9	Saint Mary's College of California	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	9	Smithsonian Institution Libraries	Items Scanned	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	9	Smithsonian Institution Libraries	Pages Created	2406	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	9	Trinity College - University of Toronto	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	9	University of California Libraries	Items Scanned	96	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	9	University of Michigan	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	10	Harvard University	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	10	Missouri Botanical Garden	Items Created	88	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	10	Missouri Botanical Garden	Items Scanned	12	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	10	Missouri Botanical Garden	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	10	New York Public Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	10	Oxford University	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	10	Prelinger Library	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	10	Robarts - University of Toronto	Items Scanned	18	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	10	Smithsonian Institution Libraries	Items Scanned	16	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	10	University of California	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	10	University of California Libraries	Items Scanned	35	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	10	University of Michigan	Items Scanned	87	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	11	Harvard University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	11	Missouri Botanical Garden	Items Scanned	16	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	11	New York Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	11	Oxford University	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	11	Prelinger Library	Items Scanned	74	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	11	Robarts - University of Toronto	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	11	University of California	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	11	University of California Libraries	Items Scanned	310	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	11	University of Michigan	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	12	Gerstein - University of Toronto	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	12	Kelly - University of Toronto	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	12	Missouri Botanical Garden	Items Scanned	78	2008-11-03 14:13:29	2008-11-03 14:13:29
+2006	12	New York Public Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	12	Oxford University	Items Scanned	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	12	Prelinger Library	Items Scanned	21	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	12	Saint Mary's College of California	Items Scanned	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	12	University of California	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	12	University of California Libraries	Items Scanned	999	2009-09-21 13:40:49	2009-09-21 13:40:49
+2006	12	University of Michigan	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	1	Harvard University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	1	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	5	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	1	MBLWHOI Library	Items Scanned	22	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	1	Missouri Botanical Garden	Items Scanned	60	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	1	New York Botanical Garden	Items Scanned	27	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	1	Oxford University	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	1	Prelinger Library	Items Scanned	28	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	1	Robarts - University of Toronto	Items Scanned	79	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	1	Smithsonian Institution Libraries	Items Scanned	5	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	1	University of California	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	1	University of California Libraries	Items Scanned	1606	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	1	University of Michigan	Items Scanned	18	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	Gerstein - University of Toronto	Items Scanned	44	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	Harvard University	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	Internet Archive	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	Kelly - University of Toronto	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	Missouri Botanical Garden	Items Scanned	138	2008-11-03 14:13:29	2009-03-09 05:38:08
+2007	2	Oxford University	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	Prelinger Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	Robarts - University of Toronto	Items Scanned	23	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	Saint Mary's College of California	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	University of California	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	University of California Libraries	Items Scanned	1567	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	2	University of Illinois Urbana Champaign	Items Scanned	5	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	3	California Academy of Sciences	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	3	Gerstein - University of Toronto	Items Scanned	257	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	3	Harvard University	Items Scanned	86	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	3	Missouri Botanical Garden	Items Scanned	53	2008-11-03 14:13:29	2009-06-22 05:18:41
+2007	3	Music - University of Toronto	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	3	Natural History Museum, London	Items Scanned	32	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	3	New York Public Library	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	3	Oxford University	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	3	Prelinger Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	3	Robarts - University of Toronto	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	3	University of California	Items Scanned	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	3	University of California Libraries	Items Scanned	1555	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	3	University of Illinois Urbana Champaign	Items Scanned	35	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	3	University of Michigan	Items Scanned	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	4	Gerstein - University of Toronto	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	4	Harvard University	Items Scanned	34	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	4	MBLWHOI Library	Items Scanned	17	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	4	Missouri Botanical Garden	Items Scanned	24	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	4	Natural History Museum, London	Items Scanned	114	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	4	New York Public Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	4	Oxford University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	4	Prelinger Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	4	Robarts - University of Toronto	Items Scanned	25	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	4	Smithsonian Institution Libraries	Items Scanned	3	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	4	University of California	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	4	University of California Libraries	Items Scanned	1802	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	4	University of Illinois Urbana Champaign	Items Scanned	14	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	4	University of Wisconsin - Madison	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	Gerstein - University of Toronto	Items Scanned	76	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	Harvard University	Items Scanned	106	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	Internet Archive	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	Kelly - University of Toronto	Items Scanned	55	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	MBLWHOI Library	Items Scanned	42	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	5	Missouri Botanical Garden	Items Scanned	40	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	5	Natural History Museum, London	Items Scanned	57	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	5	New York Public Library	Items Scanned	70	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	Oxford University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	Prelinger Library	Items Scanned	29	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	Robarts - University of Toronto	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	Smithsonian Institution Libraries	Items Scanned	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	5	University of California	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	University of California Libraries	Items Scanned	384	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	University of Illinois Urbana Champaign	Items Scanned	47	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	5	University of Michigan	Items Scanned	54	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	5	University of Wisconsin - Madison	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	6	Gerstein - University of Toronto	Items Scanned	26	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	6	Harvard University	Items Scanned	36	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	6	Library of Congress	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	6	MBLWHOI Library	Items Scanned	64	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	6	Missouri Botanical Garden	Items Scanned	30	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	6	Missouri Botanical Garden	PageNames Created	179391	2008-11-03 14:13:29	2008-12-22 05:08:01
+2007	6	Natural History Museum, London	Items Scanned	81	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	6	New York Public Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	6	PIMS - University of Toronto	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	6	Prelinger Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	6	Robarts - University of Toronto	Items Scanned	30	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	6	Smithsonian Institution Libraries	PageNames Created	64652	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	6	University of California	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	6	University of California Libraries	Items Scanned	214	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	6	University of Illinois Urbana Champaign	Items Scanned	48	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	6	University of Michigan	Items Scanned	92	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	7	Boston Public Library	Items Scanned	2	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	7	Gerstein - University of Toronto	Items Scanned	16	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	7	Harvard University	Items Scanned	25	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	7	Harvard University Herbarium	PageNames Created	3298	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	7	MBLWHOI Library	Items Scanned	104	2008-11-03 14:13:29	2008-12-15 05:06:27
+2007	7	Missouri Botanical Garden	Items Scanned	41	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	7	Missouri Botanical Garden	PageNames Created	2034862	2008-11-03 14:13:29	2009-06-29 05:08:02
+2007	7	Natural History Museum, London	Items Scanned	99	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	7	Natural History Museum, London	PageNames Created	23	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	7	Prelinger Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	7	Robarts - University of Toronto	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	7	Smithsonian Institution Libraries	PageNames Created	211003	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	7	University of California	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	7	University of California Libraries	Items Scanned	243	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	7	University of Illinois Urbana Champaign	Items Scanned	80	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	7	University of Michigan	Items Scanned	23	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	8	Gerstein - University of Toronto	Items Scanned	348	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	8	Harvard University	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	8	Harvard University Herbarium	PageNames Created	576	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	8	MBLWHOI Library	Items Scanned	128	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	8	Missouri Botanical Garden	Items Scanned	40	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	8	Missouri Botanical Garden	PageNames Created	602750	2008-11-03 14:13:29	2009-05-04 05:20:04
+2007	8	Natural History Museum, London	Items Scanned	96	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	8	Natural History Museum, London	PageNames Created	47	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	8	New York Public Library	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	8	Robarts - University of Toronto	Items Scanned	73	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	8	Smithsonian Institution Libraries	Items Scanned	21	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	8	Smithsonian Institution Libraries	PageNames Created	58550	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	8	University of California	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	8	University of California Libraries	Items Scanned	332	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	8	University of Illinois at Chicago	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	8	University of Illinois Urbana Champaign	Items Scanned	17	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	8	University of Michigan	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	8	University of Wisconsin - Madison	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	Boston Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	Gerstein - University of Toronto	Items Scanned	20	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	Harvard University	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	Harvard University Herbarium	PageNames Created	100	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	9	Kelly - University of Toronto	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	MBLWHOI Library	Items Scanned	209	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	9	Missouri Botanical Garden	Items Scanned	29	2008-11-03 14:13:29	2009-05-25 05:24:03
+2007	9	Missouri Botanical Garden	PageNames Created	136484	2008-11-03 14:13:29	2009-05-04 05:20:04
+2007	9	Natural History Museum, London	Items Scanned	93	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	9	Natural History Museum, London	PageNames Created	18	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	9	New York Botanical Garden	Items Scanned	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	9	New York Public Library	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	Oxford University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	Prelinger Library	Items Scanned	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	Robarts - University of Toronto	Items Scanned	25	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	Smithsonian Institution Libraries	Items Scanned	45	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	9	Smithsonian Institution Libraries	PageNames Created	14656	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	9	The Field Museum	Items Scanned	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	9	The Field Museum	PageNames Created	246	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	9	University of California	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	University of California Libraries	Items Scanned	198	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	University of Illinois Urbana Champaign	Items Scanned	15	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	University of Michigan	Items Scanned	93	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	9	University of Wisconsin - Madison	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	Boston Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	Gerstein - University of Toronto	Items Scanned	358	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	Harvard University	Items Scanned	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	Harvard University Herbarium	PageNames Created	35	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	10	Internet Archive	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	Kelly - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	MBLWHOI Library	Items Scanned	993	2008-11-03 14:13:29	2009-03-16 05:09:34
+2007	10	Missouri Botanical Garden	Items Scanned	21	2008-11-03 14:13:29	2009-05-25 05:24:03
+2007	10	Missouri Botanical Garden	PageNames Created	111899	2008-11-03 14:13:29	2008-12-08 05:06:12
+2007	10	Natural History Museum, London	Items Scanned	116	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	10	Natural History Museum, London	PageNames Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	10	New York Botanical Garden	Items Scanned	36	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	10	New York Botanical Garden	PageNames Created	1102	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	10	New York Public Library	Items Scanned	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	Research Library, The Getty Research Institute	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	Robarts - University of Toronto	Items Scanned	76	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	Smithsonian Institution Libraries	Items Scanned	54	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	10	Smithsonian Institution Libraries	PageNames Created	7633	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	10	The Field Museum	PageNames Created	254	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	10	University of California	Items Scanned	36	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	University of California Libraries	Items Scanned	426	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	10	University of Illinois Urbana Champaign	Items Scanned	214	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	10	University of Michigan	Items Scanned	48	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Boston Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Earth Sciences - University of Toronto	Items Scanned	163	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Gerstein - University of Toronto	Items Scanned	91	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Harvard University	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Harvard University Herbarium	PageNames Created	2197	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	11	John Adams Library at the Boston Public Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Kelly - University of Toronto	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	MBLWHOI Library	Items Scanned	877	2008-11-03 14:13:29	2009-05-25 05:24:03
+2007	11	Missouri Botanical Garden	Items Scanned	17	2008-11-03 14:13:29	2009-05-25 05:24:03
+2007	11	Missouri Botanical Garden	PageNames Created	2947706	2008-11-03 14:13:29	2009-06-29 05:08:02
+2007	11	Natural History Museum, London	Items Scanned	110	2008-11-03 14:13:29	2009-01-26 05:07:00
+2007	11	Natural History Museum, London	PageNames Created	29	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	11	New York Botanical Garden	Items Scanned	58	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	11	New York Botanical Garden	PageNames Created	48944	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	11	New York Public Library	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Prelinger Library	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Research Library, The Getty Research Institute	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Robarts - University of Toronto	Items Scanned	142	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Saint Mary's College of California	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	Smithsonian Institution Libraries	Items Scanned	61	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	11	Smithsonian Institution Libraries	PageNames Created	459872	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	11	The Field Museum	PageNames Created	976	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	11	University of California	Items Scanned	20	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	University of California Libraries	Items Scanned	92	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	University of Illinois Urbana Champaign	Items Scanned	360	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	11	University of Illinois Urbana Champaign	PageNames Created	24	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	11	University of Michigan	Items Scanned	21	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	11	University of Wisconsin - Madison	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	Earth Sciences - University of Toronto	Items Scanned	106	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	Fisher - University of Toronto	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	Gerstein - University of Toronto	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	Harvard University	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	15	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	12	Kelly - University of Toronto	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	MBLWHOI Library	Items Scanned	594	2008-11-03 14:13:29	2009-03-02 05:05:05
+2007	12	Missouri Botanical Garden	Items Scanned	61	2008-11-03 14:13:29	2009-03-09 05:38:08
+2007	12	Missouri Botanical Garden	PageNames Created	78675	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	12	Natural History Museum, London	Items Scanned	33	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	12	New York Botanical Garden	Items Scanned	113	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	12	New York Public Library	Items Scanned	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	Research Library, The Getty Research Institute	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	Robarts - University of Toronto	Items Scanned	48	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	Smithsonian Institution Libraries	Items Scanned	21	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	12	Smithsonian Institution Libraries	PageNames Created	1979	2008-11-03 14:13:29	2008-11-03 14:13:29
+2007	12	University of California	Items Scanned	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	University of California Libraries	Items Scanned	58	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	University of Illinois Urbana Champaign	Items Scanned	362	2008-11-03 14:13:29	2009-09-21 13:40:49
+2007	12	University of Michigan	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	University of New Hampshire Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2007	12	University of Wisconsin - Madison	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	Boston Public Library	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	California Department of Fish and Game	Items Scanned	235	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	Gerstein - University of Toronto	Items Scanned	71	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	Harvard University	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	Harvard University	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	179	2008-11-03 14:13:29	2008-12-29 05:06:41
+2008	1	MBLWHOI Library	Items Created	1548	2008-11-03 14:13:29	2009-03-16 05:09:34
+2008	1	MBLWHOI Library	Items Scanned	718	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	1	MBLWHOI Library	PageNames Created	1227595	2008-11-03 14:13:29	2009-03-16 05:09:34
+2008	1	MBLWHOI Library	Pages Created	639981	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	1	MBLWHOI Library	Titles Created	918	2008-11-03 14:13:29	2009-07-06 05:03:33
+2008	1	Missouri Botanical Garden	Items Created	9	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Missouri Botanical Garden	Items Scanned	24	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Missouri Botanical Garden	PageNames Created	31606	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Missouri Botanical Garden	Pages Created	9869	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Missouri Botanical Garden	Titles Created	3	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Montana State Library	Items Scanned	49	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	Natural History Museum, London	Items Created	48	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Natural History Museum, London	Items Scanned	25	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Natural History Museum, London	PageNames Created	4275	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Natural History Museum, London	Pages Created	31450	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Natural History Museum, London	Titles Created	10	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	New York Botanical Garden	Items Scanned	93	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	New York Public Library	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	Robarts - University of Toronto	Items Scanned	31	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	Smithsonian Institution Libraries	Items Created	30	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Smithsonian Institution Libraries	Items Scanned	36	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Smithsonian Institution Libraries	PageNames Created	4148	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Smithsonian Institution Libraries	Pages Created	6993	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	Smithsonian Institution Libraries	Titles Created	20	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	The Field Museum	PageNames Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	UMass Amherst Libraries	Items Scanned	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	University of California	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	University of California Libraries	Items Scanned	98	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	University of Illinois Urbana Champaign	Items Created	19	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	University of Illinois Urbana Champaign	Items Scanned	579	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	1	University of Illinois Urbana Champaign	PageNames Created	12375	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	University of Illinois Urbana Champaign	Pages Created	3466	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	University of Illinois Urbana Champaign	Titles Created	18	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	1	University of Michigan	Items Scanned	27	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	1	University of Michigan	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	Boston Public Library	Items Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Boston Public Library	Items Scanned	23	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	Boston Public Library	PageNames Created	42	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Boston Public Library	Pages Created	404	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Boston Public Library	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Fisher - University of Toronto	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	Gerstein - University of Toronto	Items Scanned	31	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	Harvard University	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	Harvard University Herbarium	PageNames Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Harvard University, MCZ, Ernst Mayr Library	Items Created	69	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	401	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	184717	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Harvard University, MCZ, Ernst Mayr Library	Pages Created	36116	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Harvard University, MCZ, Ernst Mayr Library	Titles Created	13	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	MBLWHOI Library	Items Created	1832	2008-11-03 14:13:29	2009-05-25 05:24:03
+2008	2	MBLWHOI Library	Items Scanned	881	2008-11-03 14:13:29	2009-06-03 08:55:58
+2008	2	MBLWHOI Library	PageNames Created	4070320	2008-11-03 14:13:29	2009-05-25 05:24:03
+2008	2	MBLWHOI Library	Pages Created	754740	2008-11-03 14:13:29	2009-05-25 05:24:03
+2008	2	MBLWHOI Library	Titles Created	239	2008-11-03 14:13:29	2009-03-09 05:38:08
+2008	2	Missouri Botanical Garden	Items Created	76	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Missouri Botanical Garden	Items Scanned	40	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Missouri Botanical Garden	PageNames Created	24806	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Missouri Botanical Garden	Pages Created	11531	2008-11-03 14:13:29	2009-03-02 05:05:05
+2008	2	Missouri Botanical Garden	Titles Created	5	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Natural History Museum, London	Items Created	772	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Natural History Museum, London	Items Scanned	79	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	2	Natural History Museum, London	PageNames Created	969362	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Natural History Museum, London	Pages Created	388307	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Natural History Museum, London	Titles Created	118	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	NCSU Libraries	Items Scanned	26	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	New York Botanical Garden	Items Created	56	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	New York Botanical Garden	Items Scanned	233	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	New York Botanical Garden	PageNames Created	85570	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	New York Botanical Garden	Pages Created	16622	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	New York Botanical Garden	Titles Created	50	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	New York Public Library	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	OISE - University of Toronto	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	Research Library, The Getty Research Institute	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	Robarts - University of Toronto	Items Scanned	17	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	Smithsonian Institution Libraries	Items Created	207	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Smithsonian Institution Libraries	Items Scanned	6	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Smithsonian Institution Libraries	PageNames Created	456361	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Smithsonian Institution Libraries	Pages Created	84760	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	Smithsonian Institution Libraries	Titles Created	65	2008-11-03 14:13:29	2009-07-06 05:03:33
+2008	2	The Field Museum	PageNames Created	4	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	University of California Libraries	Items Scanned	71	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	University of Illinois Urbana Champaign	Items Created	1256	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	University of Illinois Urbana Champaign	Items Scanned	120	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	2	University of Illinois Urbana Champaign	PageNames Created	605668	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	University of Illinois Urbana Champaign	Pages Created	129792	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	University of Illinois Urbana Champaign	Titles Created	1146	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	2	University of Michigan	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	University of New Hampshire Library	Items Scanned	329	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	Webster Family Library of Veterinary Medicine	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	2	Williams College Libraries	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Boston Public Library	Items Scanned	32	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	FAO Regional Office for Africa	Items Scanned	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Fisher - University of Toronto	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Gerstein - University of Toronto	Items Scanned	820	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Harvard University	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Harvard University, MCZ, Ernst Mayr Library	Items Created	8	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	347	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	3	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	5331	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Harvard University, MCZ, Ernst Mayr Library	Pages Created	4778	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Harvard University, MCZ, Ernst Mayr Library	Titles Created	9	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	John Adams Library at the Boston Public Library	Items Scanned	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Kelly - University of Toronto	Items Scanned	26	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	MBLWHOI Library	Items Created	2	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	MBLWHOI Library	Items Scanned	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	MBLWHOI Library	PageNames Created	595	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	MBLWHOI Library	Pages Created	426	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	MBLWHOI Library	Titles Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Missouri Botanical Garden	Items Created	12	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Missouri Botanical Garden	Items Scanned	26	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Missouri Botanical Garden	PageNames Created	18889	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Missouri Botanical Garden	Pages Created	12222	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Missouri Botanical Garden	Titles Created	8	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Mugar Memorial Library, Boston University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Natural History Museum, London	Items Scanned	77	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	3	Natural History Museum, London	PageNames Created	16	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	NCSU Libraries	Items Scanned	50	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	New York Botanical Garden	Items Created	30	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	New York Botanical Garden	Items Scanned	468	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	New York Botanical Garden	PageNames Created	25430	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	New York Botanical Garden	Pages Created	9942	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	New York Botanical Garden	Titles Created	25	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	New York Public Library	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	OISE - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Princeton Theological Seminary Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Robarts - University of Toronto	Items Scanned	47	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Smithsonian Institution Libraries	Items Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Smithsonian Institution Libraries	Items Scanned	10	2008-11-03 14:13:29	2009-01-26 05:07:00
+2008	3	Smithsonian Institution Libraries	PageNames Created	35	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Smithsonian Institution Libraries	Pages Created	32	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	3	Smithsonian Institution Libraries	Titles Created	1	2008-11-03 14:13:29	2009-01-26 05:07:00
+2008	3	Tisch Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	University of California	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	University of California Libraries	Items Scanned	82	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	University of Connecticut Libraries	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	University of Illinois Urbana Champaign	Items Scanned	20	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	3	University of Michigan	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	University of New Hampshire Library	Items Scanned	146	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Webster Family Library of Veterinary Medicine	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	3	Wellesley College Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Boston Public Library	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Columbia University Libraries	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	FAO Regional Office for Africa	Items Scanned	36	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	FAO Regional Office for Africa	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Gerstein - University of Toronto	Items Scanned	47	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Harvard University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Harvard University, MCZ, Ernst Mayr Library	Items Created	101	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	186	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	128548	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Harvard University, MCZ, Ernst Mayr Library	Pages Created	46461	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Harvard University, MCZ, Ernst Mayr Library	Titles Created	49	2008-11-03 14:13:29	2009-07-13 05:04:58
+2008	4	Internet Archive	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	John Adams Library at the Boston Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Kelly - University of Toronto	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	MBLWHOI Library	Items Created	968	2008-11-03 14:13:29	2009-06-03 08:55:58
+2008	4	MBLWHOI Library	Items Scanned	515	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	MBLWHOI Library	PageNames Created	1212629	2008-11-03 14:13:29	2009-06-03 08:55:58
+2008	4	MBLWHOI Library	Pages Created	369215	2008-11-03 14:13:29	2009-06-03 08:55:58
+2008	4	MBLWHOI Library	Titles Created	415	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Missouri Botanical Garden	Items Created	110	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Missouri Botanical Garden	Items Scanned	59	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Missouri Botanical Garden	PageNames Created	60874	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Missouri Botanical Garden	Pages Created	19137	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Missouri Botanical Garden	Titles Created	80	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	National Library of Medicine	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Natural History Museum, London	Items Created	154	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Natural History Museum, London	Items Scanned	150	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Natural History Museum, London	PageNames Created	177534	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Natural History Museum, London	Pages Created	84914	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Natural History Museum, London	Titles Created	40	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	NCSU Libraries	Items Scanned	76	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	New York Botanical Garden	Items Created	378	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	New York Botanical Garden	Items Scanned	673	2008-11-03 14:13:29	2009-06-15 05:22:15
+2008	4	New York Botanical Garden	PageNames Created	426278	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	New York Botanical Garden	Pages Created	138204	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	New York Botanical Garden	Titles Created	253	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	New York Public Library	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	OISE - University of Toronto	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Prelinger Library	Items Scanned	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Robarts - University of Toronto	Items Scanned	22	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Smithsonian Institution Libraries	Items Created	6	2008-11-03 14:13:29	2009-01-26 05:07:00
+2008	4	Smithsonian Institution Libraries	Items Scanned	30	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Smithsonian Institution Libraries	PageNames Created	4980	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Smithsonian Institution Libraries	Pages Created	812	2008-11-03 14:13:29	2009-01-26 05:07:00
+2008	4	Smithsonian Institution Libraries	Titles Created	5	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	State Library of Massachusetts	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	The Bancroft Library	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	The Field Museum	PageNames Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Tisch Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	University of California Libraries	Items Scanned	253	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	University of Illinois Urbana Champaign	Items Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	University of Illinois Urbana Champaign	PageNames Created	117	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	University of Illinois Urbana Champaign	Pages Created	256	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	University of Illinois Urbana Champaign	Titles Created	63	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	4	Webster Family Library of Veterinary Medicine	Items Scanned	98	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	4	Wellesley College Library	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	American Museum of Natural History Library	Items Created	10	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	American Museum of Natural History Library	Items Scanned	10	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	American Museum of Natural History Library	PageNames Created	1019	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	American Museum of Natural History Library	Pages Created	3532	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	American Museum of Natural History Library	Titles Created	10	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Boston Public Library	Items Scanned	38	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	Columbia University Libraries	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	Gerstein - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	Harvard University, MCZ, Ernst Mayr Library	Items Created	995	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	5	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	164	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	697248	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	5	Harvard University, MCZ, Ernst Mayr Library	Pages Created	338605	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	5	Harvard University, MCZ, Ernst Mayr Library	Titles Created	245	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Internet Archive	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	John Adams Library at the Boston Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	Library of Congress	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	MBLWHOI Library	Items Created	710	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	5	MBLWHOI Library	Items Scanned	657	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	MBLWHOI Library	PageNames Created	842219	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	5	MBLWHOI Library	Pages Created	257901	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	5	MBLWHOI Library	Titles Created	315	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Missouri Botanical Garden	Items Created	16	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Missouri Botanical Garden	Items Scanned	52	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Missouri Botanical Garden	PageNames Created	1736	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Missouri Botanical Garden	Pages Created	30251	2008-11-03 14:13:29	2008-11-10 05:05:58
+2008	5	Missouri Botanical Garden	Titles Created	3	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Mugar Memorial Library, Boston University	Items Scanned	15	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	Natural History Museum, London	Items Created	267	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	5	Natural History Museum, London	Items Scanned	132	2008-11-03 14:13:29	2008-12-08 05:06:12
+2008	5	Natural History Museum, London	PageNames Created	108598	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	5	Natural History Museum, London	Pages Created	152213	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	5	Natural History Museum, London	Titles Created	36	2008-11-03 14:13:29	2009-01-19 05:07:19
+2008	5	NCSU Libraries	Items Scanned	62	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	New York Botanical Garden	Items Created	750	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	New York Botanical Garden	Items Scanned	336	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	New York Botanical Garden	PageNames Created	762527	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	New York Botanical Garden	Pages Created	386596	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	New York Botanical Garden	Titles Created	195	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	New York Public Library	Items Scanned	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	OISE - University of Toronto	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	Princeton Theological Seminary Library	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	Robarts - University of Toronto	Items Scanned	20	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	Smithsonian Institution Libraries	Items Created	78	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Smithsonian Institution Libraries	Items Scanned	26	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Smithsonian Institution Libraries	PageNames Created	248136	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Smithsonian Institution Libraries	Pages Created	31998	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	Smithsonian Institution Libraries	Titles Created	56	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	5	U.S. Government Printing Office	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	University of California Libraries	Items Scanned	72	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	University of Illinois Urbana Champaign	Items Created	452	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	5	University of Illinois Urbana Champaign	Items Scanned	83	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	University of Illinois Urbana Champaign	PageNames Created	105005	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	5	University of Illinois Urbana Champaign	Pages Created	48112	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	5	University of Illinois Urbana Champaign	Titles Created	327	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	5	University of Michigan	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	Webster Family Library of Veterinary Medicine	Items Scanned	73	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	5	Wellesley College Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	California Academy of Sciences Library	Items Scanned	20	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	Canadiana.org	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	Columbia University Libraries	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	Gerstein - University of Toronto	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	Harvard University, MCZ, Ernst Mayr Library	Items Created	275	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	363	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	122179	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Harvard University, MCZ, Ernst Mayr Library	Pages Created	134737	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Harvard University, MCZ, Ernst Mayr Library	Titles Created	33	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Internet Archive	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	John Adams Library at the Boston Public Library	Items Scanned	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	Library of Congress	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	MBLWHOI Library	Items Created	1022	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	6	MBLWHOI Library	Items Scanned	637	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	6	MBLWHOI Library	PageNames Created	1327531	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	6	MBLWHOI Library	Pages Created	445331	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	6	MBLWHOI Library	Titles Created	449	2008-11-03 14:13:29	2009-03-02 05:05:05
+2008	6	Missouri Botanical Garden	Items Created	18	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Missouri Botanical Garden	Items Scanned	40	2008-11-03 14:13:29	2009-05-25 05:24:03
+2008	6	Missouri Botanical Garden	PageNames Created	3613	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Missouri Botanical Garden	Pages Created	22887	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Missouri Botanical Garden	Titles Created	11	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Mugar Memorial Library, Boston University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	Natural History Museum, London	Items Created	195	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Natural History Museum, London	Items Scanned	171	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Natural History Museum, London	PageNames Created	25618	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Natural History Museum, London	Pages Created	108756	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Natural History Museum, London	Titles Created	12	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	NCSU Libraries	Items Scanned	44	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	New York Botanical Garden	Items Created	1139	2008-11-03 14:13:29	2009-06-15 05:22:15
+2008	6	New York Botanical Garden	Items Scanned	470	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	New York Botanical Garden	PageNames Created	1459773	2008-11-03 14:13:29	2009-06-15 05:22:15
+2008	6	New York Botanical Garden	Pages Created	612231	2008-11-03 14:13:29	2009-06-15 05:22:15
+2008	6	New York Botanical Garden	Titles Created	328	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	New York Public Library	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	OISE - University of Toronto	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	Princeton Theological Seminary Library	Items Scanned	31	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	Robarts - University of Toronto	Items Scanned	73	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	Smithsonian Institution Libraries	Items Created	43	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Smithsonian Institution Libraries	Items Scanned	21	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Smithsonian Institution Libraries	PageNames Created	49296	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Smithsonian Institution Libraries	Pages Created	14390	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Smithsonian Institution Libraries	Titles Created	32	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	The Field Museum	PageNames Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Tufts University	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	University of California Libraries	Items Scanned	64	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	University of Connecticut Libraries	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	6	University of Illinois Urbana Champaign	Items Created	13	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	University of Illinois Urbana Champaign	Items Scanned	88	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	6	University of Illinois Urbana Champaign	PageNames Created	2006	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	University of Illinois Urbana Champaign	Pages Created	2864	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	University of Illinois Urbana Champaign	Titles Created	9	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	6	Webster Family Library of Veterinary Medicine	Items Scanned	69	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Allen County Public Library Genealogy Center	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	American Museum of Natural History Library	Items Created	49	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	American Museum of Natural History Library	Items Scanned	130	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	7	American Museum of Natural History Library	PageNames Created	13097	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	American Museum of Natural History Library	Pages Created	14902	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	American Museum of Natural History Library	Titles Created	48	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Boston Public Library	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Brown University Library	Items Scanned	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Canadiana.org	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Claire T. Carney Library, University of Mass Dartmouth	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Columbia University Libraries	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Gerstein - University of Toronto	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Harvard University, MCZ, Ernst Mayr Library	Items Created	228	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	156	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	7	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	162491	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Harvard University, MCZ, Ernst Mayr Library	Pages Created	94374	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Harvard University, MCZ, Ernst Mayr Library	Titles Created	52	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Internet Archive	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	John Adams Library at the Boston Public Library	Items Scanned	20	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Library of Congress	Items Scanned	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	MBLWHOI Library	Items Created	441	2008-11-03 14:13:29	2009-06-22 05:18:41
+2008	7	MBLWHOI Library	Items Scanned	684	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	7	MBLWHOI Library	PageNames Created	852124	2008-11-03 14:13:29	2009-06-22 05:18:41
+2008	7	MBLWHOI Library	Pages Created	215639	2008-11-03 14:13:29	2009-06-22 05:18:41
+2008	7	MBLWHOI Library	Titles Created	186	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Missouri Botanical Garden	Items Created	49	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Missouri Botanical Garden	Items Scanned	45	2008-11-03 14:13:29	2009-05-25 05:24:03
+2008	7	Missouri Botanical Garden	PageNames Created	152993	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Missouri Botanical Garden	Pages Created	28653	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Missouri Botanical Garden	Titles Created	44	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Mugar Memorial Library, Boston University	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Natural History Museum, London	Items Created	85	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Natural History Museum, London	Items Scanned	147	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Natural History Museum, London	PageNames Created	19179	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Natural History Museum, London	Pages Created	55336	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Natural History Museum, London	Titles Created	11	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	NCSU Libraries	Items Scanned	38	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	New York Botanical Garden	Items Created	154	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	New York Botanical Garden	Items Scanned	250	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	7	New York Botanical Garden	PageNames Created	250731	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	New York Botanical Garden	Pages Created	98426	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	New York Botanical Garden	Titles Created	46	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	New York Public Library	Items Scanned	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	OISE - University of Toronto	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Princeton Theological Seminary Library	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Robarts - University of Toronto	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	ROM - University of Toronto	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	Smithsonian Institution Libraries	Items Created	23	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Smithsonian Institution Libraries	Items Scanned	8	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Smithsonian Institution Libraries	PageNames Created	17420	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Smithsonian Institution Libraries	Pages Created	4310	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Smithsonian Institution Libraries	Titles Created	5	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	The Field Museum	PageNames Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	University of California Libraries	Items Scanned	123	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	University of Connecticut Libraries	Items Scanned	24	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	7	University of Illinois Urbana Champaign	Items Created	29	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	University of Illinois Urbana Champaign	Items Scanned	13	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	7	University of Illinois Urbana Champaign	PageNames Created	6852	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	University of Illinois Urbana Champaign	Pages Created	5664	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	University of Illinois Urbana Champaign	Titles Created	28	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	7	Webster Family Library of Veterinary Medicine	Items Scanned	112	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Allen County Public Library Genealogy Center	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	American Museum of Natural History Library	Items Created	95	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	American Museum of Natural History Library	Items Scanned	145	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	American Museum of Natural History Library	PageNames Created	81656	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	American Museum of Natural History Library	Pages Created	41070	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	American Museum of Natural History Library	Titles Created	79	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Boston Public Library	Items Scanned	16	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Brown University Library	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Canadiana.org	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Gerstein - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Harvard University, MCZ, Ernst Mayr Library	Items Created	159	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	278	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	156252	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Harvard University, MCZ, Ernst Mayr Library	Pages Created	77563	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Harvard University, MCZ, Ernst Mayr Library	Titles Created	33	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Law Library, University of North Carolina at Chapel Hill	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Library of Congress	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	MBLWHOI Library	Items Created	495	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	MBLWHOI Library	Items Scanned	8	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	MBLWHOI Library	PageNames Created	703481	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	MBLWHOI Library	Pages Created	257064	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	MBLWHOI Library	Titles Created	198	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Missouri Botanical Garden	Items Created	62	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Missouri Botanical Garden	Items Scanned	102	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	8	Missouri Botanical Garden	PageNames Created	39544	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Missouri Botanical Garden	Pages Created	34565	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Missouri Botanical Garden	Titles Created	10	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Montana State Library	Items Scanned	62	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Natural History Museum, London	Items Created	103	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Natural History Museum, London	Items Scanned	115	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Natural History Museum, London	PageNames Created	30216	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Natural History Museum, London	Pages Created	66810	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Natural History Museum, London	Titles Created	6	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	NCSU Libraries	Items Scanned	39	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	New York Botanical Garden	Items Created	523	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	New York Botanical Garden	Items Scanned	322	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	New York Botanical Garden	PageNames Created	1024513	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	New York Botanical Garden	Pages Created	251764	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	New York Botanical Garden	Titles Created	278	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	New York Public Library	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Northeastern University, Snell Library	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Princeton Theological Seminary Library	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Robarts - University of Toronto	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	Smithsonian Institution Libraries	Items Created	21	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Smithsonian Institution Libraries	Items Scanned	539	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Smithsonian Institution Libraries	PageNames Created	71531	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Smithsonian Institution Libraries	Pages Created	13220	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Smithsonian Institution Libraries	Titles Created	5	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	UMass Amherst Libraries	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	University Library, University of North Carolina at Chapel Hill	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	University of California Libraries	Items Scanned	97	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	University of Connecticut Libraries	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	University of Illinois Urbana Champaign	Items Created	32	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	University of Illinois Urbana Champaign	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	8	University of Illinois Urbana Champaign	PageNames Created	14726	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	University of Illinois Urbana Champaign	Pages Created	4248	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	University of Illinois Urbana Champaign	Titles Created	29	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	8	Webster Family Library of Veterinary Medicine	Items Scanned	134	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Allen County Public Library Genealogy Center	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	American Museum of Natural History Library	Items Created	170	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	American Museum of Natural History Library	Items Scanned	286	2008-11-03 14:13:29	2009-01-26 05:07:00
+2008	9	American Museum of Natural History Library	PageNames Created	109327	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	American Museum of Natural History Library	Pages Created	73018	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	American Museum of Natural History Library	Titles Created	124	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Boston Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Brandeis University Libraries	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Brown University Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Canadiana.org	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Claire T. Carney Library, University of Mass Dartmouth	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	FAO Regional Office for Africa	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Gerstein - University of Toronto	Items Scanned	33	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Harvard University, MCZ, Ernst Mayr Library	Items Created	348	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	354	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	296775	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Harvard University, MCZ, Ernst Mayr Library	Pages Created	121093	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Harvard University, MCZ, Ernst Mayr Library	Titles Created	68	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Internet Archive	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	John Adams Library at the Boston Public Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Lancaster County Historical Society	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Library of Congress	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	MBLWHOI Library	Items Created	261	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	9	MBLWHOI Library	Items Scanned	729	2008-11-03 14:13:29	2009-04-13 05:16:53
+2008	9	MBLWHOI Library	PageNames Created	114955	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	9	MBLWHOI Library	Pages Created	102805	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	9	MBLWHOI Library	Titles Created	59	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Missouri Botanical Garden	Items Created	216	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Missouri Botanical Garden	Items Scanned	152	2008-11-03 14:13:29	2009-04-20 05:20:04
+2008	9	Missouri Botanical Garden	PageNames Created	134421	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Missouri Botanical Garden	Pages Created	41825	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Missouri Botanical Garden	Titles Created	26	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	MIT Libraries	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Montana State Library	Items Scanned	90	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	National Library of Scotland	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Natural History Museum, London	Items Created	267	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Natural History Museum, London	Items Scanned	205	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Natural History Museum, London	PageNames Created	96342	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Natural History Museum, London	Pages Created	162880	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Natural History Museum, London	Titles Created	19	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	NCSU Libraries	Items Scanned	61	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	New York Botanical Garden	Items Created	74	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	New York Botanical Garden	Items Scanned	191	2008-11-03 14:13:29	2009-02-16 05:03:01
+2008	9	New York Botanical Garden	PageNames Created	96244	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	New York Botanical Garden	Pages Created	45844	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	New York Botanical Garden	Titles Created	28	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	New York Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Princeton Theological Seminary Library	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Research Library, The Getty Research Institute	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Robarts - University of Toronto	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Smithsonian Institution Libraries	Items Created	717	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	9	Smithsonian Institution Libraries	Items Scanned	668	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	9	Smithsonian Institution Libraries	PageNames Created	1198378	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	Smithsonian Institution Libraries	Pages Created	346583	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	9	Smithsonian Institution Libraries	Titles Created	126	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	The Field Museum	PageNames Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	The Johns Hopkins University Sheridan Libraries	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	UMass Amherst Libraries	Items Scanned	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	University Library, University of North Carolina at Chapel Hill	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	University of California Libraries	Items Scanned	109	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	University of Illinois Urbana Champaign	Items Created	12	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	University of Illinois Urbana Champaign	Items Scanned	67	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	9	University of Illinois Urbana Champaign	PageNames Created	48	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	University of Illinois Urbana Champaign	Pages Created	5616	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	University of Illinois Urbana Champaign	Titles Created	2	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	9	University of New Hampshire Library	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	University of North Carolina at Chapel Hill	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	9	Webster Family Library of Veterinary Medicine	Items Scanned	72	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Allen County Public Library Genealogy Center	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	American Museum of Natural History Library	Items Created	388	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	American Museum of Natural History Library	Items Scanned	413	2008-11-03 14:13:29	2008-11-24 05:05:02
+2008	10	American Museum of Natural History Library	PageNames Created	387040	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	American Museum of Natural History Library	Pages Created	139907	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	American Museum of Natural History Library	Titles Created	115	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Environmental Services & Library Systems	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Fisher - University of Toronto	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Gerstein - University of Toronto	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Harvard University, MCZ, Ernst Mayr Library	Items Created	278	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	218	2008-11-03 14:13:29	2008-11-17 05:06:27
+2008	10	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	275481	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Harvard University, MCZ, Ernst Mayr Library	Pages Created	93196	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Harvard University, MCZ, Ernst Mayr Library	Titles Created	67	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Kelly - University of Toronto	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Law Library, University of North Carolina at Chapel Hill	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Library of Congress	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	MBLWHOI Library	Items Created	499	2008-11-03 14:13:29	2009-04-13 05:16:53
+2008	10	MBLWHOI Library	Items Scanned	239	2008-11-03 14:13:29	2009-04-13 05:16:53
+2008	10	MBLWHOI Library	PageNames Created	551835	2008-11-03 14:13:29	2009-05-25 05:24:03
+2008	10	MBLWHOI Library	Pages Created	156556	2008-11-03 14:13:29	2009-04-13 05:16:53
+2008	10	MBLWHOI Library	Titles Created	38	2008-11-03 14:13:29	2009-04-13 05:16:53
+2008	10	Missouri Botanical Garden	Items Created	36	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Missouri Botanical Garden	Items Scanned	103	2008-11-03 14:13:29	2009-04-20 05:20:04
+2008	10	Missouri Botanical Garden	PageNames Created	188606	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Missouri Botanical Garden	Pages Created	52044	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Missouri Botanical Garden	Titles Created	10	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Montana State Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	National Library of Scotland	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Natural History Museum, London	Items Created	144	2008-11-03 14:13:29	2008-12-08 05:06:12
+2008	10	Natural History Museum, London	Items Scanned	170	2008-11-03 14:13:29	2008-11-17 05:06:27
+2008	10	Natural History Museum, London	PageNames Created	323028	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Natural History Museum, London	Pages Created	75733	2008-11-03 14:13:29	2008-12-08 05:06:12
+2008	10	Natural History Museum, London	Titles Created	70	2008-11-03 14:13:29	2008-12-08 05:06:12
+2008	10	NCSU Libraries	Items Scanned	65	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	New York Botanical Garden	Items Created	160	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	New York Botanical Garden	Items Scanned	215	2008-11-03 14:13:29	2008-11-10 05:05:58
+2008	10	New York Botanical Garden	PageNames Created	180325	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	New York Botanical Garden	Pages Created	112494	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	New York Botanical Garden	Titles Created	31	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Northeastern University, Snell Library	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	OISE - University of Toronto	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Prelinger Library	Items Scanned	52	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Research Library, The Getty Research Institute	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Robarts - University of Toronto	Items Scanned	21	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Smithsonian Institution Libraries	Items Created	498	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Smithsonian Institution Libraries	Items Scanned	471	2008-11-03 14:13:29	2008-11-17 05:06:27
+2008	10	Smithsonian Institution Libraries	PageNames Created	1091797	2008-11-03 14:13:29	2009-02-09 05:03:32
+2008	10	Smithsonian Institution Libraries	Pages Created	264315	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	Smithsonian Institution Libraries	Titles Created	121	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	The Field Museum	PageNames Created	1	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	The Johns Hopkins University Sheridan Libraries	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	UMass Amherst Libraries	Items Scanned	127	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	University of California Libraries	Items Scanned	65	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	University of Connecticut Libraries	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	University of Florida, George A. Smathers Libraries	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	University of Illinois Urbana Champaign	Items Created	92	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	University of Illinois Urbana Champaign	Items Scanned	102	2008-11-03 14:13:29	2009-09-21 13:40:49
+2008	10	University of Illinois Urbana Champaign	PageNames Created	206768	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	University of Illinois Urbana Champaign	Pages Created	47281	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	University of Illinois Urbana Champaign	Titles Created	2	2008-11-03 14:13:29	2008-11-03 14:13:29
+2008	10	University of New Hampshire Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	University of Pittsburgh Library System	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	10	Webster Family Library of Veterinary Medicine	Items Scanned	58	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Allen County Public Library Genealogy Center	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	American Museum of Natural History Library	Items Created	425	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	American Museum of Natural History Library	Items Scanned	260	2008-11-10 05:05:58	2008-12-15 05:06:27
+2008	11	American Museum of Natural History Library	PageNames Created	391777	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	American Museum of Natural History Library	Pages Created	159227	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	American Museum of Natural History Library	Titles Created	156	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Canadiana.org	Items Scanned	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Duke University Libraries	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Gerstein - University of Toronto	Items Scanned	267	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Harvard University, MCZ, Ernst Mayr Library	Items Created	204	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	1	2008-12-01 05:06:47	2008-12-01 05:06:47
+2008	11	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	156368	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Harvard University, MCZ, Ernst Mayr Library	Pages Created	67048	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Harvard University, MCZ, Ernst Mayr Library	Titles Created	90	2008-11-03 14:13:29	2008-11-17 05:06:27
+2008	11	Kelly - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Library of Congress	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	MBLWHOI Library	Items Created	327	2008-11-03 14:13:29	2009-04-13 05:16:53
+2008	11	MBLWHOI Library	Items Scanned	838	2008-11-10 05:05:58	2008-12-15 05:06:27
+2008	11	MBLWHOI Library	PageNames Created	351330	2008-11-03 14:13:29	2009-04-13 05:16:53
+2008	11	MBLWHOI Library	Pages Created	138149	2008-11-03 14:13:29	2009-04-13 05:16:53
+2008	11	MBLWHOI Library	Titles Created	46	2008-11-03 14:13:29	2008-11-24 05:05:02
+2008	11	Missouri Botanical Garden	Items Created	83	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Missouri Botanical Garden	Items Scanned	59	2008-11-10 05:05:58	2009-04-20 05:20:04
+2008	11	Missouri Botanical Garden	PageNames Created	55629	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Missouri Botanical Garden	Pages Created	26831	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Missouri Botanical Garden	Titles Created	31	2008-11-10 05:05:58	2008-12-01 05:06:47
+2008	11	Montana State Library	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	National Library of Scotland	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Natural History Museum, London	Items Created	186	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Natural History Museum, London	Items Scanned	145	2008-11-10 05:05:58	2008-12-08 05:06:12
+2008	11	Natural History Museum, London	PageNames Created	61023	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Natural History Museum, London	Pages Created	105765	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Natural History Museum, London	Titles Created	7	2008-11-03 14:13:29	2008-11-17 05:06:27
+2008	11	NCSU Libraries	Items Scanned	72	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	New York Botanical Garden	Items Created	183	2008-11-10 05:05:58	2008-11-10 05:05:58
+2008	11	New York Botanical Garden	PageNames Created	173185	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	New York Botanical Garden	Pages Created	105333	2008-11-10 05:05:58	2008-11-10 05:05:58
+2008	11	New York Botanical Garden	Titles Created	44	2008-11-10 05:05:58	2008-11-10 05:05:58
+2008	11	Northeastern University, Snell Library	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Research Library, The Getty Research Institute	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Robarts - University of Toronto	Items Scanned	43	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Smithsonian Institution Libraries	Items Created	627	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Smithsonian Institution Libraries	Items Scanned	369	2008-11-10 05:05:58	2009-01-05 05:14:53
+2008	11	Smithsonian Institution Libraries	PageNames Created	675542	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Smithsonian Institution Libraries	Pages Created	229196	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	Smithsonian Institution Libraries	Titles Created	402	2008-11-03 14:13:29	2009-07-13 05:04:58
+2008	11	The Johns Hopkins University Sheridan Libraries	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Toronto Public Library : North York Central	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	UMass Amherst Libraries	Items Scanned	214	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	University Library, University of North Carolina at Chapel Hill	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	University of California Libraries	Items Scanned	31	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	University of Illinois Urbana Champaign	Items Created	34	2008-11-10 05:05:58	2008-11-24 05:05:02
+2008	11	University of Illinois Urbana Champaign	Items Scanned	1	2008-11-10 05:05:58	2008-11-10 05:05:58
+2008	11	University of Illinois Urbana Champaign	PageNames Created	105791	2008-11-03 14:13:29	2008-12-01 05:06:47
+2008	11	University of Illinois Urbana Champaign	Pages Created	18468	2008-11-10 05:05:58	2008-11-24 05:05:02
+2008	11	University of Illinois Urbana Champaign	Titles Created	2	2008-11-10 05:05:58	2008-11-24 05:05:02
+2008	11	University of New Hampshire Library	Items Scanned	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	11	Webster Family Library of Veterinary Medicine	Items Scanned	33	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Allen County Public Library Genealogy Center	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	American Museum of Natural History Library	Items Created	117	2008-12-08 05:06:12	2008-12-15 05:06:27
+2008	12	American Museum of Natural History Library	Items Scanned	24	2008-12-08 05:06:12	2009-01-05 05:14:53
+2008	12	American Museum of Natural History Library	PageNames Created	150940	2008-12-01 05:06:47	2008-12-22 05:08:01
+2008	12	American Museum of Natural History Library	Pages Created	42696	2008-12-08 05:06:12	2008-12-15 05:06:27
+2008	12	American Museum of Natural History Library	Titles Created	22	2008-12-08 05:06:12	2008-12-08 05:06:12
+2008	12	Boston Public Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Canadiana.org	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Claire T. Carney Library, University of Mass Dartmouth	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Gerstein - University of Toronto	Items Scanned	448	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Harvard University, MCZ, Ernst Mayr Library	Items Created	53	2008-12-15 05:06:27	2008-12-29 05:06:41
+2008	12	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	261	2008-12-15 05:06:27	2009-01-12 05:07:55
+2008	12	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	55994	2008-12-08 05:06:12	2008-12-29 05:06:41
+2008	12	Harvard University, MCZ, Ernst Mayr Library	Pages Created	12171	2008-12-15 05:06:27	2008-12-29 05:06:41
+2008	12	Harvard University, MCZ, Ernst Mayr Library	Titles Created	16	2008-12-15 05:06:27	2008-12-22 05:08:01
+2008	12	Internet Archive	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Kelly - University of Toronto	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Library of Congress	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	MBLWHOI Library	Items Created	776	2008-12-08 05:06:12	2008-12-29 05:06:41
+2008	12	MBLWHOI Library	Items Scanned	269	2008-12-08 05:06:12	2009-07-06 05:03:33
+2008	12	MBLWHOI Library	PageNames Created	176693	2008-12-01 05:06:47	2009-01-05 05:14:53
+2008	12	MBLWHOI Library	Pages Created	103187	2008-12-08 05:06:12	2008-12-29 05:06:41
+2008	12	MBLWHOI Library	Titles Created	16	2008-12-22 05:08:01	2008-12-29 05:06:41
+2008	12	Missouri Botanical Garden	Items Created	62	2008-12-08 05:06:12	2009-01-05 05:14:53
+2008	12	Missouri Botanical Garden	Items Scanned	61	2008-12-08 05:06:12	2009-04-20 05:20:04
+2008	12	Missouri Botanical Garden	PageNames Created	67178	2008-12-08 05:06:12	2009-01-05 05:14:53
+2008	12	Missouri Botanical Garden	Pages Created	23502	2008-12-08 05:06:12	2009-01-05 05:14:53
+2008	12	Missouri Botanical Garden	Titles Created	17	2008-12-08 05:06:12	2009-01-05 05:14:53
+2008	12	Montana State Library	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	National Library of Scotland	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Natural History Museum, London	Items Created	84	2008-12-08 05:06:12	2008-12-29 05:06:41
+2008	12	Natural History Museum, London	Items Scanned	99	2008-12-08 05:06:12	2009-01-19 05:07:19
+2008	12	Natural History Museum, London	PageNames Created	57897	2008-12-01 05:06:47	2008-12-29 05:06:41
+2008	12	Natural History Museum, London	Pages Created	61856	2008-12-08 05:06:12	2008-12-29 05:06:41
+2008	12	Natural History Museum, London	Titles Created	20	2008-12-08 05:06:12	2008-12-29 05:06:41
+2008	12	NCSU Libraries	Items Scanned	99	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	New York Botanical Garden	Items Created	328	2008-12-15 05:06:27	2009-01-05 05:14:53
+2008	12	New York Botanical Garden	Items Scanned	328	2008-12-15 05:06:27	2009-01-05 05:14:53
+2008	12	New York Botanical Garden	PageNames Created	581670	2008-12-08 05:06:12	2009-01-05 05:14:53
+2008	12	New York Botanical Garden	Pages Created	111835	2008-12-15 05:06:27	2009-01-05 05:14:53
+2008	12	New York Botanical Garden	Titles Created	292	2008-12-15 05:06:27	2009-01-05 05:14:53
+2008	12	Prelinger Library	Items Scanned	29	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Princeton Theological Seminary Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Robarts - University of Toronto	Items Scanned	31	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Smithsonian Institution Libraries	Items Created	349	2008-12-08 05:06:12	2008-12-29 05:06:41
+2008	12	Smithsonian Institution Libraries	Items Scanned	442	2008-12-15 05:06:27	2009-02-02 05:12:59
+2008	12	Smithsonian Institution Libraries	PageNames Created	613737	2008-12-01 05:06:47	2009-01-05 05:14:53
+2008	12	Smithsonian Institution Libraries	Pages Created	121329	2008-12-08 05:06:12	2008-12-29 05:06:41
+2008	12	Smithsonian Institution Libraries	Titles Created	170	2008-12-08 05:06:12	2008-12-29 05:06:41
+2008	12	The Johns Hopkins University Sheridan Libraries	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Toronto Public Library : North York Central	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	UMass Amherst Libraries	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	University of California Libraries	Items Scanned	36	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	University of Illinois Urbana Champaign	PageNames Created	4	2008-12-01 05:06:47	2008-12-29 05:06:41
+2008	12	University of New Hampshire Library	Items Scanned	55	2009-09-21 13:40:49	2009-09-21 13:40:49
+2008	12	Webster Family Library of Veterinary Medicine	Items Scanned	76	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Allen County Public Library Genealogy Center	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	American Museum of Natural History Library	Items Created	11	2009-01-05 05:14:53	2009-01-26 05:07:00
+2009	1	American Museum of Natural History Library	Items Scanned	113	2009-02-02 05:12:59	2009-02-23 05:02:59
+2009	1	American Museum of Natural History Library	PageNames Created	11813	2009-01-12 05:07:55	2009-02-02 05:12:59
+2009	1	American Museum of Natural History Library	Pages Created	5216	2009-01-05 05:14:53	2009-01-26 05:07:00
+2009	1	American Museum of Natural History Library	Titles Created	12	2009-02-02 05:12:59	2009-02-02 05:12:59
+2009	1	Boston Public Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Canadiana.org	Items Scanned	18	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Dorothy H. Hoover Library, Ontario College of Art & Design	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Gerstein - University of Toronto	Items Scanned	395	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Harvard University, MCZ, Ernst Mayr Library	Items Created	209	2009-01-05 05:14:53	2009-01-12 05:07:55
+2009	1	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	92	2009-02-02 05:12:59	2009-03-02 05:05:05
+2009	1	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	266458	2009-01-05 05:14:53	2009-02-02 05:12:59
+2009	1	Harvard University, MCZ, Ernst Mayr Library	Pages Created	56576	2009-01-05 05:14:53	2009-01-12 05:07:55
+2009	1	Harvard University, MCZ, Ernst Mayr Library	Titles Created	50	2009-01-05 05:14:53	2009-02-02 05:12:59
+2009	1	Internet Archive	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Library of Congress	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	MBLWHOI Library	Items Created	242	2009-01-05 05:14:53	2009-07-13 05:04:58
+2009	1	MBLWHOI Library	Items Scanned	271	2009-01-12 05:07:55	2009-07-13 05:04:58
+2009	1	MBLWHOI Library	PageNames Created	255767	2009-01-05 05:14:53	2009-07-13 05:04:58
+2009	1	MBLWHOI Library	Pages Created	122022	2009-01-05 05:14:53	2009-07-13 05:04:58
+2009	1	MBLWHOI Library	Titles Created	133	2009-01-05 05:14:53	2009-03-09 05:38:08
+2009	1	Missouri Botanical Garden	Items Created	81	2009-01-05 05:14:53	2009-02-02 05:12:59
+2009	1	Missouri Botanical Garden	Items Scanned	83	2009-01-12 05:07:55	2009-02-16 05:03:01
+2009	1	Missouri Botanical Garden	PageNames Created	73870	2009-01-05 05:14:53	2009-02-02 05:12:59
+2009	1	Missouri Botanical Garden	Pages Created	28001	2009-01-05 05:14:53	2009-02-02 05:12:59
+2009	1	Missouri Botanical Garden	Titles Created	19	2009-01-05 05:14:53	2009-02-02 05:12:59
+2009	1	Montana State Library	Items Scanned	15	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Natural History Museum, London	Items Created	50	2009-01-05 05:14:53	2009-01-26 05:07:00
+2009	1	Natural History Museum, London	Items Scanned	65	2009-01-19 05:07:20	2009-04-06 05:16:31
+2009	1	Natural History Museum, London	PageNames Created	12231	2009-01-05 05:14:53	2009-02-02 05:12:59
+2009	1	Natural History Museum, London	Pages Created	22306	2009-01-05 05:14:53	2009-01-26 05:07:00
+2009	1	Natural History Museum, London	Titles Created	8	2009-01-12 05:07:55	2009-02-02 05:12:59
+2009	1	NCSU Libraries	Items Scanned	99	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	New College of California	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	New York Botanical Garden	PageNames Created	57	2009-01-05 05:14:53	2009-02-02 05:12:59
+2009	1	Northeastern University, Snell Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Penn State University	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Research Library, The Getty Research Institute	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Robarts - University of Toronto	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Smithsonian Institution Libraries	Items Created	344	2009-01-05 05:14:53	2009-01-26 05:07:00
+2009	1	Smithsonian Institution Libraries	Items Scanned	332	2009-01-12 05:07:55	2009-03-09 05:38:08
+2009	1	Smithsonian Institution Libraries	PageNames Created	393799	2009-01-12 05:07:55	2009-02-02 05:12:59
+2009	1	Smithsonian Institution Libraries	Pages Created	109912	2009-01-05 05:14:53	2009-01-26 05:07:00
+2009	1	Smithsonian Institution Libraries	Titles Created	343	2009-01-05 05:14:53	2009-02-02 05:12:59
+2009	1	The Johns Hopkins University Sheridan Libraries	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Toronto Public Library: Research and Reference Libraries	Items Scanned	39	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	UMass Amherst Libraries	Items Scanned	215	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	University Library, University of North Carolina at Chapel Hill	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	University of California Libraries	Items Scanned	57	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	University of Connecticut Libraries	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	University of Illinois Urbana Champaign	Items Created	60	2009-01-12 05:07:55	2009-01-26 05:07:00
+2009	1	University of Illinois Urbana Champaign	Items Scanned	66	2009-01-12 05:07:55	2009-02-23 05:02:59
+2009	1	University of Illinois Urbana Champaign	PageNames Created	157914	2009-01-12 05:07:55	2009-01-26 05:07:00
+2009	1	University of Illinois Urbana Champaign	Pages Created	31354	2009-01-12 05:07:55	2009-01-26 05:07:00
+2009	1	University of Illinois Urbana Champaign	Titles Created	29	2009-01-12 05:07:55	2009-01-26 05:07:00
+2009	1	University of New Hampshire Library	Items Scanned	17	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	University of Pittsburgh Library System	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Webster Family Library of Veterinary Medicine	Items Scanned	84	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	1	Wellesley College Library	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Allen County Public Library Genealogy Center	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	American Museum of Natural History Library	Items Created	151	2009-02-02 05:12:59	2009-02-23 05:02:59
+2009	2	American Museum of Natural History Library	Items Scanned	57	2009-02-09 05:03:32	2009-03-30 05:14:02
+2009	2	American Museum of Natural History Library	PageNames Created	130962	2009-02-02 05:12:59	2009-03-02 05:05:05
+2009	2	American Museum of Natural History Library	Pages Created	68454	2009-02-02 05:12:59	2009-02-23 05:02:59
+2009	2	American Museum of Natural History Library	Titles Created	39	2009-02-09 05:03:32	2009-02-23 05:02:59
+2009	2	Boston Public Library	Items Scanned	98	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Brandeis University Libraries	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Brown University Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Canadiana.org	Items Scanned	48	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Education Centre Library, Nipissing University/ Canadore College	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Gerstein - University of Toronto	Items Scanned	311	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Harvard University, MCZ, Ernst Mayr Library	Items Created	125	2009-02-02 05:12:59	2009-02-23 05:02:59
+2009	2	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	180	2009-02-09 05:03:32	2009-03-16 05:09:34
+2009	2	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	81538	2009-02-02 05:12:59	2009-03-02 05:05:05
+2009	2	Harvard University, MCZ, Ernst Mayr Library	Pages Created	41542	2009-02-02 05:12:59	2009-02-23 05:02:59
+2009	2	Harvard University, MCZ, Ernst Mayr Library	Titles Created	51	2009-02-09 05:03:32	2009-03-02 05:05:05
+2009	2	Library of Congress	Items Scanned	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	MBLWHOI Library	Items Created	321	2009-02-02 05:12:59	2009-07-13 05:04:58
+2009	2	MBLWHOI Library	Items Scanned	329	2009-02-09 05:03:32	2009-05-25 05:24:03
+2009	2	MBLWHOI Library	PageNames Created	364199	2009-02-02 05:12:59	2009-07-13 05:04:58
+2009	2	MBLWHOI Library	Pages Created	168283	2009-02-02 05:12:59	2009-07-13 05:04:58
+2009	2	MBLWHOI Library	Titles Created	84	2009-02-09 05:03:32	2009-03-02 05:05:05
+2009	2	Missouri Botanical Garden	Items Created	59	2009-02-02 05:12:59	2009-03-02 05:05:05
+2009	2	Missouri Botanical Garden	Items Scanned	58	2009-02-09 05:03:32	2009-03-16 05:09:34
+2009	2	Missouri Botanical Garden	PageNames Created	125713	2009-02-02 05:12:59	2009-03-02 05:05:05
+2009	2	Missouri Botanical Garden	Pages Created	27509	2009-02-02 05:12:59	2009-03-02 05:05:05
+2009	2	Missouri Botanical Garden	Titles Created	21	2009-02-02 05:12:59	2009-03-02 05:05:05
+2009	2	Montana State Library	Items Scanned	140	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Natural History Museum, London	Items Created	137	2009-02-02 05:12:59	2009-02-23 05:02:59
+2009	2	Natural History Museum, London	Items Scanned	131	2009-02-16 05:03:01	2009-05-18 05:20:16
+2009	2	Natural History Museum, London	PageNames Created	83681	2009-02-02 05:12:59	2009-03-02 05:05:05
+2009	2	Natural History Museum, London	Pages Created	80672	2009-02-02 05:12:59	2009-02-23 05:02:59
+2009	2	Natural History Museum, London	Titles Created	25	2009-02-09 05:03:32	2009-03-02 05:05:05
+2009	2	NCSU Libraries	Items Scanned	57	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	New York Botanical Garden	Items Created	270	2009-02-09 05:03:32	2009-02-23 05:02:59
+2009	2	New York Botanical Garden	Items Scanned	270	2009-02-09 05:03:32	2009-03-09 05:38:08
+2009	2	New York Botanical Garden	PageNames Created	607526	2009-02-09 05:03:32	2009-03-02 05:05:05
+2009	2	New York Botanical Garden	Pages Created	125217	2009-02-09 05:03:32	2009-02-23 05:02:59
+2009	2	New York Botanical Garden	Titles Created	198	2009-02-09 05:03:32	2009-02-23 05:02:59
+2009	2	Northeastern University, Snell Library	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Ontario Ministry of the Environment	Items Scanned	42	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Princeton Theological Seminary Library	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Robarts - University of Toronto	Items Scanned	39	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Smithsonian Institution Libraries	Items Created	342	2009-02-02 05:12:59	2009-02-23 05:02:59
+2009	2	Smithsonian Institution Libraries	Items Scanned	725	2009-02-09 05:03:32	2009-06-15 05:22:15
+2009	2	Smithsonian Institution Libraries	PageNames Created	368271	2009-02-02 05:12:59	2009-03-02 05:05:05
+2009	2	Smithsonian Institution Libraries	Pages Created	96485	2009-02-02 05:12:59	2009-02-23 05:02:59
+2009	2	Smithsonian Institution Libraries	Titles Created	276	2009-02-09 05:03:32	2009-03-02 05:05:05
+2009	2	U.S. Government Printing Office	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	UMass Amherst Libraries	Items Scanned	210	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Univ. of Mass Medical School, Lamar Soutter Library	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	University Library, University of North Carolina at Chapel Hill	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	University of California Libraries	Items Scanned	17	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	University of Florida, George A. Smathers Libraries	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	University of Illinois Urbana Champaign	Items Created	21	2009-02-16 05:03:01	2009-02-23 05:02:59
+2009	2	University of Illinois Urbana Champaign	Items Scanned	17	2009-02-16 05:03:01	2009-03-09 05:38:08
+2009	2	University of Illinois Urbana Champaign	PageNames Created	10264	2009-02-09 05:03:32	2009-03-02 05:05:05
+2009	2	University of Illinois Urbana Champaign	Pages Created	4162	2009-02-16 05:03:01	2009-02-23 05:02:59
+2009	2	University of Illinois Urbana Champaign	Titles Created	18	2009-02-16 05:03:01	2009-02-23 05:02:59
+2009	2	University of Pittsburgh Library System	Items Scanned	20	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Webster Family Library of Veterinary Medicine	Items Scanned	72	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	2	Wellesley College Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Abraham Lincoln Presidential Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	American Museum of Natural History Library	Items Created	240	2009-03-09 05:38:08	2009-03-30 05:14:02
+2009	3	American Museum of Natural History Library	Items Scanned	220	2009-03-09 05:38:08	2009-04-06 05:16:31
+2009	3	American Museum of Natural History Library	PageNames Created	248465	2009-03-02 05:05:05	2009-04-06 05:16:31
+2009	3	American Museum of Natural History Library	Pages Created	124432	2009-03-09 05:38:08	2009-03-30 05:14:02
+2009	3	American Museum of Natural History Library	Titles Created	57	2009-03-09 05:38:08	2009-03-30 05:14:02
+2009	3	Boston Public Library	Items Scanned	17	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Canadiana.org	Items Scanned	110	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Gerstein - University of Toronto	Items Scanned	137	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Harvard University, MCZ, Ernst Mayr Library	Items Created	407	2009-03-02 05:05:05	2009-03-30 05:14:02
+2009	3	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	474	2009-03-09 05:38:08	2009-04-20 05:20:04
+2009	3	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	249432	2009-03-02 05:05:05	2009-04-06 05:16:31
+2009	3	Harvard University, MCZ, Ernst Mayr Library	Pages Created	99899	2009-03-02 05:05:05	2009-03-30 05:14:02
+2009	3	Harvard University, MCZ, Ernst Mayr Library	Titles Created	75	2009-03-09 05:38:08	2009-03-30 05:14:02
+2009	3	Kelly - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Lewis & Clark CC / Nat. Great Rivers Research & Ed. Center	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Library of Congress	Items Scanned	28	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	MBLWHOI Library	Items Created	274	2009-03-02 05:05:05	2009-05-25 05:24:03
+2009	3	MBLWHOI Library	Items Scanned	6	2009-03-09 05:38:08	2009-04-06 05:16:31
+2009	3	MBLWHOI Library	PageNames Created	256481	2009-03-02 05:05:05	2009-05-25 05:24:03
+2009	3	MBLWHOI Library	Pages Created	150990	2009-03-02 05:05:05	2009-05-25 05:24:03
+2009	3	MBLWHOI Library	Titles Created	4	2009-03-09 05:38:08	2009-03-16 05:09:34
+2009	3	Missouri Botanical Garden	Items Created	33	2009-03-09 05:38:08	2009-04-06 05:16:31
+2009	3	Missouri Botanical Garden	Items Scanned	31	2009-03-09 05:38:08	2009-04-20 05:20:04
+2009	3	Missouri Botanical Garden	PageNames Created	66453	2009-03-02 05:05:05	2009-04-06 05:16:31
+2009	3	Missouri Botanical Garden	Pages Created	15645	2009-03-09 05:38:08	2009-05-04 05:20:04
+2009	3	Missouri Botanical Garden	Titles Created	6	2009-03-09 05:38:08	2009-03-23 05:02:54
+2009	3	Montana State Library	Items Scanned	92	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	National Library of Scotland	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Natural History Museum, London	Items Created	186	2009-03-02 05:05:05	2009-03-30 05:14:02
+2009	3	Natural History Museum, London	Items Scanned	173	2009-03-09 05:38:08	2009-04-27 05:20:26
+2009	3	Natural History Museum, London	PageNames Created	167346	2009-03-02 05:05:05	2009-04-06 05:16:31
+2009	3	Natural History Museum, London	Pages Created	89918	2009-03-02 05:05:05	2009-03-30 05:14:02
+2009	3	Natural History Museum, London	Titles Created	32	2009-03-09 05:38:08	2009-03-30 05:14:02
+2009	3	NCSU Libraries	Items Scanned	91	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	New York Botanical Garden	Items Created	255	2009-03-09 05:38:08	2009-03-30 05:14:02
+2009	3	New York Botanical Garden	Items Scanned	254	2009-03-16 05:09:34	2009-04-27 05:20:26
+2009	3	New York Botanical Garden	PageNames Created	510163	2009-03-02 05:05:05	2009-04-06 05:16:31
+2009	3	New York Botanical Garden	Pages Created	128282	2009-03-09 05:38:08	2009-03-30 05:14:02
+2009	3	New York Botanical Garden	Titles Created	195	2009-03-09 05:38:08	2009-03-30 05:14:02
+2009	3	Ontario Ministry of Natural Resources Library	Items Scanned	29	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Ontario Ministry of the Environment	Items Scanned	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Princeton Theological Seminary Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Robarts - University of Toronto	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Ryerson University Library Special Collections	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Smithsonian Institution Libraries	Items Created	876	2009-03-02 05:05:05	2009-07-06 05:03:33
+2009	3	Smithsonian Institution Libraries	Items Scanned	584	2009-03-09 05:38:08	2009-09-21 13:40:49
+2009	3	Smithsonian Institution Libraries	PageNames Created	1005701	2009-03-02 05:05:05	2009-07-06 05:03:33
+2009	3	Smithsonian Institution Libraries	Pages Created	267574	2009-03-02 05:05:05	2009-07-06 05:03:33
+2009	3	Smithsonian Institution Libraries	Titles Created	432	2009-03-09 05:38:08	2009-07-06 05:03:33
+2009	3	University of California Libraries	Items Scanned	47	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	University of Connecticut Libraries	Items Scanned	18	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	University of Florida, George A. Smathers Libraries	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	University of Illinois Urbana Champaign	Items Created	17	2009-03-09 05:38:08	2009-03-30 05:14:02
+2009	3	University of Illinois Urbana Champaign	Items Scanned	21	2009-03-16 05:09:34	2009-09-21 13:40:49
+2009	3	University of Illinois Urbana Champaign	PageNames Created	16565	2009-03-02 05:05:05	2009-04-06 05:16:31
+2009	3	University of Illinois Urbana Champaign	Pages Created	4740	2009-03-09 05:38:08	2009-03-30 05:14:02
+2009	3	University of Illinois Urbana Champaign	Titles Created	8	2009-03-09 05:38:08	2009-03-16 05:09:34
+2009	3	University of New Hampshire Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	University of Pittsburgh Library System	Items Scanned	26	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Webster Family Library of Veterinary Medicine	Items Scanned	65	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	3	Wellesley College Library	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Allen County Public Library Genealogy Center	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	American Museum of Natural History Library	Items Created	24	2009-04-06 05:16:31	2009-04-20 05:20:04
+2009	4	American Museum of Natural History Library	Items Scanned	165	2009-04-13 05:16:53	2009-06-25 05:06:04
+2009	4	American Museum of Natural History Library	PageNames Created	27725	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	American Museum of Natural History Library	Pages Created	9550	2009-04-06 05:16:31	2009-04-20 05:20:04
+2009	4	American Museum of Natural History Library	Titles Created	6	2009-04-13 05:16:53	2009-04-20 05:20:04
+2009	4	Boston Public Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Brock University	Items Scanned	20	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Canadiana.org	Items Scanned	36	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Frost - York University Libraries	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Gerstein - University of Toronto	Items Scanned	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Harvard University, MCZ, Ernst Mayr Library	Items Created	290	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	264	2009-04-06 05:16:31	2009-06-15 05:22:15
+2009	4	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	208644	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	Harvard University, MCZ, Ernst Mayr Library	Pages Created	100947	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	Harvard University, MCZ, Ernst Mayr Library	Titles Created	54	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	John Adams Library at the Boston Public Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Library of Congress	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	MBLWHOI Library	Items Created	3	2009-04-06 05:16:31	2009-04-27 05:20:26
+2009	4	MBLWHOI Library	Items Scanned	3	2009-05-11 05:03:41	2009-05-11 05:03:41
+2009	4	MBLWHOI Library	PageNames Created	7188	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	MBLWHOI Library	Pages Created	1434	2009-04-06 05:16:31	2009-04-27 05:20:26
+2009	4	MBLWHOI Library	Titles Created	1	2009-04-06 05:16:31	2009-04-06 05:16:31
+2009	4	Missouri Botanical Garden	Items Created	65	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	Missouri Botanical Garden	Items Scanned	62	2009-04-06 05:16:31	2009-06-01 05:13:00
+2009	4	Missouri Botanical Garden	PageNames Created	122433	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	Missouri Botanical Garden	Pages Created	28033	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	Missouri Botanical Garden	Titles Created	11	2009-04-06 05:16:31	2009-07-13 05:04:58
+2009	4	Montana State Library	Items Scanned	44	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Mugar Memorial Library, Boston University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	National Library of Scotland	Items Scanned	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Natural History Museum, London	Items Created	161	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	Natural History Museum, London	Items Scanned	169	2009-04-06 05:16:31	2009-06-25 05:06:04
+2009	4	Natural History Museum, London	PageNames Created	148160	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	Natural History Museum, London	Pages Created	76172	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	Natural History Museum, London	Titles Created	35	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	NCSU Libraries	Items Scanned	137	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	New York Botanical Garden	Items Created	45	2009-04-20 05:20:04	2009-05-04 05:20:04
+2009	4	New York Botanical Garden	Items Scanned	446	2009-04-20 05:20:04	2009-09-21 13:40:49
+2009	4	New York Botanical Garden	PageNames Created	40089	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	New York Botanical Garden	Pages Created	13588	2009-04-20 05:20:04	2009-05-04 05:20:04
+2009	4	New York Botanical Garden	Titles Created	30	2009-04-20 05:20:04	2009-05-04 05:20:04
+2009	4	Northeastern University, Snell Library	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Ontario Ministry of the Environment	Items Scanned	28	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Research Library, The Getty Research Institute	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Robarts - University of Toronto	Items Scanned	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Smithsonian Institution Libraries	Items Created	618	2009-04-06 05:16:31	2009-09-21 13:40:49
+2009	4	Smithsonian Institution Libraries	Items Scanned	833	2009-04-06 05:16:31	2009-06-25 05:06:04
+2009	4	Smithsonian Institution Libraries	PageNames Created	546113	2009-04-06 05:16:31	2009-09-21 13:40:49
+2009	4	Smithsonian Institution Libraries	Pages Created	184461	2009-04-06 05:16:31	2009-09-21 13:40:49
+2009	4	Smithsonian Institution Libraries	Titles Created	351	2009-04-06 05:16:31	2009-09-21 13:40:49
+2009	4	U.S. Dept. of the Treasury, Treasury Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	University of California Libraries	Items Scanned	42	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	University of Connecticut Libraries	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	University of Illinois Urbana Champaign	Items Created	3	2009-04-13 05:16:53	2009-04-13 05:16:53
+2009	4	University of Illinois Urbana Champaign	Items Scanned	5	2009-04-13 05:16:53	2009-09-21 13:40:49
+2009	4	University of Illinois Urbana Champaign	PageNames Created	7151	2009-04-06 05:16:31	2009-05-04 05:20:04
+2009	4	University of Illinois Urbana Champaign	Pages Created	946	2009-04-13 05:16:53	2009-04-13 05:16:53
+2009	4	University of Illinois Urbana Champaign	Titles Created	2	2009-04-13 05:16:53	2009-04-13 05:16:53
+2009	4	University of Pittsburgh Library System	Items Scanned	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Webster Family Library of Veterinary Medicine	Items Scanned	34	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	4	Wellesley College Library	Items Scanned	15	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Allen County Public Library Genealogy Center	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	American Museum of Natural History Library	Items Created	202	2009-05-04 05:20:04	2009-05-18 05:20:16
+2009	5	American Museum of Natural History Library	Items Scanned	91	2009-05-04 05:20:04	2009-07-13 05:04:58
+2009	5	American Museum of Natural History Library	PageNames Created	412357	2009-05-04 05:20:04	2009-05-25 05:24:03
+2009	5	American Museum of Natural History Library	Pages Created	119562	2009-05-04 05:20:04	2009-05-18 05:20:16
+2009	5	American Museum of Natural History Library	Titles Created	23	2009-05-04 05:20:04	2009-05-18 05:20:16
+2009	5	ASC - York University Libraries	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Boston College Libraries	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Boston Public Library	Items Scanned	28	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Brock University	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Canadiana.org	Items Scanned	82	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Gerstein - University of Toronto	Items Scanned	34	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Harvard University, MCZ, Ernst Mayr Library	Items Created	193	2009-05-04 05:20:04	2009-06-15 05:22:15
+2009	5	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	60	2009-05-11 05:03:41	2009-07-13 05:04:58
+2009	5	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	283624	2009-05-04 05:20:04	2009-06-15 05:22:15
+2009	5	Harvard University, MCZ, Ernst Mayr Library	Pages Created	59508	2009-05-04 05:20:04	2009-06-15 05:22:15
+2009	5	Harvard University, MCZ, Ernst Mayr Library	Titles Created	71	2009-05-04 05:20:04	2009-05-25 05:24:03
+2009	5	John Adams Library at the Boston Public Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	MBLWHOI Library	Items Created	193	2009-05-11 05:03:41	2009-05-25 05:24:03
+2009	5	MBLWHOI Library	Items Scanned	446	2009-05-11 05:03:41	2009-09-21 13:40:49
+2009	5	MBLWHOI Library	PageNames Created	346736	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	MBLWHOI Library	Pages Created	106366	2009-05-11 05:03:41	2009-05-25 05:24:03
+2009	5	MBLWHOI Library	Titles Created	29	2009-05-11 05:03:41	2009-05-25 05:24:03
+2009	5	Missouri Botanical Garden	Items Created	34	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	Missouri Botanical Garden	Items Scanned	33	2009-05-04 05:20:04	2009-06-22 05:18:41
+2009	5	Missouri Botanical Garden	PageNames Created	54074	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	Missouri Botanical Garden	Pages Created	15091	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	Missouri Botanical Garden	Titles Created	12	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	Montana State Library	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Natural History Museum, London	Items Created	119	2009-05-04 05:20:04	2009-05-25 05:24:03
+2009	5	Natural History Museum, London	Items Scanned	150	2009-05-11 05:03:41	2009-07-20 05:04:32
+2009	5	Natural History Museum, London	PageNames Created	55917	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	Natural History Museum, London	Pages Created	61792	2009-05-04 05:20:04	2009-05-25 05:24:03
+2009	5	Natural History Museum, London	Titles Created	5	2009-05-04 05:20:04	2009-05-25 05:24:03
+2009	5	NCSU Libraries	Items Scanned	121	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	New York Botanical Garden	Items Created	555	2009-05-04 05:20:04	2009-05-25 05:24:03
+2009	5	New York Botanical Garden	Items Scanned	267	2009-05-18 05:20:16	2009-07-06 05:03:33
+2009	5	New York Botanical Garden	PageNames Created	767775	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	New York Botanical Garden	Pages Created	200547	2009-05-04 05:20:04	2009-05-25 05:24:03
+2009	5	New York Botanical Garden	Titles Created	243	2009-05-04 05:20:04	2009-05-25 05:24:03
+2009	5	Queen's University Library, W.D. Jordan Special Collections	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Research Library, The Getty Research Institute	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Robarts - University of Toronto	Items Scanned	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Smithsonian Institution Libraries	Items Created	563	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	Smithsonian Institution Libraries	Items Scanned	606	2009-05-11 05:03:41	2009-07-20 05:04:32
+2009	5	Smithsonian Institution Libraries	PageNames Created	461308	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	Smithsonian Institution Libraries	Pages Created	151604	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	Smithsonian Institution Libraries	Titles Created	415	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	UMass Amherst Libraries	Items Scanned	286	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	University Library, University of North Carolina at Chapel Hill	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	University of California Libraries	Items Scanned	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	University of Florida, George A. Smathers Libraries	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	University of Illinois Urbana Champaign	Items Created	1	2009-05-25 05:24:03	2009-05-25 05:24:03
+2009	5	University of Illinois Urbana Champaign	PageNames Created	2942	2009-05-04 05:20:04	2009-06-01 05:13:00
+2009	5	University of Illinois Urbana Champaign	Pages Created	454	2009-05-25 05:24:03	2009-05-25 05:24:03
+2009	5	University of Illinois Urbana Champaign	Titles Created	1	2009-05-25 05:24:03	2009-05-25 05:24:03
+2009	5	University of Pittsburgh Library System	Items Scanned	36	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	5	Webster Family Library of Veterinary Medicine	Items Scanned	21	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Allen County Public Library Genealogy Center	Items Scanned	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	American Museum of Natural History Library	Items Created	125	2009-06-15 05:22:15	2009-06-25 05:06:04
+2009	6	American Museum of Natural History Library	Items Scanned	93	2009-06-15 05:22:15	2009-06-15 05:22:15
+2009	6	American Museum of Natural History Library	PageNames Created	313907	2009-06-08 05:27:01	2009-06-29 05:08:02
+2009	6	American Museum of Natural History Library	Pages Created	71065	2009-06-15 05:22:15	2009-06-25 05:06:04
+2009	6	American Museum of Natural History Library	Titles Created	13	2009-06-15 05:22:15	2009-06-15 05:22:15
+2009	6	ASC - York University Libraries	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Booth Library, Eastern Illinois University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Boston Public Library	Items Scanned	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Brock University	Items Scanned	18	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Canadiana.org	Items Scanned	54	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Gerstein - University of Toronto	Items Scanned	23	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Harvard University, MCZ, Ernst Mayr Library	Items Created	258	2009-06-03 08:55:58	2009-06-29 05:08:02
+2009	6	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	318	2009-06-08 05:27:01	2009-07-13 05:04:58
+2009	6	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	236664	2009-06-03 08:55:58	2009-07-06 05:03:33
+2009	6	Harvard University, MCZ, Ernst Mayr Library	Pages Created	81146	2009-06-03 08:55:58	2009-06-29 05:08:02
+2009	6	Harvard University, MCZ, Ernst Mayr Library	Titles Created	145	2009-06-03 08:55:58	2009-07-13 05:04:58
+2009	6	Internet Archive	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Library of Congress	Items Scanned	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Lucius Beebe Memorial Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	MBLWHOI Library	Items Created	371	2009-06-03 08:55:58	2009-07-13 05:04:58
+2009	6	MBLWHOI Library	Items Scanned	149	2009-06-08 05:27:01	2009-09-21 13:40:49
+2009	6	MBLWHOI Library	PageNames Created	793257	2009-06-03 08:55:58	2009-07-13 05:04:58
+2009	6	MBLWHOI Library	Pages Created	205028	2009-06-03 08:55:58	2009-07-13 05:04:58
+2009	6	MBLWHOI Library	Titles Created	30	2009-06-03 08:55:58	2009-07-06 05:03:33
+2009	6	Mississauga - University of Toronto	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Missouri Botanical Garden	Items Created	42	2009-06-03 08:55:58	2009-07-06 05:03:33
+2009	6	Missouri Botanical Garden	Items Scanned	47	2009-06-03 08:55:58	2009-09-21 13:40:49
+2009	6	Missouri Botanical Garden	PageNames Created	230685	2009-06-03 08:55:58	2009-07-13 05:04:58
+2009	6	Missouri Botanical Garden	Pages Created	19333	2009-06-03 08:55:58	2009-07-13 05:04:58
+2009	6	Missouri Botanical Garden	Titles Created	8	2009-06-03 08:55:58	2009-06-29 05:08:02
+2009	6	Natural History Museum, London	Items Created	133	2009-06-03 08:55:58	2009-06-29 05:08:02
+2009	6	Natural History Museum, London	Items Scanned	96	2009-06-08 05:27:01	2009-09-21 13:40:49
+2009	6	Natural History Museum, London	PageNames Created	151129	2009-06-03 08:55:58	2009-07-06 05:03:33
+2009	6	Natural History Museum, London	Pages Created	84466	2009-06-03 08:55:58	2009-06-29 05:08:02
+2009	6	Natural History Museum, London	Titles Created	10	2009-06-03 08:55:58	2009-06-25 05:06:04
+2009	6	NCSU Libraries	Items Scanned	121	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	New York Botanical Garden	Items Created	362	2009-06-03 08:55:58	2009-06-25 05:06:04
+2009	6	New York Botanical Garden	Items Scanned	422	2009-06-25 05:06:04	2009-07-20 05:04:32
+2009	6	New York Botanical Garden	PageNames Created	373771	2009-06-03 08:55:58	2009-07-06 05:03:33
+2009	6	New York Botanical Garden	Pages Created	158700	2009-06-03 08:55:58	2009-06-25 05:06:04
+2009	6	New York Botanical Garden	Titles Created	82	2009-06-03 08:55:58	2009-06-25 05:06:04
+2009	6	Queen's University Library, W.D. Jordan Special Collections	Items Scanned	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	School of Theology Library, Boston University	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Scott - York University Libraries	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Smithsonian Institution Libraries	Items Created	673	2009-06-03 08:55:58	2009-06-29 05:08:02
+2009	6	Smithsonian Institution Libraries	Items Scanned	335	2009-06-08 05:27:01	2009-09-21 13:40:49
+2009	6	Smithsonian Institution Libraries	PageNames Created	489033	2009-06-03 08:55:58	2009-07-06 05:03:33
+2009	6	Smithsonian Institution Libraries	Pages Created	194321	2009-06-03 08:55:58	2009-06-29 05:08:02
+2009	6	Smithsonian Institution Libraries	Titles Created	499	2009-06-03 08:55:58	2009-07-13 05:04:58
+2009	6	The University of Western Ontario, The University Archives	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	UMass Amherst Libraries	Items Scanned	26	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	University Library, University of North Carolina at Chapel Hill	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	University of California Libraries	Items Scanned	41	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	University of Connecticut Libraries	Items Scanned	22	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	University of Florida, George A. Smathers Libraries	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	University of Illinois Urbana Champaign	Items Created	39	2009-06-15 05:22:15	2009-06-25 05:06:04
+2009	6	University of Illinois Urbana Champaign	Items Scanned	48	2009-06-15 05:22:15	2009-07-06 05:03:33
+2009	6	University of Illinois Urbana Champaign	PageNames Created	18181	2009-06-15 05:22:15	2009-06-25 05:06:04
+2009	6	University of Illinois Urbana Champaign	Pages Created	7820	2009-06-15 05:22:15	2009-06-25 05:06:04
+2009	6	University of Illinois Urbana Champaign	Titles Created	32	2009-06-15 05:22:15	2009-06-25 05:06:04
+2009	6	University of Pittsburgh Library System	Items Scanned	29	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Webster Family Library of Veterinary Medicine	Items Scanned	24	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	6	Wellesley College Library	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	7	American Museum of Natural History Library	Items Created	1	2009-07-13 05:04:58	2009-07-13 05:04:58
+2009	7	American Museum of Natural History Library	PageNames Created	1715	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	American Museum of Natural History Library	Pages Created	580	2009-07-13 05:04:58	2009-07-13 05:04:58
+2009	7	ASC - York University Libraries	Items Scanned	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	7	Boston Public Library	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	7	Harvard University, MCZ, Ernst Mayr Library	Items Created	307	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Harvard University, MCZ, Ernst Mayr Library	Items Scanned	191	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Harvard University, MCZ, Ernst Mayr Library	PageNames Created	422151	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Harvard University, MCZ, Ernst Mayr Library	Pages Created	98891	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Harvard University, MCZ, Ernst Mayr Library	Titles Created	149	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	MBLWHOI Library	Items Created	127	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	MBLWHOI Library	Items Scanned	101	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	MBLWHOI Library	PageNames Created	79162	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	MBLWHOI Library	Pages Created	54440	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	MBLWHOI Library	Titles Created	11	2009-07-06 05:03:33	2009-07-20 05:04:32
+2009	7	Missouri Botanical Garden	Items Created	53	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Missouri Botanical Garden	Items Scanned	48	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Missouri Botanical Garden	PageNames Created	90432	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Missouri Botanical Garden	Pages Created	19770	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Missouri Botanical Garden	Titles Created	8	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Natural History Museum, London	Items Created	72	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Natural History Museum, London	Items Scanned	33	2009-07-20 05:04:32	2009-09-21 13:40:49
+2009	7	Natural History Museum, London	PageNames Created	29364	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Natural History Museum, London	Pages Created	49144	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Natural History Museum, London	Titles Created	3	2009-07-13 05:04:58	2009-07-20 05:04:32
+2009	7	NCSU Libraries	Items Scanned	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	7	New York Botanical Garden	Items Created	250	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	New York Botanical Garden	Items Scanned	80	2009-07-13 05:04:58	2009-09-21 13:40:49
+2009	7	New York Botanical Garden	PageNames Created	340795	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	New York Botanical Garden	Pages Created	143645	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	New York Botanical Garden	Titles Created	46	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Smithsonian Institution Libraries	Items Created	423	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Smithsonian Institution Libraries	Items Scanned	123	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Smithsonian Institution Libraries	PageNames Created	510761	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Smithsonian Institution Libraries	Pages Created	145548	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	Smithsonian Institution Libraries	Titles Created	288	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	UMass Amherst Libraries	Items Scanned	72	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	7	University of California Libraries	Items Scanned	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	7	University of Illinois Urbana Champaign	Items Created	167	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	University of Illinois Urbana Champaign	Items Scanned	158	2009-07-13 05:04:58	2009-09-21 13:40:49
+2009	7	University of Illinois Urbana Champaign	PageNames Created	65836	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	University of Illinois Urbana Champaign	Pages Created	24882	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	7	University of Illinois Urbana Champaign	Titles Created	132	2009-07-06 05:03:33	2009-09-21 13:40:49
+2009	8	Abraham Lincoln Presidential Library	Items Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Abraham Lincoln Presidential Library	Pages Created	80	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Abraham Lincoln Presidential Library	Titles Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Allen County Public Library Genealogy Center	Items Created	22	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Allen County Public Library Genealogy Center	Pages Created	8078	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Allen County Public Library Genealogy Center	Titles Created	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	ASC - York University Libraries	Items Created	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	ASC - York University Libraries	Pages Created	3170	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	ASC - York University Libraries	Titles Created	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Booth Library, Eastern Illinois University	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Booth Library, Eastern Illinois University	Pages Created	240	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Booth Library, Eastern Illinois University	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Boston College Libraries	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Boston College Libraries	Pages Created	42	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Boston College Libraries	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Boston Public Library	Items Created	297	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Boston Public Library	Pages Created	101281	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Boston Public Library	Titles Created	174	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Brandeis University Libraries	Items Created	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Brandeis University Libraries	Pages Created	440	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Brandeis University Libraries	Titles Created	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Brock University	Items Created	43	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Brock University	Pages Created	11584	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Brock University	Titles Created	43	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Brown University Library	Items Created	20	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Brown University Library	Pages Created	8644	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Brown University Library	Titles Created	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	California Academy of Sciences	Items Created	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	California Academy of Sciences	Pages Created	2041	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	California Academy of Sciences	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	California Academy of Sciences Library	Items Created	20	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	California Academy of Sciences Library	PageNames Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	California Academy of Sciences Library	Pages Created	7712	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	California Academy of Sciences Library	Titles Created	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	California Department of Fish and Game	Items Created	235	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	California Department of Fish and Game	Pages Created	32330	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	California Department of Fish and Game	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Canadiana.org	Items Created	395	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Canadiana.org	Pages Created	140879	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Canadiana.org	Titles Created	392	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Claire T. Carney Library, University of Mass Dartmouth	Items Created	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Claire T. Carney Library, University of Mass Dartmouth	Pages Created	1912	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Claire T. Carney Library, University of Mass Dartmouth	Titles Created	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Columbia University Libraries	Items Created	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Columbia University Libraries	Pages Created	7524	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Columbia University Libraries	Titles Created	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Dan Murphy	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Dan Murphy	Pages Created	92	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Dan Murphy	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Dorothy H. Hoover Library, Ontario College of Art & Design	Items Created	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Dorothy H. Hoover Library, Ontario College of Art & Design	Pages Created	2020	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Dorothy H. Hoover Library, Ontario College of Art & Design	Titles Created	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Duke University Libraries	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Duke University Libraries	Pages Created	286	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Duke University Libraries	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Earth Sciences - University of Toronto	Items Created	269	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Earth Sciences - University of Toronto	Pages Created	99100	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Earth Sciences - University of Toronto	Titles Created	150	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Education Centre Library, Nipissing University/ Canadore College	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Education Centre Library, Nipissing University/ Canadore College	Pages Created	474	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Education Centre Library, Nipissing University/ Canadore College	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Emmanuel - University of Toronto	Items Created	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Emmanuel - University of Toronto	Pages Created	1913	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Emmanuel - University of Toronto	Titles Created	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Environmental Services & Library Systems	Items Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Environmental Services & Library Systems	Pages Created	1298	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Environmental Services & Library Systems	Titles Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	FAO Regional Office for Africa	Items Created	45	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	FAO Regional Office for Africa	Pages Created	2533	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Fisher - University of Toronto	Items Created	18	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Fisher - University of Toronto	Pages Created	7106	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Fisher - University of Toronto	Titles Created	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Frost - York University Libraries	Items Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Frost - York University Libraries	Pages Created	1662	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Frost - York University Libraries	Titles Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Gerstein - University of Toronto	Items Created	3913	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Gerstein - University of Toronto	PageNames Created	67	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Gerstein - University of Toronto	Pages Created	1721578	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Gerstein - University of Toronto	Titles Created	2523	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ghent University	Items Created	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ghent University	Pages Created	2336	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ghent University	Titles Created	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Harvard University	Items Created	532	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Harvard University	PageNames Created	27	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Harvard University	Pages Created	235885	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Harvard University	Titles Created	380	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Internet Archive	Items Created	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Internet Archive	Pages Created	3556	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Internet Archive	Titles Created	17	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	John Adams Library at the Boston Public Library	Items Created	50	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	John Adams Library at the Boston Public Library	PageNames Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	John Adams Library at the Boston Public Library	Pages Created	24080	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	John Adams Library at the Boston Public Library	Titles Created	23	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Kelly - University of Toronto	Items Created	134	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Kelly - University of Toronto	Pages Created	54770	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Kelly - University of Toronto	Titles Created	123	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lancaster County Historical Society	Items Created	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lancaster County Historical Society	Pages Created	2626	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lancaster County Historical Society	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Law Library, University of North Carolina at Chapel Hill	Items Created	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Law Library, University of North Carolina at Chapel Hill	Pages Created	596	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Law Library, University of North Carolina at Chapel Hill	Titles Created	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lawrence Public Library / Prelinger Library	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lawrence Public Library / Prelinger Library	Pages Created	798	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lawrence Public Library / Prelinger Library	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lewis & Clark CC / Nat. Great Rivers Research & Ed. Center	Items Created	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lewis & Clark CC / Nat. Great Rivers Research & Ed. Center	Pages Created	1214	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lewis & Clark CC / Nat. Great Rivers Research & Ed. Center	Titles Created	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Library of Congress	Items Created	121	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Library of Congress	Pages Created	26369	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Library of Congress	Titles Created	109	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lucius Beebe Memorial Library	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lucius Beebe Memorial Library	Pages Created	140	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Lucius Beebe Memorial Library	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	MBLWHOI Library	Items Created	119	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	MBLWHOI Library	Pages Created	28550	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	MBLWHOI Library	Titles Created	109	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Mississauga - University of Toronto	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Mississauga - University of Toronto	Pages Created	168	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Mississauga - University of Toronto	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Missouri Botanical Garden	PageNames Created	62	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	MIT Libraries	Items Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	MIT Libraries	Pages Created	110	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	MIT Libraries	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Montana State Library	Items Created	519	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Montana State Library	PageNames Created	28	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Montana State Library	Pages Created	39841	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Montana State Library	Titles Created	335	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Mugar Memorial Library, Boston University	Items Created	22	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Mugar Memorial Library, Boston University	Pages Created	10498	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Mugar Memorial Library, Boston University	Titles Created	18	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Music - University of Toronto	Items Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Music - University of Toronto	Pages Created	710	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Music - University of Toronto	Titles Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	National Library of Medicine	Items Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	National Library of Medicine	Pages Created	800	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	National Library of Medicine	Titles Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	National Library of Scotland	Items Created	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	National Library of Scotland	Pages Created	2143	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	National Library of Scotland	Titles Created	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	NCSU Libraries	Items Created	1271	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	NCSU Libraries	Pages Created	574859	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	NCSU Libraries	Titles Created	869	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	New College of California	Items Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	New College of California	Pages Created	478	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	New College of California	Titles Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	New York Botanical Garden	Items Created	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	New York Botanical Garden	Pages Created	758	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	New York Botanical Garden	Titles Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	New York Public Library	Items Created	298	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	New York Public Library	Pages Created	125597	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	New York Public Library	Titles Created	237	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Northeastern University, Snell Library	Items Created	30	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Northeastern University, Snell Library	Pages Created	13874	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Northeastern University, Snell Library	Titles Created	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	OISE - University of Toronto	Items Created	45	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	OISE - University of Toronto	Pages Created	16280	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	OISE - University of Toronto	Titles Created	29	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ontario Ministry of Natural Resources Library	Items Created	29	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ontario Ministry of Natural Resources Library	Pages Created	14361	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ontario Ministry of Natural Resources Library	Titles Created	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ontario Ministry of the Environment	Items Created	89	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ontario Ministry of the Environment	Pages Created	12806	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ontario Ministry of the Environment	Titles Created	81	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Oxford University	Items Created	145	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Oxford University	PageNames Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Oxford University	Pages Created	58701	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Oxford University	Titles Created	123	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Penn State University	Items Created	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Penn State University	Pages Created	1112	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Penn State University	Titles Created	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	PIMS - University of Toronto	Items Created	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	PIMS - University of Toronto	Pages Created	1076	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	PIMS - University of Toronto	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Pratt - University of Toronto	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Pratt - University of Toronto	Pages Created	418	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Pratt - University of Toronto	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Prelinger Library	Items Created	284	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Prelinger Library	PageNames Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Prelinger Library	Pages Created	123521	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Prelinger Library	Titles Created	184	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Princeton Theological Seminary Library	Items Created	76	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Princeton Theological Seminary Library	Pages Created	27260	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Princeton Theological Seminary Library	Titles Created	69	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Princeton University	Items Created	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Princeton University	Pages Created	1927	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Princeton University	Titles Created	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Queen's University Library, W.D. Jordan Special Collections	Items Created	16	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Queen's University Library, W.D. Jordan Special Collections	Pages Created	890	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Queen's University Library, W.D. Jordan Special Collections	Titles Created	15	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Regis - University of Toronto	Items Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Regis - University of Toronto	Pages Created	878	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Regis - University of Toronto	Titles Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Research Library, The Getty Research Institute	Items Created	16	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Research Library, The Getty Research Institute	Pages Created	4146	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Research Library, The Getty Research Institute	Titles Created	12	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Robarts - University of Toronto	Items Created	1054	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Robarts - University of Toronto	Pages Created	402271	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Robarts - University of Toronto	Titles Created	750	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	ROM - University of Toronto	Items Created	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	ROM - University of Toronto	Pages Created	2246	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	ROM - University of Toronto	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ryerson University Library Special Collections	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ryerson University Library Special Collections	Pages Created	468	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Ryerson University Library Special Collections	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Saint Mary's College of California	Items Created	15	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Saint Mary's College of California	Pages Created	5606	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Saint Mary's College of California	Titles Created	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	School of Theology Library, Boston University	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	School of Theology Library, Boston University	Pages Created	456	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	School of Theology Library, Boston University	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Scott - York University Libraries	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Scott - York University Libraries	Pages Created	386	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Scott - York University Libraries	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Smithsonian Institution Libraries	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Smithsonian Institution Libraries	Pages Created	232	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	State Library of Massachusetts	Items Created	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	State Library of Massachusetts	Pages Created	814	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	State Library of Massachusetts	Titles Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	The Bancroft Library	Items Created	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	The Bancroft Library	Pages Created	1922	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	The Bancroft Library	Titles Created	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	The Johns Hopkins University Sheridan Libraries	Items Created	39	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	The Johns Hopkins University Sheridan Libraries	Pages Created	9502	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	The Johns Hopkins University Sheridan Libraries	Titles Created	39	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	The University of Western Ontario, The University Archives	Items Created	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	The University of Western Ontario, The University Archives	Pages Created	3580	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	The University of Western Ontario, The University Archives	Titles Created	13	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Tisch Library	Items Created	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Tisch Library	Pages Created	2702	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Tisch Library	Titles Created	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Toronto Public Library : North York Central	Items Created	11	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Toronto Public Library : North York Central	Pages Created	2404	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Toronto Public Library : North York Central	Titles Created	10	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Toronto Public Library: Research and Reference Libraries	Items Created	39	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Toronto Public Library: Research and Reference Libraries	Pages Created	15490	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Toronto Public Library: Research and Reference Libraries	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Trinity College - University of Toronto	Items Created	9	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Trinity College - University of Toronto	Pages Created	4368	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Trinity College - University of Toronto	Titles Created	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Tufts University	Items Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Tufts University	Pages Created	768	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Tufts University	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	U.S. Dept. of the Treasury, Treasury Library	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	U.S. Dept. of the Treasury, Treasury Library	Pages Created	76	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	U.S. Dept. of the Treasury, Treasury Library	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	U.S. Government Printing Office	Items Created	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	U.S. Government Printing Office	Pages Created	898	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	U.S. Government Printing Office	Titles Created	5	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	UMass Amherst Libraries	Items Created	1194	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	UMass Amherst Libraries	PageNames Created	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	UMass Amherst Libraries	Pages Created	516469	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	UMass Amherst Libraries	Titles Created	341	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Univ. of Mass Medical School, Lamar Soutter Library	Items Created	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Univ. of Mass Medical School, Lamar Soutter Library	Pages Created	2018	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Univ. of Mass Medical School, Lamar Soutter Library	Titles Created	4	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Universal Digital Library	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Universal Digital Library	Pages Created	355	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Universal Digital Library	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University Library, University of North Carolina at Chapel Hill	Items Created	20	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University Library, University of North Carolina at Chapel Hill	Pages Created	4998	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University Library, University of North Carolina at Chapel Hill	Titles Created	14	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of California	Items Created	164	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of California	Pages Created	65769	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of California	Titles Created	142	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of California Libraries	Items Created	11434	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of California Libraries	PageNames Created	2438	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of California Libraries	Pages Created	3658279	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of California Libraries	Titles Created	10058	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Connecticut Libraries	Items Created	100	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Connecticut Libraries	Pages Created	35536	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Connecticut Libraries	Titles Created	87	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Florida, George A. Smathers Libraries	Items Created	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Florida, George A. Smathers Libraries	Pages Created	3718	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Florida, George A. Smathers Libraries	Titles Created	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Illinois at Chicago	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Illinois at Chicago	Pages Created	28	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Illinois at Chicago	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Illinois Urbana Champaign	Items Created	443	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Illinois Urbana Champaign	PageNames Created	3	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Illinois Urbana Champaign	Pages Created	193445	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Illinois Urbana Champaign	Titles Created	264	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Michigan	Items Created	855	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Michigan	PageNames Created	7	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Michigan	Pages Created	378347	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Michigan	Titles Created	483	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of New Hampshire Library	Items Created	575	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of New Hampshire Library	Pages Created	37102	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of New Hampshire Library	Titles Created	8	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of North Carolina at Chapel Hill	Items Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of North Carolina at Chapel Hill	Pages Created	74	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of North Carolina at Chapel Hill	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Ottawa	Items Created	32	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Ottawa	Pages Created	19312	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Ottawa	Titles Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Pittsburgh Library System	Items Created	134	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Pittsburgh Library System	Pages Created	52038	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Pittsburgh Library System	Titles Created	87	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Wisconsin - Madison	Items Created	35	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Wisconsin - Madison	Pages Created	13127	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	University of Wisconsin - Madison	Titles Created	19	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Unknown	Items Created	839	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Unknown	Pages Created	444629	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Unknown	Titles Created	385	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Webster Family Library of Veterinary Medicine	Items Created	1043	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Webster Family Library of Veterinary Medicine	Pages Created	335897	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Webster Family Library of Veterinary Medicine	Titles Created	989	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Wellesley College Library	Items Created	45	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Wellesley College Library	Pages Created	9474	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Wellesley College Library	Titles Created	45	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Williams College Libraries	Items Created	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Williams College Libraries	PageNames Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Williams College Libraries	Pages Created	2308	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	8	Williams College Libraries	Titles Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	Claire T. Carney Library, University of Mass Dartmouth	PageNames Created	27	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	Gerstein - University of Toronto	PageNames Created	227	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	Missouri Botanical Garden	PageNames Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	Montana State Library	PageNames Created	53	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	NCSU Libraries	PageNames Created	6	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	New York Public Library	PageNames Created	1	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	Prelinger Library	PageNames Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	Robarts - University of Toronto	PageNames Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	UMass Amherst Libraries	PageNames Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	University of California Libraries	PageNames Created	1191	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	University of Illinois Urbana Champaign	PageNames Created	2	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	University of Michigan	PageNames Created	53	2009-09-21 13:40:49	2009-09-21 13:40:49
+2009	9	Unknown	PageNames Created	4	2009-09-21 13:40:49	2009-09-21 13:40:49
