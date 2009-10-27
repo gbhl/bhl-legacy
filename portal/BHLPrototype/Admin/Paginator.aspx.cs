@@ -304,22 +304,6 @@ namespace MOBOT.BHL.Web.Admin
 				PageSummaryView ps = bp.PageSummarySelectByPageId( pageId );
                 string viewerUrl = new BHLProvider().GetPageUrl(ps);
 
-                /*
-                String viewerUrl = String.Empty;
-                if (ps.ExternalURL == null)
-                {
-                    String cat = (ps.WebVirtualDirectory == String.Empty) ? "Researchimages" : ps.WebVirtualDirectory;
-                    String item = ps.MARCBibID + "/" + ps.BarCode + "/jp2/" + ps.FileNamePrefix + ".jp2";
-                    //viewerUrl = String.Format("http://images.mobot.org/ImageWeb/GetImage.aspx?cat={0}&item={1}&wid=500&hei=1000&rgn=0,0,1,1&method=scale", cat, item);
-                    viewerUrl = String.Format("http://images.biodiversitylibrary.org/adore-djatoka/resolver?url_ver=Z39.88-2004&rft_id=http://mbgserv09:8057/{0}/{1}&svc_id=info:lanl-repo/svc/getRegion&svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&svc.format=image/jpeg&svc.scale=800", cat, item);
-                }
-                else
-                {
-                    //viewerUrl = ps.ExternalURL;
-                    viewerUrl = String.Format("http://images.biodiversitylibrary.org/adore-djatoka/resolver?url_ver=Z39.88-2004&rft_id={0}&svc_id=info:lanl-repo/svc/getRegion&svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&svc.format=image/jpeg&svc.scale=800", ps.ExternalURL);
-                }
-                 */
-
 				pageFrame.Attributes.Add( "src", viewerUrl );
 
 				// Reset previous row
