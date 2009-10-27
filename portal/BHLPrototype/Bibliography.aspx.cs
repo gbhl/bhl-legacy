@@ -115,7 +115,7 @@ namespace MOBOT.BHL.Web
                     if (item.DownloadUrl != String.Empty && item.ItemSourceID == 2)
                     {
                         // This is kludgy... should find a better way to do this
-                        String pdfLocation = item.DownloadUrl.Replace("http://www.botanicus.org/", "\\\\mbgserv14\\").Replace('/', '\\');
+                        String pdfLocation = item.DownloadUrl.Replace("http://www.botanicus.org/", "\\\\server\\").Replace('/', '\\');
                         if (new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").FileExists(pdfLocation))
                             item.DownloadUrl = ConfigurationManager.AppSettings["PdfAuthUrl"] != null ? String.Format(ConfigurationManager.AppSettings["PdfAuthUrl"], item.BarCode) : String.Empty;
                         else

@@ -9,7 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-using CounterSoft.Gemini.Commons;
+//using CounterSoft.Gemini.Commons;
 
 namespace MOBOT.BHL.Web
 {
@@ -73,6 +73,10 @@ namespace MOBOT.BHL.Web
 
 		protected void submitButton_Click( object sender, EventArgs e )
 		{
+            /*
+             * SUBMIT FEEDBACK TO AN ISSUE-TRACKING SYSTEM... WE USE A THIRD-PARTY SYSTEM (COUNTERSOFT'S
+             * GEMINI) IN-HOUSE, AND CANNOT LEGALLY REDISTRIBUTE THE ASSEMBLIES WHICH SUPPORT THIS SYSTEM.
+             * 
 			// Get Gemini data from web.config file
 			string geminiWebServiceURL = ConfigurationManager.AppSettings.GetValues( "GeminiURL" )[ 0 ];
 			string geminiUserName = ConfigurationManager.AppSettings.GetValues( "GeminiUser" )[ 0 ];
@@ -123,7 +127,9 @@ namespace MOBOT.BHL.Web
 						{
 							// Note that this might throw a security exception.
 							data.IssueID = smProxyManager.IssueServices.CreateIssue( data );
+             */
 							Response.Redirect( createReturnUrl() );
+            /*
 						}
 						catch
 						{
@@ -143,6 +149,7 @@ namespace MOBOT.BHL.Web
 				errorPanel.Visible = true;
 				errorLabel.Text = "Server appears to be down, we apologize. Your feedback is important to us, we apologize.";
 			}
+             */
 		}
 
 		protected void closeButton_Click( object sender, EventArgs e )

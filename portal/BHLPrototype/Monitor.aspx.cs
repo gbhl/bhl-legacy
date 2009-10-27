@@ -50,7 +50,7 @@ namespace MOBOT.BHL.Web
             try
             {
                 //throw new Exception("Test");
-                string[] subDirectories = new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetSubDirectories(@"\\mbgserv14\botanicus6\imagecache");
+                string[] subDirectories = new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetSubDirectories(@"\\server\imagecache");
                 Response.Write("completed successfully at " + DateTime.Now.ToString("HH:mm:ss:fffffff") + "</li>");
                 Response.Flush();
             }

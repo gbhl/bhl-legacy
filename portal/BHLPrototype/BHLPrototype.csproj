@@ -34,14 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CounterSoft.Gemini.Commons, Version=2.2.2760.20192, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\CounterSoft.Gemini.Commons.dll</HintPath>
-    </Reference>
-    <Reference Include="CounterSoft.Gemini.Services, Version=1.0.2760.20207, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\CounterSoft.Gemini.Services.dll</HintPath>
-    </Reference>
     <Reference Include="CustomBases, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\CustomBases.dll</HintPath>
@@ -1166,7 +1158,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>46426</DevelopmentServerPort>
+          <DevelopmentServerPort>4929</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
