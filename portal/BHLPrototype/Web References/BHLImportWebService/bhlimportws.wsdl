@@ -593,10 +593,10 @@
   </wsdl:binding>
   <wsdl:service name="BHLImportWS">
     <wsdl:port name="BHLImportWSSoap" binding="tns:BHLImportWSSoap">
-      <soap:address location="http://mbgserv09/bhlimportwebservice/bhlimportws.asmx" />
+      <soap:address location="http://server/bhlimportwebservice/bhlimportws.asmx" />
     </wsdl:port>
     <wsdl:port name="BHLImportWSSoap12" binding="tns:BHLImportWSSoap12">
-      <soap12:address location="http://mbgserv09/bhlimportwebservice/bhlimportws.asmx" />
+      <soap12:address location="http://server/bhlimportwebservice/bhlimportws.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -2182,10 +2182,10 @@
   </wsdl:binding>
   <wsdl:service name="BHLWS">
     <wsdl:port name="BHLWSSoap" binding="tns:BHLWSSoap">
-      <soap:address location="http://mbgdevserv02/bhlwebservice/bhlws.asmx" />
+      <soap:address location="http://server/bhlwebservice/bhlws.asmx" />
     </wsdl:port>
     <wsdl:port name="BHLWSSoap12" binding="tns:BHLWSSoap12">
-      <soap12:address location="http://mbgdevserv02/bhlwebservice/bhlws.asmx" />
+      <soap12:address location="http://server/bhlwebservice/bhlws.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
