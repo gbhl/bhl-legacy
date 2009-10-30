@@ -3,7 +3,7 @@
 <asp:Content ID="mainContent" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
   <div id="browseContainerDiv">
     <cc:ContentPanel ID="browseContentPanel" runat="server" TableID="browseContentPanel">
-      <div id="browseInnerDiv" style="height: 100%; overflow: auto;">
+      <div id="browseInnerDiv">
           <p class="pageheader">OpenUrl Results</p>
           <p>Select one of the items below to find the desired citation.</p>
           <p>
