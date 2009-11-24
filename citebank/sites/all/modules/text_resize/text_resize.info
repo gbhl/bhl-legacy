@@ -1,0 +1,13 @@
+; $Id $
+name = Text Resize
+description = Creates a block that allows your users to resize text on the page.
+core = "6.x"
+version = VERSION
+
+
+; Information added by drupal.org packaging script on 2009-06-02
+version = "6.x-1.5"
+core = "6.x"
+project = "text_resize"
+datestamp = "1243974180"
+

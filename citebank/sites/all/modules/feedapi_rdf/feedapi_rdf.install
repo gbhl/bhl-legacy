@@ -1,0 +1,22 @@
+<?php
+// $Id: feedapi_rdf.install,v 1.1 2008/12/04 23:39:58 alexb Exp $
+
+/**
+ * Implementation of hook_install().
+ * @todo: This approach doesn't allow RDF module installed at the same time.
+ *        Moving rdf_db_create_repository() to hook_enable() does not help. 
+ */
+function feedapi_rdf_install() {
+  rdf_db_create_repository('feed_items', array('dc:title' => t('Feed items'), 'dc:description' => t('Stores aggregated data.')));
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function feedapi_rdf_uninstall() {
+  // Wrap in function_exists() because if RDF API is uninstalled at the same time
+  // as feedapi_rdf, rdf_db_delete_repository() won't be present.
+  if (function_exists('rdf_db_delete_repository')) {
+    rdf_db_delete_repository('feed_items');
+  }
+}

@@ -1,0 +1,78 @@
+# $Id: xmlsitemap_menu.pot,v 1.1.2.3 2009/04/25 23:01:00 kiam Exp $
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  xmlsitemap_menu.module,v 1.1.4.35 2009/04/24 18:25:50 kiam
+#  xmlsitemap_menu.info,v 1.1.4.5 2009/04/24 18:33:46 kiam
+#  xmlsitemap_menu.install,v 1.1.4.33 2009/04/24 18:25:50 kiam
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2009-04-26 00:59+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: xmlsitemap_menu.module:36
+msgid "Calculated from the menu items weight"
+msgstr ""
+
+#: xmlsitemap_menu.module:39
+msgid "Menu items priority"
+msgstr ""
+
+#: xmlsitemap_menu.module:40
+msgid "The priority assigned to the menu items."
+msgstr ""
+
+#: xmlsitemap_menu.module:59
+msgid "Menu settings"
+msgstr ""
+
+#: xmlsitemap_menu.module:60
+msgid "The settings for the menus to include in the site map."
+msgstr ""
+
+#: xmlsitemap_menu.module:66
+msgid "Menu links change frequency"
+msgstr ""
+
+#: xmlsitemap_menu.module:67
+msgid "The change frequency associated with the menu links."
+msgstr ""
+
+#: xmlsitemap_menu.module:79
+msgid "Menus to include in the site map"
+msgstr ""
+
+#: xmlsitemap_menu.module:91 xmlsitemap_menu.info:0
+msgid "XML Sitemap: Menu"
+msgstr ""
+
+#: xmlsitemap_menu.module:92
+msgid "The module allows menu items to be added to the site map. You can choose the menus to include on the XML Sitemap administration page and can add and remove menu items on the <a href=\"@menu\">menu administration</a> page. The priority of a menu item is determined by its weight."
+msgstr ""
+
+#: xmlsitemap_menu.module:0
+msgid "xmlsitemap_menu"
+msgstr ""
+
+#: xmlsitemap_menu.install:34;53 xmlsitemap_menu.info:0
+msgid "XML Sitemap"
+msgstr ""
+
+#: xmlsitemap_menu.install:35;53;128
+msgid "A custom menu added by <em>XML Sitemap: Menu</em> module, which can optionally be used as a source for menu links in the sitemap for more fine-grained control."
+msgstr ""
+
+#: xmlsitemap_menu.info:0
+msgid "Adds menu items to the site map."
+msgstr ""
+

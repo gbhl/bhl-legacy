@@ -1,0 +1,10 @@
+<?php
+// $Id: xmlsitemap_term.install,v 1.5.2.47 2009/05/07 19:56:39 earnie Exp $
+
+/**
+ * @file
+ * Installation file for XML sitemap term.
+ */
+
+function xmlsitemap_term_uninstall() {
+}

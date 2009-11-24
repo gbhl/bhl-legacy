@@ -1,0 +1,87 @@
+# $Id: fr.po,v 1.1.2.1 2009/04/01 09:38:25 slybud Exp $
+#
+# French translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  xmlsitemap.module,v 1.1.2.56 2009/03/18 21:22:29 kiam
+#  xmlsitemap_node.module,v 1.19.2.81 2009/03/23 14:00:46 kiam
+#  xmlsitemap_term.module,v 1.11.2.43 2009/03/19 13:19:50 kiam
+#  xmlsitemap_engines.module,v 1.5.2.19 2009/02/15 00:36:18 kiam
+#  xmlsitemap.install,v 1.1.2.30 2009/03/14 18:52:18 kiam
+#  xmlsitemap.info,v 1.1.2.2 2009/03/08 23:47:46 kiam
+#  xmlsitemap_engines.info,v 1.2.2.1 2009/03/08 23:47:46 kiam
+#  xmlsitemap_file.info,v 1.1.4.3 2008/11/28 19:11:58 kiam
+#  xmlsitemap_helper.info,v 1.1.2.1 2009/03/08 23:47:46 kiam
+#  xmlsitemap_menu.install,v 1.1.4.26 2009/03/11 16:01:08 kiam
+#  xmlsitemap_menu.info,v 1.1.4.3 2009/03/08 23:47:47 kiam
+#  xmlsitemap_node.info,v 1.2.2.1 2009/03/08 23:47:48 kiam
+#  xmlsitemap_term.info,v 1.2.2.1 2009/02/19 16:15:46 kiam
+#  xmlsitemap_user.info,v 1.2.2.1 2009/03/08 23:47:48 kiam
+#  xmlsitemap_file.module,v 1.1.4.35 2009/03/19 13:19:56 kiam
+#  xmlsitemap_helper.module,v 1.1.2.4 2009/03/18 21:04:15 kiam
+#  xmlsitemap_helper.install.inc,v 1.1.2.1 2009/03/08 23:47:47 kiam
+#  xmlsitemap_user.module,v 1.12.2.58 2009/03/19 13:19:42 kiam
+#  xmlsitemap_menu.module,v 1.1.4.29 2009/03/23 13:51:26 kiam
+#  xmlsitemap_node.install,v 1.9.2.46 2009/03/11 16:01:03 kiam
+#  xmlsitemap_user.install,v 1.6.2.43 2009/03/11 16:00:59 kiam
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: French Translation for xmlsitemap_menu drupal6 module\n"
+"POT-Creation-Date: 2009-04-01 11:17+0200\n"
+"PO-Revision-Date: 2009-04-01 11:19+0100\n"
+"Last-Translator: Sylvain Moreau <sylvain.moreau@ows.fr>\n"
+"Language-Team: Sylvain Moreau, OWS <sylvain.moreau@ows.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: xmlsitemap_menu.module:22
+#: xmlsitemap_menu.info:0
+msgid "XML Sitemap: Menu"
+msgstr "XML Sitemap : Menu"
+
+#: xmlsitemap_menu.module:23
+msgid "The module allows menu items to be added to the site map. You can choose the menus to include on the XML Sitemap administration page and can add and remove menu items on the <a href=\"@menu\">menu administration</a> page. The priority of a menu item is determined by its weight."
+msgstr "Le module permet aux éléments de menu d'être ajoutés au plan du site. Vous pouvez sélectionner les menus à inclure sur la page d'administration de XML Sitemap, et pouvez ajouter ou supprimer des éléments de menu depuis la page d'<a href=\"@menu\">administration des menus</a>. La priorité d'un élement de menu est déterminée par son poids."
+
+#: xmlsitemap_menu.module:84
+msgid "Menu settings"
+msgstr "Paramètres du menu"
+
+#: xmlsitemap_menu.module:85
+msgid "The settings for the menus to include in the site map."
+msgstr "Les paramètres pour les menus à inclure dans le plan du site."
+
+#: xmlsitemap_menu.module:91
+msgid "Menu links change frequency"
+msgstr "Fréquence de modification des liens de menus"
+
+#: xmlsitemap_menu.module:92
+msgid "The change frequency associated with the menu links."
+msgstr "La fréquence de modification associée aux liens de menus."
+
+#: xmlsitemap_menu.module:104
+msgid "Menus to include in the site map"
+msgstr "Menus à inclure dans le plan du site"
+
+#: xmlsitemap_menu.module:0
+msgid "xmlsitemap_menu"
+msgstr "xmlsitemap_menu"
+
+#: xmlsitemap_menu.install:36;55
+#: xmlsitemap_menu.info:0
+msgid "XML Sitemap"
+msgstr "XML Sitemap"
+
+#: xmlsitemap_menu.install:37;55
+msgid "The menu from where <em>XML Sitemap: Menu</em> looks for the menus to add to the sitemap."
+msgstr "Le menu dans lequel <em>XML Sitemap : Menu</em> cherche des menus à ajouter au plan du site."
+
+#: xmlsitemap_menu.info:0
+msgid "Adds menu items to the site map."
+msgstr "Ajoute des élements de menu au plan du site."
+

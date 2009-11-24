@@ -1,0 +1,363 @@
+<?php
+
+define('FEEDAPI_RDF_REPOSITORY', 'feed_items');
+
+/**
+ * Implementation of hook_help().
+ */
+function feedapi_rdf_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#feedapi_rdf':
+      return t('Processor for FeedAPI, transforms items into nodes.');
+    case 'feedapi/full_name':
+      return t('FeedAPI RDF - store feed items as RDF triples');
+  }
+}
+
+/**
+ * Implementation of hook_rdf_namespaces().
+ */
+function feedapi_rdf_rdf_namespaces() {
+  return array(
+    'ag' => 'http://purl.org/rss/1.0/modules/aggregation/',
+    'rdfg' => 'http://www.w3.org/2004/03/trix/rdfg-1/',
+    'rvns' => 'http://rver.com/ns', // KML
+    'geo' => 'http://www.w3.org/2003/01/geo/wgs84_pos#', // KML
+  );
+}
+
+/**
+ * Helper function for rdf query options.
+ *
+ * @param $graph
+ *   The named graph (context) to use.
+ * @param $time
+ *   Boolean, use the current timestamp
+ */
+function feedapi_rdf_options($graph = false, $time = false) {
+  $options = array('repository' => FEEDAPI_RDF_REPOSITORY);
+  if ($graph) {
+    $options = array_merge($options, array('graph' => $graph));
+  }
+  // Not actually supported yet. See http://drupal.org/node/330718
+  if ($time) {
+    static $timestamp;
+    if (empty($timestamp)) {
+      $timestamp = time();
+    }
+    $options = array_merge($options, array('created' => $timestamp));
+  }
+  return $options;
+}
+
+/**
+ * Implementation of hook_feedapi_item().
+ */
+function feedapi_rdf_feedapi_item($op) {
+  switch ($op) {
+    case 'type':
+      return array("XML feed");
+    default:
+      if (function_exists('_feedapi_rdf_'. $op)) {
+        $args = array_slice(func_get_args(), 1);
+        return call_user_func_array('_feedapi_rdf_'. $op, $args);
+      }
+  }
+}
+
+/**
+ * Implementation of hook_feedapi_settings_form().
+ */
+function feedapi_rdf_feedapi_settings_form($type) {
+  $form = array();
+  switch ($type) {
+    case 'processors':
+      feedapi_rdf_include_mappers();
+      $mappers = module_invoke_all('feedapi_rdf_map', 'list');
+      $form['mappers'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Mappers'),
+        '#options' => $mappers,
+        '#description' => t('Choose one or more mappers to apply to this feed. A mapper defines which elements of a feed item are mapped to which RDF triples.'),
+        '#default_value' => array(),
+      );
+      break;
+  }
+  return $form;
+}
+
+/**
+ * Include mappers.
+ */
+function feedapi_rdf_include_mappers() {
+  static $included;
+  if (!$included) {
+    include(drupal_get_path('module', 'feedapi_rdf') .'/feedapi_rdf.mapper.inc');
+    $included = TRUE;
+  }
+}
+
+/**
+ * Check for expired items, pass them to the item_expire function.
+ */
+function _feedapi_rdf_expire($feed, $settings) {
+  $count = 0;
+
+  if ($settings['items_delete'] > FEEDAPI_NEVER_DELETE_OLD) {
+    $timexpire = time() - $settings['items_delete'];
+    // TODO figure out a way to store/check this feature. For now  it's not
+    // supported. We may want to use the sparql module for this.
+    
+    // $result = db_query("SELECT * FROM {feedapi_node_item} fn JOIN {feedapi_node_item_feed} ff ON ff.feed_item_nid = fn.nid WHERE ff.feed_nid = %d AND ( (fn.timestamp > 0 AND fn.timestamp < %d) OR (fn.timestamp = 0 AND fn.arrived > 0 AND fn.arrived < %d) )", $feed->nid, $timexpire, $timexpire);
+    // while ($item = db_fetch_object($result)) {
+    //   feedapi_expire_item($feed, $item);
+    //   $count++;
+    // }
+  }
+  return $count;
+}
+
+/**
+ * Store rdf statements from the feed item
+ */
+function _feedapi_rdf_save($feed_item, $feed_nid, $settings = array()) {
+  if ($subject = feedapi_rdf_subject($feed_item)) {
+    $feed_node = node_load($feed_nid);
+    $statements = feedapi_rdf_make_triples($subject, $feed_item, $feed_node->feed);
+    rdf_insert_all($statements, feedapi_rdf_options($feed_node->feed->url, true));
+  }
+  return $feed_item;
+}
+
+/**
+ * Update a items data.
+ * 
+ * Currently just removes and replaces. Could be much smarter.
+ */
+function _feedapi_rdf_update($feed_item, $feed_nid) {
+  if ($subject = feedapi_rdf_subject($feed_item)) {
+    $feed_node = node_load($feed_nid);
+    $statements = feedapi_rdf_make_triples($subject, $feed_item, $feed_node->feed);    
+    rdf_delete($subject, NULL, NULL, feedapi_rdf_options($feed_node->feed->url));
+    rdf_insert_all($statements, feedapi_rdf_options($feed_node->feed->url, true));
+  }
+  return $feed_item;
+}
+
+/**
+ * Delete a node which already assigned to a feed item
+ */
+function _feedapi_rdf_delete($feed_item) {
+  rdf_delete($feed_item[0], NULL, NULL, feedapi_rdf_options($feed_item['graph']));
+}
+
+/**
+ * Delete all entries for a given feed.
+ */
+function _feedapi_rdf_purge($feed) {
+  $return = rdf_delete(NULL, NULL, NULL, feedapi_rdf_options($feed->url, true));
+  drupal_set_message(t('All feed items have been deleted.'));
+}
+
+/**
+ * Construct the basic information (nid, feed_nid) of all feeds into an array.
+ *
+ * @param $feed
+ *   Feed object
+ *
+ * @return
+ *   The array of unique ids of feed items;
+ */
+function _feedapi_rdf_fetch($feed) {
+  $statements = rdf_query(NULL, 'dc:title', NULL, feedapi_rdf_options($feed->url));
+
+  $items = array();
+  while ($item = $statements->current()) {
+    $items[] = $item + array('graph' => $feed->url);
+    $statements->next();
+  }
+  return $items;
+}
+
+/**
+ * Tell if the feed item was seen before or not at the feed
+ *
+ * @param $feed_item
+ *  Feed item object
+ * @param $feed_nid
+ *  Feed ID
+ * @return
+ *  TRUE if the item is new, FALSE if the item is a duplicated one
+ */
+function _feedapi_rdf_unique($feed_item, $feed_nid, $settings) {
+  if ($subject = feedapi_rdf_subject($feed_item)) {
+    $feed_node = node_load($feed_nid);
+    $statements = rdf_query($subject, null, null, feedapi_rdf_options($feed_node->feed->url))->to_array();
+
+    if (count($statements)) {
+      return FALSE;
+    }
+    return TRUE;
+  }
+}
+
+/**
+ * Determine a unique id for the feed item, giving preference to the url.
+ *
+ * @param $feed_item
+ *   A feed item object.
+ *
+ * @return
+ *   An unique string identifier.
+ */
+function feedapi_rdf_subject($feed_item) {
+  if ($feed_item->options->original_url) {
+    return $feed_item->options->original_url;
+  }
+  else {
+    return $feed_item->options->guid;
+  }
+}
+
+/**
+ * Generate triples from feed items.
+ *
+ * @param $subject
+ *   The unique identifier of the feed item, usually guid or url.
+ * @param $feed_item
+ *   The feed item object.
+ * @param $feed
+ *   A FeedAPI feed object with valid settings.
+ *
+ * @return
+ *   An array of rdf triples.
+ */
+function feedapi_rdf_make_triples($subject, $feed_item, $feed) {
+  static $map;
+  if (empty($map)) {
+    $map = array();
+    feedapi_rdf_include_mappers();
+    // Call all enabled mappers to build $map.
+    @$mappers = array_filter($feed->settings['processors']['feedapi_rdf']['mappers']);
+    if (@count($mappers)) {
+      foreach ($mappers as $mapper) {
+        $result = module_invoke_all('feedapi_rdf_map', 'map', $mapper);
+        if (isset($result) && is_array($result)) {
+          $map = array_merge_recursive($map, $result);
+        }
+      }
+    }
+  }
+  $statements = array();
+  foreach ($map as $predicate => $info) {
+    // Translate local prefixes in location array to prefixes used in feed item.
+    $location = _feedapi_rdf_translate_prefixes(rdf_get_namespaces(), $feed_item->namespaces, $info['location']);
+
+    $object = _feedapi_rdf_item_recurse($feed_item, $location);
+    if (isset($info['callback']) && function_exists($info['callback'])) {
+      $statements = array_merge($statements, call_user_func($info['callback'], $subject, $predicate, $object, $feed_item, $info['callback argument']));
+    }
+    elseif (is_array($object)) {
+      foreach ($object as $val) {
+        $statements[] = array($subject, $predicate, $val);
+      }
+    }
+    elseif ($object !== null) {
+      $statements[] = array($subject, $predicate, $object);
+    }
+  }
+  return $statements;
+}
+
+/**
+ * Translates prefixes in $elements to local namespace prefixes.
+ *
+ * @param $element_namespaces
+ *   Array of namespaces used in $elements. 
+ *   The keys contain prefixes and the values contain Base URIs.
+ * @param $elements
+ *   Array of elements to translate
+ * 
+ * @return 
+ *   Translated elements.
+ */
+function _feedapi_rdf_translate_prefixes($from_ns, $to_ns, $elements) {
+  // Get all available namespaces, flip, so that BaseURI => prefix
+  $to_ns = array_flip($to_ns);
+  // Iterate through all elements and try to match a prefix in element with 
+  // a local prefix. We do this by going through $element_namespaces and
+  // $local_namespaces
+  $result = array();
+  foreach ($elements as $element) {
+    $e = explode(':', $element);
+    if (@count($e) == 2) {
+      if (!empty($to_ns[$from_ns[$e[0]]])) {
+        $result[] = $to_ns[$from_ns[$e[0]]] .':'. $e[1];
+        continue;
+      }
+    }
+    $result[] = $element;
+  }
+  return $result;
+}
+
+/**
+ * Helper function to find a value on the feed_item object
+ *
+ * @param $elem
+ *   The feed_item, or part thereof to search.
+ *
+ * @param $loc
+ *   A string or array specifying the location of the value
+ *
+ * @return a value or possibly an array of values.
+ */
+function _feedapi_rdf_item_recurse($elem, $loc) {
+  $elem = (array)$elem;
+
+  if (is_array($loc)) {
+    // Location more complex, we need to recurse.
+    $i = array_shift($loc);
+    if (isset($elem[$i])) {
+      if (count($loc)) {
+        if (is_array($elem[$i]) || is_object($elem[$i])) {
+          return _feedapi_rdf_item_recurse($elem[$i], $loc);
+        }
+      }
+      return $elem[$i];
+    }
+  }
+  elseif (isset($elem[$loc])) {
+    // Got a simple string for the location.
+    return $elem[$loc];
+  }
+  return null;
+}
+
+// Implementation of hook_nodeapi().
+function feedapi_rdf_nodeapi(&$node, $op, $a3 = null, $a4 = null) {
+  if (isset($node->feed) && in_array('feedapi_rdf', $node->feed->processors)) {
+    switch ($op) {
+      case 'update':
+        rdf_delete(feedapi_rdf_url($node->feed->url), 'rdfs:label', NULL, feedapi_rdf_options());
+        // Cascasde.
+      case 'insert':
+        rdf_insert(feedapi_rdf_url($node->feed->url), 'rdfs:label', $node->title, feedapi_rdf_options());
+        break;
+    }
+  }
+}
+
+/**
+ * Feed api doesn't ensure that all urls include the http, but we do.
+ * @param $url
+ *   A url (string), which may or may not begin with http://
+ * @return
+ *   A url (string) which does begin with http://
+ */
+function feedapi_rdf_url($url) {
+  if (strpos($url, 'http://') !== 0) {
+    return 'http://'. $url;
+  }
+  return $url;
+}

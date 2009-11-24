@@ -1,0 +1,101 @@
+<?php
+// $Id: greybox.module,v 1.3 2008/12/04 11:50:00 Gurpartap Exp $
+
+/**
+ * Implementation of hook_perm().
+ */
+function greybox_perm() {
+  return array('administer greybox');
+}
+
+/**
+ * Implementation of hook_init().
+ */
+function greybox_init() {
+	static $files_added = FALSE;
+	if (!$files_added) {
+    greybox_add_files();
+    $files_added = TRUE;
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function greybox_menu() {
+  $items = array();
+
+	$items['admin/settings/greybox'] = array(
+		'title' => t('Greybox'),
+		'description' => t('Configure the appearance of Greybox popup window.'),
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('greybox_settings'),
+		'access callback' => 'user_access',
+		'access arguments' => array('administer greybox'),
+		'type' => MENU_NORMAL_ITEM
+	);
+
+  return $items;
+}
+
+/**
+ * Menu callback; Returns settings form..
+ */
+function greybox_settings() {
+  $form = array();
+
+  $form['greybox_options'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Basic configuration'),
+		'#description' => t('<em>Open <a href="http://google.com" class="greybox" title="My caption" rel="">Example Popup</a> ( <code>&lt;a href="http://google.com" class="greybox" title="My caption" rel=""&gt;Example Popup&lt;/a&gt;</code> )</em>'),
+    '#collapsible' => FALSE, 
+    '#collapsed' => FALSE,
+  );
+  $form['greybox_options']['greybox_class_text']  = array(
+    '#type' => 'textfield',
+    '#title' => t('Class name'),
+    '#description' => t('The class name of the elements, to associate Greybox with. Example: Enter <em>greybox</em> if your element HTML code is: <code>&lt;a class="greybox"&gt;</code>.'),
+    '#default_value' => variable_get('greybox_class_text', 'greybox'),
+  );
+  $form['greybox_options']['greybox_window_height']  = array(
+    '#type' => 'textfield',
+    '#title' => t('Window height (in pixels)'),
+		'#description' => t('600 recommended. Enter 0 for automatic height.'),
+    '#size' => 5,
+		'#required' => TRUE,
+    '#default_value' => variable_get('greybox_window_height', 0),
+  );
+  $form['greybox_options']['greybox_window_width']  = array(
+    '#type' => 'textfield',
+    '#title' => t('Window width (in pixels)'),
+		'#description' => t('800 recommended. Enter 0 for automatic width.'),
+    '#size' => 5,
+		'#required' => TRUE,
+    '#default_value' => variable_get('greybox_window_width', 0),
+  );
+
+  return system_settings_form($form);
+}
+
+/**
+ * Load required JS and CSS files.
+ */
+function greybox_add_files() {
+	$path = drupal_get_path('module', 'greybox');
+	$height = variable_get('greybox_window_height', 0);
+	$width = variable_get('greybox_window_width', 0);
+	// Add the required CSS file.
+	drupal_add_css($path . '/greybox.css');
+	// Add the Javascript settings.
+	drupal_add_js(array(
+		'greybox' => array(
+			'class_text' => variable_get('greybox_class_text', 'greybox'),
+			'gbheight' => $height == 0 ? NULL : $height,
+			'gbwidth' => $width == 0 ? NULL : $width,
+			'path' => base_path() . $path,
+		),
+	), 'setting');
+	// Add the required Javascript.
+	drupal_add_js($path . '/js/greybox.js');
+}
+
