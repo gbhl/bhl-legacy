@@ -1,0 +1,5 @@
+ProxyPass /adore-djatoka/ ajp://127.0.0.1:8009/adore-djatoka/ smax=5 max=20 ttl=120 retry=300
+ProxyPassReverse /adore-djatoka/ ajp://127.0.0.1:8009/adore-djatoka/
+
+ProxyPass /djatoka/ ajp://127.0.0.1:8009/djatoka/ smax=5 max=20 ttl=120 retry=300
+ProxyPassReverse /djatoka/ ajp://127.0.0.1:8009/djatoka/

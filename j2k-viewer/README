@@ -1,0 +1,75 @@
+----------------
+BHL image viewer
+----------------
+includes custom code enabling BHL to display Internet Archive (IA) jpeg2000 
+images via the adore-djatoka image viewer
+
+adore-djatoka image viewer:
+http://sourceforge.net/apps/mediawiki/djatoka/index.php?title=Main_Page
+
+BHL code/support: 
+http://code.google.com/p/bhl-bits/
+phil.cryer@mobot.org
+
+NOTES: 
+ * we use Debian GNU/Linux, so these directions should work for Ubuntu as well 
+ * the following commands will need to be run as root
+
+=======
+INSTALL
+=======
+1) update APT 
+Apt needs contrib and non-free repositories enabled, to set those copy in this file: 
+# mv /etc/apt/sources.list /etc/apt/sources.list.old
+# mv sources.list /etc/apt
+
+Then update apt with those new repos:
+# apt-get update
+
+2) install Java, Tomcat-5.5 and Apache2
+# apt-get install sun-java6-jdk tomcat5.5 apache2  
+
+3) configure Apache
+- enable apache modules
+# a2enmod proxy_ajp
+# a2enmod proxy_http
+# /etc/init.d/apache2 restart
+
+- copy proxy.conf file in to allow access
+# mv /etc/apache2/mods-available/proxy.conf  /etc/apache2/mods-available/proxy.conf.back
+# cp etc/apache2/mods-available/proxy.conf /etc/apache2/mods-available
+
+- set proxy_ajp file 
+# cp etc/apache2/conf.d/proxy_ajp /etc/apache2/conf.d/
+
+- restart Apache (watch for errors)
+# /etc/init.d/apache2 restart 
+
+4) configure Tomcat 
+- copy default tomcat settings file in
+# mv /etc/default/tomcat5.5 /etc/default/tomcat5.5.back
+# cp etc/default/tomcat5.5 /etc/default/
+
+- restart Tomcat (watch for errors)
+# /etc/init.d/tomcat5.5 restart 
+
+5) configure adore-djatoka
+- copy adore-djatoka into lib
+# cp -R var/lib/adore-djatoka /var/lib
+
+- copy djatoka into tomcat webapps 
+# cp -R var/lib/tomcat5.5/webapps/* /var/lib/tomcat5.5/webapps
+
+- set correct permissions on the webapps
+# chown -R tomcat55:nogroup /var/lib/tomcat5.5/webapps
+
+- restart Tomcat (watch for errors)
+# /etc/init.d/tomcat5.5 restart 
+
+
+
+
+
+
+
+
