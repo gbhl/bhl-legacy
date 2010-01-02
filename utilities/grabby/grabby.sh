@@ -76,9 +76,7 @@ echo -n "$sum" > current.status.txt "of "
 TOTAL=`cat todo.txt | wc -l` 
 echo ${TOTAL} >> current.status.txt
 echo "title: ${BOOK_ID}" >> current.status.txt
-
 echo -n " [ `head -n1 current.status.txt` ]	Title: ${BOOK_ID}"; echo
-
 if [ -d "${BOOK_ID}" ]; then
 	echo "	- Existing data found, continuing previous download..."
 	if [ -f "${BOOK_ID}/index.html" ]; then 
