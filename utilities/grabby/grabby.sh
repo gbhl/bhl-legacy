@@ -5,15 +5,17 @@
 # File        	: grabby.sh
 # Usage		: ./grabby.sh 
 # Author      	: phil.cryer@mobot.org
-# Date        	: 2009-10-10
-# Source	: http://code.google.com/p/bhl-bits/
-# Description 	: a generic bash script to perform batch downloads of Internet
-#		  Archive (archive.org) materials, as listed in todo.txt
-# Requires	: BASH, wget
+# Date created  : 2009-10-10
+# Last updated  : 2010-01-01
+# Source	: http://code.google.com/p/bhl-bits/utilities/grabby
+# Description 	: a bash script to perform batch downloads of Internet Archive
+#		  (archive.org) materials, via record ids as listed in todo.txt
+# Requires	: Bash, wget
+# (optional)    : fast/stable internet connection, paitience, sense of humor
 #
 ################################################################################
 #
-# Copyright (c) 2009, Biodiversity Heritage Library
+# Copyright (c) 2010, Biodiversity Heritage Library
 #
 # All rights reserved.
 #
@@ -39,7 +41,13 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 ################################################################################
+# More information about the BSD License can be found here:
+# http://www.opensource.org/licenses/bsd-license.php
+################################################################################
 #
+########################################
+# Check todo, set time, make directory
+########################################
 if [ ! -f "todo.txt" ]; then 
 	echo "can't find todo.txt, fail"
 	echo "define IA identifiers in todo.txt (one per line) and rerun"
@@ -48,16 +56,22 @@ fi
 clear
 sum=0
 num=1
-echo " * Starting download..."
-echo; echo "------------------------------------------------------"; echo
+START_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
+echo "Starting download at ${START_TIME}" 
+echo "------------------------------------------------------"
+START=`date +%s`
+PUID=${START}
+COMPLETE_DIR=complete.${PUID}
+mkdir ${COMPLETE_DIR}
+MANIFEST=00_manifest.${PUID}
 #
-################################################################################
-#
+########################################
+# Inventory do/done downloads
+########################################
 cat todo.txt | while read BOOK_ID
 do
 BASE_URL="http://archive.org/download/${BOOK_ID}"
 sum=$(($sum + $num))
-
 echo -n "$sum" > current.status.txt "of "
 TOTAL=`cat todo.txt | wc -l` 
 echo ${TOTAL} >> current.status.txt
@@ -71,38 +85,63 @@ if [ -d "${BOOK_ID}" ]; then
 		rm ${BOOK_ID}/index.html 
 	fi 
 fi
-
+#
+########################################
+# Build download list
+########################################
 wget -p -c -nc -nH -nd -erobots=off -P${BOOK_ID} ${BASE_URL}
-
-grep "${BOOK_ID}." ${BOOK_ID}/index.html | cut -d"<" -f4 | cut -d">" -f2 >> ${BOOK_ID}/xml_files_tmp
-
-sed "s/  *$//;/^$/d" ${BOOK_ID}/xml_files_tmp > ${BOOK_ID}/xml_files_tmp2
-
-cat ${BOOK_ID}/xml_files_tmp2 | sed s/^/http:\\/\\/archive.org\\/download\\/$BOOK_ID\\// > ${BOOK_ID}/download.urls
-
+grep "<a href=" ${BOOK_ID}/index.html | grep ${BOOK_ID} | grep -v "<h1" | cut -d">" -f1 | cut -d"\"" -f2 >> ${BOOK_ID}/xml_files_tmp
+cat ${BOOK_ID}/xml_files_tmp | sed s/^/http:\\/\\/archive.org\\/download\\/$BOOK_ID\\// > ${BOOK_ID}/download.urls
 rm ${BOOK_ID}/index.html; rm ${BOOK_ID}/xml_files_tmp*
-
-# manually grep out files, in this example, it will only list djvu.txt files
-# otherwise limit by file prefix on the wget line below
-#grep djvu.txt ${BOOK_ID}/download.urls > ${BOOK_ID}/download.urls-single
-#mv ${BOOK_ID}/download.urls-single ${BOOK_ID}/download.urls
-
+#
+########################################
+# Download files
+########################################
 # download all related files (DEFAULT)
 wget -p -c -i ${BOOK_ID}/download.urls -nc -nH -nd -erobots=off -P${BOOK_ID} ${BASE_URL}
-
-# to limit downloads to only xml files
+# Notice: by default we now download every file related to the record id
+# if you want to limit this, manually grep out files here. in this example,
+# it will only djvu.txt files -  otherwise limit by file prefix on the wget line below
+#grep djvu.txt ${BOOK_ID}/download.urls > ${BOOK_ID}/download.urls-single
+#mv ${BOOK_ID}/download.urls-single ${BOOK_ID}/download.urls
+# or to limit downloads to only xml files
 #wget -p -c -A '.xml' -i ${BOOK_ID}/download.urls -nc -nH -nd -erobots=off -P${BOOK_ID} ${BASE_URL}
-
-# to limit downloads to only txt files
-#wget -p -c -A 'txt' -i ${BOOK_ID}/download.urls -nc -nH -nd -erobots=off -P${BOOK_ID} ${BASE_URL}
-
+#
+########################################
+# Clean up download directory
+########################################
 rm ${BOOK_ID}/download.urls
-echo " > Download of ${BOOK_ID} complete."
-echo; echo "------------------------------------------------------"; echo
+if [ -f "${BOOK_ID}/index.html" ]; then 
+	rm ${BOOK_ID}/index.html 
+fi 
+mv ${BOOK_ID} ${COMPLETE_DIR}
+echo "Download of ${BOOK_ID} complete."
 done
 #
-################################################################################
-#
-echo " > Download of all items complete."
+########################################
+# Summarize downloads, time, etc
+########################################
+TOTAL_DATA=`du -hc | tail -n1`
+TOTAL_BOOKS=`cat current.status.txt | head -n1 | cut -d" " -f3`
+END_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
 rm current.status.txt
+echo "------------------------------------------------------" > ${COMPLETE_DIR}/${MANIFEST}
+echo "Start time		${START_TIME}" >> ${COMPLETE_DIR}/${MANIFEST}
+echo "Finish time		${END_TIME} " >> ${COMPLETE_DIR}/${MANIFEST}
+echo "Data transfered		${TOTAL_DATA}" >> ${COMPLETE_DIR}/${MANIFEST}
+echo "Books transfered		${TOTAL_BOOKS}" >> ${COMPLETE_DIR}/${MANIFEST}
+echo "------------------------------------------------------" >> ${COMPLETE_DIR}/${MANIFEST}
+for f in $( ls ${COMPLETE_DIR} | grep -v ${MANIFEST} ); do echo $f >> ${COMPLETE_DIR}/${MANIFEST}; done
+echo "------------------------------------------------------"
+echo "Start time		${START_TIME}"
+echo "Finish time		${END_TIME} "
+echo "Data transfered		${TOTAL_DATA}"
+echo "Books transfered		${TOTAL_BOOKS}"
+echo "------------------------------------------------------"
+FINISH=`date +%s`
+ELAPSED=`expr $FINISH - $START`
+echo "------------------------------------------------------" >> ${COMPLETE_DIR}/${MANIFEST}
+echo "Total download time: ${ELAPSED} seconds"
+echo "Total download time: ${ELAPSED} seconds" >> ${COMPLETE_DIR}/${MANIFEST}
+echo "Files downloaded to: ${COMPLETE_DIR}"
 exit 0
