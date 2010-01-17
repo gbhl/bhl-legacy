@@ -60,14 +60,18 @@ START_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
 echo "Starting download at ${START_TIME}" 
 echo "------------------------------------------------------"
 START=`date +%s`
-PUID=${START}
+PUID=${2-${START}}
 COMPLETE_DIR=complete.${PUID}
-mkdir ${COMPLETE_DIR}
+if [ ! -d ${COMPLETE_DIR} ]; then
+	mkdir ${COMPLETE_DIR}
+fi
 MANIFEST=00_manifest.${PUID}
 #
 ########################################
 # Inventory do/done downloads
 ########################################
+mv todo.txt  ${COMPLETE_DIR}
+cd ${COMPLETE_DIR}
 cat todo.txt | while read BOOK_ID
 do
 BASE_URL="http://archive.org/download/${BOOK_ID}"
@@ -112,7 +116,7 @@ rm ${BOOK_ID}/download.urls
 if [ -f "${BOOK_ID}/index.html" ]; then 
 	rm ${BOOK_ID}/index.html 
 fi 
-mv ${BOOK_ID} ${COMPLETE_DIR}
+#mv ${BOOK_ID} ${COMPLETE_DIR}
 echo "Download of ${BOOK_ID} complete."
 done
 #
@@ -123,6 +127,8 @@ TOTAL_DATA=`du -hc | tail -n1`
 TOTAL_BOOKS=`cat current.status.txt | head -n1 | cut -d" " -f3`
 END_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
 rm current.status.txt
+mv ${COMPLETE_DIR}/todo.txt ${COMPLETE_DIR}/00_download.${PUID}
+cd ..
 echo "------------------------------------------------------" > ${COMPLETE_DIR}/${MANIFEST}
 echo "Start time		${START_TIME}" >> ${COMPLETE_DIR}/${MANIFEST}
 echo "Finish time		${END_TIME} " >> ${COMPLETE_DIR}/${MANIFEST}
