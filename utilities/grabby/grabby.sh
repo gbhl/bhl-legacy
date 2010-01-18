@@ -3,7 +3,7 @@
 ################################################################################
 #
 # File          : grabby.sh
-# Usage         : ./grabby.sh
+# Usage         : ./grabby.sh download_list
 # Author        : phil.cryer@mobot.org
 # Date created  : 2009-10-10
 # Last updated  : 2010-01-17
@@ -56,7 +56,7 @@ if [ ! -f ${1} ]; then
 	echo "Fail: file ${1} not found"
 	exit 1
 fi
-
+#
 ########################################
 # Check for/create directories
 ########################################
@@ -69,21 +69,21 @@ fi
 if [ ! -d failed ]; then 
 	mkdir failed
 fi
-
+#
 ########################################
 # Get report stats
 ########################################
 sum=0; num=1; full=`cat ${1} | wc -l` 
 START_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
 PUID=`date +%s`
-
+#
 ########################################
 # Start the loop
 ########################################
 cat ${1} | while read BOOK_ID
 do
 sum=$(($sum + $num))
-
+#
 ########################################
 # Generate report file
 ########################################
@@ -105,12 +105,12 @@ echo "<li>${TOTAL_FAILED} books failed to download</li>" >> status
 #echo "<li>Download took ${ELAPSED} seconds</li>" >> status
 echo "<li>Total data downloaded `du -hc complete/ failed/ | tail -n1`</li>" >> status
 echo "</ul><hr>" >> status
-
+#
 ########################################
 # Download files
 ########################################
 wget --user-agent="Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.2; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)" --tries=2 --span-hosts --recursive --level=1 --continue --no-parent --no-host-directories --reject index.html --cut-dirs=2 --execute robots=off http://www.archive.org/download/${BOOK_ID} 
-	
+#	
 ########################################
 # Generate and check sha1 checksums
 ########################################
@@ -124,13 +124,13 @@ if [ `grep FAILED /tmp/cksums_${BOOK_ID} | wc -l` -gt '0' ]; then
 else
 	mv ${BOOK_ID} complete
 fi
-
+#
 ########################################
 # End loop, save download list to done
 ########################################
 done
 mv ${1} done/${PUID}.${1}
-
+#
 ########################################
 # Summarize downloads, time, etc
 ########################################
@@ -153,6 +153,5 @@ echo "<li>Download took ${ELAPSED} seconds</li>" >> status
 echo "<li>Total data downloaded `du -hc complete/ failed/ | tail -n1`</li>" >> status
 echo "</ul><hr>" >> status
 cp status done/${PUID}.status
-
+#
 exit 0
-
