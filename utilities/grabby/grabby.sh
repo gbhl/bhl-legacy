@@ -122,7 +122,10 @@ shasum -c /tmp/shasums_${BOOK_ID} > /tmp/cksums_${BOOK_ID}
 if [ `grep FAILED /tmp/cksums_${BOOK_ID} | wc -l` -gt '0' ]; then
 	mv ${BOOK_ID} failed
 	mv /tmp/cksums_${BOOK_ID} failed/${BOOK_ID}
+	mv /tmp/shasums_${BOOK_ID} failed/${BOOK_ID}
 else
+	rm /tmp/cksums_${BOOK_ID}
+	rm /tmp/shasums_${BOOK_ID}
 	mv ${BOOK_ID} complete
 fi
 
