@@ -24,7 +24,9 @@ ls -1 ${1} | grep -v "sortr.sh" > /tmp/sortr_rawlist
 cat /tmp/sortr_rawlist | while read RAW_ID
 do
 
-DIR_ID=`echo ${RAW_ID} | sed 's/\([a-z]\).*/\1/'`
+#DIR_ID=`echo ${RAW_ID} | sed 's/\([a-z]\).*/\1/'`
+DIR_ID=`echo ${RAW_ID} | sed 's/\([A-Za-z0-9]\).*/\1/'`
+
 
 if [ ! -d ${DIR_ID} ]; then
 	mkdir -p ${TARGET_DIR}/${DIR_ID} 
