@@ -1,0 +1,874 @@
+<?php
+/**
+ * @file entrez.module
+ */
+
+/**
+ * Data is ultimately saved by a drupal_write_record() in the node hooks
+ * (hook_insert and hook_update) of biblio.module, so all that is needed to
+ * save an additional piece of information is to add it to the $b array keyed
+ * with the name of a column from the {biblio} table.
+
+ * What are these column names?  We thought you'd never ask:
+ +-----------------------------+--------------+------+-----+---------+-------+
+ | Field                       | Type         | Null | Key | Default | Extra |
+ +-----------------------------+--------------+------+-----+---------+-------+
+ | nid                         | int(11)      | NO   | MUL | 0       |       |
+ | vid                         | int(11)      | NO   | PRI | 0       |       |
+ | biblio_type                 | int(11)      | NO   |     | 0       |       |
+ | biblio_number               | varchar(24)  | YES  |     | NULL    |       |
+ | biblio_other_number         | varchar(24)  | YES  |     | NULL    |       |
+ | biblio_secondary_title      | varchar(255) | YES  |     | NULL    |       |
+ | biblio_tertiary_title       | varchar(255) | YES  |     | NULL    |       |
+ | biblio_edition              | varchar(255) | YES  |     | NULL    |       |
+ | biblio_publisher            | varchar(255) | YES  |     | NULL    |       |
+ | biblio_place_published      | varchar(255) | YES  |     | NULL    |       |
+ | biblio_year                 | int(11)      | NO   | MUL | 9999    |       |
+ | biblio_volume               | varchar(24)  | YES  |     | NULL    |       |
+ | biblio_pages                | varchar(128) | YES  |     | NULL    |       |
+ | biblio_date                 | varchar(16)  | YES  |     | NULL    |       |
+ | biblio_isbn                 | varchar(24)  | YES  |     | NULL    |       |
+ | biblio_lang                 | varchar(24)  | YES  |     | eng     |       |
+ | biblio_abst_e               | text         | YES  |     | NULL    |       |
+ | biblio_abst_f               | text         | YES  |     | NULL    |       |
+ | biblio_full_text            | int(11)      | YES  |     | 0       |       |
+ | biblio_url                  | varchar(255) | YES  |     | NULL    |       |
+ | biblio_issue                | varchar(24)  | YES  |     | NULL    |       |
+ | biblio_type_of_work         | varchar(100) | YES  |     | NULL    |       |
+ | biblio_accession_number     | varchar(30)  | YES  |     | NULL    |       |
+ | biblio_call_number          | varchar(30)  | YES  |     | NULL    |       |
+ | biblio_notes                | text         | YES  |     | NULL    |       |
+ | biblio_custom1              | text         | YES  |     | NULL    |       |
+ | biblio_custom2              | text         | YES  |     | NULL    |       |
+ | biblio_custom3              | text         | YES  |     | NULL    |       |
+ | biblio_custom4              | text         | YES  |     | NULL    |       |
+ | biblio_custom5              | text         | YES  |     | NULL    |       |
+ | biblio_custom6              | text         | YES  |     | NULL    |       |
+ | biblio_custom7              | text         | YES  |     | NULL    |       |
+ | biblio_research_notes       | text         | YES  |     | NULL    |       |
+ | biblio_number_of_volumes    | varchar(24)  | YES  |     | NULL    |       |
+ | biblio_short_title          | varchar(255) | YES  |     | NULL    |       |
+ | biblio_alternate_title      | varchar(255) | YES  |     | NULL    |       |
+ | biblio_original_publication | varchar(255) | YES  |     | NULL    |       |
+ | biblio_reprint_edition      | varchar(255) | YES  |     | NULL    |       |
+ | biblio_translated_title     | varchar(255) | YES  |     | NULL    |       |
+ | biblio_section              | varchar(24)  | YES  |     | NULL    |       |
+ | biblio_citekey              | varchar(255) | YES  |     | NULL    |       |
+ | biblio_coins                | text         | YES  |     | NULL    |       |
+ | biblio_doi                  | varchar(255) | YES  |     | NULL    |       |
+ | biblio_issn                 | varchar(24)  | YES  |     | NULL    |       |
+ | biblio_auth_address         | text         | YES  |     | NULL    |       |
+ | biblio_remote_db_name       | varchar(255) | YES  |     | NULL    |       |
+ | biblio_remote_db_provider   | varchar(255) | YES  |     | NULL    |       |
+ | biblio_label                | varchar(255) | YES  |     | NULL    |       |
+ | biblio_access_date          | varchar(255) | YES  |     | NULL    |       |
+ | biblio_md5                  | varchar(32)  | YES  | MUL | NULL    |       |
+ +-----------------------------+--------------+------+-----+---------+-------+
+ *
+ * In addition, contributors (authors/editors etc.) save in a separate table.
+ */
+
+define('ENTREZ_UPDATE_PER_CRON', 20);
+define('ENTREZ_IMPORT_MAX', 3000);
+
+require_once 'EntrezClient.php';
+require_once 'EntrezPubmedArticle.php';
+
+/**
+ * Implementation of hook_menu().
+ */
+function entrez_menu() {
+  $items = array();
+  $items['admin/content/entrez'] = array(
+    'title' => t('Entrez'),
+    'description' => 'Configure entrez module search queries and moderate bibliographies imported from PubMed.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('entrez_admin_settings_form'),
+    'access arguments' => array('administer biblio'),
+    'file' => 'entrez.admin.inc',
+  );
+  $items['admin/content/entrez/basic'] = array(
+      'title' => t('Settings'),
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'weight' => -10,
+  );
+  $items['admin/content/entrez/pubmed_id_import'] = array(
+    'title' => t('Import by Pubmed ID'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('entrez_pubmed_id_import_form'),
+    'access arguments' => array('create biblio'),  // not using the somewhat silly biblio_access wrapper function
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 8,
+  );
+  $items['admin/content/entrez/search_import'] = array(
+    'title' => t('Import by search terms'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('entrez_search_import_form'),
+    'access arguments' => array('administer biblio'),  // not using the somewhat silly biblio_access wrapper function
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 8,
+  );
+  return $items;
+}
+
+/**
+ * Form to import from Entrez using search terms.
+ *
+ * @ingroup forms
+ * @see entrez_search_import_form_validate()
+ * @see entrez_search_import_form_submit()
+ *
+ * @return
+ *   An array which will be used by the form builder to build the import form.
+ */
+function entrez_search_import_form() {
+  $esearch_help = 'http://eutils.ncbi.nlm.nih.gov/corehtml/query/static/esearch_help.html';
+  $form['entrez_pubmed_search'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('PubMed search'),
+    '#description' => t('Define your PubMed search.'),
+    'search_query' => array(
+      '#type' => 'textarea',
+      '#title' => t('Search terms'),
+      '#description' => '<p>' . l('Search terms', $esearch_help . '#Searchterms') . '</p>',
+      '#default_value' => entrez_get_search_query(),
+      '#required' => FALSE,
+    ),
+    'min_date' => array(
+      '#type' => 'date_select',
+      '#title' => t('Minimum date'),
+      '#description' => '<p>' . l('Minimum date.', $esearch_help . '#DateRanges') . '</p>',
+      '#default_value' => entrez_get_min_date('current'),
+      '#date_year_range' => '-30:+0',
+      '#required' => TRUE,
+    ),
+    'max_date' => array(
+      '#type' => 'date_select',
+      '#title' => t('Maximum date'),
+      '#description' => '<p>' . l('Maximum date.', $esearch_help . '#DateRanges') . '</p>',
+      '#default_value' => entrez_get_max_date('current'),
+      '#date_year_range' => '-30:+0',
+      '#required' => TRUE,
+    ),
+    'button_batch_import' => array(
+      '#type' => 'submit',
+      '#value' => t('Import from PubMed'),
+    ),
+  );
+  return $form;
+}
+
+/**
+ * Returns a form used to import PubMed into biblio by PMID.
+ *
+ * @ingroup forms
+ * @see entrez_pubmed_id_import_form_validate()
+ * @see entrez_pubmed_id_import_form_submit()
+ *
+ * @return
+ *   An array which will be used by the form builder to build the import form.
+ */
+function entrez_pubmed_id_import_form() {
+  global $user;
+  $form['entrez_pubmed_id'] = array(
+    '#type' => 'textfield',
+    '#title' => t('PubMed ID'),
+    '#description' => t('One or more PubMed unique identifiers of articles.  If more than one, separate by spaces, commas, or semicolons.'),
+    '#required' => TRUE,
+  );
+  // this matches the check in biblio.import.export.inc's biblio_save_node().
+  if (user_access('administer nodes')) {
+    module_load_include('inc', 'biblio', 'biblio.import.export');
+    if (function_exists('_biblio_admin_build_user_select')) {
+      // if statement redundant; no need to risk a parse error for this gravy
+      // @TODO honestly an autocomplete would be a better interface
+      $form['userid'] = _biblio_admin_build_user_select($user->uid);
+      $form['userid']['#title'] = t('Set user credited as posting biblios:');
+    } else {
+      watchdog('biblioreference', 'Expected function _biblio_admin_build_user_select not available from biblio module in file biblio.import.export.inc.', WATCHDOG_ERROR);
+    }
+  }
+  if (FALSE && module_exists('taxonomy')) {
+    module_load_include('inc', 'entrez', 'entrez.taxonomy');
+    $form['import_taxonomy'] = entrez_form_taxonomy();
+  }
+  $form['button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Import from PubMed'),
+  );
+  return $form;
+}
+
+/**
+ * Implementation of validation for entrez_search_import_form.
+ */
+function entrez_search_import_form_validate($form, &$form_state) {
+  $search_query = $form_state['values']['search_query'];
+  $min_date = $form_state['values']['min_date'];
+  $max_date = $form_state['values']['max_date'];
+  
+  if (empty($search_query)) {
+    form_set_error('entrez_pubmed_search',
+      t('Please enter at least one Search term.'));
+  }
+  elseif ($min_date >= $max_date) {
+    form_set_error('entrez_pubmed_search',
+      t('Minimum date must be earlier than Maximum date.'));
+  }
+}
+
+/**
+ * Implementation of validation for entrez_pubmed_id_import_form.
+ */
+function entrez_pubmed_id_import_form_validate($form, &$form_state) {
+  $pmids = entrez_au_rationalize_separators($form_state['values']['entrez_pubmed_id']);
+  if (empty($pmids)) {
+    form_set_error('entrez_pubmed_id', t('Please enter at least one PubMed ID.'));
+  }
+  else {
+    $errors = array();
+    for ($i = 0; $i < count($pmids); $i++) {
+      if (!ctype_digit($pmids[$i]) || $pmids[$i] <= 0) {
+        // "@" sends the input through check_plain to prevent security breaches
+        $errors[] = t('A value entered, %pmid, is not a positive integer.', array('%pmid' => $pmids[$i]));
+      }
+    }
+    if ($errors) {
+      // Report how many and which entered pubmed IDs were rejected
+      form_set_error('entrez_pubmed_id', implode(' ', $errors) . ' ' . t('Please ensure you input valid PubMed IDs.'));
+    }
+    else {
+      // add the cleaned-up pubmed IDs to the form values
+      // these are passed to submit by reference
+      $form_state['values']['pmids'] = $pmids;
+    }
+  }
+}
+
+/**
+ * Implementation of submit for the entrez_search_import_form.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function entrez_search_import_form_submit($form, &$form_state) {
+  $search_query = $form_state['values']['search_query'];
+  $min_date = $form_state['values']['min_date'];
+  $max_date = $form_state['values']['max_date'];
+  entrez_set_query(array(
+    'query' => $search_query,
+    'min_date' => $min_date,
+    'max_date' => $max_date,
+  ));
+
+  if (isset($form_state['values']['userid'])) {
+    $uid = $form_state['values']['userid'];
+  }
+  else {
+    global $user;
+    $uid = $user->uid;
+  }
+  // if we allow creation of free tagging terms, this will become complicated.
+  // we will have to know the vocabulary and create the terms first
+  $term_ids = array();
+  $taxonomy = $form_state['values']['taxonomy']; // works because form tree true
+  if (isset($taxonomy) && is_array($taxonomy)) {
+    foreach ($taxonomy as $vid => $vocabulary) {
+      $vocab_term_ids = array_keys($vocabulary);  // this changes for free tags
+      $term_ids = array_merge($term_ids, $vocab_term_ids);
+    }
+  }
+  $node_info = array(
+    'uid' => $uid,
+    'taxonomy' => $term_ids,
+    'status' => 0, // set bulk imported to unpublished by default
+  );
+
+  $entrez = entrez_create_client();
+  $entrez->setReturnMax(25);
+  $entrez->setTerm($form_state['values']['search_query']);
+  $entrez->setDateRange($min_date, $max_date);
+ 
+  try {
+    $entrez->search();
+    // Disable indexing during mass import. Run afterwards.
+    variable_set('biblio_index', 0);
+
+    $devel = entrez_mode_check('development');
+    $override = FALSE;
+    if (isset($form_state['values']['override_import_max']) &&
+        $form_state['values']['override_import_max'] == TRUE) {
+      $override = TRUE;
+    }
+    if ($entrez->count() > ENTREZ_IMPORT_MAX && !$devel && !$override) {
+      drupal_set_message(t('The search query was saved but the import was not performed because the result set contained more than @max articles (it contained @count).  This could adversely affect the experience of people using the site during the import.  Please refine your search (including start and stop dates) or arrange for the query to be done at a time or location that will not interfere with normal usage of the site.', array('@max' => ENTREZ_IMPORT_MAX, '@count' => $entrez->count())), 'warning');
+    }
+    elseif ($entrez->count() > $entrez->getReturnMax()) { // go to batch mode
+      $destination = $_GET['q'];
+      $batch_op = array(
+        'title' => t('Importing @count Pubmed articles', array('@count' => $entrez->count())),
+        'operations' => array(
+          array(
+            'entrez_import_batch',
+            array($entrez, $node_info, $entrez->getReturnMax()),
+          ),
+        ),
+        'progressive' => TRUE,
+        'finished' => 'entrez_import_batch_finished',
+        'init_message' => t('Processing bibliography imports from PubMed.'),
+        'progress_message' => t('Importing from PubMed and saving bibliographies.'),
+        'file' => './'. drupal_get_path('module', 'biblioreference') .'/pubmed_import.inc'
+      );
+      batch_set($batch_op);
+      batch_process($destination);
+    }
+    elseif ($entrez->count() > 0) {
+      $imported = entrez_import_pubmed($entrez->fetchResult(), $node_info);
+      $message = format_plural(count($imported), 'One bibliography saved.',
+        '@count bibliographies saved.');
+      $not_imported = $entrez->count() - count($imported);
+      if ($not_imported > 0) {
+        $message .= format_plural($not_imported,
+          'One bibliography has not changed since last import.',
+          '@count bibliographies have not changed since last import.');
+      }
+ 
+      drupal_set_message($message);
+    }
+    else {
+      drupal_set_message(t('Sorry, your search returned no results.'));
+    }
+  }
+  catch (Exception $exception) {
+    drupal_set_message(t('An error occurred when requesting data from ' .
+      'PubMed. Try again later.'));
+  }
+}
+
+/**
+ * Imports Pubmed documents matching the IDs entered by the user.
+ *
+ * @param $form
+ * @param $form_state
+ */
+function entrez_pubmed_id_import_form_submit($form, &$form_state) {
+  global $user;
+  $uid = $user->uid;
+  $entrez = entrez_create_client();
+  // @TODO if people try updating lots of pmids, send it to search function
+  // where batch mode will be used and also avoid dozens of queries for titles.
+  foreach ($form_state['values']['pmids'] as $pmid) {
+    try {
+      $biblio = entrez_import_pubmed($entrez->fetch($pmid));
+      if ($biblio[0]) {
+        drupal_set_message(t('Successfully imported bibliographic citation !link',
+          array('!link' => l($biblio[0]->title, 'node/' . $biblio[0]->nid))));
+      }
+      else {
+        drupal_set_message(t('@pmid is not a valid PubMed ID; not imported.',
+          array('@pmid' => $pmid)), 'warning');
+      }
+    }
+    catch (Exception $exception) {
+      watchdog('entrez', $exception->getMessage(), array(), WATCHDOG_ERROR);
+      drupal_set_message(t('An error occurred when requesting data from ' .
+        'PubMed. Try again later.'));
+    }
+  }
+}
+
+/**
+ * Batch callback operation: Import PubMed articles into Biblio.
+ *
+ * @param $entrez
+ *   A configured entrez client object.
+ * @param $node_info
+ *   Array of node information to act as default for imported bibliographies.
+ * @param $size
+ *   Number of articles to import in each operation.
+ * @param $context
+ *   Batch context containing state information.
+ */
+function entrez_import_batch($entrez, $node_info, $size, &$context) {
+  if (!isset($context['sandbox']['progress'])) {
+    $context['sandbox']['progress'] = 0;
+    $context['sandbox']['max'] = $entrez->count();
+    $context['results']['imported'] = 0;
+    $context['results']['retrieved'] = 0;
+  }
+
+  $i = $context['sandbox']['progress'];
+
+  // Sometimes the NCBI server responds with errors. Retry in the next batch.
+  try {
+    $imported = entrez_import_pubmed($entrez->fetchResult($i), $node_info);
+    $i = min($i + $entrez->getReturnMax(), $entrez->count());
+    $context['results']['imported'] += count($imported);
+    $context['results']['retrieved'] = $i;
+  }
+  catch (Exception $exception) {
+    watchdog('entrez', $exception->getMessage(), array(), WATCHDOG_ERROR);
+  }
+
+  $context['sandbox']['progress'] = $i;
+  // Multistep processing : report progress.
+  if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
+    $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+  }
+}
+
+/**
+ * Prints out a message and resets biblio_index.
+ *
+ * @param $success
+ * @param $results
+ * @param $operations
+ */
+function entrez_import_batch_finished($success, $results, $operations) {
+  if ($success) {
+    $message = format_plural($results['imported'], 'One bibliography saved.',
+      '@count bibliographies saved.');
+    $not_imported = $results['retrieved'] - $results['imported'];
+    if ($not_imported > 0) {
+      $message .= format_plural($not_imported,
+        'One bibliography has not changed since last import.',
+        '@count bibliographies have not changed since last import.');
+    }
+  }
+  else {
+    $message = t('Import finished with an error.');
+  }
+  
+  drupal_set_message($message);
+}
+
+/**
+ * Imports the given PubMed articles to the biblio database.
+ *
+ * @param $set
+ *   a PubmedArticleSet element
+ * @param $node_info
+ *   an array of node information to act as default for imported bibliographies
+ * @return object
+ *   the imported biblio item
+ * @throws Exception
+ */
+function entrez_import_pubmed(SimpleXMLElement $set, $node_info = array()) {
+  if (!isset($set->PubmedArticle)) {
+    $message = t('The retrieved data is invalid: !data',
+      array('!data' => $set->asXML()));
+    throw new Exception($message);
+  }
+  
+  $hashes = entrez_get_hashes($set->xpath('//PMID'));
+  variable_set('biblio_index', 0);
+  
+  foreach ($set->PubmedArticle as $xml) {
+    $pubmed_article = new EntrezPubmedArticle($xml);
+    
+    if ($pubmed_article->getMd5() == $hashes[$pubmed_article->getId()]) {
+      watchdog('entrez', 'Bibliographic citation !id has not changed.',
+        array('!id' => $pubmed_article->getId()), WATCHDOG_INFO);
+      continue;
+    }
+
+    $biblio = (object)array_merge(
+      entrez_biblio_node_defaults(),
+      $node_info,
+      entrez_biblio_nodelet($pubmed_article->getId()),
+      $pubmed_article->getBiblio()
+    );
+
+    module_load_include('inc', 'biblio', 'biblio.keywords');
+    module_load_include('inc', 'biblio', 'biblio.import.export');
+    // biblio_save_node calls node_save which triggers biblio_insert or _update
+    // no need to call biblio_save_node, we are handling defaults and our batches
+    node_save($biblio);
+    watchdog('entrez', 'Successfully imported bibliographic citation !link',
+      array('!link' => l($biblio->title, 'node/' . $biblio->nid)),
+      WATCHDOG_INFO);
+  
+    $values .= '(' . $pubmed_article->getId() . ','
+             . "'" . $pubmed_article->getMd5() . "'" . '),';
+    $imported[] = clone $biblio;
+  }
+  
+  if (!empty($values)) {
+    $sql = 'REPLACE INTO entrez_hash VALUES ' . rtrim($values, ',');
+    _db_query($sql);
+    biblioreference_update_index();
+  }
+   
+  variable_set('biblio_index', 1);
+    
+  return $imported;
+}
+
+/**
+ * Biblio node defaults for use as the base of merging in other values.
+ *
+ * In general use user-configurable settings afforded by biblio module.
+ *
+ * @return array
+ */
+function entrez_biblio_node_defaults() {
+  $options = variable_get('node_options_biblio', array('status'));
+  $node_defaults = array(
+    'type' => 'biblio',
+    'uid' => 1,
+    'status' => in_array('status', $options),
+    'promote' => in_array('promote', $options),
+    'moderate' => in_array('moderate', $options), // note: not used in Drupal core
+    'sticky' => in_array('sticky', $options),
+    'format' => 0,
+    'comment' => variable_get('comment_biblio', 0),
+    'taxonomy' => array(),
+    'biblio_type' => 129, // miscellaneous
+  );
+  return $node_defaults;
+}
+
+/**
+ * Returns nid, vid and taxonomy information for an existing biblio item with
+ * the given PubMed ID or an empty array if there's no matching record.
+ *
+ * @param $pubmed_id
+ *   a PubMed ID
+ * @return array
+ */
+function entrez_biblio_nodelet($pubmed_id) {
+  $sql = 'SELECT nid, vid from {biblio} WHERE `biblio_citekey` = %d LIMIT 1';
+  $nodelet = db_fetch_array(db_query($sql, $pubmed_id));
+  
+  if (!$nodelet) {
+    $nodelet = array();
+  }
+  else {
+    $nodelet['taxonomy'] = taxonomy_node_get_terms((object)$nodelet);
+  }
+  
+  return $nodelet;
+}
+
+
+/**
+ * Get the most recent (or from given timestamp) search query.
+ *
+ * This function provides a default value if there is none in the database.
+ *
+ * @param $qdate
+ *   An optional UNIX timestamp.  If not given, get the most recent values.
+ *
+ * @see entrez_query_fetch_value()
+ * @see entrez_query_fetch_row()
+ */
+function entrez_get_search_query($qdate = 'current') {
+  return entrez_query_fetch_value('query', '', $qdate);
+}
+
+/**
+ * Get the most recent (or from given timestamp) query minimum date.
+ *
+ * @see entrez_query_fetch_value()
+ */
+function entrez_get_min_date($qdate = 'current') {
+  $default = date(DateTime::ISO8601, time()-60*60*24);
+  return entrez_query_fetch_value('min_date', $default, $qdate);
+}
+
+/**
+ * Get the most recent (or from given timestamp) query maximum date.
+ *
+ * @see entrez_query_fetch_value()
+ */
+function entrez_get_max_date($qdate = 'current', $override_default = FALSE) {
+  if (!$override_default) {
+    $default = date(DateTime::ISO8601);
+  }
+  else {
+    $default = $override_default;
+  }
+  return entrez_query_fetch_value('max_date', $default, $qdate);
+}
+
+/**
+ * A helper function for getting individual values from the entrez_query table.
+ *
+ * Functions that call this function must provide the name of the value
+ * requested AND a default value.
+ *
+ * @param $value
+ *   A string corresponding to the field name for the entrez_query db table.
+ *
+ * @param $default
+ *   The default value for this field if no result from database.
+ *
+ * @param $qudate
+ *   An optional UNIX timestamp.  If not given, get the most recent values.
+ *
+ * @see entrez_query_fetch_row()
+ */
+function entrez_query_fetch_value($column, $default, $qdate = 'current') {
+  $entrez_query_row = entrez_query_fetch_row($qdate);
+  if (is_array($entrez_query_row)) {
+    return $entrez_query_row[$column];
+  }
+  else {
+    // Provide the default.
+    return $default;
+  }
+}
+
+/**
+ * Fetch a single row from the entrez_query table and cache the results.
+ *
+ * This function is used to cache the database query results for more granular
+ * functions.
+ *
+ * If a string other than 'current' is passed in the worst that will happen is
+ * that caching is bypassed, so we do not bother to validate this text.
+ *
+ * @param $qudate
+ *   An optional UNIX timestamp.  If not given, get the most recent values.
+ */
+function entrez_query_fetch_row($qdate = 'current') {
+  static $entrez_query_rows = array();
+  if (!isset($entrez_query_rows[$qdate])) {
+    $sql = 'SELECT * FROM {entrez_query} ';
+    $args = array();
+    if (is_numeric($qdate)) {
+      $sql .= 'WHERE qdate = %d';
+      $args[] = $qdate;
+    }
+    else {
+      // Get the most recent entry.
+      $sql .= 'ORDER BY qdate DESC LIMIT 1';
+    }
+    $entrez_query_rows[$qdate] = db_fetch_array(db_query($sql, $args));
+  }
+  return $entrez_query_rows[$qdate];
+}
+
+function entrez_set_query($values = array()) {
+  if (empty($values)) {
+    watchdog('entrez', 'No values given to save to entrez_query table', array(), WATCHDOG_ERROR);
+    return;
+  }
+  $values['qdate'] = time();
+  $sql = 'INSERT INTO {entrez_query} ';
+  $separator = '';
+  $cols = '(';
+  $vals = '(';
+  $args = array();
+  foreach ($values as $column => $value) {
+    $cols .= $separator . $column;
+    $vals .= $separator . "'%s'";
+    $args[] = $value;
+    $separator = ', ';
+  }
+  $cols .= ')';
+  $vals .= ')';
+  $sql .= $cols . ' VALUES ' . $vals;
+  db_query($sql, $args);
+}
+
+/**
+ * Returns an array of md5 hash values for the given PubMed IDs.
+ *
+ * @param $pubmed_ids
+ *   an array of PubMed IDs
+ * @return array
+ *   an array of PubMed IDs and associated md5 hashes
+ */
+function entrez_get_hashes(Array $pubmed_ids) {
+  if (!empty($pubmed_ids)) {
+    $placeholders = implode(',', array_fill(0, count($pubmed_ids), '%d'));
+    $sql = "SELECT pubmed_id,md5 FROM entrez_hash "
+         . "WHERE pubmed_id IN ($placeholders)";
+    $result = db_query($sql, $pubmed_ids);
+    while (($row = db_fetch_array($result)) !== FALSE) {
+      $hashes[$row['pubmed_id']] = $row['md5'];
+    }
+  } else {
+    $hashes = array();
+  }
+  
+  return $hashes;
+}
+
+/**
+ * Replace all other separators in a string with spaces and split into arary.
+ *
+ * Agaric Utility function most practical for numeric IDs, rather than text.
+ *
+ * @param $string
+ *  String value containing one or more simple values, separated by anything.
+ * @return
+ *  Array of values from the split string.
+ */
+function entrez_au_rationalize_separators($string) {
+  // transform all separators into spaces
+  $seps = array(',', ';', ':', '|', '.');
+  $string = str_replace($seps, ' ', $string);
+  $string = trim(ereg_replace(' +', ' ', $string));
+  return explode(' ', $string);
+}
+
+/**
+ * Returns a new EntrezClient instance.
+ *
+ * @return EntrezClient
+ */
+function entrez_create_client() {
+  $client = new EntrezClient();
+  $client->setEmail(variable_get('site_mail', null));
+  $client->setTool(variable_get('site_name', 'Drupal'));
+
+  return $client;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function entrez_cron() {
+  if (variable_get('entrez_cron_import', 0)) {
+    try {
+      entrez_cron_import();
+    }
+    catch (Exception $exception) {
+      watchdog('entrez', $exception->getMessage(), array(), WATCHDOG_ERROR);
+    }
+  }
+  if (variable_get('entrez_cron_update', 0)) {
+    try {
+      entrez_cron_update();
+    }
+    catch (Exception $exception) {
+      watchdog('entrez', $exception->getMessage(), array(), WATCHDOG_ERROR);
+    }
+  }
+}
+
+/**
+ * Retrieves the latest articles from the PubMed database using the saved
+ * search term. The search is performed daily and the articles are fetched in
+ * subsequent cron runs.
+ */
+function entrez_cron_import() {
+  $entrez = entrez_create_client();
+  $entrez->setReturnMax(25);
+  $now = new DateTime();
+  $cron_last = new DateTime(variable_get('entrez_cron_last', 'yesterday'));
+  
+  // Make sure that new results are retrieved more frequently than once a day
+  // to avoid some articles slipping through.
+  if ($now->format('U') - $cron_last->format('U') > 84000) {
+    $entrez->setDateRange($cron_last->format('Y/m/d'), $now->format('Y/m/d'));
+    $entrez->setTerm(entrez_get_search_query());
+    $entrez->search();
+    
+    variable_set('entrez_cron_webenv', $entrez->getWebEnvironment());
+    variable_set('entrez_cron_query', $entrez->getQueryKey());
+    variable_set('entrez_cron_runs', 0);
+    variable_set('entrez_cron_last', $now->format('Y/m/d'));
+    variable_set('entrez_cron_results', $entrez->count());
+      
+    $message = 'Initiated retrieval of !results articles published between '
+             . '!min_date and !max_date.';
+    $params = array(
+      '!results' => $entrez->count(),
+      '!min_date' => $cron_last->format('Y/m/d'),
+      '!max_date' => $now->format('Y/m/d'),
+    );
+    watchdog('entrez', $message, $params, WATCHDOG_INFO);
+  }
+  
+  if (entrez_cron_more_results($entrez)) {
+    $cron_runs = variable_get('entrez_cron_runs', 0);
+    $ret_start =  $cron_runs * $entrez->getReturnMax();
+    $min_date = clone $cron_last;
+    $min_date->modify('yesterday');
+    $node_info = array('uid' => 1, 'status' => 0);
+    
+    $message = 'Retrieving results !start to !stop of !results from PubMed.';
+    $params = array(
+      '!start' => $ret_start + 1,
+      '!stop' => min($ret_start + $entrez->getReturnMax(), variable_get('entrez_cron_results', 0)),
+      '!results' => variable_get('entrez_cron_results', 0),
+    );
+    watchdog('entrez', $message, $params, WATCHDOG_INFO);
+    
+    $entrez->setWebEnvironment(variable_get('entrez_cron_webenv', ''));
+    $entrez->setQueryKey(variable_get('entrez_cron_query_key', 1));
+    $entrez->setDateRange($min_date->format('Y/m/d'), $cron_last->format('Y/m/d'));
+    $biblio = entrez_import_pubmed($entrez->fetchResult($ret_start), $node_info);
+    variable_set('entrez_cron_runs', $cron_runs + 1);
+  }
+}
+
+/**
+ * Updates existing biblio items.
+ */
+function entrez_cron_update() {
+  $hash = array();
+  $entrez = entrez_create_client();
+  $entrez->setReturnMax(ENTREZ_UPDATE_PER_CRON);
+  $cron_runs = variable_get('entrez_cron_update_runs', 0);
+  $offset = $cron_runs * $entrez->getReturnMax();
+  // Biblios imported from PubMed can be identified by their link to an abstract.
+  $where = 'WHERE biblio_custom1 LIKE "http://www.ncbi.nlm.nih.gov/pubmed%"';
+  $items = db_result(db_query('SELECT COUNT(*) FROM {biblio} ' . $where));
+
+  // Start again when all items have been updated.
+  if ($offset >= $items) {
+    $offset = 0;
+    $cron_runs = 0;
+  }
+  
+  // Use the PubMed IDs as search term. Biblio table stores PubMed ID in
+  // biblio_citekey.
+  $sql = "SELECT biblio_citekey FROM {biblio} $where";
+  $result = db_query_range($sql, $offset, ENTREZ_UPDATE_PER_CRON);
+  while (($row = db_fetch_array($result)) !== FALSE ) {
+    $pubmed_ids[] = $row['biblio_citekey'];
+  }
+  
+  if (!empty($pubmed_ids)) {
+    $entrez->setTerm(implode(' ', $pubmed_ids));
+    $entrez->search();
+    $biblio = entrez_import_pubmed($entrez->fetchResult());
+    variable_set('entrez_cron_update_runs', $cron_runs + 1);
+  }
+}
+
+/**
+ * Returns TRUE if there are more results to be fetched in the current cron
+ * cycle, FALSE otherwise.
+ *
+ * @param $client
+ *   an EntrezClient object
+ * @return bool
+ */
+function entrez_cron_more_results(EntrezClient $client) {
+  $cron_runs = variable_get('entrez_cron_runs', 0);
+  $results = variable_get('entrez_cron_results', 0);
+    
+  return ($cron_runs * $client->getReturnMax() < $results);
+}
+
+/**
+ * Check if site is in the given mode, FALSE if not or if no mode.module.
+ */
+function entrez_mode_check($mode_name = 'development') {
+  $in_mode = FALSE;
+  $mode_name = strtolower($mode_name);
+  // If using mode.module, allow large imports if mode named 'Development'.
+  // As implemented, this is a very hidden feature.
+  if (function_exists('mode_modes_load')) {
+    $mode = mode_modes_load(NULL, TRUE);
+    if (strtolower($mode->name) == $mode_name) {
+      $in_mode = TRUE;
+    }
+  }
+  return $in_mode;
+}

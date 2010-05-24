@@ -1,0 +1,324 @@
+<?php
+// $Id: signwriter.install,v 1.8.2.2.2.4 2009/07/14 12:57:53 agileware Exp $
+
+/**
+ * @file
+ * (Un)Install/Update hooks for Signwriter.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function signwriter_install() {
+  drupal_install_schema('signwriter');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function signwriter_uninstall() {
+  variable_del('signwriter_cachedir');
+  variable_del('signwriter_cachecleanperiod');
+  variable_del('signwriter_fontpath');
+  variable_del('signwriter_last_cleanup');
+  variable_del('signwriter_menusettings');
+  variable_del('signwriter_menulevels');
+  variable_del('signwriter_specialcharnotice');
+  variable_del('signwriter_pagehookprofile');
+  variable_del('signwriter_blockhookprofile');
+  variable_del('signwriter_panelshooktitleprofile');
+
+  cache_clear_all("signwriter_menu", "cache");
+  cache_clear_all("signwriter_menucss", "cache");
+
+  drupal_uninstall_schema('signwriter');
+}
+
+/**
+ * Implementation of hook_schema().
+ */
+function signwriter_schema() {
+  $schema['signwriter'] = array(
+    'description' => t('signwriter table'),
+    'fields' => array(
+      'id' => array(
+        'description' => 'the primary identifier of the schema',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'the name of the schema',
+        'type' => 'varchar',
+        'length' => 128,
+      ),
+      'pattern' => array(
+        'description' => 'the signwriter pattern',
+        'type' => 'varchar',
+        'length' => 128,
+      ),
+      'allowed_nonasciichars' => array(
+        'description' => 'allowed unicode characters for text',
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+      'imagetype' => array(
+        'description' => 'the type of the image',
+        'type' => 'varchar',
+        'length' => 8,
+        'not null' => TRUE,
+        'default' => 'gif',
+      ),
+      'width' => array(
+        'description' => 'width of the image',
+        'type' => 'int',
+      ),
+      'height' => array(
+        'description' => 'height of the image',
+        'type' => 'int',
+      ),
+      'maxwidth' => array(
+        'description' => 'maximum width of the image',
+        'type' => 'int',
+      ),
+      'textalign' => array(
+        'description' => 'alignment of text within the image',
+        'type' => 'varchar',
+        'length' => 32,
+      ),
+      'multiline' => array(
+        'description' => 'is multiline functionality enabled',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'disable_span' => array(
+        'description' => 'Whether or not to disable the hidden span.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'default' => 0,
+      ),
+      'threestate' => array(
+        'description' => 'add hover and active images',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'transparent' => array(
+        'description' => 'transparent image',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'use_title_text' => array(
+        'description' => 'Whether or not to display title text for images.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'indexes' => array(
+      'name' => array('name'),
+    ),
+    'primary key' => array('id'),
+  );
+
+  signwriter_imgstate_schema($schema);
+  signwriter_imgstate_schema($schema, "hov_");
+  signwriter_imgstate_schema($schema, "act_");
+
+  $schema['signwriter_menu'] = array(
+    'description' => t('signwriter menu profile table'),
+    'fields' => array(
+      'id' => array(
+        'description' => 'the primary identifier of the profile',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'the name of the profile',
+        'type' => 'varchar',
+        'length' => 128,
+      ),
+      'data' => array(
+        'description' => 'The value of the variable.',
+        'type' => 'text',
+        'not null' => TRUE,
+        'size' => 'big'
+      ),
+    ),
+    'indexes' => array(
+      'name' => array('name'),
+    ),
+    'primary key' => array('id'),
+  );
+  return $schema;
+}
+
+/**
+ * Provides additional signwriter fields for different menu states
+ */
+function signwriter_imgstate_schema(&$schema, $state = "") {
+  $schema['signwriter']['fields'] += array(
+    "${state}fontfile" => array(
+      'description' => 'the name of the font, without ttf',
+      'type' => 'varchar',
+      'length' => 128,
+    ),
+    "${state}fontsize" => array(
+      'description' => 'the size of the font',
+      'type' => 'int',
+      'unsigned' => TRUE,
+      'default' => 20,
+    ),
+    "${state}background" => array(
+      'description' => 'background color',
+      'type' => 'varchar',
+      'length' => 6,
+      'default' => 'ffffff',
+    ),
+    "${state}foreground" => array(
+      'description' => 'foreground color',
+      'type' => 'varchar',
+      'length' => 6,
+      'default' => '000000',
+    ),
+    "${state}bgimage" => array(
+      'description' => 'background image',
+      'type' => 'varchar',
+      'length' => 128,
+    ),
+    "${state}xoffset" => array(
+      'description' => 'x offset of the text within the image',
+      'type' => 'int',
+    ),
+    "${state}yoffset" => array(
+      'description' => 'y offset of the text within the image',
+      'type' => 'int',
+    ),
+    "${state}drop_shadow" => array(
+      'description' => 'are drop shadows on or off',
+      'type' => 'int',
+      'not null' => TRUE,
+      'default' => 0,
+    ),
+    "${state}shadow_color" => array(
+      'description' => 'are drop shadows on or off',
+      'type' => 'varchar',
+      'length' => 6,
+      'default' => 'd2d2d2',
+    ),
+    "${state}shadow_xoffset" => array(
+      'description' => 'x offset of shadow from actual text',
+      'type' => 'int',
+      'default' => 5,
+    ),
+    "${state}shadow_yoffset" => array(
+      'description' => 'y offset of shadow from actual text',
+      'type' => 'int',
+    ),
+    "${state}border" => array(
+      'description' => 'are borders on or off',
+      'type' => 'int',
+      'not null' => TRUE,
+      'default' => 0,
+    ),
+    "${state}border_color" => array(
+      'description' => 'border color',
+      'type' => 'varchar',
+      'length' => 6,
+      'default' => 'e2e2e2',
+    ),
+    "${state}border_radius" => array(
+      'description' => 'radius of border',
+      'type' => 'int',
+      'default' => 1,
+    ),
+  );
+}
+
+/**
+ * Provides update for additional signwriter fields for different menu states
+ */
+function _signwriter_update_imgstate(&$ret, $state) {
+  db_add_field($ret, 'signwriter', "${state}fontfile", array('description' => 'the name of the font, without ttf', 'type' => 'varchar', 'length' => 128,  ));
+  db_add_field($ret, 'signwriter', "${state}fontsize", array('description' => 'the size of the font', 'type' => 'int','unsigned' => TRUE, 'default' => 20,));
+  db_add_field($ret, 'signwriter', "${state}background", array('description' => 'background color', 'type' => 'varchar', 'length' => 6, 'default' => 'ffffff'));
+  db_add_field($ret, 'signwriter', "${state}foreground", array('description' => 'foreground color', 'type' => 'varchar', 'length' => 6, 'default' => '000000'));
+  db_add_field($ret, 'signwriter', "${state}bgimage", array('description' => 'background image', 'type' => 'varchar', 'length' => 128));
+  db_add_field($ret, 'signwriter', "${state}xoffset", array('description' => 'x offset of the text within the image', 'type' => 'int'));
+  db_add_field($ret, 'signwriter', "${state}yoffset", array('description' => 'y offset of the text within the image', 'type' => 'int'));
+  db_add_field($ret, 'signwriter', "${state}drop_shadow", array('description' => 'are drop shadows on or off', 'type' => 'int', 'not null' => TRUE, 'default' => 0));
+  db_add_field($ret, 'signwriter', "${state}shadow_color", array('description' => 'are drop shadows on or off', 'type' => 'varchar', 'length' => 6, 'default' => 'd2d2d2'));
+  db_add_field($ret, 'signwriter', "${state}shadow_xoffset", array('description' => 'x offset of shadow from actual text', 'type' => 'int', 'default' => 5));
+  db_add_field($ret, 'signwriter', "${state}shadow_yoffset", array('description' => 'y offset of shadow from actual text', 'type' => 'int'));
+  db_add_field($ret, 'signwriter', "${state}border", array('description' => 'are borders on or off', 'type' => 'int', 'not null' => TRUE, 'default' => 0));
+  db_add_field($ret, 'signwriter', "${state}border_color", array('description' => 'border color', 'type' => 'varchar', 'length' => 6, 'default' => 'e2e2e2'));
+  db_add_field($ret, 'signwriter', "${state}border_radius", array('description' => 'radius of border', 'type' => 'int', 'default' => 1));
+}
+
+function signwriter_update_6000() {
+  $ret = array();
+  variable_del('cachedir');
+  variable_del('fontpath');
+  $ret[] = update_sql("ALTER TABLE {signwriter} CHANGE fontsize fontsize int unsigned default '20'");
+  $ret[] = update_sql("ALTER TABLE {signwriter} CHANGE background background varchar(6) default 'ffffff'");
+  $ret[] = update_sql("ALTER TABLE {signwriter} CHANGE foreground foreground varchar(6) default '000000'");
+  $ret[] = update_sql("ALTER TABLE {signwriter} CHANGE shadow_color shadow_color varchar(6) default 'd2d2d2'");
+  $ret[] = update_sql("ALTER TABLE {signwriter} ADD allowed_nonasciichars varchar(255) AFTER fontsize");
+  cache_clear_all();
+  menu_rebuild();
+  drupal_set_message(t('The signwriter module now has an option to clean up the generated image files regularily (off by default). Files generated by previous versions have to be removed manually from the old signwriter cache directory, the new one is located within the files directory.'));
+  return $ret;
+}
+
+function signwriter_update_6200() {
+  $ret = array();
+
+  // Need to check this column as it exists in new D5 versions but not old ones
+  if (!db_column_exists('signwriter', 'disable_span')) {
+    db_add_field($ret, 'signwriter', 'disable_span', array('description' => 'Whether or not to disable the hidden span.', 'type' => 'int', 'unsigned' => TRUE, 'default' => 0));
+  }
+
+  db_add_field($ret, 'signwriter', 'threestate', array('description' => 'add hover and active images', 'type' => 'int', 'not null' => TRUE, 'default' => 0));
+  db_add_field($ret, 'signwriter', 'use_title_text', array('description' => 'Whether or not to display title text for images.', 'type' => 'int', 'unsigned' => TRUE, 'default' => 0));
+
+  db_add_field($ret, 'signwriter', 'border_radius', array('description' => 'radius of border', 'type' => 'int', 'default' => 1));
+  db_add_field($ret, 'signwriter', 'border_color', array('description' => 'border color', 'type' => 'varchar', 'length' => 6, 'default' => 'e2e2e2'));
+  db_add_field($ret, 'signwriter', 'border', array('description' => 'are borders on or off', 'type' => 'int', 'not null' => TRUE, 'default' => 0));
+
+  _signwriter_update_imgstate($ret, "hov_");
+  _signwriter_update_imgstate($ret, "act_");
+
+  $schema['signwriter_menu'] = array(
+    'description' => t('signwriter menu profile table'),
+    'fields' => array(
+      'id' => array(
+        'description' => 'the primary identifier of the profile',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'the name of the profile',
+        'type' => 'varchar',
+        'length' => 128,
+      ),
+      'data' => array(
+        'description' => 'The value of the variable.',
+        'type' => 'text',
+        'not null' => TRUE,
+        'size' => 'big'
+      ),
+    ),
+    'indexes' => array(
+      'name' => array('name'),
+    ),
+    'primary key' => array('id'),
+  );
+
+  db_create_table($ret, 'signwriter_menu', $schema['signwriter_menu']);
+
+  return $ret;
+}

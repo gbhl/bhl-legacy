@@ -1,0 +1,185 @@
+#GnuBook {
+ border:1px solid black;
+ position:absolute;
+ font-family: arial, sans-serif;
+}
+
+#GBtoolbar {
+    height:25px;
+    width:100%;
+    background-color: #E6E4E1;
+}
+
+#GBtoolbar .label {
+    font-size: 0.9em;
+}
+
+#GBcontainer {
+    /*height:95%;*/
+    top:25px;
+    bottom:0px;
+    width:100%;
+    overflow-x:auto;
+    overflow-y:scroll;    
+    /*text-align: center;*/
+    background-color: #FCFCFC;
+    position:absolute;
+}
+
+#GBpageview {
+    background-color: #FCFCFC;
+}
+
+.GBpagediv1up {
+    background-color: #FFFFEE;
+    overflow:hidden;
+    border-right: 2px solid #717171;
+    border-bottom: 2px solid #717171;
+    border-left: 1px solid #909090;
+    border-top: 1px solid #909090;
+    cursor: move;
+}
+
+.GBpagediv2up {
+    background-color: rgb(234, 226, 205);
+    overflow:hidden;
+}
+
+/* search sidebar */
+#GnuBookSearch {
+    border:1px solid black;
+    position:absolute;
+    background-color: #E6E4E1;
+    font-family: arial, sans-serif;
+}
+
+#GnuBookSearchResults {
+    background-color: #FCFCFC;
+    top: 25px;
+    bottom: 0px;
+    overflow:auto;    
+    position: absolute;
+    left: 0px;
+    right: 0px;    
+    font-family: arial, san-serif;
+    font-size: 0.85em; 
+    padding: 2px;
+}
+
+.GnuBookSearchHilite {
+    opacity: 0.20; 
+    filter: alpha(opacity = 20);
+    background-color: #00f;
+    position:absolute;
+}
+
+.GBpageform {
+    display: inline; 
+}
+
+.GBicon {
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+    vertical-align: middle;
+    border: none;
+}
+
+/* Absolute path used since the html might be generated at /stream/id or elsewhere */
+.GBicon.logo { background: url(images/logo_icon.png) no-repeat; }
+.GBicon.zoom_out { background: url(images/zoom_out_icon.png) no-repeat; }
+.GBicon.zoom_in { background: url(images/zoom_in_icon.png) no-repeat; }
+.GBicon.one_page_mode { background: url(images/one_page_mode_icon.png) no-repeat; }
+.GBicon.two_page_mode { background: url(images/two_page_mode_icon.png) no-repeat; }
+.GBicon.embed { background: url(images/embed_icon.png) no-repeat; }
+.GBicon.book_left { background: url(images/book_left_icon.png) no-repeat; }
+.GBicon.book_right { background: url(images/book_right_icon.png) no-repeat; }
+.GBicon.book_up { background: url(images/book_up_icon.png) no-repeat; }
+.GBicon.book_down { background: url(images/book_down_icon.png) no-repeat; }
+.GBicon.book_leftmost { background: url(images/book_leftmost_icon.png) no-repeat; }
+.GBicon.book_rightmost { background: url(images/book_rightmost_icon.png) no-repeat; }
+.GBicon.book_top { background: url(images/book_top_icon.png) no-repeat; }
+.GBicon.book_bottom { background: url(images/book_bottom_icon.png) no-repeat; }
+
+
+.GBicon.play { background: url(images/control_play_icon.png) no-repeat; }
+.GBicon.pause { background: url(images/control_pause_icon.png) no-repeat; }
+
+/* Icons with this class should have a 48x24 image which contains
+   the regular and hover images side-by-side */
+.GBicon.rollover:hover { background-position: -24px 0; }
+
+/* Special logic for the logo, which is an actual link */
+a.GBicon {
+    display: block;
+    text-decoration: none;
+    border: none;
+    float: left;
+}
+
+/* footer stuff, from Rebecca's demo */
+#GBfooter { 
+    position:absolute;
+    bottom: 1px;        /* ensure no vertical scroll bar in FF */
+    left: 0px;
+    /*width: 100%;*/    /* this causes horizontal scroll bar in FF */
+    right: 0px;
+    clear: both; 
+    color: #000000; 
+    padding: 0px 0px 0px 10px; 
+    background: #CCCCCC; 
+    height: 2em; 
+    line-height: 25px; 
+    vertical-align: middle; 
+    font-family: arial, sans-serif;
+    font-size: 12px;
+}
+
+.GBlogotype {
+    float:left;
+    font-weight: bold; 
+    height: 25px; 
+    line-height: 25px; 
+    vertical-align: middle; 
+}
+
+a.GBwhite 			{ color: #fff }
+a.GBwhite:hover 		{ text-decoration: none; }
+a.GBwhite:visited		{ color: #fff }
+
+a.GBblack           { color: #000000 }
+a.GBblack:hover     { text-decoration: none; }
+a.GBblack:visited   { color: #000000 }
+
+.GBnavlinks {
+    float:right; 
+    padding: 0px 20px 0px 0px; 
+    margin: 0px; 
+    height: 25px; 
+    line-height: 25px; 
+    vertical-align: middle;
+}
+
+/* thumnbail view, from Rebecca's demo */
+.GBpdstatus-footer {
+    position:absolute;
+    height: 65px;
+    bottom: 25px;
+    width: 100%;
+    background-color: #f8f8f8;
+    border-top: 1px solid #ccc; 
+    text-align: right; 
+    padding: 0px 0px 0px 0px; 
+}
+
+.GBwidgetlabel { 
+    color: #919070; 
+    padding: 8px 8px 4px 8px; 
+    font-family: verdana, arial, helvetica, sans-serif; 
+    font-size: 10px; 
+    float: left; 
+}
+
+.GBfliparea {
+    background-image: url(images/transparent.png); # Required to capture mouse on IE
+}

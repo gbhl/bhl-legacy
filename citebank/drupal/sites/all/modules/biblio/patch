@@ -1,0 +1,47 @@
+### Eclipse Workspace Patch 1.0
+#P biblio
+Index: biblio.pages.inc
+===================================================================
+RCS file: /cvs/drupal-contrib/contributions/modules/biblio/biblio.pages.inc,v
+retrieving revision 1.1.2.94
+diff -u -r1.1.2.94 biblio.pages.inc
+--- biblio.pages.inc 6 Aug 2009 15:42:15 -0000 1.1.2.94
++++ biblio.pages.inc 5 Sep 2009 00:53:53 -0000
+@@ -110,12 +110,12 @@
+
+   $selects[] = "DISTINCT(n.nid)";
+   $count_selects[] = "DISTINCT(n.nid)";
+-  $selects[] = "n.*";
+-  $selects[] = "b.*";
+-  $selects[] = "bt.name as biblio_type_name";
++  //$selects[] = "n.*";
++  //$selects[] = "b.*";
++  //$selects[] = "bt.name as biblio_type_name";
+
+   $joins[] = "left join {biblio} b  on n.vid=b.vid ";
+-  $joins[] = "inner join {biblio_types} bt  on b.biblio_type=bt.tid ";
++  //$joins[] = "inner join {biblio_types} bt  on b.biblio_type=bt.tid ";
+
+   // POSIX regular expression matching, case insensitive
+   $match_op = ($db_type == 'pgsql') ? '~*' : 'RLIKE';
+@@ -461,7 +461,7 @@
+       $content .= drupal_get_form('biblio_search_form');
+     }
+     if ( biblio_access('export')) {
+-      $content .= '<div class="biblio-export">'.t('Export @count results', array('@count' => $pager_total_items[0])).':' . theme('biblio_export_links'). '</div>';
++      $content .= '<div class="biblio-export">'. theme('biblio_export_links'). '</div>';
+     }else{
+       $content .= '<div class="biblio-export">'.t('Found @count results', array('@count' => $pager_total_items[0])) .'</div><br />';
+     }
+@@ -489,8 +489,9 @@
+
+   while ($node = db_fetch_object($result)) {
+     $count++;
+-    $node->biblio_contributors = biblio_load_contributors($node->vid);
+-    $node->biblio_keywords = biblio_load_keywords($node->vid);
++    $node = node_load($node->nid);
++    //$node->biblio_contributors = biblio_load_contributors($node->vid);
++    //$node->biblio_keywords = biblio_load_keywords($node->vid);
+     if (variable_get('biblio_hide_bibtex_braces', 0)) $node->title = biblio_remove_brace($node->title);
+     if (module_exists("upload")) $node->files = upload_load($node);
+     if (variable_get('biblio_fix_isi_links', 0)) biblio_fix_isi_links($node);
