@@ -1,0 +1,106 @@
+<h1>View holdings records</h1>
+<form method="post" action="<?php echo $html->url('/holdings')?>">
+    <p>
+         <!--  Title:
+        <?php echo $html->input('Holding/title', array('size' => '40'))?>
+        <?php echo $html->tagErrorMsg('Holding/title', 'Search term required') ?>
+    </p>
+
+    <p>
+      <?php echo $html->submit('Search') ?>    -->
+<?php
+   $html->addCrumb('view records','/holdings/index');
+   $pagination->setPaging($paging);
+   echo ($filter->setFiltering($filters));
+   ?>
+   <hr/><br/>
+    <?php echo $html->link('Remove duplicates','/bibs/dedupselect'); ?>
+<br/><br><hr/><br/>
+
+
+<table>
+<tr>
+    <th><?php echo $pagination->sortLink('control', '035'); ?></th>
+    <th>Actions</th>
+    <th>Bid to scan</th>
+
+</tr>
+
+<!--?php var_dump($Holdings); ?-->
+
+<?php foreach ($Holdings as $row): ?>
+
+<tr>
+
+
+
+
+
+   <td>   
+   
+         <?php          
+		 $holdings = $row['Holding'];
+		 foreach ($holdings as $holding)
+		 {		    
+		    echo $matchlinker->generate_opac_links($holding['place'], $holding['035'], $holding['oclc'], $row['Holding']['001']);
+		    echo "<br>";
+		 }                  
+         ?>
+
+   </td>
+      
+
+
+    <td>
+        <?php echo $html->link('View record and bids','/Holdings/view/' . $row['Holding']['id']); ?><br/>
+        <?php //echo $html->link('Edit','/Holdings/edit/' . $row['Holding']['id']); ?>
+     </td>
+     <td>
+ <?php
+        
+            if ($bidbutton->draw_buttons($row) == 'none')
+                {
+                if ($othAuth->sessionValid())
+                {                    echo $html->formTag('/bids/bidall/' . $html->tagValue('Bid/id'));
+                    echo "<input type=\"hidden\" name=\"data[Bid][partial]\" id=\"data[Bid][partial]\" value=\"0\" />";
+                    echo "<input type=\"hidden\" name=\"data[Bid][bib_id]\"  id=\"data[Bid][bib_id]\" value=\"";
+                    echo $row['Holding']['id'] . "\" />";
+                    echo "<input type=\"hidden\" name=\"data[Bid][user_id]\" id=\"data[Bid][user_id]\" value=\"";
+                    echo $othAuth->user('id'). '" />';
+           
+                    echo "<input type=\"hidden\" name=\"data[Bid][status_id]\" id=\"data[Bid][status_id]\" value=\"1\" />";
+                    echo	$html->submit('Bid for all ');
+           
+                    echo "</form>";
+           
+                    echo $html->formTag('/bids/bidpartial/' . $html->tagValue('Bid/id'));
+                    echo "<input type=\"hidden\" name=\"data[Bid][bib_id]\"   id=\"data[Bid][bib_id]\" value=\"";
+                    echo $row['Holding']['id'] . "\" />";
+                    echo "<input type=\"hidden\" name=\"data[Bid][Holding][title]\" id=\"data[Bid][Holding][title]\" value=\"";
+                    echo $row['Holding']['title'] . "\" />" . $html->submit('Partial bid') . "</form>" ;
+                }
+                else
+                {
+               echo "<p><b>Please " . $html->link('login','/users/login') . " to bid</b></p>"; 
+                }  
+                }
+                else
+                {                echo $bidbutton->draw_buttons($row);                }
+           
+ 
+            
+ ?>
+
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+
+<br />
+<br />
+ <p>Select a page:</p>
+<?php echo $pagination->pageNumbers(NULL, NULL, ' '); ?>
+
+
+</table>
+</table>

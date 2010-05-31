@@ -1,0 +1,64 @@
+<?php
+$id = $myproblemlistline['Problemlistline']['id'];
+$pklistid = $myproblemlistline['Problemlistline']['problemlist_id'];
+$html->addCrumb('back to problem list records',"/problemlists/edit/$pklistid");
+$html->addCrumb('view line record',"/problemlistlines/view/$id"); 
+
+
+$myproblemlistlines = $myproblemlistline['Problemlistline'];
+
+
+
+?>
+
+<h1><?php echo "Line  " . $myproblemlistline['Problemlistline']['id'] . " for Problem list " . $myproblemlistline['Problemlistline']['problemlist_id']?></h1>
+
+
+	 
+     
+	 
+	<small><?php echo "(for Problem list " .  $myproblemlistline['Problemlistline']['problemlist_id'] . " created: " . $myproblemlistline['Problemlist']['create_date'] . " by Library: " . $myproblemlistline['Problemlist']['library'] . ")"; ?></small>     
+
+
+
+<p><small class="standoutlabel">Title: </small><small class="standoutcontent"><?php if(!$myproblemlistline['Title']['title']) echo '&nbsp;'; else echo $myproblemlistline['Title']['title']; ?></small></p>
+
+<p><small class="standoutlabel">Catkey: </small><small class="standoutcontent"><?php if(!$myproblemlistline['Title']['catkey']) echo '&nbsp;'; else echo $myproblemlistline['Title']['catkey']; ?></small></p>
+
+<hr />
+
+<p><small class="standoutlabel">Chronology Start: </small><small class="standoutcontent"><?php if(!$myproblemlistline['Problemlistline']['chronology_start']) echo '&nbsp;'; else echo $myproblemlistline['Problemlistline']['chronology_start']; ?></small></p>
+
+<p><small class="standoutlabel">Chronology End: </small><small class="standoutcontent"><?php if(!$myproblemlistline['Problemlistline']['chronology_end']) echo '&nbsp;'; else echo $myproblemlistline['Problemlistline']['chronology_end']; ?></small></p>
+
+<hr />
+
+<p><small class="standoutlabel">Enumeration Start: </small><small class="standoutcontent"><?php if(!$myproblemlistline['Problemlistline']['enum_start']) echo '&nbsp;'; else echo $myproblemlistline['Problemlistline']['enum_start']; ?></small></p>
+
+<p><small class="standoutlabel">Enumeration End: </small><small class="standoutcontent"><?php if(!$myproblemlistline['Problemlistline']['enum_end']) echo '&nbsp;'; else echo $myproblemlistline['Problemlistline']['enum_end']; ?></small></p>
+
+<hr />
+
+<p><small class="standoutlabel">Series: </small><small class="standoutcontent"><?php if(!$myproblemlistline['Problemlistline']['series']) echo '&nbsp;'; else echo $myproblemlistline['Problemlistline']['series']; ?></small></p>
+
+<hr />
+
+
+<form method="post" action="<?php echo $html->url('/problemlistlines/editlimited/' . $myproblemlistline['Problemlistline']['id'])?>">
+<?php echo $html->hidden('Problemlistline/id', array('value' => $myproblemlistline['Problemlistline']['id'])); ?>
+<?php echo $html->hidden('Problemlistline/problemlist_id', array('value' => $myproblemlistline['Problemlistline']['problemlist_id'])); ?>
+
+<p><small>Problem status: 
+
+<?php  echo  $html->selectTag('Problemlistline/problem_status', $Problemstatuses, $myproblemlistline['Problemlistline']['problem_status'] ,array(),NULL,0);?>                        
+
+</small></p>
+
+<p> 
+<?php echo $html->submit('[U]pdate reason', array('accesskey' => 'u')) ?><br/>
+</p>
+
+</form>
+
+
+

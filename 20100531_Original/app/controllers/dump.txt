@@ -1,0 +1,44 @@
+			 /* create a view form for searching the two data tables. To be initialized by a form
+			 action */
+
+			   var_dump($this->data['Bib']['title']);
+			   var_dump($this->data['Bib']['abbrev_title']);
+
+
+			   // if any form field has data (is not null), initialise the SQL arrays
+			   if ($this->data['Bib']['title'] || $this->data['Bib']['abbrev_title'] || $this->data['Bib']['place'])
+			   {
+			     $sqlcondsinner = array();
+			     $sqlconds = array();
+
+			   }
+
+
+			   /* parse for field name and set SQL condition */
+
+			   if ($this->data['Bib']['title']) {
+			      # first get the element that tells us what operator is requested
+			      array_push($sqlcondsinner, "Bib.title='" . $this->data['Bib']['title'] . "'");
+				  $sqlconds .= $sqlconds . "title='" . $this->data['Bib']['title'] . "'";
+				  var_dump($sqlconds);
+			   }
+
+
+			   if ($this->data['Bib']['place']) {
+				  $sqlconds .= $sqlconds . "place='" . $this->data['Bib']['place'] . "'";
+				  var_dump($sqlconds);
+			   }
+
+
+
+			   if (!$sqlconds)
+			   {
+			  	   $cond = NULL;
+			   }
+
+
+
+
+
+
+			   $cond = $sqlconds;

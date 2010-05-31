@@ -1,3 +1,0 @@
-1	Rare Books	A volume scanned as part of MBG's Rare Books Website.
-2	Ex Libris Linnaeus	Titles referenced in Linnaeus' Species Plantarum, 1753.
-3	Latin American Periodical	Lists of periodicals from Latin American countries, produced in-country.

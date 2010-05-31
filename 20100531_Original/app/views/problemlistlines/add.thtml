@@ -1,0 +1,145 @@
+
+<?php echo $javascript->link('selector.js')?>
+<?php echo $javascript->link('validator.js')?>
+
+<?php
+$html->addCrumb('Control Panel','/pages/control');
+$html->addCrumb('Back to problem list','/Problemlists/edit/' . $theproblemlistidvalue); 
+
+
+?>
+
+
+<?php 
+    echo "<h1>Add line to problem list</h1>";
+?>
+
+<div class="error_message">
+<?php 
+if ($addrecordconfirmmessage) { // displays to indicate a successfully added record.
+    echo $addrecordconfirmmessage;
+    }
+?>
+</div>
+
+<?php if ($addrecordconfirmmessage) echo "<!--"; // only show the title link if it is a genuine new title line ?>
+
+    <p>
+        First, search by first few letters of title for an existing IPR cleared record: 
+        <form method="post" action="<?php echo $html->url('/Titles/pickupatitle_problemlist/') ?>">
+                               
+        <?php echo $html->input('Problemlistline/name', array('size' => '20', 'name' => 'selid1'))?>
+                <?php echo $html->hidden('Problemlistline/problemlist_id', array('value' => $theproblemlistidvalue))?>       
+
+        
+        <?php echo $html->submit('[S]earch...', array('accesskey' => 's')) ?>
+        </form>
+   </p>
+
+<p>&nbsp;</p>
+<hr />
+
+<?php if ($addrecordconfirmmessage) echo "-->"; // only show the title link if it is a genuine new title line ?>
+
+<form method="post" action="<?php echo $html->url('/problemlistlines/add')?>" onSubmit="return checkrequired_packinglistline(this)">
+
+
+
+         <p>
+           <?php 
+           // this is for a new add where a link to a title has been made           
+           if ($thetitlenamevalue) // only give publisher details if we've tried to link to one sucessfully.
+           {
+           echo "***Title Details***  Title: <b>" . $thetitlenamevalue; 
+           echo "</b>; Pressmark: <b>" . $thepressmarknamevalue;
+           echo "</b>; Catkey: <b>" . $thecatkeyvalue . "</b><br/><br/>";
+           echo "<small>" . $lastrecchronenuminfo . "</small>";
+           echo "<hr />";
+           
+                     
+           }
+           
+           ?>
+                   
+         
+         </p>
+
+
+
+
+
+    <p>
+        Line number:   <?php 
+                       
+                       if ($addrecordconfirmmessage) // must be a duplicated record           
+                       {
+                            echo ($thelinenumbervalue) ;
+                       }
+                       else
+                       {
+                            echo ($numberproblemlistlinesvalue) ;
+                       }
+        
+                        ?>
+               
+        
+        <?php echo $html->tagErrorMsg('Problemlistline/catkey', 'catkey is required!') ?>
+        <?php echo $html->hidden('Problemlistline/username', array('value' => $othAuth->user('username')))?>
+        
+        <?php echo $html->hidden('Problemlistline/title_id', array('value' => $thetitleidvalue))?>
+        <?php echo $html->hidden('Problemlistline/problemlist_id', array('value' => $theproblemlistidvalue))?>       
+        <?php 
+            if ($addrecordconfirmmessage) // must be a duplicated record
+                echo $html->hidden('Problemlistline/linenumber', array('value' => $thelinenumbervalue));
+            else // must be a fresh record
+                echo $html->hidden('Problemlistline/linenumber', array('value' => $numberproblemlistlinesvalue));
+        ?>       
+        
+    </p>
+    
+      <p>
+        Enumeration from: <small>(e.g. Vol 2 OR Issue 3 OR No. 4)</small><br />
+        <?php echo $html->input('Problemlistline/enum_start', array('size' => '80', 'value' => $theenumstartdatevalue))?>
+        <?php echo $html->tagErrorMsg('Problemlistline/enum_start', 'Start date is required!') ?>        
+      </p>
+      
+      <p>
+        Enumeration to:
+        <?php echo $html->input('Problemlistline/enum_end', array('size' => '80', 'value' => $theenumenddatevalue))?>        
+      </p>
+    
+    <p>
+
+        Date from: <small>(e.g. 1921 OR 01 Jun 1923; OR Jun 1923 Years = 4 digit Months = 3 letter Days = 2 digit)</small><br />
+
+            <?php echo $html->input('Problemlistline/chronology_start', array('size' => '20', 'value' => $thechronstartdatevalue))?>              
+            <?php echo $html->tagErrorMsg('Problemlistline/chronology_start', 'Start chronology is required!') ?>
+        </p>
+      <p>
+        Date to:
+        <?php echo $html->input('Problemlistline/chronology_end', array('size' => '80', 'value' => $thechronenddatevalue))?>
+      </p>
+   
+      <p>
+        Series:
+        <?php echo $html->input('Problemlistline/series', array('size' => '80', 'value' => $theseriesvalue))?>
+      </p>
+      
+            
+      <p>      
+             
+        <?php         
+		  echo "Problem status:";
+		  if (!$this->params['form']['data']['Problemlistline']['problem_status'])          
+		     $Problemstatusesselect = 1;       
+		  echo  $html->selectTag('Problemlistline/problem_status', $Problemstatuses, $Problemstatusesselect);
+          
+        ?>                        
+        
+       </p>
+
+
+    <p>
+        <?php echo $html->submit('[A]dd line', array('accesskey' => 'a')) ?>
+    </p>
+</form>

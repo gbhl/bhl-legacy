@@ -1,7 +1,0 @@
-1	100	Main Entry -- Personal Name (MARC 100)	100
-2	110	Main Entry -- Corporate Name (MARC 110)	110
-3	111	Main Entry -- Meeting Name (MARC 111)	111
-4	700	Added Entry -- Personal Name (MARC 700)	700
-5	710	Added Entry -- Corporate Name (MARC 710)	710
-6	711	Added Entry -- Meeting Name (MARC 711)	711
-7	720	Added Entry -- Uncontrolled Name (MARC 720)	720

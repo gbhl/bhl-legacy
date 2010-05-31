@@ -1,3 +1,0 @@
-10	Pending
-20	In Progress
-30	Complete

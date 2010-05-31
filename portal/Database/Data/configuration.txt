@@ -1,2 +1,0 @@
-1	CurrentVaultID	15
-2	CurrentIAVaultID	14

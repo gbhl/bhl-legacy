@@ -1,0 +1,32 @@
+<?php
+
+$html->addCrumb('view records','/bibs/index');
+?>
+
+<h1><!--?php echo $bib['Bib']['title']?--></h1>
+
+<h2>Search form</h2>
+
+
+<?php
+                echo $html->formTag('/bibs/indexnew/' . $html->tagValue('Bib/id'));
+                echo "<table>";
+                echo "<tr><td>Title:</td><td>";
+                echo "<input type=\"text\" name=\"data[Bib][title]\"   id=\"data[Bib][title]\" value=\"\" />";
+                echo "</td><tr><td>Abbrev title:</td><td>";
+                echo "<input type=\"text\" name=\"data[Bib][abbrev_title]\"  id=\"data[Bib][abbrev_title]\" value=\"";
+                echo $bib['Bib']['abbrev_title'] . "\" />";
+                echo "</td><tr><td>Subject:</td><td>";
+                echo "<input type=\"text\" name=\"data[Bib][subject]\"   id=\"data[Bib][subject]\" value=\"";
+               echo $bib['Bib']['subject'] . "\" />";
+                echo "</td><tr><td>&nbsp;</td><td>";       
+                echo	$html->submit('Search ');
+       
+                echo "</form>";
+       
+                echo "</table />";
+?>
+
+
+
+ 

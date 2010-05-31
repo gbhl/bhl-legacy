@@ -1,0 +1,38 @@
+take equal numbers of parameters for fieldname, fieldcontent, operator and boollink where 
+
+fieldcontent = typed into box 
+operator = like. = >, < 
+boollink = AND or OR or (final element of this will always be NULL due to form) 
+
+create function and send parameters to it (even if they are null) 
+
+function 
+
+e.g fieldcontent1, fieldcontent2, operator1, operator2, boollink1, boollink2 
+
+have fixed array of @fieldnames for where (eg bib.title, holding.place) and qualified by table name 
+push content to @fieldcontent (even if fields are empty) 
+same for operator and boollinks 
+
+$sqlselect = select * from <bib> join on holding where 
+
+for (x = 0 x < <num in above fixed array> x++) 
+{ 
+if @fieldcontent[x] not null 
+{ 
+
+if (@operator[x] = > or < must be numeric so no quotes needed around content) 
+$where =   @fieldnames[x] @operator[x]  @fieldcontent[x] 
+else 
+$where =   @fieldnames[x] @operator[x]  '@fieldcontent[x]' 
+
+
+
+$where .= @boollinks[x] # this will be NULL for last element so no problem 
+
+} 
+} 
+
+$sqlselect .= $where 
+return $sqlselect 
+} 

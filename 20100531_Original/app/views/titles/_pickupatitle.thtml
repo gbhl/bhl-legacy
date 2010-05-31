@@ -1,0 +1,32 @@
+<?php
+$id = $myapukkatitle['Title']['id'];
+$html->addCrumb('Control Panel','/pages/control');
+$html->addCrumb('Search for records','/titles/index');   
+
+?>
+
+<h1><?php echo $myapukkatitle['Title']['title']?></h1>
+
+<p><small>Catkey: <?php echo $myapukkatitle['Title']['catkey']?></small></p>
+
+<p><small>Title control: <?php echo $myapukkatitle['Title']['title_control']?></small></p>
+
+<p><small>Title: <?php echo $myapukkatitle['Title']['title']?></small></p>
+
+<p><small>Pressmark: <?php echo $myapukkatitle['Title']['pressmark']?></small></p>
+
+<p><small>Latest Copyright Band: <?php echo $Highestcopyrights[$myapukkatitle['Title']['highest_copyright_band']]; ?></small></p>
+
+<p><small>Is any part of the title scannable?: <?php echo $Any_scannable_statuses[$myapukkatitle['Title']['any_scannable_status']]?></small></p>
+
+<p><small>Reason it can't be scanned: <?php echo $myapukkatitle['Title']['not_scannable_reason']?></small></p>
+
+<p><small>Record was created by user: <?php echo $othAuth->user('username')?> </small></p>
+
+<!-- BS remmed out for now -->
+<!-- <p><small>Matches: <?php echo $matchlinker->generate_opac_links($myapukkatitle['Title']['matches'])?></small></p> -->
+
+
+<!--p><?php echo $html->link('Edit this record','/titles/edit/'.$myapukkatitle['Title']['id']) ?></p-->
+
+

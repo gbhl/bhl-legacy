@@ -1,0 +1,30 @@
+<?php // $html->addCrumb('Welcome','/matches/');
+if ($othAuth->sessionValid())
+{$fullname   = $othAuth->user('name');}
+else
+{
+$fullname ='';    
+}    
+?>
+
+<h1>Welcome <?php echo $fullname ?></h1>
+
+<p>
+Welcome the the Biodiversity Heritage Library Serials Union Catalogue.
+This catalogue allows users to browse and search titles held by BHL member institutions using advanced filtering.
+
+</p>
+<ul>
+<li><?php echo $html->link('Browse and search records','/bibs/')?> -  Available to all users</li>
+
+
+<?php
+if (!$othAuth->sessionValid())
+    {
+     echo "<li>" . $html->link('Login','/users/login') . "- Registed users can login to add and amend records & bid on titles to scan</li>";
+    }
+?>
+
+</ul>
+<br/>
+<p>Registration is only available to current members of the Biodiversity Heritage Library and other associated parties. For more information on the consortium and its aims, please visit the <a href="http://www.biodiversitylibrary.org/About.aspx">Biodiversity Heritage Library website</a>.</p>
