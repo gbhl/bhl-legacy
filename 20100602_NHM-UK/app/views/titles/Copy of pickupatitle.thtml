@@ -1,0 +1,113 @@
+
+<?php
+$id = $myapukkatitle['Title']['id'];
+$html->addCrumb('view records','/packinglists/index');
+$html->addCrumb('view record',"/packinglists/view/$id"); 
+
+$myapukkatitles = $myapukkatitle['Title'];
+
+?>
+
+<hr />
+<p>Is the correct title displayed?</p>
+<input type=submit value="[N]o" onClick="history.go(-1)", accesskey='n' >
+
+<form method="post" action="<?php echo $html->url('/packinglistlines/add')?>">
+
+<!-- this bit displays the first part of the html page if it is only *one* record that has been found -->
+<?php if ($thenumberoftitles > 1) echo "<!-- </br>"; ?>
+
+
+<?php echo $html->hidden('Packinglist/id', array('value' => $thepackinglistidvalue))?>       
+
+<input type=submit value="[Y]es" accesskey='y' >
+
+
+
+
+
+<h1><?php echo $myapukkatitle['Title']['title']?></h1>
+
+<?php echo $html->hidden('Title/title', array('value' => $myapukkatitle['Title']['title']) ); ?>
+
+<p><small>Catkey: <?php echo $myapukkatitle['Title']['catkey']?></small></p>
+
+<?php echo $html->hidden('Title/catkey', array('value' => $myapukkatitle['Title']['catkey']) ); ?>
+<?php echo $html->hidden('Title/id', array('value' => $myapukkatitle['Title']['id']) ); ?>
+
+<p><small>Title control: <?php echo $myapukkatitle['Title']['title_control']?></small></p>
+
+<p><small>Title: <?php echo $myapukkatitle['Title']['title']?></small></p>
+
+<p><small>Pressmark: <?php echo $myapukkatitle['Title']['pressmark']?></small></p>
+
+<?php echo $html->hidden('Title/pressmark', array('value' => $myapukkatitle['Title']['pressmark']) ); ?>
+
+<p><small>Latest Copyright Band: <?php echo $Highestcopyrights[$myapukkatitle['Title']['highest_copyright_band']]; ?></small></p>
+
+<p><small>Is any part of the title scannable?: <?php echo $Any_scannable_statuses[$myapukkatitle['Title']['any_scannable_status']]?></small></p>
+
+<p><small>Reason it can't be scanned: <?php echo $myapukkatitle['Title']['not_scannable_reason']?></small></p>
+
+<p><small>Record was created by user: <?php echo $othAuth->user('username')?> </small></p>
+
+
+
+<?php if ($thenumberoftitles > 1)  echo "-->"; ?>
+
+
+<!-- this bit displays the second part of the html page if it is *many* records that have been found -->
+
+<?php if ($thenumberoftitles == 1)  echo "<!-- </br>"; ?>
+
+
+
+<table id="results">
+<tr>
+    <th>Title</th>
+    <th>Pressmark</th>
+    <th>&copy; band</th>
+    <th>Any scannable?</th>
+    <th></th>
+
+</tr>
+
+<?php foreach ($myapukkatitle as $row): ?>
+
+<tr>
+    <td>
+        <a id="row<?php echo $row['Title']['title'] ?>"></a><?php echo $row['Title']['title'] ?>
+        <!-- all the hidden form fields go here. -->
+        <?php echo $html->hidden('Packinglist/id', array('value' => $thepackinglistidvalue))?>
+	<?php echo $html->hidden('Title/title', array('value' => $row['Title']['title']) ); ?>
+	<?php echo $html->hidden('Title/catkey', array('value' => $row['Title']['catkey']) ); ?>
+	<?php echo $html->hidden('Title/id', array('value' => $row['Title']['id']) ); ?>
+        <?php echo $html->hidden('Title/pressmark', array('value' => $row['Title']['pressmark']) ); ?>
+        
+    </td>
+     
+    <td><?php if(!$row['Title']['pressmark']) echo '&nbsp;'; else echo $row['Title']['pressmark']; ?></td>
+    
+    
+    <td><?php if(!$Highestcopyrights[$row['Title']['highest_copyright_band']]) echo '&nbsp;'; else echo $Highestcopyrights[$row['Title']['highest_copyright_band']]; ?></td>
+      
+    <td><?php if(!$Any_scannable_statuses[$row['Title']['any_scannable_status']]) echo '&nbsp;'; else echo $Any_scannable_statuses[$row['Title']['any_scannable_status']]; ?></td>
+
+    <td>
+        <?php echo $html->link('view','/Titles/view/' . $row['Title']['id']); ?><br />
+        <input type=submit value="[Y]es" accesskey='y' >
+        
+     </td>
+</tr>
+<?php endforeach; ?>
+</table>
+
+
+
+
+<?php if ($thenumberoftitles == 1) echo "-->"; ?>
+
+</form>
+
+
+

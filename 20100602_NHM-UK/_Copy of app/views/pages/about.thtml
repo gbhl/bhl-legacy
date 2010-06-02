@@ -1,0 +1,2 @@
+<?php  $html->addCrumb('about','/pages/about'); ?>
+<h1>About</h1>

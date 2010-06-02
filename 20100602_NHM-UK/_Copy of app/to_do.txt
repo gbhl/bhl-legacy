@@ -1,0 +1,86 @@
+/*
+BHL serials union catalogue mark 2 - to do:
+
+1) Bids
+                     - FIX partial bid dates  - NB ALSO FIX DATE DROPDOWNS AND OTHER DATE HELPERS
+                     - Add filters to bid index (recursive on status, owner and title)
+                     - 
+
+
+)Rename matches controller to BIB
+
+1.5) New holdings model + view+control - has belongto_has many relationhsip with bib
+
+2) Manual DE-DUP in matches EDIT mode
+
+3) Multiple user levels - high class admin
+
+4) - Reporting capability - http://bakery.cakephp.org/articles/view/144
+- Generate reports on scanned / to be scanned for each institution
+
+5) BATCH UPDATE SCRIPT
+
+6) Static page - help screen / user notes
+
+
+IF I GET TIME: ------
+
+
+7) - Add RSS feed to bids table   - FIX output - MAP fields
+
+Sort out bid buttons with a new helper using this fix - http://cakebaker.42dh.com/2007/02/19/using-a-helper-inside-another-helper/
+
+8) - NEW MATCH VIEWS: better browse / search - browse by title / publisher/ institution - curent search to become 'advanced'           Make use of model->findAllBy<fieldName>
+					"    * string $value
+
+						These magic functions can be used as a shortcut to search your tables for a row given a certain field, and a certain value. Just tack on the name of the field you wish to search, and CamelCase it. Examples (as used in a Controller) might be:
+						$this->Post->findByTitle('My First Blog Post');
+						$this->Author->findByLastName('Rogers');
+						$this->Property->findAllByState('AZ');
+						$this->Specimen->findAllByKingdom('Animalia');
+
+						The returned result is an array formatted just as would be from find() or findAll()."
+
+9) MEans to notify that electronic versions already exist...
+
+
+
+Changes log:
+- Crumbtrails
+- Bid buttons in matches view screen   - add extra logic for partial bids
+ - Edit bid (if it is yours)
+ - Delete bid (if it is yours)
+-  Add filters & actions to bid index
+Added bids model - with working functions to save partial and full bids
+
+General- fix application model / folder structure - turn matches index back into a browse list and transfer 'splash' screen to application level index page             -DONE
+
+Added application wide controller to enable app wide authentication - documented at:
+
+
+Links:
+- Add internal and external hypertext links using html helpers...       -DONE
+
+Search:
+- Search form - multiple                               -DONE    Taken from http://mho.ath.cx/~cake/exams/filter/
+- Add search functionality from old site               -DONE
+- filters                                              -DONE
+- Advanced search                                      - NECESSARY ???
+
+Browse:
+-Browse by options                            -DONE WITH FILTERS - MAY NEED EXPLANATION / NEW INTERFACE HELPER ???
+
+Full record display:
+- separate 002's into hyperlinks back to original OPAC's...  -DONE
+
+Edit:
+- add user authentication                                    -DONE  - http://bakery.cakephp.org/articles/view/148
+
+
+Other:
+- Alter links in bottom left                            -DONE
+- splash screen                                         -DONE
+- contacts page                                         -DONE
+
+
+*/

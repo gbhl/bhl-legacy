@@ -1,0 +1,36 @@
+<?php
+
+$html->addCrumb('view records','/matches/index');
+$html->addCrumb('edit record','/matches/edit'); ?>
+<h1>Edit Post</h1>
+<form method="post" action="<?php echo $html->url('/matches/edit')?>">
+     <?php echo $html->hidden('Match/id'); ?>
+    <p>
+        Title:
+        <?php echo $html->input('Match/title', array('size' => '60'))?>
+        <?php echo $html->tagErrorMsg('Match/title', 'Title is required.') ?>
+    </p>
+    <p>
+
+        001:
+            <?php echo $html->input('Match/001', array('size' => '40'))?>
+        </p>
+      <p>
+        008:
+        <?php echo $html->input('Match/008', array('size' => '40'))?>
+        </p>
+      <p>
+        ISSN:
+        <?php echo $html->input('Match/022', array('size' => '40'))?>
+        </p>
+      <p>
+         Publisher:
+        <?php echo $html->textarea('Match/pub', array('size' => '40')) ?>
+      </p>
+      <p>
+        Matches:
+    </p><?php echo $html->textarea('Match/matches', array('size' => '40')) ?>
+    <p>
+        <?php echo $html->submit('Save') ?>
+    </p>
+</form>

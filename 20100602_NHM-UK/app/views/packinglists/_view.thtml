@@ -1,0 +1,27 @@
+<?php
+$id = $mypackinglist['Packinglist']['id'];
+$html->addCrumb('view records','/packinglists/index');
+$html->addCrumb('view record',"/packinglists/view/$id"); 
+
+
+$mypackinglists = $mypackinglist['Packinglist'];
+
+
+
+?>
+
+<h1><?php echo "Packing list number " . $mypackinglist['Packinglist']['id']?></h1>
+
+
+<p><small>Date created: <?php if(!$mypackinglist['Packinglist']['create_date']) echo '&nbsp;'; else echo $mypackinglist['Packinglist']['create_date']; ?></small></p>
+
+<p><small>Library: <?php if(!$mypackinglist['Packinglist']['library']) echo '&nbsp;'; else echo $mypackinglist['Packinglist']['library']; ?></small></p>
+
+<p><small>Packinglist Status: <?php echo $Packingliststatuses[$mypackinglist['Packinglist']['packing_list_status']]?></small></p>
+
+
+
+
+
+
+

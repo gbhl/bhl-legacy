@@ -1,0 +1,67 @@
+<h1>View existing bids</h1>
+<form method="post" action="<?php echo $html->url('/bids')?>">
+    <p>
+         <!--  Title:
+        <?php echo $html->input('Match/title', array('size' => '40'))?>
+        <?php echo $html->tagErrorMsg('Match/title', 'Search term required') ?>
+    </p>
+
+    <p>
+      <?php echo $html->submit('Search') ?>    -->
+<?php
+   $html->addCrumb('view bids','/bids');
+   $pagination->setPaging($paging);
+   echo ($filter->setFiltering($filters));
+?>
+
+<table>
+<tr>
+    <th><?php echo $pagination->sortLink('id', 'ID', 1); ?></th>
+    <th><?php echo $pagination->sortLink('title_id', 'Title'); ?></th>
+    <th><?php echo $pagination->sortLink('user_id', 'User'); ?></th>
+    <th><?php echo $pagination->sortLink('partial', 'Bid type'); ?></th>
+    <th><?php echo $pagination->sortLink('start_date', 'Start date'); ?></th>
+    <th><?php echo $pagination->sortLink('end_date', 'End date'); ?></th>
+    <th><?php echo $pagination->sortLink('status_id', 'Status'); ?></th>
+    <th><?php echo $pagination->sortLink('notes', 'Notes'); ?></th>
+    <th>Actions</th>
+
+</tr>
+<?php foreach ($Bids as $row):
+
+
+?>
+<tr>
+     <td><?php echo $row['Bid']['id'] ?></td>
+     <td><?php echo $row['Match']['title'] ?></td>
+     <td><?php echo $row['User']['username'] ?></td>
+      <td><?php if ($row['Bid']['partial']) {echo 'Partial bid'; } else {echo 'Complete bid'; }  ?></td>
+     <td><?php echo $row['Bid']['start_date'] ?></td>
+     <td><?php echo $row['Bid']['end_date'] ?></td>
+     <td><?php echo $row['Status']['status'] ?></td>
+     <td><?php echo $row['Bid']['notes'] ?></td>
+
+	   <td>
+          <?php
+          if ($othAuth and $row['User']['id']== $othAuth->user('id'))
+          {
+          echo $html->link('Edit bid','/bids/edit/'. $row['Bid']['id']) . "<br/>";
+          echo $html->link('Delete bid','/bids/delete/'. $row['Bid']['id']);
+          }
+          else
+          {
+          echo "You are not authorised to delete or edit this bid, please contact the bid owner";
+          }
+          ?>
+      </td>
+</tr>
+<?php endforeach; ?>
+</table>
+
+<br />
+<br />
+ <p>Select a page:</p>
+<?php echo $pagination->pageNumbers(NULL, NULL, ' '); ?>
+
+
+</table>

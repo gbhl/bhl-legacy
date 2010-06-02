@@ -1,0 +1,2 @@
+<?php  $html->addCrumb('admin','/pages/admin'); ?>
+<h1>Admin</h1>

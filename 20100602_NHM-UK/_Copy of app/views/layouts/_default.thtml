@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+
+
+<title>BHL</title>
+<?php echo $html->charset('UTF-8')?>
+<meta name="description" content="Website description" />
+<meta name="keywords" content="keyword1,keyword2,keyword2,keyword4" />
+<?php echo $html->css('cake.forms', 'stylesheet', array("media"=>"all" ));?>
+<?php echo $html->css('contented4', 'stylesheet', array("media"=>"all" ));?>
+</head>
+
+</head>
+<body>
+	<div id="container">
+		<div id="header">
+			<h1></h1>
+		</div>
+		<div id="content">
+			<?php if ($session->check('Message.flash'))
+					{
+						$session->flash();
+					}
+					echo $content_for_layout;
+			?>
+		</div>
+		<div id="footer">
+			&nbsp;
+			<a href="http://www.cakephp.org/" target="_new">
+				<?php echo $html->image('cake.power.png', array('alt'=>"CakePHP : Rapid Development Framework", 'border'=>"0"));?>
+			</a>
+		</div>
+	</div>
+</body>
+</html>

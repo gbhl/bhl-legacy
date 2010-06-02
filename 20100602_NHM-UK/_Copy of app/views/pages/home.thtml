@@ -1,0 +1,14 @@
+<?php // $html->addCrumb('Welcome','/matches/'); ?>
+<h1>Welcome</h1>
+
+<p>
+Welcome the the Biodiversity Heritage Library Serials Union Catalogue.
+This catalogue allows users to browse and search titles held by BHL member institutions using advanced filtering.
+
+</p>
+<ul>
+<li><?php echo $html->link('Browse and search records','/matches/')?> -  Available to all users</li>
+<li><?php echo $html->link('Login','/users/login')?> - Registed users can login to add and amend records & bid on titles to scan</li>
+</ul>
+<br/>
+<p>Registration is only available to current members of the Biodiversity Heritage Library and other associated parties. For more information on the consortium and its aims, please visit the <a href="http://bhl.si.edu/">Biodiversity Heritage Library website</a>.</p>

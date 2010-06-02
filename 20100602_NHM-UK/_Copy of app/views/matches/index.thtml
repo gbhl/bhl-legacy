@@ -1,0 +1,78 @@
+<h1>View records</h1>
+<form method="post" action="<?php echo $html->url('/matches')?>">
+    <p>
+         <!--  Title:
+        <?php echo $html->input('Match/title', array('size' => '40'))?>
+        <?php echo $html->tagErrorMsg('Match/title', 'Search term required') ?>
+    </p>
+
+    <p>
+      <?php echo $html->submit('Search') ?>    -->
+<?php
+   $html->addCrumb('view records','/matches/index');
+   $pagination->setPaging($paging);
+   echo ($filter->setFiltering($filters));
+?>
+
+<table>
+<tr>
+    <th><?php echo $pagination->sortLink('id', 'ID', 1); ?></th>
+    <th><?php echo $pagination->sortLink('title', 'Title'); ?></th>
+    <th><?php echo $pagination->sortLink('pub', 'Publisher'); ?></th>
+    <th><?php echo $pagination->sortLink('matches', 'Matches'); ?></th>
+
+    <th>Actions</th>
+    <th>Bid to scan</th>
+
+</tr>
+<?php foreach ($Matches as $row): ?>
+<tr>
+    <td><?php echo $row['Match']['id'] ?></td>
+    <td><?php echo $row['Match']['title'] ?></td>
+    <td><?php echo $row['Match']['pub'] ?></td>
+
+      <!--  <td><?php// echo $row['Match']['matches']?></td> -->
+
+   <td><?php echo $matchlinker->generate_opac_links($row['Match']['matches']); ?></td>
+    <td>
+        <?php echo $html->link('View record and bids','/Matches/view/' . $row['Match']['id']); ?><br/>
+        <?php //echo $html->link('Edit','/Matches/edit/' . $row['Match']['id']); ?>
+     </td>
+     <td>
+ <?php
+
+ if ($bidbutton->draw_buttons($row) == 'none')
+     {     echo $html->formTag('/bids/bidall/' . $html->tagValue('Bid/id'));
+	 echo "<input type=\"hidden\" name=\"data[Bid][partial]\"   id=\"data[Bid][partial]\" value=\"0\" />";
+	 echo "<input type=\"hidden\" name=\"data[Bid][title_id]\"  id=\"data[Bid][title_id]\" value=\"";
+	 echo $row['Match']['id'] . "\" />";
+	 echo "<input type=\"hidden\" name=\"data[Bid][user_id]\"   id=\"data[Bid][user_id]\" value=\"";
+	 echo $othAuth->user('id'). '" />';
+
+	 echo "<input type=\"hidden\" name=\"data[Bid][status_id]\" id=\"data[Bid][status_id]\" value=\"1\" />";
+	 echo	$html->submit('Bid for all ');
+
+	 echo "</form>";
+
+	 echo $html->formTag('/bids/bidpartial/' . $html->tagValue('Bid/id'));
+	 echo "<input type=\"hidden\" name=\"data[Bid][title_id]\"   id=\"data[Bid][title_id]\" value=\"";
+	 echo $row['Match']['id'] . "\" />";
+	 echo "<input type=\"hidden\" name=\"data[Bid][Match][title]\" id=\"data[Bid][Match][title]\" value=\"";
+	 echo $row['Match']['title'] . "\" />" . $html->submit('Partial bid') . "</form>" ;
+     }
+     else
+     {     echo $bidbutton->draw_buttons($row);     }
+ ?>
+
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+
+<br />
+<br />
+ <p>Select a page:</p>
+<?php echo $pagination->pageNumbers(NULL, NULL, ' '); ?>
+
+
+</table>
