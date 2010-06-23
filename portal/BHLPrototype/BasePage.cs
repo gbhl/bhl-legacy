@@ -23,4 +23,17 @@ namespace MOBOT.BHL.Web
             main = (Main)Page.Master;
         }
     }
+
+    public class ALABasePage<T> : Page where T : MasterPage {
+
+        protected BHLProvider bhlProvider = null;
+        protected T main = default(T);
+
+        protected override void OnInit(EventArgs e) {
+            base.OnInit(e);
+            bhlProvider = new BHLProvider();
+            main = Page.Master as T;
+        }
+
+    }
 }

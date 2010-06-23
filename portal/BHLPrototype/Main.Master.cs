@@ -14,11 +14,8 @@ using MOBOT.BHL.Web.Utilities;
 
 namespace MOBOT.BHL.Web
 {
-	public partial class Main : System.Web.UI.MasterPage
-	{
-		private PageType pageType = PageType.Content;
-		private int titlesOnlineCount = 0;
-		private bool debugMode = false;
+	public partial class Main : BHLMasterPage
+	{		
 		private string projectUpdateFeedLocation = "";
 
 		protected void Page_Load( object sender, EventArgs e )
@@ -54,30 +51,10 @@ namespace MOBOT.BHL.Web
 				ControlGenerator.AddAttributesAndPreserveExisting( Body, "onresize", "ResizeContentPanelHeight('newsDiv', 262);" );
 				rssFeed.FeedLocation = projectUpdateFeedLocation;
 			}
+
+            
 		}
 
-		private Stats GetStats()
-		{
-			Stats stats = null;
-
-			// Cache the results of the institutions query for 24 hours
-			String cacheKey = "StatsSelect";
-			if ( Cache[ cacheKey ] != null )
-			{
-				// Use cached version
-				stats = (Stats)Cache[ cacheKey ];
-			}
-			else
-			{
-				// Refresh cache
-				stats = new BHLProvider().StatsSelect();
-				Cache.Add( cacheKey, stats, null, DateTime.Now.AddMinutes(
-					Convert.ToDouble( ConfigurationManager.AppSettings[ "StatsSelectQueryCacheTime" ] ) ),
-					System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null );
-			}
-
-			return stats;
-		}
 
         /// <summary>
         /// Reads the alert message from a text file and caches it.  Using the cache
@@ -168,39 +145,15 @@ namespace MOBOT.BHL.Web
                 ddlLanguage.SelectedValue = this.Request.Cookies["ddlLanguage"].Value;
         }
 
-		internal HtmlGenericControl Body
-		{
-			get
-			{
+		internal override HtmlGenericControl Body {
+			get {
 				return bod;
 			}
 		}
 
-		internal int TitlesOnlineCount
-		{
-			get
-			{
-				return titlesOnlineCount;
-			}
-		}
-
-		internal void HideOverflow()
-		{
+		internal void HideOverflow() {
 			hideOverflowStyle.Visible = true;
 		}
 
-		internal void SetPageType( PageType pageType )
-		{
-			this.pageType = pageType;
-		}
-
-		internal enum PageType
-		{
-			Content,
-			Admin,
-			Error,
-			TitleViewer,
-			NamesResult
-		}
 	}
 }

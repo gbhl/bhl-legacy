@@ -35,6 +35,8 @@ function ResizeBrowseDivs()
 	else
 	    subtractAmount = 131;
 	    
+    subtractAmount += 20;	    
+	    
 	//if(elementBrowseContainerDiv) elementBrowseContainerDiv.style.height = (containerDivHeight + addAmount) + "px";
 	if(elementBrowseInnerDiv)
 	{

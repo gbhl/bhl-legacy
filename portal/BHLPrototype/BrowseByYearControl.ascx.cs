@@ -20,14 +20,14 @@ namespace MOBOT.BHL.Web
 	{
 		protected void Page_Load( object sender, EventArgs e )
 		{
-			Main main = (Main)Page.Master;
-			main.SetPageType( Main.PageType.Content );
+            //Main main = (Main)Page.Master;
+            //main.SetPageType( Main.PageType.Content );
 
-			ControlGenerator.AddScriptControl( Page.Master.Page.Header.Controls, "/Scripts/ResizeBrowseUtils.js" );
-			ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onload",
-				"ResizeContentPanel('browseContentPanel', 258);ResizeBrowseDivs();" );
-			ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onresize",
-				"ResizeContentPanel('browseContentPanel', 258);ResizeBrowseDivs();" );
+            //ControlGenerator.AddScriptControl( Page.Master.Page.Header.Controls, "/Scripts/ResizeBrowseUtils.js" );
+            //ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onload",
+            //    "ResizeContentPanel('browseContentPanel', 258);ResizeBrowseDivs();" );
+            //ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onresize",
+            //    "ResizeContentPanel('browseContentPanel', 258);ResizeBrowseDivs();" );
 
             String institutionCode = String.Empty;
             if (this.Request.Cookies["ddlContributors"] != null) institutionCode = this.Request.Cookies["ddlContributors"].Value;

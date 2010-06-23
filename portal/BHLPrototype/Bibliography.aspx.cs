@@ -27,7 +27,7 @@ namespace MOBOT.BHL.Web
 		{
 			main.SetPageType( Main.PageType.Content );
 			ControlGenerator.AddScriptControl( Page.Master.Page.Header.Controls, "/Scripts/ResizeBrowseUtils.js" );
-            ControlGenerator.AddScriptControl( Page.Master.Page.Header.Controls, "/Scripts/jquery-1.2.6.min.js" );
+            ControlGenerator.AddScriptControl( Page.Master.Page.Header.Controls, "/Scripts/jquery-1.4.2.min.js" );
 			ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onload",
 				"ResizeContentPanel('browseContentPanel', 258);ResizeBrowseDivs();" );
 			ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onresize",

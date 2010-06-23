@@ -24,7 +24,7 @@ namespace MOBOT.BHL.Web
         protected string languageCode = String.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Main main = (Main)Page.Master;
+            BHLMasterPage main = (BHLMasterPage) Page.Master;
             ControlGenerator.AddAttributesAndPreserveExisting(main.Body, "onload", "initMap();");
 
             if (this.Request.Cookies["ddlContributors"] != null) institutionCode = this.Request.Cookies["ddlContributors"].Value;

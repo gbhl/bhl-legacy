@@ -14,34 +14,25 @@ namespace MOBOT.BHL.Web
     {
         private string tableID = "";
         private int width = 0;
+        private String @class = "ContentPanel";
 
-        public string TableID
-        {
-            get
-            {
-                return tableID;
-            }
-            set
-            {
-                tableID = value;
-            }
+        public string Class {
+            get { return @class; }
+            set { @class = value; }
         }
 
-        public int Width
-        {
-            get
-            {
-                return width;
-            }
-            set
-            {
-                width = value;
-            }
+        public string TableID {
+            get { return tableID; }
+            set { tableID = value; }
         }
 
-        protected override void Render(HtmlTextWriter writer)
-        {
-            string openingTag = "<table style=\"height:99%;\" border=\"0\" ";
+        public int Width {
+            get { return width; }
+            set { width = value; }
+        }
+
+        protected override void Render(HtmlTextWriter writer) {
+            string openingTag = "<table class=\"" + @class + "\" style=\"height:99%;\" border=\"0\" ";
             if (tableID != null && tableID.Trim().Length > 0)
                 openingTag += "id=\"" + tableID.Trim() + "\" ";
 

@@ -25,7 +25,7 @@ namespace MOBOT.BHL.Web
     {
       Main main = (Main)Page.Master;
       titleSelectionContentPanel.SetTableID( "titleSelectionContentPanel" );
-      ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, "/Scripts/jquery-1.2.6.min.js");
+      ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, "/Scripts/jquery-1.4.2.min.js");
       ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onload", 
         "ResizeContentPanel('titleSelectionContentPanel', 258);" );
       ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onresize", 

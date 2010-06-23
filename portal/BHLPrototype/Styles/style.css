@@ -78,6 +78,7 @@ A.ButtonLinks:active {
 	font-family: Helvetica, Verdana, Times, serif;
 }
 
+
 A.HeaderLinks:link {
 	text-decoration: none;
 	font-size: 12px;
@@ -102,6 +103,32 @@ A.HeaderLinks:active {
 	color: #27638C;
 	font-family: Helvetica, Verdana, Times, serif;
 }
+
+A.FooterLinks:link {
+	text-decoration: none;
+	font-size: 12px;
+	color: white;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+A.FooterLinks:visited {
+	text-decoration: none;
+	font-size: 12px;
+	color: white;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+A.FooterLinks:hover {
+	text-decoration: underline;
+	color: white;
+	font-size: 12px;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+A.FooterLinks:active {
+	text-decoration: none;
+	font-size: 12px;
+	color: white;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+
 
 .BlackHeading {
 	font-family: Helvetica, Verdana, Times, serif;
