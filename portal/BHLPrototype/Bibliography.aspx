@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" Codebehind="Bibliography.aspx.cs" Inherits="MOBOT.BHL.Web.Bibliography"
+<%@ Page Language="C#" MasterPageFile="~/BHL-AU.master" AutoEventWireup="true" Codebehind="Bibliography.aspx.cs" Inherits="MOBOT.BHL.Web.Bibliography"
 	Title="Biodiversity Heritage Library" %>
 
 <%@ Register TagPrefix="cc" Assembly="MOBOT.BHL.Web" Namespace="MOBOT.BHL.Web" %>

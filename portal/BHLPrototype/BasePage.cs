@@ -14,14 +14,14 @@ namespace MOBOT.BHL.Web
     public class BasePage : Page
     {
         protected BHLProvider bhlProvider = null;
-        protected Main main = null;
+        protected BHLMasterPage main = null;
 
-        protected override void OnInit(EventArgs e)
-        {
+        protected override void OnInit(EventArgs e) {
             base.OnInit(e);
             bhlProvider = new BHLProvider();
-            main = (Main)Page.Master;
+            main = (BHLMasterPage) Page.Master;
         }
+
     }
 
     public class ALABasePage<T> : Page where T : MasterPage {

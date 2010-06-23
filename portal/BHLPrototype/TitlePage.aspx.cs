@@ -32,7 +32,7 @@ namespace MOBOT.BHL.Web
         ControlGenerator.AddAttributesAndPreserveExisting(main.Body, "onresize", "resizeViewerHeight(157);");
 
         main.SetPageType(Main.PageType.TitleViewer);
-        main.HideOverflow();
+        // main.HideOverflow();
 
         if (!Page.IsPostBack)
         {

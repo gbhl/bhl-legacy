@@ -16,6 +16,7 @@
             .h1 {
     	        font-size: larger;
             }
+            
         </style>
         
 	    <link href="/Styles/style.css" rel="stylesheet" type="text/css" />
@@ -109,8 +110,8 @@
 		                    <table width="100%">
 		                        <tr>
 		                            <td>
-                                        <div style="font-family:Arial,Helvetica,Verdana,Times,serif; font-size: 18px;">Biodiversity Heritage Library</div>
-		                                <div style="font-family:Arial,Helvetica,Verdana,Times,serif; font-size: 18px;">Australia</div> 
+                                        <div style="font-family:Arial,Helvetica,Verdana,Times,serif; font-size: 18px;"><a class="TitleLink" href="/Default.aspx">Biodiversity Heritage Library</a></div>
+		                                <div style="font-family:Arial,Helvetica,Verdana,Times,serif; font-size: 18px;"><a class="TitleLink" href="/Default.aspx">Australia</a></div> 
                                     </td>
 		                            <td>                        
 		                                <span style="float: right">

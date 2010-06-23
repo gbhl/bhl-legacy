@@ -78,6 +78,32 @@ A.ButtonLinks:active {
 	font-family: Helvetica, Verdana, Times, serif;
 }
 
+a.TitleLink 
+{
+	
+}
+
+a.TitleLink:link {
+    text-decoration: none;
+    color: #27638C;
+    font-family: Helvetica, Verdana, Times, serif;
+}
+a.TitleLink:visited {
+    text-decoration: none;
+    color: #27638C;
+    font-family: Helvetica, Verdana, Times, serif;
+}
+a.TitleLink:hover {
+    text-decoration: none;
+    color: #27638C;    
+    font-family: Helvetica, Verdana, Times, serif;
+}
+a.TitleLink:active {
+    text-decoration: none;    
+    color: #27638C;
+    font-family: Helvetica, Verdana, Times, serif;
+}            
+
 
 A.HeaderLinks:link {
 	text-decoration: none;
