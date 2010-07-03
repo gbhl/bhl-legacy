@@ -5,7 +5,31 @@
 <%@ Register src="COinSControl.ascx" tagname="COinSControl" tagprefix="uc1" %>
 <asp:Content ID="mainContent" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
 
-    <script>
+    <script language="javascript" type="text/javascript">
+    
+    resizeBrowseDiv = function() {
+        var topRowHeight = $("#topRow").height();
+        var contentHeight = $("#mainContentDiv").height();	            
+        var delta = $("#browse_container_outer").height() - $("#browse_container_inner").height();
+        var targetHeight = contentHeight - (topRowHeight + delta);
+        
+        $("#browseContentPanel").css("width", "100%");
+        
+        if (targetHeight > 0) {	            	            	            
+            $("#browse_container_inner").css("height", targetHeight + "px");	                
+        }
+    }
+
+    $(document).ready(function() {
+        resizeBrowseDiv();
+        $(window).resize(resizeBrowseDiv);                
+    });
+    
+    readBook = function(itemId) {
+        window.location = "/item/" + itemId;        
+    }
+    
+    
     function ToggleView(viewType)
     {
         var basicLink = document.getElementById("spanBasic");
@@ -63,13 +87,113 @@
         }
     }
     </script>
-	<div id="browseContainerDiv">
+    
+	<div id="browse_container_outer" style="overflow: auto; width: 100%">
 		<cc:ContentPanel ID="browseContentPanel" runat="server" TableID="browseContentPanel">
-			<div id="browseInnerDiv" style="overflow: auto;">
-				<table width="99%">
+			<div id="browse_container_inner" style="overflow: auto;">
+				<table width="100%" style="border: 1px solid black;">
 					<tr>
-						<td style="width: 60%;" valign="top">
+						<td style="border: 1px solid black;" valign="top">
 							<b class="accent"><asp:Literal ID="fullTitleLiteral" runat="server"></asp:Literal></b>
+							<br />
+							<asp:Repeater ID="authorsRepeater" runat="server">
+								<ItemTemplate>
+									<b><a href="/creator/<%# Eval("CreatorID") %>">
+										<%# Eval("MARCCreator_Full")%>
+									</a></b>
+									<br />
+								</ItemTemplate>
+							</asp:Repeater>
+						</td>
+						<td style="width: 300px; border: 1px solid black;" valign="top">
+						    <center>
+						        <br />
+							    <img src="/images/rpterror.png" align="texttop" title="Report an error" alt="Report an error"/>&nbsp;<asp:LinkButton ID="lnkFeedback" runat="server" Text="Report an error" PostBackUrl="/Feedback.aspx"></asp:LinkButton>
+							    <br />
+							    <asp:HyperLink ID="editTitleLink" runat="server" ToolTip="Fix this entry" Text="Fix this entry"></asp:HyperLink>
+							    <asp:HiddenField ID="hidTitleID" runat="server" />
+							</center>
+						</td>
+					</tr>
+					<tr>
+						<td>							
+							<asp:Repeater ID="itemRepeater" runat="server">
+								<ItemTemplate>
+								    <table width="100%" cellpadding="10" cellspacing="5">
+								        <tr>
+								            <td style="width:120px;text-align:center" valign="top">								                
+								                <%# Eval("Volume") %>
+							                    <div class="BookThumb">
+							                        <div class="BookThumbItemID" style="display: none"><%#Eval("ItemID")%></div>
+							                        <div style="height:150px; width: 100px">
+							                            <center>
+							                                <img style="margin-top:50px" src="/Images/PageLoading.gif" width="31" height="31" alt="loading book thumbnail"/>
+                                                        </center>							            
+							                        </div>
+							                    </div>		
+							                    <br />					                    
+							                    <input type="button" value="View Book" onclick="readBook('<%# Eval("ItemID") %>')" />
+								            </td>
+								            <td valign="top">
+									            <b>Contributed by</b>
+									            <div style=""><%# Eval("InstitutionUrl").ToString().Trim() == String.Empty ? Eval("InstitutionName") : "<a target='_blank' href='" + Eval("InstitutionUrl") + "'>" + Eval("InstitutionName") + "</a>"%></div>
+									            <br />
+									            <b>Abstract</b>
+									            <div style="">....</div>									            
+								            </td>
+								        </tr>
+								    </table>
+								    <hr />								    
+								</ItemTemplate>
+							</asp:Repeater>
+							
+						</td>
+						<td valign="top" style="border: 1px solid black; padding: 10px">
+							<b>Additional authors:</b><br />
+							<asp:Repeater ID="additionalAuthorsRepeater" runat="server">
+								<ItemTemplate>
+									<a href="/creator/<%# Eval("CreatorID") %>">
+										<%# Eval("MARCCreator_Full") %>
+									</a>
+									<br />
+								</ItemTemplate>
+							</asp:Repeater>
+							
+							<asp:Panel ID="relatedPanel" runat="server">
+							    <p>
+							        <b>Related Titles:</b><br />
+							        <asp:Repeater ID="associationsRepeater" runat="server">
+							            <ItemTemplate>
+							                <i><%# Eval("TitleAssociationLabel") %>:</i>
+							                <%# Eval("AssociatedTitleID") == null ? "" : "<a href='/bibliography/" + Eval("AssociatedTitleID").ToString() + "'>"%>
+							                <%# Eval("Title") %> <%# Eval("Section") %> <%# Eval("Volume") %> <%# Eval("Heading") %> <%# Eval("Publication") %> <%# Eval("Relationship") %>
+							                <%# Eval("AssociatedTitleID") == null ? "" : "</a>"%>
+							                <br />
+							            </ItemTemplate>
+							        </asp:Repeater>
+							    </p>
+							</asp:Panel>
+							
+							<asp:Panel ID="callNumberPanel" runat="server">
+								<p>
+									<b>Call Number:</b><br />
+									<asp:Literal ID="callNumberLiteral" runat="server"></asp:Literal>
+								</p>
+							</asp:Panel>
+							
+							<asp:Panel ID="publicationInfoPanel" runat="server">
+							    <p>
+								    <b>Publication info:</b><br />
+								    <asp:Literal ID="publicationInfoLiteral" runat="server"></asp:Literal>
+							    </p>
+							</asp:Panel>
+						
+                            <asp:Panel ID="subjectPanel" runat="server">
+								<p>
+									<b>Subjects:</b><br />
+									<asp:Literal ID="subjectLiteral" runat="server"></asp:Literal>
+								</p>
+							</asp:Panel>
 							<div id="viewcontrol" runat="server" visible="false">
 							    <p>
 							    <span id="spanBasic">Brief | <a href="#" onclick="ToggleView(1);">Detailed</a> | <a href="#" onclick="ToggleView(2);">MARC</a> | <a href="#" onclick="ToggleView(3);">BibTeX</a> | <a href="#" onclick="ToggleView(4);">EndNote</a></span>
@@ -88,62 +212,13 @@
 							</div>
 							<div id="basicview">
 							<div id="associationsDiv" runat="server">
-							<p>
-							    <b>Related Titles:</b><br />
-							    <asp:Repeater ID="associationsRepeater" runat="server">
-							        <ItemTemplate>
-							            <i><%# Eval("TitleAssociationLabel") %>:</i>
-							            <%# Eval("AssociatedTitleID") == null ? "" : "<a href='/bibliography/" + Eval("AssociatedTitleID").ToString() + "'>"%>
-							            <%# Eval("Title") %> <%# Eval("Section") %> <%# Eval("Volume") %> <%# Eval("Heading") %> <%# Eval("Publication") %> <%# Eval("Relationship") %>
-							            <%# Eval("AssociatedTitleID") == null ? "" : "</a>"%>
-							            <br />
-							        </ItemTemplate>
-							    </asp:Repeater>
-							</p>
 							</div>
-							<p>
-								<b>By:</b><br />
-								<asp:Repeater ID="authorsRepeater" runat="server">
-									<ItemTemplate>
-										<b><a href="/creator/<%# Eval("CreatorID") %>">
-											<%# Eval("MARCCreator_Full")%>
-										</a></b>
-										<br />
-									</ItemTemplate>
-								</asp:Repeater>
-								<asp:Repeater ID="additionalAuthorsRepeater" runat="server">
-									<ItemTemplate>
-										<a href="/creator/<%# Eval("CreatorID") %>">
-											<%# Eval("MARCCreator_Full") %>
-										</a>
-										<br />
-									</ItemTemplate>
-								</asp:Repeater>
-							</p>
-							<p>
-								<b>Publication info:</b><br />
-								<asp:Literal ID="publicationInfoLiteral" runat="server"></asp:Literal>
-							</p>
-							<asp:Panel ID="callNumberPanel" runat="server">
-								<p>
-									<b>Call Number:</b><br />
-									<asp:Literal ID="callNumberLiteral" runat="server"></asp:Literal>
-								</p>
-							</asp:Panel>
-							<asp:Panel ID="subjectPanel" runat="server">
-								<p>
-									<b>Subjects:</b><br />
-									<asp:Literal ID="subjectLiteral" runat="server"></asp:Literal>
-								</p>
-							</asp:Panel>
-							<%--<p>
-								<b>Contributing Library:</b><br />
-								<asp:PlaceHolder ID="attributionPlaceHolder" runat="server" />
-							</p>--%>
 							<p>&nbsp;</p>
 							<p>
-								<asp:HyperLink CssClass="large" ID="localLibraryLink" runat="server" NavigateUrl="http://worldcatlibraries.org/">Find in a local library<br /></asp:HyperLink>
-                        		<uc1:COinSControl ID="COinSControl1" runat="server" />
+							    <center>
+								    <asp:HyperLink CssClass="large" ID="localLibraryLink" runat="server" NavigateUrl="http://worldcatlibraries.org/">Find in a local library<br /></asp:HyperLink>
+                        		    <uc1:COinSControl ID="COinSControl1" runat="server" />
+                        		</center>
 							</p>
 							</div>
 							<div id="expandedview" style="display:none">
@@ -160,53 +235,7 @@
 							    <asp:HyperLink ID="hypEndNote" runat="server" Text="Download EndNote citations" NavigateUrl="/EndNoteDownload.ashx?id=" /><br /><br />
 							    <asp:Literal ID="litEndNote" runat="server"></asp:Literal>
 							</div>
-						</td>
-						<td>
-							<img src="/images/blank.gif" alt="" width="10" height="1" /></td>
-						<td style="width: 40%;" valign="top">
-							<img src="/images/rpterror.png" align="texttop" title="Report an error" />&nbsp;<asp:LinkButton ID="lnkFeedback" runat="server" Text="Report an error" PostBackUrl="/Feedback.aspx"></asp:LinkButton>
-							<asp:HiddenField ID="hidTitleID" runat="server" /><br /><br />							
-						    <img src="/images/bib_plus3.gif"/> = show details&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/icon_book_open.gif" /> = read book<br /><br />
-							<b>View:</b>&nbsp;&nbsp;<a id="expand" class="small" href="#">Expand All</a><a id="collapse" class="small" href="#" style="display:none">Collapse All</a><br />
-							<asp:Repeater ID="itemRepeater" runat="server">
-								<ItemTemplate>
-								    <img class="expandImg" alt="" src="/images/bib_plus3.gif" onclick="toggleItem(this, document.getElementById('item<%#Eval("ItemID")%>'));" />
-									<a href="/item/<%# Eval("ItemID") %>" class="large"><img src="/images/icon_book_open.gif" /></a>
-									<a href="/item/<%# Eval("ItemID") %>"><%# Eval("Volume") %></a>
-									<div id="item<%#Eval("ItemID")%>" class="itemDetailDiv">
-									<b>Download:</b>
-									<div style="margin-left:7px"><%# Eval("DownloadUrl").ToString().Trim() == String.Empty ? "" : (Eval("ItemSourceID").ToString().Trim() == "1" ? "<a href='http://www.archive.org/download/" + Eval("BarCode") + "/" + Eval("BarCode") + ".pdf'>PDF</a>&nbsp;|&nbsp;<a href='http://www.archive.org/download/" + Eval("BarCode") + "/" + Eval("BarCode") + "_djvu.txt'>OCR</a>&nbsp;|&nbsp;<a href='http://www.archive.org/download/" + Eval("BarCode") + "/" + Eval("BarCode") + "_jp2.zip'>Images</a>&nbsp;|&nbsp;<a target='_blank' href='" + Eval("DownloadUrl") + "'>All</a>" : "&nbsp;<a href='#' onclick=\"javascript:window.open('" + Eval("DownloadUrl") + "','pdf','width=400,height=200,status=no,toolbar=no,menubar=no,resizeable=no');\">PDF</a>")%></div>
-									<b>Contributing Library:</b>
-									<div style="margin-left:7px"><%# Eval("InstitutionUrl").ToString().Trim() == String.Empty ? Eval("InstitutionName") : "<a target='_blank' href='" + Eval("InstitutionUrl") + "'>" + Eval("InstitutionName") + "</a>"%></div>
-									<b>Sponsor:</b>
-									<div style="margin-left:7px"><%# Eval("Sponsor") %></div>
-									<b>Date Scanned:</b>
-									<%# Eval("ScanningDate") == null ? "" : "&nbsp;" +
-										((MOBOT.BHL.DataObjects.Item)Container.DataItem).ScanningDate.Value.ToString("MM/dd/yyyy")%>
-									<br /><br />
-									<b>--Copyright and Usage--</b><br />
-									<div style="margin-left:7px"><%# (Eval("LicenseUrl") != "" || 
-				                                    Eval("Rights") != "" || 
-				                                    Eval("DueDiligence") != "" ||
-				                                    Eval("CopyrightStatus") != "" ||
-				                                    Eval("CopyrightRegion").ToString().Trim() != "" ||
-				                                    Eval("CopyrightComment") != "" ||
-				                                    Eval("CopyrightEvidence") != "") ? "" : "Not specified"%></div>
-                                    <%# (Eval("LicenseUrl") == "") ? "" : "<b>License Type:</b><div style='margin-left:7px'>" + Eval("LicenseUrl") + "</div>"%>
-                                    <%# (Eval("Rights") == "") ? "" : "<b>Rights:</b><div style='margin-left:7px'>" + Eval("Rights") + "</div>"%>
-									<%# (Eval("DueDiligence") == "") ? "" : "<b>Due Diligence:</b><div style='margin-left:7px'>" + Eval("DueDiligence") + "</div>"%>
-									<%# (Eval("CopyrightStatus") == "") ? "" : "<b>Copyright Status:</b><div style='margin-left:7px'>" + Eval("CopyrightStatus") + "</div>"%>
-									<%# (Eval("CopyrightRegion").ToString().Trim() == "") ? "" : "<b>Copyright Region:</b><div style='margin-left:7px'>" + Eval("CopyrightRegion") + "</div>"%>
-									<%# (Eval("CopyrightComment") == "") ? "" : "<b>Copyright Comments:</b><div style='margin-left:7px'>" + Eval("CopyrightComment") + "</div>"%>
-									<%# (Eval("CopyrightEvidence") == "") ? "" : "<b>Copyright Evidence:</b><div style='margin-left:7px'>" + Eval("CopyrightEvidence") + "</div>"%>
-									</div>
-									<br />
-								</ItemTemplate>
-							</asp:Repeater>
-						</td>
-						<td align="right" valign="top">
-							<asp:HyperLink ID="editTitleLink" runat="server" ImageUrl="/images/pencil.png" ToolTip="Edit Title">
-							</asp:HyperLink>
+							
 						</td>
 					</tr>
 				</table>
@@ -229,8 +258,47 @@
 	}
 	
 	$(document).ready(function(){
-	$("#expand").click(function(){$("div.itemDetailDiv:hidden").toggle();$("img.expandImg").attr("src", "/images/bib_minus3.gif");$("#expand").toggle();$("#collapse").toggle();return false;});
-	$("#collapse").click(function(){$("div.itemDetailDiv:visible").toggle();$("img.expandImg").attr("src", "/images/bib_plus3.gif");$("#expand").toggle();$("#collapse").toggle();return false;});
+	    $("#expand").click(function(){$("div.itemDetailDiv:hidden").toggle();$("img.expandImg").attr("src", "/images/bib_minus3.gif");$("#expand").toggle();$("#collapse").toggle();return false;});
+	    $("#collapse").click(function(){$("div.itemDetailDiv:visible").toggle();$("img.expandImg").attr("src", "/images/bib_plus3.gif");$("#expand").toggle();$("#collapse").toggle();return false;});
+	    
+
+        $(".BookThumbItemID").each(function() {
+            var itemId = $(this).html();
+            $(this).closest(".BookThumb").each(function() {
+                var imagediv = $(this);
+        	    $.getJSON("http://" + document.domain + ':' + location.port + "/Services/PageSummaryService.ashx?op=FirstPageSummarySelectForViewerByItemID&itemID=" + itemId, function(data) {
+    	            var imageURI = getPageImageURI(data[0]);
+    	            imagediv.html('<img src="' + imageURI + '" height="150"></img>');
+	            })
+	        });	    
+                
+        });	    	   
+	    
 	});
+	
+    getPageImageURI = function(pageRecord) {
+        var url = "";
+
+        if (pageRecord != null) {
+            if (pageRecord.AltExternalUrl != "" && pageRecord.AltExternalUrl != null) {
+                url = 'http://www.archive.org/download/' + pageRecord.BarCode + '/' + pageRecord.BarCode + '_jp2.zip/' + pageRecord.BarCode + '_jp2/' + pageRecord.BarCode + pageRecord.AltExternalUrl;
+            } else {
+                if (pageRecord.RareBooks) {
+                    if (pageRecord.Illustration) {
+                        var item = pageRecord.FileRootFolder + '/' + pageRecord.BarCode + '/' + pageRecord.FileNamePrefix + '.jp2';
+                        url = 'http://images.biodiversitylibrary.org/adore-djatoka/resolver?url_ver=Z39.88-2004&rft_id=http://mbgserv09:8057/' + pageRecord.WebVirtualDirectory + '/' + item + '&svc_id=info:lanl-repo/svc/getRegion&svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&svc.format=image/jpeg&svc.scale=200';
+                    } else {
+                        url = 'http://www.botanicus.org/' + pageRecord.WebVirtualDirectory + '/' + pageRecord.FileRootFolder + '/' + pageRecord.BarCode + '/fullsize/' + pageRecord.FileNamePrefix + '.jpg';
+                    }
+                } else {
+                    var item = pageRecord.FileRootFolder + '/' + pageRecord.BarCode + '/jp2' + '/' + pageRecord.FileNamePrefix + '.jp2';
+                    url = 'http://images.biodiversitylibrary.org/adore-djatoka/resolver?url_ver=Z39.88-2004&rft_id=http://mbgserv09:8057/' + pageRecord.WebVirtualDirectory + '/' + item + '&svc_id=info:lanl-repo/svc/getRegion&svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&svc.format=image/jpeg&svc.scale=200';
+                }
+            }
+        }
+
+        //alert(url);
+        return url;
+    }	
 	</script>
 </asp:Content>

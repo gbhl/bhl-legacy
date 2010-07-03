@@ -32,22 +32,24 @@ namespace MOBOT.BHL.Web
             {
                 BHLProvider provider = new BHLProvider();
                 PageSummaryView ps = provider.PageSummarySelectByPageId(pageID);
+
+
                 String imageUrl = String.Empty;
+                if (ps != null) {
+                    if (ps.ExternalURL == null) {
+                        String cat = (ps.WebVirtualDirectory == String.Empty) ? "Researchimages" : ps.WebVirtualDirectory;
+                        String item = ps.MARCBibID + "/" + ps.BarCode + "/jp2/" + ps.FileNamePrefix + ".jp2";
+                        imageUrl = String.Format("http://images.mobot.org/ImageWeb/GetImage.aspx?cat={0}&item={1}&wid=" + width.ToString() + "&hei= " + height.ToString() + "&rgn=0,0,1,1&method=scale", cat, item);
+                    } else {
+                        imageUrl = ps.ExternalURL;
+                    }
 
-                if (ps.ExternalURL == null)
-                {
-                    String cat = (ps.WebVirtualDirectory == String.Empty) ? "Researchimages" : ps.WebVirtualDirectory;
-                    String item = ps.MARCBibID + "/" + ps.BarCode + "/jp2/" + ps.FileNamePrefix + ".jp2";
-                    imageUrl = String.Format("http://images.mobot.org/ImageWeb/GetImage.aspx?cat={0}&item={1}&wid=" + width.ToString() + "&hei= " + height.ToString() + "&rgn=0,0,1,1&method=scale", cat, item);
+                    System.Net.WebClient client = new System.Net.WebClient();
+                    context.Response.ContentType = "image/jpeg";
+                    context.Response.BinaryWrite(client.DownloadData(imageUrl));
+                } else {
+                    // Page not found!
                 }
-                else
-                {
-                    imageUrl = ps.ExternalURL;
-                }
-
-                System.Net.WebClient client = new System.Net.WebClient();
-                context.Response.ContentType = "image/jpeg";
-                context.Response.BinaryWrite(client.DownloadData(imageUrl));
             }
         }
 

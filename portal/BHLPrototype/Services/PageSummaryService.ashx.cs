@@ -86,6 +86,10 @@ namespace MOBOT.BHL.Web.Services
                         response = this.PageSummarySelectForViewerByItemID(itemID);
                         break;
                     }
+                case "FirstPageSummarySelectForViewerByItemID": {
+                        response = this.FirstPageSummarySelectForViewerByItemID(itemID);
+                        break;
+                    }
                 default:
                     {
                         response = null;
@@ -253,6 +257,38 @@ namespace MOBOT.BHL.Web.Services
                 return null;
             }
         }
+
+        private string FirstPageSummarySelectForViewerByItemID(string itemIDString) {
+            try {
+                int itemID;
+                if (Int32.TryParse(itemIDString, out itemID)) {
+                    CustomGenericList<PageSummaryView> pages = new BHLProvider().PageSummarySelectForViewerByItemID(itemID);
+
+                    // Serialize only the information we need                    
+                    List<ViewerPage> viewerPages = new List<ViewerPage>();
+                    if (pages.Count > 0) {
+                        PageSummaryView page = pages[0];
+                        ViewerPage viewerPage = new ViewerPage();
+                        viewerPage.AltExternalUrl = page.AltExternalURL;
+                        viewerPage.WebVirtualDirectory = page.WebVirtualDirectory;
+                        viewerPage.FileRootFolder = page.FileRootFolder;
+                        viewerPage.BarCode = page.BarCode;
+                        viewerPage.FileNamePrefix = page.FileNamePrefix;
+                        viewerPage.RareBooks = page.RareBooks;
+                        viewerPage.Illustration = page.Illustration;
+                        viewerPages.Add(viewerPage);
+                    }
+
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    return js.Serialize(viewerPages);
+                } else {
+                    return null;
+                }
+            } catch {
+                return null;
+            }
+        }
+
 
         [Serializable]
         private class ViewerPage

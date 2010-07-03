@@ -1013,6 +1013,7 @@
     <Content Include="Images\map_pin_red.png" />
     <Content Include="Images\map_pin_white.png" />
     <Content Include="Images\map_pin_yellow.png" />
+    <Content Include="Images\PageLoading.gif" />
     <Content Include="Images\rpterror.png" />
     <Content Include="Images\textpageblk.PNG" />
     <Content Include="Images\view_page.gif" />

@@ -71,16 +71,17 @@
 
     function updateUI(results)
     {
-      if (updateViewer)
-          loadViewer(results[0]);
-      else
-          updateViewer = true;
+      if (updateViewer) {            
+        loadViewer(results[0]);
+      } else {
+        updateViewer = true;
+      }
 
       var hidPageID = document.getElementById('<%= hidPageID.ClientID %>');
       hidPageID.value = results[3];
 
       var pgLink = document.getElementById('<%= pageLink.ClientID %>');
-      var url = 'http://' + document.domain + '/page/' + results[3];
+      var url = 'http://' + document.domain + '/page/' + results[3];      
       pgLink.innerHTML = url.replace(/www./, "").replace(/beta./, "");
 
       var masterFeedbackLink = document.getElementById('<%= ( (HyperLink)Master.FindControl( "masterFeedbackLink" ) ).ClientID  %>');
