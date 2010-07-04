@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" Codebehind="TitlePage.aspx.cs" Inherits="MOBOT.BHL.Web.TitlePage"
+<%@ Page Language="C#" MasterPageFile="~/BHL-AU.Master" AutoEventWireup="true" Codebehind="TitlePage.aspx.cs" Inherits="MOBOT.BHL.Web.TitlePage"
 	Title="Biodiversity Heritage Library" %>
 
 <%@ Register TagPrefix="UC" TagName="TitleVolumeSelectionControl" Src="TitleVolumeSelectionControl.ascx" %>
@@ -71,17 +71,16 @@
 
     function updateUI(results)
     {
-      if (updateViewer) {            
-        loadViewer(results[0]);
-      } else {
-        updateViewer = true;
-      }
+      if (updateViewer)
+          loadViewer(results[0]);
+      else
+          updateViewer = true;
 
       var hidPageID = document.getElementById('<%= hidPageID.ClientID %>');
       hidPageID.value = results[3];
 
       var pgLink = document.getElementById('<%= pageLink.ClientID %>');
-      var url = 'http://' + document.domain + '/page/' + results[3];      
+      var url = 'http://' + document.domain + '/page/' + results[3];
       pgLink.innerHTML = url.replace(/www./, "").replace(/beta./, "");
 
       var masterFeedbackLink = document.getElementById('<%= ( (HyperLink)Master.FindControl( "masterFeedbackLink" ) ).ClientID  %>');
@@ -296,10 +295,14 @@
         hash = newHash;
         startPolling();
     }
+    
+    $(document).ready(function() {
+        firstPage();
+    });
 
 	</script>
 
-	<div id="leftDiv">
+	<div id="leftDiv" style="display:none">
 		<div align="center">
 			<cc:ContentPanel ID="pageListContentPanel" runat="server">
 				<div id="pageListDiv">
@@ -359,20 +362,8 @@
 			<div id="ocrText" style="font-size: 12pt;">
 			</div>
 		</div>
-		<div id="viewer" style="position: absolute; left: 256px; right: 12px; top: 157px; z-index: 90; border-style: solid; border-width: 1px;
-			border-color: #cccccc;">
+		<div id="viewer" style="width: 100%; height: 100%; border: 1px solid #3C3B37;">
 		</div>
-		<!--
-		<div id="maximize" style="position: absolute; left: 256px; top: 159px; z-index: 100;">
-			<img src="http://images.mobot.org/viewer/images/view-fullscreen.png" title="Maximize" alt="Maximize" width="16" height="16" onclick="javascript:toggleMaximized(256,157,256,159);" />
-		</div>
-		<div id="pageNav" style="position: absolute; right: 33px; top: 164px; z-index: 100;">
-			<img src="/Images/first.gif" title="First" alt="First Page" width="13" height="15" onclick="javascript:firstPage();" />&nbsp;&nbsp;
-			<img src="/Images/previous.gif" title="Previous" alt="Previous Page" width="10" height="15" onclick="javascript:previousPage();" />&nbsp;&nbsp;
-			<img src="/Images/next.gif" title="Next" alt="Next Page" width="10" height="15" onclick="javascript:nextPage();" />&nbsp;&nbsp;
-			<img src="/Images/last.gif" title="Last" alt="Last Page" width="13" height="15" onclick="javascript:lastPage();" />
-		</div>
-		-->
 	</div>
 	<div id="attributionDiv" runat="server" style="right: 15px;">
 		Book contributed by
