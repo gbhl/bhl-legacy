@@ -23,7 +23,7 @@ namespace MOBOT.BHL.Web
 
     protected void Page_Load( object sender, EventArgs e )
     {
-      Main main = (Main)Page.Master;
+        BHLMasterPage main = (BHLMasterPage)Page.Master;
       titleSelectionContentPanel.SetTableID( "titleSelectionContentPanel" );
       ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, "/Scripts/jquery-1.4.2.min.js");
       ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onload", 

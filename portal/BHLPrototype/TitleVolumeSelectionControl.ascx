@@ -1,6 +1,7 @@
 <%@ Control Language="C#" AutoEventWireup="true" Codebehind="TitleVolumeSelectionControl.ascx.cs"
   Inherits="MOBOT.BHL.Web.TitleVolumeSelectionControl" %>
 <%@ Register TagPrefix="cc" Namespace="MOBOT.BHL.Web" Assembly="MOBOT.BHL.Web" %>
+
 <cc:ContentPanel ID="titleSelectionContentPanel" runat="server">
   <table cellpadding="0" cellspacing="0" width="100%">
     <tr>
@@ -55,6 +56,8 @@
           // DOESN'T WORK IN IE6
           //$('#itemdd > li').bind('mouseover', itemdd_open)
           //$('#itemdd > li').bind('mouseout', itemdd_timer)
+          
+          $('#titleSelectionContentPanel').css("width", "100%");
 
           $('li.headlink').hover(
             function() { $('ul', this).css('display', 'block'); },

@@ -93,7 +93,7 @@
 			<div id="browse_container_inner" style="overflow: auto;">
 				<table width="100%" style="height:100%" cellpadding="0" cellspacing="0">
 					<tr>
-						<td style="margin:5px; padding: 10px; border-right: 1px solid #3C3B37; border-bottom: 1px solid #3C3B37" valign="top">
+						<td style="height:60px; margin:5px; padding: 10px; border-right: 1px solid #3C3B37; border-bottom: 1px solid #3C3B37" valign="top">
 							<b class="accent"><asp:Literal ID="fullTitleLiteral" runat="server"></asp:Literal></b>
 							<br />
 							<asp:Repeater ID="authorsRepeater" runat="server">
