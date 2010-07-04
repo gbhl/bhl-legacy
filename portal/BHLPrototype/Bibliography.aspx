@@ -91,9 +91,9 @@
 	<div id="browse_container_outer" style="overflow: auto; width: 100%">
 		<cc:ContentPanel ID="browseContentPanel" runat="server" TableID="browseContentPanel">
 			<div id="browse_container_inner" style="overflow: auto;">
-				<table width="100%" style="border: 1px solid black;">
+				<table width="100%" style="height:100%" cellpadding="0" cellspacing="0">
 					<tr>
-						<td style="border: 1px solid black;" valign="top">
+						<td style="margin:5px; padding: 10px; border-right: 1px solid #3C3B37; border-bottom: 1px solid #3C3B37" valign="top">
 							<b class="accent"><asp:Literal ID="fullTitleLiteral" runat="server"></asp:Literal></b>
 							<br />
 							<asp:Repeater ID="authorsRepeater" runat="server">
@@ -103,9 +103,9 @@
 									</a></b>
 									<br />
 								</ItemTemplate>
-							</asp:Repeater>
+							</asp:Repeater>													
 						</td>
-						<td style="width: 300px; border: 1px solid black;" valign="top">
+						<td style="border-bottom: 1px solid #3C3B37" valign="top">
 						    <center>
 						        <br />
 							    <img src="/images/rpterror.png" align="texttop" title="Report an error" alt="Report an error"/>&nbsp;<asp:LinkButton ID="lnkFeedback" runat="server" Text="Report an error" PostBackUrl="/Feedback.aspx"></asp:LinkButton>
@@ -116,13 +116,12 @@
 						</td>
 					</tr>
 					<tr>
-						<td>							
+						<td style="border-right: 1px solid #3C3B37" valign="top">							
 							<asp:Repeater ID="itemRepeater" runat="server">
 								<ItemTemplate>
 								    <table width="100%" cellpadding="10" cellspacing="5">
 								        <tr>
-								            <td style="width:120px;text-align:center" valign="top">								                
-								                <%# Eval("Volume") %>
+								            <td style="width:120px;text-align:center" valign="top">								                								                
 							                    <div class="BookThumb">
 							                        <div class="BookThumbItemID" style="display: none"><%#Eval("ItemID")%></div>
 							                        <div style="height:150px; width: 100px">
@@ -135,20 +134,26 @@
 							                    <input type="button" value="View Book" onclick="readBook('<%# Eval("ItemID") %>')" />
 								            </td>
 								            <td valign="top">
+								                <p>
+									                <b>Volume:</b> <%# Eval("Volume") %>
+									            </p>									           
 									            <b>Contributed by</b>
 									            <div style=""><%# Eval("InstitutionUrl").ToString().Trim() == String.Empty ? Eval("InstitutionName") : "<a target='_blank' href='" + Eval("InstitutionUrl") + "'>" + Eval("InstitutionName") + "</a>"%></div>
 									            <br />
 									            <b>Abstract</b>
-									            <div style="">....</div>									            
+									            <div style="">...</div>									            
 								            </td>
 								        </tr>
-								    </table>
-								    <hr />								    
+								    </table>								    							    
 								</ItemTemplate>
+								
+								<SeparatorTemplate>
+                                    <hr style="width:80%"></hr>
+                                </SeparatorTemplate>
 							</asp:Repeater>
 							
 						</td>
-						<td valign="top" style="border: 1px solid black; padding: 10px">
+						<td valign="top" style="padding: 10px">
 							<b>Additional authors:</b><br />
 							<asp:Repeater ID="additionalAuthorsRepeater" runat="server">
 								<ItemTemplate>
