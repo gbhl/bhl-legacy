@@ -1001,6 +1001,7 @@
     <Content Include="Images\bib_plus.GIF" />
     <Content Include="Images\bib_plus3.gif" />
     <Content Include="Images\content-gradient.png" />
+    <Content Include="OLBookReader\GnuBook\images\view_contents.png" />
     <Content Include="Images\hdr_logo2.gif" />
     <Content Include="Images\hdr_squares2.gif" />
     <Content Include="Images\icon_book_open.gif" />

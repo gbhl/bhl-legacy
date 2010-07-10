@@ -7,7 +7,7 @@ function goto_url(url) {
 function loadViewer(viewerURL) {
 	var elementViewer = document.getElementById("viewer");
 	if (elementViewer) {
-		elementViewer.innerHTML = "<iframe src='" + viewerURL + "' frameborder='no' scrolling='no' width='100%' height='100%'></iframe>";
+		elementViewer.innerHTML = "<iframe id='GBFrame' src='" + viewerURL + "' frameborder='no' scrolling='no' width='100%' height='100%'></iframe>";
 	}
 //	var windowWidth = 0;
 //	if (window.innerWidth) {
@@ -72,11 +72,11 @@ function resizeViewerHeight(viewerTop){
 
     var viewerWidth = 0;
     
-    if(maximized == 0)
-        viewerWidth = windowWidth - 375;
-    else
-        viewerWidth = windowWidth;
-        
+//    if(maximized == 0)
+//        viewerWidth = windowWidth - 375;
+//    else
+        viewerWidth = windowWidth - 20;
+//        
     if(viewerWidth < 0) viewerWidth = 0;
     
     if(headerHidden)

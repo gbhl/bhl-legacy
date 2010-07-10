@@ -26,7 +26,7 @@
                 qsParm[key] = val;
             }
         }
-
+        
     </script>
 
     <!--[if lte IE 6]>
@@ -151,6 +151,11 @@
 
             // Let's go!
             gb.init();
+            
+            if (parent.GBPostLoad) {
+                parent.GBPostLoad();
+            }
+                        
         }
     </script>
 </body>

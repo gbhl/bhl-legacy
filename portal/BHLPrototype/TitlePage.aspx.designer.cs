@@ -41,15 +41,6 @@ namespace MOBOT.BHL.Web {
         protected global::System.Web.UI.WebControls.HiddenField hidSequenceMax;
         
         /// <summary>
-        /// pageListContentPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::MOBOT.BHL.Web.ContentPanel pageListContentPanel;
-        
-        /// <summary>
         /// pageListBox control.
         /// </summary>
         /// <remarks>

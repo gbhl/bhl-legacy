@@ -24,7 +24,7 @@ namespace MOBOT.BHL.Web
         Master.Page.Header.Controls.Add(ControlGenerator.GetScriptControl("/Scripts/BotanicusDropInViewerUtils.js"));
         //Master.Page.Header.Controls.Add( ControlGenerator.GetScriptControl( "/Scripts/Highlighter.js" ) );
 
-        pageListContentPanel.SetTableID("pageListTable");
+//        pageListContentPanel.SetTableID("pageListTable");
         namesListContentPanel.SetTableID("nameListTable");
         //ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, "/Scripts/ResizeContentPanelUtils.js");
         ControlGenerator.AddAttributesAndPreserveExisting(main.Body, "onload",

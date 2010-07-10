@@ -2507,7 +2507,7 @@ GnuBook.prototype.initToolbar = function(mode, ui) {
         + " <button class='GBicon rollover one_page_mode' onclick='gb.switchMode(1); return false;'/>"
         + " <button class='GBicon rollover two_page_mode' onclick='gb.switchMode(2); return false;'/>"
         + "&nbsp;&nbsp;<a class='GBblack title' href='"+this.bookUrl+"' target='_blank'>"+this.shortTitle(50)+"</a>"
-        + "</span></div>");
+        + "</span><span id='GBToolbarHook'/></div>");
     
     this.updateToolbarZoom(this.reduce); // Pretty format
         

@@ -101,6 +101,7 @@
 .GBicon.book_rightmost { background: url(images/book_rightmost_icon.png) no-repeat; }
 .GBicon.book_top { background: url(images/book_top_icon.png) no-repeat; }
 .GBicon.book_bottom { background: url(images/book_bottom_icon.png) no-repeat; }
+.GBicon.show_contents { background: url(images/view_contents.png) no-repeat; }
 
 
 .GBicon.play { background: url(images/control_play_icon.png) no-repeat; }
