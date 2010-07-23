@@ -1,0 +1,478 @@
+<?php
+// $Id: biblio_oai_xc.module,v 1.1.2.2 2010/01/26 01:55:08 rjerome Exp $
+/*
+ * @file biblio_oai_xc.module
+ *
+ */
+
+/*
+ *   add the marc option to the option list of the biblio_import_form
+ *   the key is the module name use by module_invoke to call hook_biblio_import
+ *   module_invoke('biblio_oai_xc', 'biblio_import',...)
+ */
+function biblio_oai_xc_biblio_import_options() {
+  return array('biblio_oai_xc' => t('MARC'));
+}
+
+
+
+function biblio_oai_xc_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
+  if ($node->type != 'biblio') return;
+  $callback = '_biblio_oai_xc_'. str_replace(' ', '_', $op);
+  if (function_exists($callback)) {
+    return $callback($node, $a3, $a4);
+  }
+  return;
+}
+
+function _biblio_oai_xc_delete($node) {
+  db_query('DELETE FROM {biblio_oai_xc} WHERE nid = %d', $node->nid);
+}
+
+function _biblio_oai_xc_view($node) {
+
+}
+
+function _biblio_oai_xc_insert($node) {
+  if (!isset($node->biblio_oai_xc_md5)) return;
+  drupal_write_record('biblio_oai_xc', $node);
+}
+
+function biblio_oai_xc_oaiharvester_process_record($record) {
+  module_load_include('inc', 'biblio', 'biblio.import.export');
+
+  $raw = $record['metadata']['childNode'];
+  $format = $raw->localName;
+  
+  // error_log('format = ' . $format, 0);
+  switch ($format)
+  {
+	case 'dc':
+		biblio_oai_xc_oaiharvester_process_record_oai_dc($record);
+		break;
+	case 'mods':
+		biblio_oai_xc_oaiharvester_process_record_mods($record);
+		break;
+  }
+  
+  return;
+}
+
+/*
+ *	Harvest records that use the oai_dc metadata format
+ */
+function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
+{
+  $raw = $record['metadata']['childNode'];
+  
+  // Get the unique URL (identifier) for the item
+  $identifiers = $raw->getElementsByTagName('identifier');
+  foreach($identifiers as $identifier)
+  {
+	if (filter_var($identifier->nodeValue, FILTER_VALIDATE_URL)) {
+		$biblio_url = $identifier->nodeValue;
+		break;
+	}
+  }  
+
+  // See if we already have an entry for this item
+  if (!empty($biblio_url)) {
+	if ($dup = biblio_oai_xc_check_md5(md5($biblio_url)))
+	{
+		// Retrieve the existing node so that we can do an update instead of an insert
+		$node = node_load($dup);
+	}
+  }
+  
+
+  // Fill in the updated information  
+  $node->title = $raw->getElementsByTagName('title')->item(0)->nodeValue;
+  $node->biblio_url = $biblio_url;
+  $node->biblio_publisher = $raw->getElementsByTagName('publisher')->item(0)->nodeValue;
+  $node->biblio_year = $raw->getElementsByTagName('date')->item(0)->nodeValue;
+  $node->biblio_lang = $raw->getElementsByTagName('language')->item(0)->nodeValue;
+
+  $creators = $raw->getElementsByTagName('creator');
+  $node->biblio_contributors = array();
+  foreach ($creators as $creator) {
+    $node->biblio_contributors[1][]= array('name' => $creator->nodeValue, 'auth_type' => 1);
+  }
+  $subjects = $raw->getElementsByTagName('subject');
+  $node->biblio_keywords = array();
+  foreach ($subjects as $subject) {
+	$keywords = explode(";", $subject->nodeValue);
+	foreach ($keywords as $keyword) {
+		$node->biblio_keywords[] = $keyword;
+		//$node->biblio_keywords[]= $subject->nodeValue;
+	}
+  }
+
+  // Check whether one of the types specific in the OAI feed match a Biblio Type
+  $types = $raw->getElementsByTagName('type');
+  foreach ($types as $type) {
+  	if ($node->biblio_type = biblio_oai_xc_gettypeid($type->nodeValue))
+	{
+		break;
+	}
+  }
+  if (empty($node->biblio_type)) {
+	$node->biblio_type = 100;	// No matches in the feed, so default to "Book"
+  }
+  
+  if (!empty($biblio_url))
+  {
+	$node->biblio_oai_xc_md5 = md5($biblio_url);
+  }
+  else
+  {
+	$node->biblio_oai_xc_md5 = md5(serialize($node));
+  }
+
+  if (!empty($node)) {
+    biblio_save_node($node);
+  }
+
+  return ;
+}
+
+/*
+ *	Harvest records that use the mods metadata format
+ */
+function biblio_oai_xc_oaiharvester_process_record_mods($record)
+{
+  $raw = $record['metadata']['childNode'];
+
+  // Set up an XPath document
+  $doc = new DOMDocument;
+  $doc->appendChild($doc->importNode($raw, true));
+  $xpath = new DOMXPath($doc);
+  $xpath->registerNamespace('x', 'http://www.loc.gov/mods/v3');
+  
+  // Read any identifiers for the item
+  $identifiers = $xpath->query('/x:mods/x:identifier');
+  foreach($identifiers as $identifier)
+  {
+	if ($identifier->hasAttribute('type'))
+	{
+		switch ($identifier->getAttribute('type'))
+		{
+			case 'uri':
+				$biblio_url = $identifier->nodeValue;
+				break;
+			case 'isbn':
+				$biblio_isbn = $identifier->nodeValue;
+				break;
+			case 'issn':
+				$biblio_issn = $identifier->nodeValue;
+				break;
+		}			
+	}
+  }  
+  
+  // See if there is a 'url' element (let this take precedence over any 'uri' identifiers)
+  $urls = $xpath->query('/x:mods/x:location/x:url');
+  if ($urls->length > 0)
+  {
+	$biblio_url = $urls->item(0)->nodeValue;
+  }  
+
+  // See if we already have an entry for this item
+  if (!empty($biblio_url)) {
+	if ($dup = biblio_oai_xc_check_md5(md5($biblio_url)))
+	{
+		// Retrieve the existing node so that we can do an update instead of an insert
+		$node = node_load($dup);
+	}
+  }  
+
+  // Add the identifiers to the node
+  $node->biblio_url = $biblio_url;
+  $node->biblio_isbn = $biblio_isbn;
+  $node->biblio_issn = $biblio_issn;
+
+  // Get the title information
+  $titleInfoList = $xpath->query('/x:mods/x:titleInfo');
+  
+  foreach($titleInfoList as $titleInfo)
+  {
+	// Only use titles that apply to MARC 245a/b/n/p by ignoring any with the 'type' attribute
+	if (!$titleInfo->hasAttribute('type'))
+	{
+		$node->title = '';
+		$nonSort = $titleInfo->getElementsByTagName('nonSort');
+		if ($nonSort->length > 0) $node->title = $nonSort->item(0)->nodeValue . ' ';
+		$title = $titleInfo->getElementsByTagName('title');
+		if ($title->length > 0) $node->title = $node->title . $title->item(0)->nodeValue;
+		$subTitle = $titleInfo->getElementsByTagName('subTitle');
+		if ($subTitle->length > 0) $node->title = $node->title . ' ' . $subTitle->item(0)->nodeValue;
+	}
+  }
+  
+  // Get the publishing information
+  $originInfo = $xpath->query('/x:mods/x:originInfo');
+  foreach($originInfo as $origin)
+  {
+  	$node->biblio_place_published = '';
+	$places = $origin->getElementsByTagName('place');
+	foreach($places as $place)
+	{
+		$placeTerm = $place->getElementsByTagName('placeTerm')->item(0);
+		if ($placeTerm->getAttribute('type') == 'text')
+		{
+			$node->biblio_place_published = $placeTerm->nodeValue;
+			break;
+		}
+	}
+	
+	$node->biblio_publisher = $origin->getElementsByTagName('publisher')->item(0)->nodeValue;
+  }
+  
+  // Get the date information
+  $node->biblio_year = 9999;
+  $node->biblio_date = '';
+  
+  $dates = $xpath->query('/x:mods/x:originInfo/x:dateIssued');
+  if ($dates->length > 0)
+  {
+	//$dates = $origin->getElementsByTagName('dateIssued');
+	foreach($dates as $date)
+	{
+		if (!$date->hasAttribute('encoding'))
+		{
+			$node->biblio_date = $date->nodeValue;
+		}
+		elseif ($date->getAttribute('encoding') == 'iso8601')
+		{
+			$node->biblio_date = $date->nodeValue;
+		}
+		elseif ($date->getAttribute('encoding') == 'marc')
+		{
+			if (!$date->hasAttribute('point'))
+			{
+				$node->biblio_year = $date->nodeValue;
+			}
+			elseif ($date->getAttribute('point') == 'start')
+			{
+				$node->biblio_year = $date->nodeValue;
+			}
+		}		
+	}
+  }
+  
+  // Get the language
+  $languageElement = $xpath->query('/x:mods/x:language');
+  if ($languageElement->length > 0)
+  {
+	$languageTerms = $languageElement->item(0)->getElementsByTagName('languageTerm');
+	if ($languageTerms->length > 0) $node->biblio_lang = $languageTerms->item(0)->nodeValue;
+  }  
+
+  // Get the authors
+  $node->biblio_contributors = array();
+  $names = $xpath->query('/x:mods/x:name');
+  foreach($names as $name)
+  {
+	// get the type of author
+	$auth_type = 1;	// match to row in table 'biblio_contributor_type_data'
+	if ($name->hasAttribute('type'))
+	{
+		switch($name->getAttribute('type'))
+		{
+			case 'personal':
+				$auth_type = 1;
+				break;
+			case 'corporate':
+				$auth_type = 5;
+				break;
+			case 'conference':
+				$auth_type = 19;
+				break;		
+		}
+	}
+	
+	// get the name of the author
+	$nameParts = $name->getElementsByTagName('namePart');
+	$authorName = '';
+	$given = '';
+	$family = '';
+	$authorDate = '';
+	foreach($nameParts as $namePart)
+	{
+		if (!$namePart->hasAttribute('type'))
+		{
+			$authorName = $namePart->nodeValue;
+			break;
+		}
+		else
+		{
+			switch($namePart->getAttribute('type'))
+			{
+				case 'given':
+					$given = $namePart->nodeValue;
+					break;
+				case 'family':
+					$family = $namePart->nodeValue;
+					break;
+				case 'date':
+					$authorDate = $namePart->nodeValue;
+					break;			
+			}
+		}	
+	} 
+	if ($authorName == '') $authorName = $family . ', ' . $given . ' ' . $authorDate;
+	
+	// add the author to the node
+    $node->biblio_contributors[1][]= array('name' => $authorName, 'auth_type' => $auth_type);
+  }  
+  
+  // Get the subjects (keywords)
+  $node->biblio_keywords = array();
+  $subjects = $xpath->query('/x:mods/x:subject');
+  foreach($subjects as $subject)
+  {
+	$topics = $subject->getElementsByTagName('topic');
+	foreach($topics as $topic)
+	{
+		$node->biblio_keywords[] = $topic->nodeValue;
+	}
+	$names = $subject->getElementsByTagName('name');
+	foreach($names as $name)
+	{
+		$node->biblio_keywords[] = $name->nodeValue;
+	}
+	$geographics = $subject->getElementsByTagName('geographic');
+	foreach($geographics as $geographic)
+	{
+		$node->biblio_keywords[] = $geographic->nodeValue;
+	}
+  }  
+  
+  // Look for a call number in the item's classification entries
+  $classifications = $xpath->query('/x:mods/x:classification');
+  foreach($classifications as $classification)
+  {
+	if ($classification->hasAttribute('authority'))
+	{
+		if ($classification->getAttribute('authority') == 'lcc')
+		{
+			$node->biblio_call_number = $classification->nodeValue;
+			break;
+		}			
+	}
+  }  
+  
+  // Identify the type of item
+  $genres = $xpath->query('/x:mods/x:genre');
+  if ($genres->length > 0)
+  {
+	switch ($genres->item(0)->nodeValue)
+	{
+		case 'book':
+			$node->biblio_type = 100;	// book
+			break;
+		case 'series':
+			$node->biblio_type = 100;	// book
+			break;
+		case 'article':
+			$node->biblio_type = 102;	// journal article
+			break;
+		default:
+			$node->biblio_type = 100;	// book
+			break;
+	}  
+  }
+
+  if (empty($node->biblio_type)) $node->biblio_type = 100;	// No matches in the feed, so default to "Book"
+  
+  // Check for page and volume information for journals
+  $relatedItems = $xpath->query('/x:mods/x:relatedItem');
+  foreach($relatedItems as $relatedItem)
+  {
+	if ($relatedItem->getAttribute('type') == 'host' && $node->biblio_type == 102)
+	{
+
+		// Get journal title
+		$journalTitleInfo = $relatedItem->getElementsByTagName('titleInfo');
+		if ($journalTitleInfo->length > 0)
+		{
+			$node->biblio_secondary_title = $journalTitleInfo->item(0)->getElementsByTagName('title')->item(0)->nodeValue;		
+		}
+	
+		// Get volume/issue/pages
+		$parts = $relatedItem->getElementsByTagName('part');
+		if ($parts->length > 0)
+		{
+			$part = $parts->item(0);
+			
+			$details = $part->getElementsByTagName('detail');
+			$text = $part->getElementsByTagName('text');
+			if ($details->length > 0)
+			{
+				foreach($details as $detail)
+				{
+					$number = $detail->getElementsByTagName('number')->item(0)->nodeValue;
+					
+					if (!empty($number))
+					{
+						switch($detail->getAttribute('type'))
+						{
+							case 'volume':
+								$node->biblio_volume = $number;
+								break;
+							case 'issue':
+								$node->biblio_issue = $number;
+								break;
+						}
+					}
+				}
+			}
+			else
+			{
+				$node->biblio_volume = $text->item(0)->nodeValue;
+			}
+			
+			$extents = $part->getElementsByTagName('extent');
+			if ($extents->length > 0)
+			{
+				$node->biblio_section = $extents->item(0)->getElementsByTagName('start')->item(0)->nodeValue;
+				$node->biblio_pages = $extents->item(0)->getElementsByTagName('list')->item(0)->nodeValue;
+			}
+			
+			$partDates = $part->getElementsByTagName('date');
+			if ($partDates->length > 0) $node->biblio_year = $partDates->item(0)->nodeValue;
+		}
+	}
+  }
+  
+  // Generate an md5 hash and save the item
+  if (!empty($biblio_url))
+  {
+	$node->biblio_oai_xc_md5 = md5($biblio_url);
+  }
+  else
+  {
+	$node->biblio_oai_xc_md5 = md5(serialize($node));
+  }
+
+  if (!empty($node)) {
+    biblio_save_node($node);
+  }
+
+  return;
+}
+
+function biblio_oai_xc_check_md5($md5) {
+    $result = db_query("SELECT * FROM {biblio_oai_xc} WHERE biblio_oai_xc_md5 = '%s'", $md5);
+    if ($row = db_fetch_object($result)) {
+	  return $row->nid;
+    }
+	return;
+}
+
+function biblio_oai_xc_gettypeid($type) {
+	$result = db_query("SELECT * FROM {biblio_types} WHERE name = '%s'", $type);
+	if ($row = db_fetch_object($result)) {
+		return $row->tid;
+	}
+	return;
+}

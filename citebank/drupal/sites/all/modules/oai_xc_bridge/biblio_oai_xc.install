@@ -1,0 +1,88 @@
+<?php
+// $Id$
+/**
+ * @file
+ * Database table creation for biblio_oai_xc module.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function biblio_oai_xc_install() {
+  drupal_install_schema('biblio_oai_xc');
+  _save_oaidc_maps();
+}
+
+function biblio_oai_xc_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+
+  if ($phase == 'install') {
+    if (!module_exists('biblio')) {
+      $requirements['biblio_oai_xc'] = array(
+        'title' => $t('Biblio'),
+        'description' => $t('The Biblio module must be installed first'),
+        'severity' => REQUIREMENT_ERROR
+      );
+    }
+    if (!db_table_exists('biblio_type_maps')) {
+      $requirements['biblio_oai_xc_table'] = array(
+        'title' => $t('Biblio table '),
+        'description' => $t("Missing db table 'biblio_type_maps', you probably have to update your biblio module"),
+        'severity' => REQUIREMENT_ERROR
+      );
+    }
+  }
+
+  return $requirements;
+}
+
+function biblio_oai_xc_uninstall() {
+  drupal_uninstall_schema('biblio_oai_xc');
+  update_sql("DELETE FROM {biblio_type_maps} WHERE format = 'marc'");
+}
+
+function biblio_oai_xc_enable() {
+
+}
+
+
+function _save_oaidc_maps() {
+  $maps['type_map'] = serialize(
+        array(
+        )
+  );
+
+  $maps['type_names'] =  serialize(
+        array(
+        )
+  );
+
+  $maps['field_map'] =  serialize(
+        array(
+          'dc:title'      => 'title',
+          'dc:publisher'  => 'biblio_publisher',
+        )
+  );
+
+  $maps['format'] = 'oaidc';
+  drupal_write_record('biblio_type_maps', $maps);
+
+}
+/**
+ * Implementation of hook_schema().
+ *
+ * Note:  Pro Drupal Development models use of t() to translate 'description'
+ * for field definitions, but Drupal core does not use them.  We follow core.
+ */
+function biblio_oai_xc_schema() {
+  $schema = array();
+  $schema['biblio_oai_xc'] = array(
+    'fields' => array(
+      'nid'       => array('type' => 'int', 'not null' => TRUE),
+      'biblio_oai_xc_md5' => array('type' => 'char', 'length' => 32, 'not null' => TRUE),
+      ),
+  'primary key' => array('nid'),
+  );
+  return $schema;
+}
