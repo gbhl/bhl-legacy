@@ -1,5 +1,5 @@
 <?php
-// $Id: biblio.keywords.inc,v 1.6.2.12 2009/07/29 18:11:33 rjerome Exp $
+// $Id: biblio.keywords.inc,v 1.6.2.13.2.3 2010/01/21 22:14:19 rjerome Exp $
 /**
  *   biblio.module for Drupal
  *
@@ -50,7 +50,7 @@ function biblio_get_keyword_by_id($kid) {
   static $keywords = array();
 
   if (!isset($keywords[$kid])) {
-    $keywords[$kid] = db_fetch_object(db_query('SELECT * FROM {biblio_keyword_data} WHERE kid = %d', $kid));
+    $keywords[$kid] = db_fetch_array(db_query('SELECT * FROM {biblio_keyword_data} WHERE kid = %d', $kid));
   }
 
   return $keywords[$kid];
@@ -58,13 +58,39 @@ function biblio_get_keyword_by_id($kid) {
 }
 
 /**
- * @param $node
+ * @param unknown_type $node
  * @return unknown_type
+ */
+function biblio_delete_keywords($node) {
+  db_query('DELETE FROM {biblio_keyword} WHERE nid = %d', $node->nid);
+  $count = db_affected_rows();
+  biblio_delete_orphan_keywords();
+  return $count;
+}
+
+function biblio_update_keywords($node) {
+  biblio_insert_keywords($node, TRUE);
+  biblio_delete_orphan_keywords();
+}
+
+function biblio_delete_orphan_keywords ($force = FALSE) {
+  if (variable_get('biblio_auto_orphaned_keyword_delete', 0) || $force) {
+    db_query('DELETE FROM {biblio_keyword_data} WHERE kid NOT IN (SELECT DISTINCT(kid) FROM {biblio_keyword})');
+  }
+}
+
+/**
+ * Load keywords from the database
+ *
+ * @param $vid
+ *   node version id of the keywords to load
+ * @return
+ *   an array of keywords keyed on the keyword id
  */
 function biblio_load_keywords($vid) {
 
   $result = db_query('SELECT bkd.* FROM {biblio_keyword} bk INNER JOIN {biblio_keyword_data} bkd ON bk.kid = bkd.kid  WHERE bk.vid = %d ORDER BY bkd.word ASC', $vid);
-  $keywords[$vid] = '';
+  $keywords[$vid] = array();
   while ($keyword = db_fetch_object($result)) {
     $keywords[$vid][$keyword->kid] = $keyword->word;
   }
@@ -76,7 +102,8 @@ function biblio_load_keywords($vid) {
  * @param $node
  * @return
  */
-function biblio_save_keywords(&$node, $update = FALSE) {
+function biblio_insert_keywords($node, $update = FALSE) {
+  if (empty($node->biblio_keywords)) return;
   $kw_vocab = variable_get('biblio_keyword_vocabulary', 0);
   $freetagging = variable_get('biblio_keyword_freetagging', 0);
   $taxo_terms = $typed_keywords = array();
@@ -116,13 +143,13 @@ function biblio_save_keywords(&$node, $update = FALSE) {
     if (!strlen(trim($word))) continue; //skip if we have a blank
     $kid = FALSE;
     // See if the term exists
-    if ( ($term = biblio_get_keyword_by_name($word)) ) {
-      $kid = $term->kid;
+    if ( ($kw = biblio_get_keyword_by_name($word)) ) {
+      $kid = $kw->kid;
     }
     if (!$kid) {
-      $term = array('word' => trim($word));
-      $status = biblio_save_keyword($term);
-      $kid = $term['kid'];
+      $kw = array('word' => trim($word));
+      $status = biblio_save_keyword($kw);
+      $kid = $kw['kid'];
     }
     // Defend against duplicate, differently cased tags
     if (!isset($inserted[$kid])) {
@@ -138,18 +165,18 @@ function biblio_save_keywords(&$node, $update = FALSE) {
     $node->taxonomy['tags'][$kw_vocab] =  biblio_implode_keywords($typed_keywords, ',');
   }
 
-  return count($inserted);
+  return array_keys($inserted);
 }
 /**
  * @param $word
  * @return
  */
-function biblio_save_keyword(&$form_values) {
-  if (!empty($form_values['kid']) && $form_values['word']) {
-    drupal_write_record('biblio_keyword_data', $form_values, 'kid');
+function biblio_save_keyword(&$keyword) {
+  if (!empty($keyword['kid']) && $keyword['word']) {
+    drupal_write_record('biblio_keyword_data', $keyword, 'kid');
     $status = SAVED_UPDATED;
   } else {
-    drupal_write_record('biblio_keyword_data', $form_values);
+    drupal_write_record('biblio_keyword_data', $keyword);
     $status = SAVED_NEW;
   }
 
@@ -170,11 +197,39 @@ function biblio_delete_node_keywords($node) {
  */
 function biblio_delete_revision_keywords($node) {
   db_query('DELETE FROM {biblio_keyword} WHERE vid = %d', $node->vid);
+  return db_affected_rows();
+
 }
 
+/**
+ * Delete multiple keywords from both the biblio_keyword and biblio_keyword_data tables
+ * This will remove the keywords referenced by the supplied ID's from ALL nodes which reference them.
+ *
+ * @param array $keywords
+ *   An array of keyword id's to delete
+ * @return
+ *   The number of keywords deleted
+ */
+function biblio_delete_multiple_keywords($keywords) {
+  $count = 0;
+  foreach ($keywords as $kid) {
+    $count += biblio_delete_keyword($kid);
+  }
+  return $count;
+}
+/**
+ * Delete a keyword from both the biblio_keyword and biblio_keyword_data tables
+ * This will remove the keyword referenced by the supplied ID from ALL nodes which reference them.
+ *
+ * @param $keyword_id
+ *   The keyword id to delete
+ * @return
+ *   The number of keywords deleted (should always be one)
+ */
 function biblio_delete_keyword($keyword_id) {
   db_query('DELETE FROM {biblio_keyword} WHERE kid = %d', $keyword_id);
   db_query('DELETE FROM {biblio_keyword_data} WHERE kid = %d', $keyword_id);
+  return db_affected_rows();
 }
 
 function biblio_explode_keywords($string) {

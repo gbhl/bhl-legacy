@@ -8,6 +8,81 @@
 
 Upgrades from 5.x or RC2 and later are directly supported without any intermediate updates.
 
+<h3>6.x-2.x-dev</h3>
+<b>New features...</b>
+<ul> 
+  <li><a href="http://drupal.org/node/89038#comment-2496844">#89038</a>added "Token" for citekey</li>
+  <li><a href="http://drupal.org/node/660846">#660846</a>added David Lesieur's Edit publication type names patch</li>
+</ul>
+<b>Bugs Fixed...</b>
+<ul>
+  <li><a href="http://drupal.org/node/734682">#734682</a>Theming error - $base not supplied</li>
+  <li><a href="http://drupal.org/node/699092">#699092</a> fixed biblio_admin_get_styles() includes temporary files (*.inc~)</li>
+  <li><a href="http://drupal.org/node/697680">#697680</a> fixed Authors sorted randomly</li>
+  <li>updated German translation (biblio.de.po) by Niels Hackius</li>
+  <li><a href="http://drupal.org/node/575676">#575676</a> Biblio items mangle taxonomy term title</li>
+  <li><a href="http://drupal.org/node/691574">#691574</a> biblio_delete needs to require biblio.keywords.inc</li>
+  <li><a href="http://drupal.org/node/689320">#689320</a> 'Not unique table/alias' in RSS feed</li>
+  <li><a href="http://drupal.org/node/683868">#683868</a>Biblio Access restricts access to node if you have "User may edit his own node"</li>
+  <li><a href="http://drupal.org/node/502562#comment-2481200">#502562</a> "CrossRef OpenURL Account ID" descriptive text on user profile page enhanced to avoid confusion between different types of  CrossRef accounts </li>
+  <li><a href="http://drupal.org/node/681730">#681730</a>Rendering biblio as citation style for views omits status</li>
+  <li><a href="http://drupal.org/node/670394">#670394</a>fixed MLA Style issue: missing punctuation for Book Chapter type</li>
+  <li>fixed problem with closing italics tag on secondary titles</li>
+  <li><a href="http://drupal.org/node/662214">#662214</a>fixed Fields don't show after selecting biblio type, was a problem related to localization of the submit "Op"</li>
+  <li><a href="http://drupal.org/node/661604">#661604</a>fixed Vancouver style - More than one author - Final period not inserted</li>
+  <li><a href="http://drupal.org/node/645046">#645046</a>fixed fatal error introduced by <a href="http://drupal.org/node/645046#comment-2376504">#645046</a></li>
+  <li><a href="http://drupal.org/node/660554">#660554</a>fixed (another) missing escape in preg_match</li>
+</ul>
+
+<h3>6.x-1.9</h3>
+<b>New features...</b>
+<ul> 
+  <li><a href="http://drupal.org/node/645046#comment-2376504">#645046</a>Added an option on the "admin/settings/biblio/fields" page to hide "Other Biblio Fields" fieldset </li>
+  <li><a href="http://drupal.org/node/592584">#592584</a>added David Lesieur's field-translation patch </li>
+</ul>
+<b>Bugs Fixed...</b>
+<ul>
+  <li><a href="http://drupal.org/node/660554">#660554</a>fixed missing escape in preg_match</li>
+  <li><a href="http://drupal.org/node/653596">#653596</a>fixed biblio_separator_bar not showing "Submitted" or "In Press" correctly</li>
+  <li><a href="http://drupal.org/node/654242">#654242</a>fixed bug Update to biblio 1.8 breaks citations with &lt;bib&gt; tags (introduced by <a href="http://drupal.org/node/586494">#586494</a>)</li>
+</ul>
+<h3>6.x-1.8</h3>
+<b>New features...</b>
+<ul>
+  <li>Added a new "Biblio - PubMed" module which adds a "PubMed Lookup" section to the input form.  Entering a PubMed ID in this area, will populate the input form with data from PubMed</li> 
+  <li>Unpublished entries are now highlighted in red for the admin user</li> 
+  <li>Added a new field biblio_refereed (blame bekasu :-) <a href="http://drupal.org/node/613214">#613214></a>)which allows you to differentiate between refereed and non-refereed articles </li> 
+  <li>Added Inline Citations see http://drupal.org/node/398498</li>
+</ul>
+<b>Bugs Fixed...</b>
+<ul>
+  <li><a href="http://drupal.org/node/626430">#626430</a> Incorrect bibtex generation</li>
+  <li><a href="http://drupal.org/node/586494">#586494</a> Duplicate references with [bib] [/bib]</li>
+  <li><a href="http://drupal.org/node/644792">#644792</a> New publications' more... link outside of box</li>
+  <li><a href="http://drupal.org/node/646610">#646610</a> Biblio and Views: Filter by Author Lastname Error</li>
+  <li><a href="http://drupal.org/node/601558#comment-2254532">#601558</a> Improved support for PostgreSQL and PHP 5.3.x</li>
+  <li><a href="http://drupal.org/node/629960">#629960</a> Don't show DOI field to anonymous users when creating new entries</li>
+  <li><a href="http://drupal.org/node/625352">#625352</a> Theming error with biblio_category_separator_bar and biblio-inline</li>
+  <li># fixed problem where an authors "Drupal UserID" could be improperly set to 0</li> 
+  <li># fixed problem when sorting by keyword that the keyword was not being shown in the separator bars</li> 
+  <li><a href="http://drupal.org/node/616754">#616754</a> style_vancouver warning</li>
+  <li><a href="http://drupal.org/node/614970#comment-2193774">#614970</a> fixed extra "biblio-title-vancouver" spans in Vancouver style</li>
+  <li><a href="http://drupal.org/node/614598">#614598</a> fixed Missing } in biblio.module causes errors using multisite</li>
+  <li># row titles in theme_biblio_tabular() not translated</li> 
+  <li><a href="http://drupal.org/node/146758#comment-2184004">#146758</a> fixed missing initialization of the keyword separator string</li>
+  <li># fixed spans being filtered out of biblio listings</li>
+  <li><a href="http://drupal.org/node/611712">#611712</a> fixed Empty href attributes in OpenURL links </li>
+  <li># fixed "keyword" page so that keywords from "unpublished" nodes are not listed (with the exception of the Admin user UID=1, who will still see them )</li>
+  <li># fixed "authors" page so that authors from "unpublished" nodes are not listed (with the exception of the Admin user UID=1, who will still see them)</li>
+  <li># fixed extra period after title in some styles</li>
+  <li><a href="http://drupal.org/node/146760">#146760</a>proper handling of name suffixes</li>
+  <li># fixed Import: Invalid argument supplied for foreach() in biblio.import.export.inc on line 267</li>
+  <li># fixed falformed paragraph tag</li>
+  <li><a href="http://drupal.org/node/597286">#597286</a>searching bibligraphy adds <em></em> around result</li>
+  <li><a href="http://drupal.org/node/584616">#584616</a>Import: Invalid argument supplied for foreach() in biblio.import.export.inc</li>
+  <li><a href="http://drupal.org/node/592750">#592750</a>Error when Block Settings is ordered by Year Published following upgrade from 6.x-1.6 to 6.x-1.7</li>
+</ul>
+
 <h3>6.x-1.7</h3>
 <b>New features...</b>
 <ul>

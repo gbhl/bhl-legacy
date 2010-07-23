@@ -1,4 +1,4 @@
-# $Id: uk.po,v 1.5.4.2 2009/05/24 17:56:10 podarok Exp $
+# $Id: uk.po,v 1.5.4.2.2.1 2009/11/20 21:58:14 thomaszahreddin Exp $
 #
 # Ukrainian translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>

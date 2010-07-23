@@ -1,7 +1,14 @@
+3rd February 2010
+----------------------------------------------------------------
+* Added php version to info file to restrict to version 5 and up due to the use of features not available in php4.
+* SECURITY FIX - Fixed a security bug that allows arbitrary PHP code to be executed when using a signwriter
+profile as an input filter, leading to a Cross Site Scripting vulnerability.
+Any users with the ability to use input filters with signwriter profiles are able to exploit this vulnerability.
+
 8th September 2008
 ----------------------------------------------------------------
 * Updated to Drupal 6.2 with assistance of patch submitted by Catorg (www.catorg.co.uk)
-* Fixed a bug causing a blank line to be inseerted at the start of multiline image if the first word is longer than the max width.
+* Fixed a bug causing a blank line to be inserted at the start of multiline image if the first word is longer than the max width.
 
 5th September 2008
 ----------------------------------------------------------------

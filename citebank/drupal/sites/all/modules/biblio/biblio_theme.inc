@@ -1,5 +1,5 @@
 <?php
-// $Id: biblio_theme.inc,v 1.8.2.87 2009/09/30 15:48:25 rjerome Exp $
+// $Id: biblio_theme.inc,v 1.8.2.95.2.7 2010/02/19 22:12:13 rjerome Exp $
 /**
  *
  *   Copyright (C) 2006-2008  Ron Jerome
@@ -59,7 +59,7 @@ function biblio_openURL($node) {
   //  global $hostInstitutionAbbrevName;
   $openURLResolver = !empty($user->biblio_baseopenurl)?$user->biblio_baseopenurl:'';
   if (empty($openURLResolver)) $openURLResolver = variable_get('biblio_baseopenurl', '');
-  if (empty($openURLResolver)) {
+  if (!empty($openURLResolver)) {
     $co = biblio_contextObject($node);
 
     $sid = "biblio:". variable_get('site_name', 'Drupal');
@@ -119,7 +119,7 @@ function theme_biblio_long($node, $base = 'biblio', $style = 'classic') {
   $openurl_base = variable_get('biblio_baseopenurl', '');
   if ($openurl_base)
     $output .= theme('biblio_openurl', biblio_openurl($node, $openurl_base));
-  $output .= '<div class="biblio_type"><h3>'. t("Publication Type") .":</h3> $node->biblio_type_name</div>\n";
+  $output .= '<div class="biblio_type"><h3>'. t("Publication Type") .":</h3> ". _biblio_localize_type($node->biblio_type, $node->biblio_type_name) ."</div>\n";
   $output .= '<div class="biblio_authors"><h3>'. t("Authors") .':</h3> '. $authors ."</div>\n";
   $output .= '<div class="biblio_source"><h3>'. t("Source") .': </h3> ';
   $source = null;
@@ -197,15 +197,16 @@ function theme_biblio_tabular($node, $base = 'biblio', $teaser = false) {
   $tid = $node->biblio_type;
   $style_name = biblio_get_style();
   $style_function = "biblio_style_$style_name"."_author_options";
-  module_load_include('inc','biblio',"biblio_style_$style_name");
+  module_load_include('inc', 'biblio', "styles/biblio_style_$style_name");
   $fields = _biblio_get_field_information($node->biblio_type, TRUE);
+  _biblio_localize_fields($fields);
   $rows[] = array(
     array('data' => t('Title'), 'class' => 'biblio-row-title'),
     array('data' => filter_xss($node->title, biblio_get_allowed_tags()))
   );
   $rows[] = array(
     array('data' => t('Publication Type'), 'class' => 'biblio-row-title'),
-    array('data' => $node->biblio_type_name)
+    array('data' => isset($node->biblio_type_name) ? _biblio_localize_type($node->biblio_type, $node->biblio_type_name) : $node->biblio_type)
   );
 
   if ($node->biblio_url) {
@@ -252,7 +253,7 @@ function theme_biblio_tabular($node, $base = 'biblio', $teaser = false) {
     }
     $rows[] = array(
       array(
-        'data' => $row['title'],
+        'data' => t($row['title']),
         'class' => 'biblio-row-title'
       ),
       array(
@@ -472,6 +473,7 @@ function theme_biblio_format_authors($contributors, $options, $inline = false)
 
     // if there is a surname prefix like "van", "von" etc, stick it back before the last name.
     if (!empty($author['prefix'])) $author['lastname'] = $author['prefix'] .' '. $author['lastname'];
+    if (!empty($author['suffix'])) $author['lastname'] = $author['lastname'] .', '. $author['suffix'];
 
     if (!empty($author['firstname'])) {
       if ($rank == 0) { // -> first author
@@ -542,11 +544,10 @@ function theme_biblio_author_link($author, $aid, $base='biblio', $inline = FALSE
   $inline = $inline ? "/inline" : "";
 
   if (isset($_GET['sort'])) {
-    $options['query']  .= "sort=" . $_GET['sort'];
+    $options['query']['sort'] = $_GET['sort'];
   }
   if (isset($_GET['order'])) {
-    $options['query']   .= $options['query'] ? "&" : "" ;
-    $options['query']   .= "order=" . $_GET['order'];
+    $options['query']['order'] = $_GET['order'];
   }
 
   $html = l(trim($author), "$base/author/$aid".$inline,$options );
@@ -641,8 +642,8 @@ function theme_biblio_page_number($origPageInfo, $pageRangeDelim = "-", $singleP
  * @param $inline "inline" mode returns the raw HTML rather than letting drupal render the whole page.
  * @return A string containing the styled (HTML) node
  */
-function theme_biblio_style(& $node, $base = 'biblio', $style_name = 'classic', $inline = false) {
-  module_load_include('inc','biblio',"biblio_style_$style_name");
+function theme_biblio_style($node, $base = 'biblio', $style_name = 'classic', $inline = false) {
+  module_load_include('inc', 'biblio', "styles/biblio_style_$style_name");
 
   $style_function = "biblio_style_$style_name";
   $styled_node = $style_function ($node, $base, $inline);
@@ -659,8 +660,11 @@ function theme_biblio_style(& $node, $base = 'biblio', $style_name = 'classic', 
  * @return unknown_type
  */
 function theme_biblio_entry($node, $base = 'biblio', $style = 'classic', $inline = false) {
-  $output  = "\n".'<div class="biblio-entry">'."\n" ;
-
+  $output  = "\n".'<div class="biblio-entry">' . "\n" ;
+  $output  .= '<div class="biblio-style-'. $style . '">' . "\n" ;
+  if (!$node->status) {
+    $output .= '<div id="node-'.$node->nid.'" class="node node-unpublished">';
+  }
   // first add the styled entry...
   $output .= theme('biblio_style', $node, $base, $style, $inline);
 
@@ -691,7 +695,11 @@ function theme_biblio_entry($node, $base = 'biblio', $style = 'classic', $inline
     // add links to attached files (if any)
     $output .= theme('biblio_download_links',$node);
   }
-  $output .= "\n</div>";
+  if (!$node->status) {
+    $output .= '</div>';
+  }
+
+  $output .= "\n</div></div>";
 
   return $output;
 }
@@ -780,9 +788,11 @@ function theme_biblio_admin_types_edit_form($form) {
   else {
     $header = array(t('Field Name'), t('Default Title'), t('Hint'), '', t('Common'), t('Required'), t('Autocomplete'), t('Weight'));
   }
-  $output .= '<p>';
+  $output = '<p>';
   $output .= '<h2>'. drupal_render($form['top_message']) .'</h2>';
   $output .= drupal_render($form['help']);
+  $output .= drupal_render($form['type_name']);
+  $output .= drupal_render($form['options']);
   $output .= theme('table', $header, $conf_table, array('id' => 'field-table'));
   $output .= '<p><center>'. drupal_render($form['submit']) .'</center></p>';
   $output .= drupal_render($form);
@@ -831,48 +841,24 @@ function theme_biblio_download_links($node = NULL) {
  */
 function theme_biblio_export_links($node = NULL) {
   global $pager_total_items;
+  $links = array();
   $base = variable_get('biblio_base', 'biblio');
-  $show_link = variable_get('biblio_export_links', array('tagged' => TRUE, 'xml' => TRUE, 'bibtex' => TRUE));
-  $show_link['google'] = variable_get('biblio_google_link', 1);
 
-  $links = '';
-  if ($show_link['tagged']) $links .= '<li> '. _build_biblio_link($base, $node, 'tagged') .'</li>';
-  if ($show_link['xml'])    $links .= '<li> '. _build_biblio_link($base, $node, 'xml') .'</li>';
-  if ($show_link['bibtex']) $links .= '<li> '. _build_biblio_link($base, $node, 'bibtex') .'</li>';
-  if ($show_link['google'] && !empty($node))
-                            $links .= '<li> '. _build_biblio_link($base, $node, 'google') .'</li>';
+  if (biblio_access('export', $node)) {
+    $show_link = variable_get('biblio_lookup_links', array('google' => TRUE));
+    $lookup_links = module_invoke_all('biblio_lookup_link', $node);
+    if ($show_link['google'] && !empty($node)) $lookup_links['biblio_google_scholar'] = _build_google_scholar_link($node);
 
-  if (!empty($links)) $links = '<ul class="biblio-export-buttons">' . $links . '</ul>';
+    $export_links = module_invoke_all('biblio_export_link', $node->nid);
+    $links = array_merge($lookup_links, $export_links);
+  }
   if (empty($node) && !empty($links)) {
-    $links = t('Export @count results', array('@count' => $pager_total_items[0])).':' . $links;
+    $output = t('Export @count results', array('@count' => $pager_total_items[0])).': ';
   }
-  return $links;
+  return $output . theme('links', $links, array('class' => "biblio-export-buttons"));
+
 }
 
-/**
- * Creates a link to export a node (or view) in EndNote Tagged format
- *
- * @param $base this is the base url (defaults to /biblio)
- * @param $nid  the node id, if NULL then the current view is exported
- * @return  a link (<a href=...>Tagged</a>)
- */
-function _build_biblio_link($base, $node = NULL, $type = NULL) {
-  switch ($type) {
-    case 'bibtex':
-      $link = _build_biblio_bibtex_link($base, $node->nid);
-      break;
-    case 'tagged':
-      $link = _build_biblio_tagged_link($base, $node->nid);
-      break;
-    case 'xml':
-      $link = _build_biblio_xml_link($base, $node->nid);
-      break;
-    case 'google':
-      $link = _build_google_scholar_link($node);
-      break;
-  }
-  return  l($link['title'], $link['href'], $link);
-}
 
 function _build_biblio_tagged_link($base, $nid) {
   if (module_exists('popups') && !empty($nid)) {
@@ -881,23 +867,6 @@ function _build_biblio_tagged_link($base, $nid) {
     $link = array('href' => "$base/export/tagged/$nid", 'attributes' => array('title' => t("Click to download the EndNote Tagged formatted file")));
   }
   $link['title'] = t('Tagged');
-
-  return $link;
-}
-/**
- * Creates a link to export a node (or view) in BibTEX format
- *
- * @param $base this is the base url (defaults to /biblio)
- * @param $nid  the node id, if NULL then the current view is exported
- * @return  a link (<a href=...>BibTEX</a>)
- */
-function _build_biblio_bibtex_link($base, $nid = NULL) {
-  if (module_exists('popups') && !empty($nid)) {
-    $link = array('href' => "$base/export/bibtex/$nid/popup", 'attributes' => array('class' => 'popups', 'title' => t("Click to get the BibTEX output ")));
-  } else {
-    $link = array('href' => "$base/export/bibtex/$nid", 'attributes' => array('title' => t("Click to download the BibTEX formatted file")));
-  }
-  $link['title'] = t('BibTex');
 
   return $link;
 }
@@ -950,10 +919,10 @@ function theme_biblio_contributors($form) {
     // Build the table row.
     $row = array('');
     $row[] = array('data' => drupal_render($form[$key]['name']),
-              		 'class' => 'biblio-contributor');
+                   'class' => 'biblio-contributor');
     if (!$form['#hideRole']) {
       $row[] = array('data' => drupal_render($form[$key]['auth_type']),
-      							 'class' => 'biblio-contributor-type');
+                     'class' => 'biblio-contributor-type');
     }
     $row[] = drupal_render($form[$key]['rank']);
     $rows[] = array('data' => $row, 'class' => 'draggable');
@@ -984,15 +953,15 @@ function theme_biblio_alpha_line($type = 'author',$current = NULL, $path = NULL)
       $all = '['.l(t('Show ALL'), substr($_GET['q'], 0, -2)).']' ;
       break;
     case 'author':
-      $options['query'] .= 'sort=author';
+      $options['query'] = array('sort' => 'author');
       $path = "$base/ag/";
-      $all_query['query'] = 'sort=author'. ($_GET['order']?'&order='.$_GET['order']:'');
+      $all_query['query'] = array('sort' => 'author', 'order' => $_GET['order']);
       $all = '['.l(t('Show ALL'), $base,$all_query).']' ;
       break;
     case 'title':
-      $options['query'] .= 'sort=title';
+      $options['query'] = array('sort' => 'title');
       $path = "$base/tg/";
-      $all_query['query'] = 'sort=title'. ($_GET['order']?'&order='.$_GET['order']:'');
+      $all_query['query'] = array('sort' => 'title', 'order' => $_GET['order']);
       $all = '['.l(t('Show ALL'), $base,$all_query).']' ;
       break;
     default:
@@ -1000,7 +969,7 @@ function theme_biblio_alpha_line($type = 'author',$current = NULL, $path = NULL)
       return;
       $inline = $inline ? "/inline" : "";
       if (isset ($_GET['sort'])) {
-        $options['query'] .= "sort=". $_GET['sort'];
+        $options['query']['sort'] = $_GET['sort'];
         if ($_GET['sort'] == 'author')
         $path = "$base/ag/";
         if ($_GET['sort'] == 'title')
@@ -1009,8 +978,7 @@ function theme_biblio_alpha_line($type = 'author',$current = NULL, $path = NULL)
 
   }
   if (isset ($_GET['order'])) {
-    $options['query'] .= $options['query'] ? "&" : "";
-    $options['query'] .= "order=". $_GET['order'];
+    $options['query']['order'] = $_GET['order'];
   }
   $output = '<div class="biblio-alpha-line">';
   for ($i = 65; $i <= 90; $i++) {
@@ -1041,7 +1009,7 @@ function theme_biblio_admin_author_edit_form($form){
             array('data' => drupal_render($form['initials'])),
             array('data' => drupal_render($form['lastname'])),
             array('data' => drupal_render($form['suffix'])));
-  $rows[] = array(array('data' => drupal_render($form['name']), 'colspan' => 5));
+  $rows[] = array(array('data' => drupal_render($form['name']) . drupal_render($form['no_format']), 'colspan' => 5));
   $rows[] = array(array('data' => drupal_render($form['affiliation']), 'colspan' => 5));
   $rows[] = array(array('data' => drupal_render($form['drupal_uid']), 'colspan' => 5));
 

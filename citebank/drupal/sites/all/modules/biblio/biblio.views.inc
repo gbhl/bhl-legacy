@@ -1,35 +1,36 @@
 <?php
-// $Id: biblio.views.inc,v 1.4.2.13 2009/07/22 02:37:35 rjerome Exp $
+// $Id: biblio.views.inc,v 1.4.2.14.2.1 2010/02/19 22:12:13 rjerome Exp $
 function biblio_views_plugins() {
-  return array(
-    'display' => array(
-      'biblio' => array(
-        'title' => t('Biblio Page'),
-        'help' => t(''),
-        'handler' => 'views_plugin_display_page_biblio',
-        'path' => drupal_get_path('module', 'biblio') . '/views', // not necessary for most modules
-//        'theme' => 'views_view_row_node',
-        'base' => array('node'), // only works with 'node' as base.
-        'uses options' => TRUE,
-        'type' => 'normal',
-        ),     
-      ),
-    'style' => array(
-      // ... list of style plugins,
-      ),
-    'row' => array(
-      // ... list of row style plugins,
-      ),
-    'argument default' => array(
-      // ... list of argument default plugins,
-      ),
-    'argument validator' => array(
-      // ... list of argument validator plugins,
-      ),
-    'access' => array(
-      // ... list of access plugins,
-      ),
-   );
+// Not ready for prime time!!!
+//  return array(
+//    'display' => array(
+//      'biblio' => array(
+//        'title' => t('Biblio Page'),
+//        'help' => t(''),
+//        'handler' => 'views_plugin_display_page_biblio',
+//        'path' => drupal_get_path('module', 'biblio') . '/views', // not necessary for most modules
+////        'theme' => 'views_view_row_node',
+//        'base' => array('node'), // only works with 'node' as base.
+//        'uses options' => TRUE,
+//        'type' => 'normal',
+//        ),
+//      ),
+//    'style' => array(
+//      // ... list of style plugins,
+//      ),
+//    'row' => array(
+//      // ... list of row style plugins,
+//      ),
+//    'argument default' => array(
+//      // ... list of argument default plugins,
+//      ),
+//    'argument validator' => array(
+//      // ... list of argument validator plugins,
+//      ),
+//    'access' => array(
+//      // ... list of access plugins,
+//      ),
+//   );
 }
 /**
  * Implementation of hook_views_handlers().
@@ -65,6 +66,9 @@ function biblio_views_handlers() {
  * Filters
  */
       'biblio_handler_filter_contributor' => array(
+        'parent' => 'views_handler_filter_many_to_one',
+      ),
+      'biblio_handler_filter_contributor_lastname' => array(
         'parent' => 'views_handler_filter_many_to_one',
       ),
       'biblio_handler_filter_biblio_type' => array(
@@ -126,8 +130,8 @@ function biblio_views_data() {
       unset($data[$field['name']]['argument']);
     }
   }
-  $data['biblio_year']['argument']  = array('handler' => 'views_handler_argument_numeric');  // biblio_year is an int 
-  $data['biblio_year']['filter']    = array('handler' => 'views_handler_filter_numeric');  // biblio_year is an int 
+  $data['biblio_year']['argument']  = array('handler' => 'views_handler_argument_numeric');  // biblio_year is an int
+  $data['biblio_year']['filter']    = array('handler' => 'views_handler_filter_numeric');  // biblio_year is an int
   unset($data['biblio_keywords']); // keywords are in a separate table which has it's own handlers
 
   $data['table']['join'] = array(
@@ -165,6 +169,7 @@ function biblio_views_data() {
   $data['name'] =  array(
     'field'   => array('handler' => 'views_handler_field'),
     'sort'    => array('handler' => 'views_handler_sort'),
+    'argument'  => array('handler' => 'views_handler_argument_string'),
     'title'   => t('Type of Publication'),
     'help'    => t('The type of publication: Journal, Book, Conference Paper, etc.')
   );
@@ -249,10 +254,10 @@ function biblio_views_data() {
   );
   $data['lastname'] =  array(
     'sort'     => array('handler' => 'views_handler_sort'),
-    'filter'    => array('handler' => 'views_handler_filter'),
+    'filter'    => array('handler' => 'biblio_handler_filter_contributor_lastname'),
     'argument'  => array('handler' => 'views_handler_argument_string'),
     'title'     => t('Author Lastname'),
-    'help'      => t('')
+    'help'      => t('Author Lastname')
   );
 
   $viewsdata['biblio_contributor_data'] = $data;

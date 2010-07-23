@@ -164,6 +164,28 @@ function signwriter_settings_form($form_state) {
       '#description' => t('Add a : separated list of directories to search for your font files. Signwriter will automatically search the drupal directory, your files directory, and your current theme\'s directory.'),
       '#default_value' => variable_get('signwriter_fontpath', ''),
     );
+
+    $form['pages'] = array('#type' => 'fieldset', '#title' => t('Pages'), '#collapsible' => TRUE, '#collapsed' => FALSE);
+    $options = array(t('Use on every page except the listed pages.'), t('Use on only the listed pages.'));
+    $description = t("Enter one page per line as Drupal paths. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
+    $access = user_access('use PHP for signwriter pages');
+    if ($access) {
+      $options[] = t('Use if the following PHP code returns <code>TRUE</code> (PHP-mode, experts only).');
+      $description .= ' '. t('If the PHP-mode is chosen, enter PHP code between %php. Note that executing incorrect PHP-code can break your Drupal site.', array('%php' => '<?php ?>'));
+    }
+    $form['pages']['signwriter_pages_type'] = array(
+      '#type' => 'radios',
+      '#title' => t('Use signwriter on specific pages'),
+      '#options' => $options,
+      '#default_value' => variable_get('signwriter_pages_type', 0),
+    );
+    $form['pages']['signwriter_pages_list'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Pages'),
+      '#default_value' => variable_get('signwriter_pages_list', ''),
+      '#description' => $description,
+    );
+
     $form['signwriter_specialcharnotice'] = array(
       '#type' => 'checkbox',
       '#title' => t('Special character notice'),
@@ -574,6 +596,15 @@ function signwriter_profile_form(&$form_state, $p = NULL) {
     '#collapsed' => FALSE,
     '#title' => t('Image Layout')
   );
+/*
+  $form['layout']['angle'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Angle'),
+    '#description' => t("Set the angle of the image in degrees."),
+    '#default_value' => _signwriter_get_val($p, 'angle', 0),
+    '#size' => 4,
+  );
+*/   
   $form['layout']['width'] = array(
     '#type' => 'textfield',
     '#title' => t('Width'),
@@ -656,6 +687,11 @@ function signwriter_profile_form_validate($form, $form_state) {
   if (!is_numeric($form_state['values']['fontsize']) && $form_state['values']['fontsize']) {
     form_set_error('fontsize', 'Font size must be numeric.');
   }
+/*
+  if (!is_numeric($form_state['values']['angle']) && $form_state['values']['angle']) {
+    form_set_error('angle', 'Angle must be numeric.');
+  }
+*/
 }
 
 function signwriter_profile_form_submit($form, &$form_state) {
@@ -665,6 +701,11 @@ function signwriter_profile_form_submit($form, &$form_state) {
   if (!$profile->fontsize) {
     $profile->fontsize = 20;
   }
+/*
+  if (!$profile->angle) {
+    $profile->angle = 0;
+  }
+*/
 
   $clicked_button = $form_state['clicked_button']['#value'];
   if ($clicked_button == t('Delete')) {

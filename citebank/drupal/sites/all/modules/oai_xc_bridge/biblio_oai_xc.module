@@ -100,11 +100,7 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
   $subjects = $raw->getElementsByTagName('subject');
   $node->biblio_keywords = array();
   foreach ($subjects as $subject) {
-	$keywords = explode(";", $subject->nodeValue);
-	foreach ($keywords as $keyword) {
-		$node->biblio_keywords[] = $keyword;
-		//$node->biblio_keywords[]= $subject->nodeValue;
-	}
+    $node->biblio_keywords[]= $subject->nodeValue;
   }
 
   // Check whether one of the types specific in the OAI feed match a Biblio Type
@@ -210,10 +206,10 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   
   // Get the publishing information
   $originInfo = $xpath->query('/x:mods/x:originInfo');
-  foreach($originInfo as $origin)
+  if ($originInfo->length > 0)
   {
-  	$node->biblio_place_published = '';
-	$places = $origin->getElementsByTagName('place');
+	$node->biblio_place_published = '';
+	$places = $originInfo->item(0)->getElementsByTagName('place');
 	foreach($places as $place)
 	{
 		$placeTerm = $place->getElementsByTagName('placeTerm')->item(0);
@@ -224,24 +220,14 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 		}
 	}
 	
-	$node->biblio_publisher = $origin->getElementsByTagName('publisher')->item(0)->nodeValue;
-  }
-  
-  // Get the date information
-  $node->biblio_year = 9999;
-  $node->biblio_date = '';
-  
-  $dates = $xpath->query('/x:mods/x:originInfo/x:dateIssued');
-  if ($dates->length > 0)
-  {
-	//$dates = $origin->getElementsByTagName('dateIssued');
+	$node->biblio_publisher = $originInfo->item(0)->getElementsByTagName('publisher')->item(0)->nodeValue;
+	
+	$node->biblio_year = 9999;
+	$node->biblio_date = '';
+	$dates = $originInfo->item(0)->getElementsByTagName('dateIssued');
 	foreach($dates as $date)
 	{
 		if (!$date->hasAttribute('encoding'))
-		{
-			$node->biblio_date = $date->nodeValue;
-		}
-		elseif ($date->getAttribute('encoding') == 'iso8601')
 		{
 			$node->biblio_date = $date->nodeValue;
 		}
@@ -388,7 +374,7 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   $relatedItems = $xpath->query('/x:mods/x:relatedItem');
   foreach($relatedItems as $relatedItem)
   {
-	if ($relatedItem->getAttribute('type') == 'host' && $node->biblio_type == 102)
+	if ($relatedItem->getAttribute('type') == 'host' && $node->biblio_type = 102)
 	{
 
 		// Get journal title
@@ -405,30 +391,22 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 			$part = $parts->item(0);
 			
 			$details = $part->getElementsByTagName('detail');
-			$text = $part->getElementsByTagName('text');
-			if ($details->length > 0)
+			foreach($details as $detail)
 			{
-				foreach($details as $detail)
+				$number = $detail->getElementsByTagName('number')->item(0)->nodeValue;
+				
+				if (!empty($number))
 				{
-					$number = $detail->getElementsByTagName('number')->item(0)->nodeValue;
-					
-					if (!empty($number))
+					switch($detail->getAttribute('type'))
 					{
-						switch($detail->getAttribute('type'))
-						{
-							case 'volume':
-								$node->biblio_volume = $number;
-								break;
-							case 'issue':
-								$node->biblio_issue = $number;
-								break;
-						}
+						case 'volume':
+							$node->biblio_volume = $number;
+							break;
+						case 'issue':
+							$node->biblio_issue = $number;
+							break;
 					}
 				}
-			}
-			else
-			{
-				$node->biblio_volume = $text->item(0)->nodeValue;
 			}
 			
 			$extents = $part->getElementsByTagName('extent');

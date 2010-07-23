@@ -1,5 +1,5 @@
 <?php
-// $Id: biblio_handler_field_contributor.inc,v 1.1.2.2 2009/06/15 18:26:42 rjerome Exp $
+// $Id: biblio_handler_field_contributor.inc,v 1.1.2.2.2.2 2010/01/25 02:57:39 rjerome Exp $
 class biblio_handler_field_contributor extends biblio_handler_field {
   function construct() {
     parent::construct();
@@ -32,7 +32,7 @@ class biblio_handler_field_contributor extends biblio_handler_field {
   }
 
   function pre_render($values) {
-    module_load_include('inc','biblio','biblio_style_'.$this->options['style_name']);
+    module_load_include('inc', 'biblio', 'styles/biblio_style_'.$this->options['style_name']);
     $author_options_func = 'biblio_style_'.$this->options['style_name'].'_author_options';
     $this->author_options = $author_options_func();
 
@@ -56,7 +56,7 @@ class biblio_handler_field_contributor extends biblio_handler_field {
       }
       $result = db_query('SELECT * FROM {biblio_contributor} bc
                           INNER JOIN {biblio_contributor_data} bcd ON bc.cid = bcd.cid
-													WHERE '. $vidstr .
+                          WHERE '. $vidstr .
                          ' AND auth_category='. $this->auth_category.
                          ' ORDER BY bc.rank');
       while ($item = db_fetch_array($result)) {
