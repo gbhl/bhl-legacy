@@ -13,7 +13,7 @@ namespace MOBOT.BHL.Web
     public class ContentPanel : Control
     {
         private string tableID = "";
-        private int width = 0;
+        private string width = null;
         private String @class = "ContentPanel";
 
         public string Class {
@@ -26,7 +26,7 @@ namespace MOBOT.BHL.Web
             set { tableID = value; }
         }
 
-        public int Width {
+        public string Width {
             get { return width; }
             set { width = value; }
         }
@@ -36,8 +36,9 @@ namespace MOBOT.BHL.Web
             if (tableID != null && tableID.Trim().Length > 0)
                 openingTag += "id=\"" + tableID.Trim() + "\" ";
 
-            if (width > 0)
+            if (!String.IsNullOrEmpty(width)) {
                 openingTag += "width=\"" + width.ToString() + "\" ";
+            }
 
             openingTag += "cellpadding=\"0\" cellspacing=\"0\">";
 

@@ -18,15 +18,18 @@ namespace MOBOT.BHL.Web
   {
     protected void Page_Load( object sender, EventArgs e )
     {
+
+      ControlGenerator.AddAttributesAndPreserveExisting(main.Body, "onload", "resizeContentDiv()");
+      ControlGenerator.AddAttributesAndPreserveExisting(main.Body, "onresize", "resizeContentDiv()");
+
       //authorListContentPanel.SetTableID("authorListContentPanel");
       authorContentPanel.SetTableID( "authorDetailContentPanel" );
       //Page.Master.Page.Header.Controls.Add(ControlGenerator.GetScriptControl("/Scripts/ResizeContentPanelUtils.js"));
       //ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, "/Scripts/ResizeContentPanelUtils.js");
-      ControlGenerator.AddScriptControl( Page.Master.Page.Header.Controls, "/Scripts/ResizeBrowseUtils.js" );
-      ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onload", 
-        "ResizeContentPanel('authorDetailContentPanel', 258);ResizeBrowseDivs();" );
-      ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onresize", 
-        "ResizeContentPanel('authorDetailContentPanel', 258);ResizeBrowseDivs();" );
+      //ControlGenerator.AddScriptControl( Page.Master.Page.Header.Controls, "/Scripts/ResizeBrowseUtils.js" );
+      //ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onload", "ResizeContentPanel('authorDetailContentPanel', 258);ResizeBrowseDivs();" );
+      //ControlGenerator.AddAttributesAndPreserveExisting( main.Body, "onresize", "ResizeContentPanel('authorDetailContentPanel', 258);ResizeBrowseDivs();" );
+      
       //CustomGenericList<Data.Creator> creators = bhlProvider.CreatorSelectAll();
       //authorsDropDownList.DataSource = creators;
       //authorsDropDownList.DataTextField = "CreatorName";

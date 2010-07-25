@@ -19,7 +19,7 @@
     var currentSequence = 1;
     var updateViewer = true;
     
-    var ToggleContents = function() {
+    var ToggleContents = function(toolbarHeight) {
         var current = $('#PageListDiv').css("display");
         var panel = $('#PageListDiv');
         if (current == "none") {
@@ -27,12 +27,15 @@
             panel.css({
                 'position' : 'absolute',
                 'left':'245px',
-                'width':'200px',
-                'top':'166px', 
+                'width':'200px',                
                 'height':'300px',                
                 'z-index': '10',
-                'background-color':' #3C3B37',                
-            });
+                'background-color':'#3C3B37'
+            });            
+            var frameTop = $('#viewer').position().top;            
+            var top = (frameTop + toolbarHeight) + "px";            
+            panel.css('top', top);
+
         } else {
             panel.css("display", "none");
         }
@@ -42,7 +45,7 @@
     
     // gets called after the book viewer has been loaded...
     var GBPostLoad = function() {                        
-        $('#GBFrame').contents().find('#GBToolbarHook').html('<span class="label" style="padding-left: 50px">View Contents<button class="GBicon rollover show_contents" onclick="parent.ToggleContents(); return false;"/></span>');
+        $('#GBFrame').contents().find('#GBToolbarHook').html('<span class="label" style="padding-left: 50px">View Contents<button class="GBicon rollover show_contents" onclick="parent.ToggleContents($(\'#GBtoolbar\').height()); return false;"/></span>');
     }
     
      

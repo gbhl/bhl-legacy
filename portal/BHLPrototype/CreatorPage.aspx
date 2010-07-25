@@ -1,11 +1,11 @@
-<%@ Page Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" Codebehind="CreatorPage.aspx.cs"
+<%@ Page Language="C#" MasterPageFile="~/BHL-AU.Master" AutoEventWireup="true" Codebehind="CreatorPage.aspx.cs"
   Inherits="MOBOT.BHL.Web.CreatorPage" Title="Biodiversity Heritage Library" %>
 
 <%@ Register TagPrefix="cc" Namespace="MOBOT.BHL.Web" Assembly="MOBOT.BHL.Web" %>
 <asp:Content ID="mainContent" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
-  <div id="browseContainerDiv">
-    <cc:ContentPanel ID="authorContentPanel" runat="server">
-      <div id="browseInnerDiv" style="height: 100%; overflow: auto;">
+  <div id="browseContainerDiv"  style="height: 100%; width: 100%">
+    <cc:ContentPanel ID="authorContentPanel" runat="server" Width="100%">
+      <div id="browseInnerDiv" style="height: 100%; width: 100%; overflow: auto;">
         <table width="80%" cellpadding="5" cellspacing="5" border="0">
           <tr>
             <td colspan="2">
