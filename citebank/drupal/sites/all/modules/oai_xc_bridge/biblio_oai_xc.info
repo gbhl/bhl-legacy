@@ -1,6 +1,7 @@
 ; $Id$
 name = Biblio - OAI-XC
 description = Provides provides a bridge between the XC OAI havester and Biblio
+version = "6.x-1.14"
 core = 6.x
 package = Biblio
 dependencies[] = biblio
