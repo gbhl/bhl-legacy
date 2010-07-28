@@ -5,7 +5,7 @@
  *
  */
 
-// modified DLH 2010/07/26 for compatibility for OAI bridge to work with 6.x-1.x
+// modified DLH 2010/07/26 for compatibility for OAI bridge to work with 6.x-1-x version of the Biblio module.
 
 function logmsg($msg)
 {
@@ -55,18 +55,14 @@ function _biblio_oai_xc_view($node) {
 }
 
 function _biblio_oai_xc_insert($node) {
-	//logmsg('_biblio_oai_xc_insert: ' . $node->biblio_oai_xc_md5);
 	logmsg('_biblio_oai_xc_insert: ' . $node->biblio_md5);
 	
-	//$biblio_oai_xc_md5 = $node->biblio_oai_xc_md5;
 	$biblio_md5 = $node->biblio_md5;
 
-  //if (!isset($biblio_oai_xc_md5)) {
   if (!isset($biblio_md5)) {
   	return;
   }
   
-  //drupal_write_record('biblio_oai_xc', $node);
   $flagInsert = true;
   if ($node->nid) {
   	$flagInsert = false;
@@ -171,12 +167,10 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
   
   if (!empty($biblio_url))
   {
-	//$node['biblio_oai_xc_md5'] = md5($biblio_url);
 	$node['biblio_md5'] = md5($biblio_url);
   }
   else
   {
-	//$node['biblio_oai_xc_md5'] = md5(serialize($node));
 	$node['biblio_md5'] = md5(serialize($node));
   }
 
@@ -506,40 +500,34 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   // Generate an md5 hash and save the item
   if (!empty($biblio_url))
   {
-	//$node['biblio_oai_xc_md5'] = md5($biblio_url);
-	$node['biblio_md5'] = md5($biblio_url);
+		$node['biblio_md5'] = md5($biblio_url);
   }
   else
   {
-	//$node['biblio_oai_xc_md5'] = md5(serialize($node));
-	$node['biblio_md5'] = md5(serialize($node));
+		$node['biblio_md5'] = md5(serialize($node));
   }
 
   if (!empty($node)) {
     if ($updateFlag == false) {  // do a regular insert via the other calls...
     	biblio_save_node($node);
     }
-    // else it's an update, and blocking it for the moment. DLH 07/28/2010
+    // FIXME: else it's an update, and blocking it for the moment. DLH 07/28/2010
   }
 
   return;
 }
 
 function biblio_oai_xc_check_md5($md5) {
-		//$sql = "SELECT * FROM biblio WHERE biblio_md5 = '".$md5."'";
+
 		$sql = "SELECT nid, biblio_md5, biblio_url FROM biblio where biblio_md5 = '".$md5."'";
-    //$sql = "SELECT nid, biblio_oai_xc_md5 FROM biblio_oai_xc where biblio_oai_xc_md5 = '".$md5."'";
+
     $result = db_query($sql);
-    // SELECT nid, biblio_oai_xc_md5 FROM biblio_oai_xc where biblio_oai_xc_md5 = 'db64adaa551a21e722dc046f7c075526'
-		
-		logmsg('result:[' . print_r($row) . ']');
 		
 		logmsg($sql);
+
     $row = db_fetch_object($result);
-    logmsg('nid: [' . $row->nid . '] Row:' . print_r($row));
     
     if ($row) {
-    //if ($row = db_fetch_object($result)) {
 	  	return $row->nid;
     }
     
