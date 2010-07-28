@@ -71,8 +71,9 @@ function _biblio_oai_xc_insert($node) {
   	logmsg('Insert new record: ' . $node->biblio_md5);
   	drupal_write_record('biblio', $node);
   } else {
-  	logmsg('Update existing: ' . $node->biblio_md5);
-  	drupal_write_record('biblio', $node, 'nid');
+  	logmsg('Skip existing: ' . $node->biblio_md5);
+  	//logmsg('Update existing: ' . $node->biblio_md5);
+  	//drupal_write_record('biblio', $node, 'nid');
   }
 }
 
