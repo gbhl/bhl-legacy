@@ -17,18 +17,23 @@ function logmsg($msg, $type = 'biblio oai xc')
 }
 
 /*
+ *  biblio_oai_xc_biblio_import_options - 
  *   add the marc option to the option list of the biblio_import_form
  *   the key is the module name use by module_invoke to call hook_biblio_import
  *   module_invoke('biblio_oai_xc', 'biblio_import',...)
  */
-function biblio_oai_xc_biblio_import_options() {
-	
+function biblio_oai_xc_biblio_import_options() 
+{
 	logmsg('biblio_oai_xc_biblio_import_options');
 
   return array('biblio_oai_xc' => t('MARC'));
 }
 
-function biblio_oai_xc_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
+/*
+ *  biblio_oai_xc_nodeapi - 
+ */
+function biblio_oai_xc_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) 
+{
 	logmsg('biblio_oai_xc_nodeapi:' . $op . ' node:[' . print_r($node, true) . ']');
 
 	$nodeType = $node->type;
@@ -45,25 +50,36 @@ function biblio_oai_xc_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
   if (function_exists($callback)) {
     return $callback($node, $a3, $a4);
   }
+  
   return;
 }
 
-function _biblio_oai_xc_delete($node) {
+/*
+ *  _biblio_oai_xc_delete - 
+ */
+function _biblio_oai_xc_delete($node) 
+{
 	logmsg('_biblio_oai_xc_delete');
   db_query('DELETE FROM {biblio_oai_xc} WHERE nid = %d', $node['nid']);
 }
 
-function _biblio_oai_xc_view($node) {
+/*
+ *  _biblio_oai_xc_view - 
+ */
+function _biblio_oai_xc_view($node) 
+{
 	logmsg('_biblio_oai_xc_view');
-
 }
 
-function _biblio_oai_xc_insert($node) {
-	//logmsg('_biblio_oai_xc_insert: ' . $node->biblio_md5);
-	
+/*
+ *  _biblio_oai_xc_insert - 
+ */
+function _biblio_oai_xc_insert($node) 
+{
 	$biblio_md5_orig = $node->biblio_md5;
 	$biblio_url = $node->biblio_url;
 	$nid        = $node->nid;
+
 	logmsg('_biblio_oai_xc_insert: ' . $biblio_md5);
 
   if (!isset($biblio_md5)) {
@@ -74,29 +90,14 @@ function _biblio_oai_xc_insert($node) {
   $flagInsert = true;
 
   // See if we already have an entry for this item
-//  if (!empty($biblio_url)) {
-//		if ($dup = biblio_oai_xc_check_md5($biblio_md5))
-//		{
-//			//logmsg('insert check dup:' . $dup);
-//			// Retrieve the existing node so that we can do an update instead of an insert
-//			logmsg('nid:[' . $nid . '] insert dup:' . $dup . ' url:[' . $biblio_url . '] md5:' . $biblio_md5, 'Insert dup');
-//			$node->nid = $dup; // this forces an update instead of an insert later on
-//			$flagInsert = false;
-//		}
-//  } else {
-  	//logmsg('Empty biblio url', 'biblio url');
-//  }
+	$biblio_md5 = md5($biblio_url);
+	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url);
 
-		$biblio_md5 = md5($biblio_url);
-		$count = biblio_oai_xc_check_md5($biblio_url);
-		if ($count > 0) // it is a duplicate
-		{
-			//logmsg('insert check dup:' . $dup);
-			// Retrieve the existing node so that we can do an update instead of an insert
-			logmsg('nid:[' . $nid . '] count:' . $count . ' url:[' . $biblio_url . '] md5:' . $biblio_md5 . ' orig md5:' . $biblio_md5_orig, 'Insert dup');
-			//$node->nid = $nid; // this forces an update instead of an insert later on
-			$flagInsert = false;
-		}
+	if ($isRecordFlag) { // it is a duplicate
+		// Retrieve the existing node so that we can do an update instead of an insert
+		logmsg('nid:[' . $nid . '] url:[' . $biblio_url . '] md5:' . $biblio_md5 . ' orig md5:' . $biblio_md5_orig, 'Record dup');
+		$flagInsert = false;
+	}
 
   // if we have a nid (node ID), then record already exists
   if ($nid > 0) {
@@ -109,12 +110,14 @@ function _biblio_oai_xc_insert($node) {
   	drupal_write_record('biblio', $node);
   } else {
   	logmsg('Skip existing: ' . $biblio_md5, 'biblio oai xc Insert Callback');
-  	//logmsg('Update existing: ' . $node->biblio_md5);
-  	//drupal_write_record('biblio', $node, 'nid');
   }
 }
 
-function biblio_oai_xc_oaiharvester_process_record($record) {
+/*
+ *  biblio_oai_xc_oaiharvester_process_record - 
+ */
+function biblio_oai_xc_oaiharvester_process_record($record) 
+{
 	logmsg('biblio_oai_xc_oaiharvester_process_record');
 
   module_load_include('inc', 'biblio', 'biblio.import.export');
@@ -125,23 +128,24 @@ function biblio_oai_xc_oaiharvester_process_record($record) {
   // error_log('format = ' . $format, 0);
   switch ($format)
   {
-	case 'dc':
-		biblio_oai_xc_oaiharvester_process_record_oai_dc($record);
-		break;
-	case 'mods':
-		biblio_oai_xc_oaiharvester_process_record_mods($record);
-		break;
+		case 'dc':
+			biblio_oai_xc_oaiharvester_process_record_oai_dc($record);
+			break;
+
+		case 'mods':
+			biblio_oai_xc_oaiharvester_process_record_mods($record);
+			break;
   }
   
   return;
 }
 
 /*
- *	Harvest records that use the oai_dc metadata format
+ *	biblio_oai_xc_oaiharvester_process_record_oai_dc - Harvest records that use the oai_dc metadata format
  */
 function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
 {
-	$updateFlag = false;
+	$updateFlag = false;  // are we an insert or update?  if true then is an update
 
 	logmsg('biblio_oai_xc_oaiharvester_process_record_oai_dc');
 
@@ -151,79 +155,69 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
   
   // Get the unique URL (identifier) for the item
   $identifiers = $raw->getElementsByTagName('identifier');
-  foreach($identifiers as $identifier)
-  {
-	if (filter_var($identifier->nodeValue, FILTER_VALIDATE_URL)) {
-		$biblio_url = $identifier->nodeValue;
-		break;
-	}
+
+  foreach ($identifiers as $identifier) {
+		if (filter_var($identifier->nodeValue, FILTER_VALIDATE_URL)) {
+			$biblio_url = $identifier->nodeValue;
+			break;
+		}
   }  
 
   // See if we already have an entry for this item
- //if (!empty($biblio_url)) {
-//		if ($dup = biblio_oai_xc_check_md5(md5($biblio_url)))
-//		{
-//			logmsg('dc dup:' . $dup . ' url:[' . $biblio_url . ']', 'biblio oai xc URL');
-//			// Retrieve the existing node so that we can do an update instead of an insert
-//			$node = node_load($dup);
-//			$node->nid = $dup; // this forces an update instead of an insert later on
-//			$updateFlag = true;
-//		}
-  //}
+	$biblio_md5 = md5($biblio_url);
+	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url);
 
-		$biblio_md5 = md5($biblio_url);
-		$count = biblio_oai_xc_check_md5($biblio_url);
-		if ($count > 0) // it is a duplicate
-		{
-			//logmsg('insert check dup:' . $dup);
-			// Retrieve the existing node so that we can do an update instead of an insert
-			logmsg('count:' . $count . ' url:[' . $biblio_url . '] md5:' . $biblio_md5, 'Insert dup');
-			$node->nid = $nid; // this forces an update instead of an insert later on
-			$updateFlag = true;
-		}
+	if ($isRecordFlag) { // it is a duplicate
+		// Retrieve the existing node so that we can do an update instead of an insert
+		logmsg('url:[' . $biblio_url . '] md5:' . $biblio_md5, 'Record dup');
+		//$node->nid = $nid; // this forces an update instead of an insert later on
+		$updateFlag = true;
+	}
   
-
   // Fill in the updated information  
-  $node['title'] = $raw->getElementsByTagName('title')->item(0)->nodeValue;
-  $node['biblio_url'] = $biblio_url;
+  $node['title']            = $raw->getElementsByTagName('title')->item(0)->nodeValue;
+  $node['biblio_url']       = $biblio_url;
   $node['biblio_publisher'] = $raw->getElementsByTagName('publisher')->item(0)->nodeValue;
-  $node['biblio_year'] = $raw->getElementsByTagName('date')->item(0)->nodeValue;
-  $node['biblio_lang'] = $raw->getElementsByTagName('language')->item(0)->nodeValue;
+  $node['biblio_year']      = $raw->getElementsByTagName('date')->item(0)->nodeValue;
+  $node['biblio_lang']      = $raw->getElementsByTagName('language')->item(0)->nodeValue;
 
   $creators = $raw->getElementsByTagName('creator');
   $node['biblio_contributors'] = array();
+
   foreach ($creators as $creator) {
-    $node['biblio_contributors'][1][]= array('name' => $creator->nodeValue, 'auth_type' => 1);
+    $node['biblio_contributors'][1][] = array('name' => $creator->nodeValue, 'auth_type' => 1);
   }
+
   $subjects = $raw->getElementsByTagName('subject');
   $node['biblio_keywords'] = array();
+
   foreach ($subjects as $subject) {
-	$keywords = explode(";", $subject->nodeValue);
-	foreach ($keywords as $keyword) {
-		$node['biblio_keywords'][] = $keyword;
-		//$node->biblio_keywords[]= $subject->nodeValue;
-	}
+		$keywords = explode(";", $subject->nodeValue);
+
+		foreach ($keywords as $keyword) {
+			$node['biblio_keywords'][] = $keyword;
+			//$node->biblio_keywords[]= $subject->nodeValue;
+		}
   }
 
   // Check whether one of the types specific in the OAI feed match a Biblio Type
   $types = $raw->getElementsByTagName('type');
+
   foreach ($types as $type) {
-  	if ($node['biblio_type'] = biblio_oai_xc_gettypeid($type->nodeValue))
-	{
-		break;
-	}
-  }
-  if (empty($node['biblio_type'])) {
-	$node['biblio_type'] = 100;	// No matches in the feed, so default to "Book"
+  	// if find a type, assign it, and done
+  	if ($node['biblio_type'] = biblio_oai_xc_gettypeid($type->nodeValue)) {
+			break;
+		}
   }
   
-  if (!empty($biblio_url))
-  {
-	$node['biblio_md5'] = md5($biblio_url);
+  if (empty($node['biblio_type'])) {
+		$node['biblio_type'] = 100;	// No matches in the feed, so default to "Book"
   }
-  else
-  {
-	$node['biblio_md5'] = md5(serialize($node));
+  
+  if (!empty($biblio_url)) {
+		$node['biblio_md5'] = md5($biblio_url);
+  } else {
+		$node['biblio_md5'] = md5(serialize($node));
   }
 
   if (!empty($node)) {
@@ -233,15 +227,15 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
 	  // FIXME: else it's an update, and blocking it for the moment. DLH 07/28/2010
   }
 
-  return ;
+  return;
 }
 
 /*
- *	Harvest records that use the mods metadata format
+ *	biblio_oai_xc_oaiharvester_process_record_mods - Harvest records that use the mods metadata format
  */
 function biblio_oai_xc_oaiharvester_process_record_mods($record)
 {
-	$updateFlag = false;
+	$updateFlag = false;  // are we an insert or update?  if true then is an update
 	
   $raw = $record['metadata']['childNode'];
 
@@ -255,96 +249,97 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   
   // Read any identifiers for the item
   $identifiers = $xpath->query('/x:mods/x:identifier');
-  foreach($identifiers as $identifier)
-  {
-	if ($identifier->hasAttribute('type'))
-	{
-		switch ($identifier->getAttribute('type'))
-		{
-			case 'uri':
-				$biblio_url = $identifier->nodeValue;
-				break;
-			case 'isbn':
-				$biblio_isbn = $identifier->nodeValue;
-				break;
-			case 'issn':
-				$biblio_issn = $identifier->nodeValue;
-				break;
-		}			
-	}
+
+  foreach ($identifiers as $identifier) {
+
+		if ($identifier->hasAttribute('type')) {
+
+			switch ($identifier->getAttribute('type'))
+			{
+				case 'uri':
+					$biblio_url = $identifier->nodeValue;
+					break;
+
+				case 'isbn':
+					$biblio_isbn = $identifier->nodeValue;
+					break;
+
+				case 'issn':
+					$biblio_issn = $identifier->nodeValue;
+					break;
+			}			
+		}
   }  
   
   // See if there is a 'url' element (let this take precedence over any 'uri' identifiers)
   $urls = $xpath->query('/x:mods/x:location/x:url');
-  if ($urls->length > 0)
-  {
-	$biblio_url = $urls->item(0)->nodeValue;
+
+  if ($urls->length > 0) {
+		$biblio_url = $urls->item(0)->nodeValue;
   }  
 
   // See if we already have an entry for this item
-  //if (!empty($biblio_url)) {
-//		if ($dup = biblio_oai_xc_check_md5(md5($biblio_url)))
-//		{
-//			logmsg('mods dup:' . $dup);
-//			// Retrieve the existing node so that we can do an update instead of an insert
-//			logmsg('dc dup:' . $dup . ' url:[' . $biblio_url . ']', 'biblio oai xc URL');
-//			$node = node_load($dup);
-//			$node->nid = $dup; // this forces an update instead of an insert later on
-//			$updateFlag = true;
-//		}
-  //}  
+	$biblio_md5 = md5($biblio_url);
+	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url);
 
-		$biblio_md5 = md5($biblio_url);
-		$count = biblio_oai_xc_check_md5($biblio_url);
-		if ($count > 0) // it is a duplicate
-		{
-			//logmsg('insert check dup:' . $dup);
-			// Retrieve the existing node so that we can do an update instead of an insert
-			logmsg('count:' . $count . ' url:[' . $biblio_url . '] md5:' . $biblio_md5, 'Insert dup');
-			$node->nid = $nid; // this forces an update instead of an insert later on
-			$updateFlag = true;
-		}
+	if ($isRecordFlag) { // it is a duplicate
+		// Retrieve the existing node so that we can do an update instead of an insert
+		logmsg('url:[' . $biblio_url . '] md5:' . $biblio_md5, 'Record dup');
+
+		//$node->nid = $nid; // this forces an update instead of an insert later on
+		$updateFlag = true;
+	}
 
   // Add the identifiers to the node
-  $node['biblio_url'] = $biblio_url;
+  $node['biblio_url']  = $biblio_url;
   $node['biblio_isbn'] = $biblio_isbn;
   $node['biblio_issn'] = $biblio_issn;
 
   // Get the title information
   $titleInfoList = $xpath->query('/x:mods/x:titleInfo');
   
-  foreach($titleInfoList as $titleInfo)
-  {
-	// Only use titles that apply to MARC 245a/b/n/p by ignoring any with the 'type' attribute
-	if (!$titleInfo->hasAttribute('type'))
-	{
-		$node['title'] = '';
-		$nonSort = $titleInfo->getElementsByTagName('nonSort');
-		if ($nonSort->length > 0) $node['title'] = $nonSort->item(0)->nodeValue . ' ';
-		$title = $titleInfo->getElementsByTagName('title');
-		if ($title->length > 0) $node['title'] = $node['title'] . $title->item(0)->nodeValue;
-		$subTitle = $titleInfo->getElementsByTagName('subTitle');
-		if ($subTitle->length > 0) $node['title'] = $node['title'] . ' ' . $subTitle->item(0)->nodeValue;
-	}
+  foreach ($titleInfoList as $titleInfo) {
+		// Only use titles that apply to MARC 245a/b/n/p by ignoring any with the 'type' attribute
+
+		if (!$titleInfo->hasAttribute('type')) {
+			$node['title'] = '';
+			$nonSort = $titleInfo->getElementsByTagName('nonSort');
+			
+			if ($nonSort->length > 0) {
+				$node['title'] = $nonSort->item(0)->nodeValue . ' ';
+			}
+			
+			$title = $titleInfo->getElementsByTagName('title');
+			
+			if ($title->length > 0) {
+				$node['title'] = $node['title'] . $title->item(0)->nodeValue;
+			}
+			
+			$subTitle = $titleInfo->getElementsByTagName('subTitle');
+			
+			if ($subTitle->length > 0) {
+				$node['title'] = $node['title'] . ' ' . $subTitle->item(0)->nodeValue;
+			}
+		}
   }
   
   // Get the publishing information
   $originInfo = $xpath->query('/x:mods/x:originInfo');
-  foreach($originInfo as $origin)
-  {
+
+  foreach ($originInfo as $origin) {
   	$node['biblio_place_published'] = '';
-	$places = $origin->getElementsByTagName('place');
-	foreach($places as $place)
-	{
-		$placeTerm = $place->getElementsByTagName('placeTerm')->item(0);
-		if ($placeTerm->getAttribute('type') == 'text')
-		{
-			$node['biblio_place_published'] = $placeTerm->nodeValue;
-			break;
+		$places = $origin->getElementsByTagName('place');
+		
+		foreach ($places as $place) {
+			$placeTerm = $place->getElementsByTagName('placeTerm')->item(0);
+
+			if ($placeTerm->getAttribute('type') == 'text') {
+				$node['biblio_place_published'] = $placeTerm->nodeValue;
+				break;
+			}
 		}
-	}
-	
-	$node['biblio_publisher'] = $origin->getElementsByTagName('publisher')->item(0)->nodeValue;
+		
+		$node['biblio_publisher'] = $origin->getElementsByTagName('publisher')->item(0)->nodeValue;
   }
   
   // Get the date information
@@ -352,229 +347,239 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   $node['biblio_date'] = '';
   
   $dates = $xpath->query('/x:mods/x:originInfo/x:dateIssued');
-  if ($dates->length > 0)
-  {
-	//$dates = $origin->getElementsByTagName('dateIssued');
-	foreach($dates as $date)
-	{
-		if (!$date->hasAttribute('encoding'))
-		{
-			$node['biblio_date'] = $date->nodeValue;
+
+  if ($dates->length > 0) {
+		//$dates = $origin->getElementsByTagName('dateIssued');
+
+		foreach ($dates as $date) {
+
+			if (!$date->hasAttribute('encoding')) {
+				$node['biblio_date'] = $date->nodeValue;
+			} elseif ($date->getAttribute('encoding') == 'iso8601') {
+				$node['biblio_date'] = $date->nodeValue;
+			} elseif ($date->getAttribute('encoding') == 'marc') {
+
+				if (!$date->hasAttribute('point')) {
+					$node['biblio_year'] = $date->nodeValue;
+				} elseif ($date->getAttribute('point') == 'start') {
+					$node['biblio_year'] = $date->nodeValue;
+				}
+			}		
 		}
-		elseif ($date->getAttribute('encoding') == 'iso8601')
-		{
-			$node['biblio_date'] = $date->nodeValue;
-		}
-		elseif ($date->getAttribute('encoding') == 'marc')
-		{
-			if (!$date->hasAttribute('point'))
-			{
-				$node['biblio_year'] = $date->nodeValue;
-			}
-			elseif ($date->getAttribute('point') == 'start')
-			{
-				$node['biblio_year'] = $date->nodeValue;
-			}
-		}		
-	}
   }
   
   // Get the language
   $languageElement = $xpath->query('/x:mods/x:language');
-  if ($languageElement->length > 0)
-  {
-	$languageTerms = $languageElement->item(0)->getElementsByTagName('languageTerm');
-	if ($languageTerms->length > 0) $node['biblio_lang'] = $languageTerms->item(0)->nodeValue;
-  }  
+
+  if ($languageElement->length > 0) {
+		$languageTerms = $languageElement->item(0)->getElementsByTagName('languageTerm');
+	
+		if ($languageTerms->length > 0) {
+			$node['biblio_lang'] = $languageTerms->item(0)->nodeValue;
+		}
+	}  
 
   // Get the authors
   $node['biblio_contributors'] = array();
   $names = $xpath->query('/x:mods/x:name');
-  foreach($names as $name)
-  {
-	// get the type of author
-	$auth_type = 1;	// match to row in table 'biblio_contributor_type_data'
-	if ($name->hasAttribute('type'))
-	{
-		switch($name->getAttribute('type'))
-		{
-			case 'personal':
-				$auth_type = 1;
-				break;
-			case 'corporate':
-				$auth_type = 5;
-				break;
-			case 'conference':
-				$auth_type = 19;
-				break;		
-		}
-	}
-	
-	// get the name of the author
-	$nameParts = $name->getElementsByTagName('namePart');
-	$authorName = '';
-	$given = '';
-	$family = '';
-	$authorDate = '';
-	foreach($nameParts as $namePart)
-	{
-		if (!$namePart->hasAttribute('type'))
-		{
-			$authorName = $namePart->nodeValue;
-			break;
-		}
-		else
-		{
-			switch($namePart->getAttribute('type'))
+
+  foreach($names as $name) {
+		// get the type of author
+		$auth_type = 1;	// match to row in table 'biblio_contributor_type_data'
+
+		if ($name->hasAttribute('type')) {
+			
+			switch ($name->getAttribute('type')) 
 			{
-				case 'given':
-					$given = $namePart->nodeValue;
+				case 'personal':
+					$auth_type = 1;
 					break;
-				case 'family':
-					$family = $namePart->nodeValue;
+				
+				case 'corporate':
+					$auth_type = 5;
 					break;
-				case 'date':
-					$authorDate = $namePart->nodeValue;
-					break;			
+				
+				case 'conference':
+					$auth_type = 19;
+					break;		
 			}
-		}	
-	} 
-	if ($authorName == '') $authorName = $family . ', ' . $given . ' ' . $authorDate;
+		}
 	
-	// add the author to the node
-    $node['biblio_contributors'][1][]= array('name' => $authorName, 'auth_type' => $auth_type);
+		// get the name of the author
+		$nameParts  = $name->getElementsByTagName('namePart');
+		$authorName = '';
+		$given      = '';
+		$family     = '';
+		$authorDate = '';
+
+		foreach ($nameParts as $namePart) {
+
+			if (!$namePart->hasAttribute('type')) {
+				$authorName = $namePart->nodeValue;
+				break;
+			} else {
+				
+				switch($namePart->getAttribute('type'))
+				{
+					case 'given':
+						$given = $namePart->nodeValue;
+						break;
+
+					case 'family':
+						$family = $namePart->nodeValue;
+						break;
+
+					case 'date':
+						$authorDate = $namePart->nodeValue;
+						break;			
+				}
+			}	
+		} 
+		
+		if ($authorName == '') {
+			$authorName = $family . ', ' . $given . ' ' . $authorDate;
+		}
+		
+		// add the author to the node
+    $node['biblio_contributors'][1][] = array('name' => $authorName, 'auth_type' => $auth_type);
   }  
   
   // Get the subjects (keywords)
   $node['biblio_keywords'] = array();
   $subjects = $xpath->query('/x:mods/x:subject');
-  foreach($subjects as $subject)
-  {
-	$topics = $subject->getElementsByTagName('topic');
-	foreach($topics as $topic)
-	{
-		$node['biblio_keywords'][] = $topic->nodeValue;
-	}
-	$names = $subject->getElementsByTagName('name');
-	foreach($names as $name)
-	{
-		$node['biblio_keywords'][] = $name->nodeValue;
-	}
-	$geographics = $subject->getElementsByTagName('geographic');
-	foreach($geographics as $geographic)
-	{
-		$node['biblio_keywords'][] = $geographic->nodeValue;
-	}
+
+  foreach ($subjects as $subject) {
+		$topics = $subject->getElementsByTagName('topic');
+		
+		foreach ($topics as $topic) {
+			$node['biblio_keywords'][] = $topic->nodeValue;
+		}
+
+		$names = $subject->getElementsByTagName('name');
+
+		foreach ($names as $name) {
+			$node['biblio_keywords'][] = $name->nodeValue;
+		}
+
+		$geographics = $subject->getElementsByTagName('geographic');
+
+		foreach ($geographics as $geographic) {
+			$node['biblio_keywords'][] = $geographic->nodeValue;
+		}
   }  
   
   // Look for a call number in the item's classification entries
   $classifications = $xpath->query('/x:mods/x:classification');
-  foreach($classifications as $classification)
-  {
-	if ($classification->hasAttribute('authority'))
-	{
-		if ($classification->getAttribute('authority') == 'lcc')
-		{
-			$node['biblio_call_number'] = $classification->nodeValue;
-			break;
-		}			
-	}
+
+  foreach ($classifications as $classification) {
+
+		if ($classification->hasAttribute('authority')) {
+
+			if ($classification->getAttribute('authority') == 'lcc') {
+				$node['biblio_call_number'] = $classification->nodeValue;
+				break;
+			}			
+		}
   }  
   
   // Identify the type of item
   $genres = $xpath->query('/x:mods/x:genre');
-  if ($genres->length > 0)
-  {
-	switch ($genres->item(0)->nodeValue)
-	{
-		case 'book':
-			$node['biblio_type'] = 100;	// book
-			break;
-		case 'series':
-			$node['biblio_type'] = 100;	// book
-			break;
-		case 'article':
-			$node['biblio_type'] = 102;	// journal article
-			break;
-		default:
-			$node['biblio_type'] = 100;	// book
-			break;
-	}  
+
+  if ($genres->length > 0) {
+
+		switch ($genres->item(0)->nodeValue)
+		{
+			case 'book':
+				$node['biblio_type'] = 100;	// book
+				break;
+
+			case 'series':
+				$node['biblio_type'] = 100;	// book
+				break;
+
+			case 'article':
+				$node['biblio_type'] = 102;	// journal article
+				break;
+
+			default:
+				$node['biblio_type'] = 100;	// book
+				break;
+		}  
   }
 
-  if (empty($node['biblio_type'])) $node['biblio_type'] = 100;	// No matches in the feed, so default to "Book"
+  if (empty($node['biblio_type'])) {
+  	$node['biblio_type'] = 100;	// No matches in the feed, so default to "Book"
+  }
   
   // Check for page and volume information for journals
   $relatedItems = $xpath->query('/x:mods/x:relatedItem');
-  foreach($relatedItems as $relatedItem)
-  {
-	if ($relatedItem->getAttribute('type') == 'host' && $node['biblio_type'] == 102)
-	{
 
-		// Get journal title
-		$journalTitleInfo = $relatedItem->getElementsByTagName('titleInfo');
-		if ($journalTitleInfo->length > 0)
-		{
-			$node['biblio_secondary_title'] = $journalTitleInfo->item(0)->getElementsByTagName('title')->item(0)->nodeValue;		
-		}
-	
-		// Get volume/issue/pages
-		$parts = $relatedItem->getElementsByTagName('part');
-		if ($parts->length > 0)
-		{
-			$part = $parts->item(0);
-			
-			$details = $part->getElementsByTagName('detail');
-			$text = $part->getElementsByTagName('text');
-			if ($details->length > 0)
-			{
-				foreach($details as $detail)
-				{
-					$number = $detail->getElementsByTagName('number')->item(0)->nodeValue;
-					
-					if (!empty($number))
-					{
-						switch($detail->getAttribute('type'))
-						{
-							case 'volume':
-								$node['biblio_volume'] = $number;
-								break;
-							case 'issue':
-								$node['biblio_issue'] = $number;
-								break;
+  foreach ($relatedItems as $relatedItem) {
+
+		if ($relatedItem->getAttribute('type') == 'host' && $node['biblio_type'] == 102) {
+			// Get journal title
+			$journalTitleInfo = $relatedItem->getElementsByTagName('titleInfo');
+
+			if ($journalTitleInfo->length > 0) {
+				$node['biblio_secondary_title'] = $journalTitleInfo->item(0)->getElementsByTagName('title')->item(0)->nodeValue;		
+			}
+		
+			// Get volume/issue/pages
+			$parts = $relatedItem->getElementsByTagName('part');
+
+			if ($parts->length > 0) {
+				$part = $parts->item(0);
+				
+				$details = $part->getElementsByTagName('detail');
+				$text = $part->getElementsByTagName('text');
+
+				if ($details->length > 0) {
+
+					foreach ($details as $detail) {
+						$number = $detail->getElementsByTagName('number')->item(0)->nodeValue;
+						
+						if (!empty($number)) {
+
+							switch($detail->getAttribute('type'))
+							{
+								case 'volume':
+									$node['biblio_volume'] = $number;
+									break;
+
+								case 'issue':
+									$node['biblio_issue'] = $number;
+									break;
+							}
 						}
 					}
+				} else {
+					$node['biblio_volume'] = $text->item(0)->nodeValue;
+				}
+				
+				$extents = $part->getElementsByTagName('extent');
+
+				if ($extents->length > 0) {
+					$node['biblio_section'] = $extents->item(0)->getElementsByTagName('start')->item(0)->nodeValue;
+					$node['biblio_pages'] = $extents->item(0)->getElementsByTagName('list')->item(0)->nodeValue;
+				}
+				
+				$partDates = $part->getElementsByTagName('date');
+				if ($partDates->length > 0) {
+					$node['biblio_year'] = $partDates->item(0)->nodeValue;
 				}
 			}
-			else
-			{
-				$node['biblio_volume'] = $text->item(0)->nodeValue;
-			}
-			
-			$extents = $part->getElementsByTagName('extent');
-			if ($extents->length > 0)
-			{
-				$node['biblio_section'] = $extents->item(0)->getElementsByTagName('start')->item(0)->nodeValue;
-				$node['biblio_pages'] = $extents->item(0)->getElementsByTagName('list')->item(0)->nodeValue;
-			}
-			
-			$partDates = $part->getElementsByTagName('date');
-			if ($partDates->length > 0) $node['biblio_year'] = $partDates->item(0)->nodeValue;
 		}
-	}
   }
   
   // Generate an md5 hash and save the item
-  if (!empty($biblio_url))
-  {
+  if (!empty($biblio_url)) {
 		$node['biblio_md5'] = md5($biblio_url);
-  }
-  else
-  {
+  } else {
 		$node['biblio_md5'] = md5(serialize($node));
   }
 
   if (!empty($node)) {
+    
     if ($updateFlag == false) {  // do a regular insert via the other calls...
     	biblio_save_node($node);
     }
@@ -584,44 +589,83 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   return;
 }
 
-function biblio_oai_xc_check_md5($url) {
-
-		//$sql = "SELECT nid, biblio_md5, biblio_url FROM biblio where biblio_md5 = '".$md5."'";
-		//$sql = "SELECT count(*) as total FROM biblio where biblio_md5 = '".$md5."'";
-		$sql = "SELECT count(*) as total FROM biblio where biblio_url = '".$url."'";
-		//      SELECT nid, biblio_md5, biblio_url FROM biblio where biblio_url = 'http://hdl.handle.net/10088/7030';
-
-    $result = db_query($sql);
+/*
+ *  biblio_oai_xc_isRecord - is there a record, true = yes, false = no
+ */
+function biblio_oai_xc_isRecord($field) 
+{
+	$sql = "SELECT count(*) as total FROM biblio where biblio_url = '".$field."'";
+	
+	$result = db_query($sql);
+	
+	//logmsg($sql);
+	
+	$row = db_fetch_object($result);
+	
+	if ($row) {
+		$count = $row->total;
+		//logmsg('count:[' . $count . ']', 'biblio oai xc DUP CHECK');
 		
-		logmsg($sql);
+		return true;
+	}
+	
+	return false;
+}
 
-    $row = db_fetch_object($result);
-    
-//    if ($row) {
-//    	$nid = $row->nid;
-//    	logmsg('Nid:[' . $nid . ']', 'biblio oai xc DUP CHECK');
-//    	
-//	  	return $nid;
-//    }
+/*
+ *  biblio_oai_xc_check_md5 - using the md5 of an url find the record and return count of records if found
+ */
+function biblio_oai_xc_check_md5($field) 
+{
+	$sql = "SELECT count(*) as total FROM biblio where biblio_md5 = '".$field."'";
 
-    if ($row) {
-    	$count = $row->total;
-    	logmsg('count:[' . $count . ']', 'biblio oai xc DUP CHECK');
-    	
-	  	return $count;
-    }
+  $result = db_query($sql);
+	
+  $row = db_fetch_object($result);
+  
+  if ($row) {
+  	$count = $row->total;
+  	
+  	return $count;
+  }
     
 	return 0;
 }
 
-function biblio_oai_xc_gettypeid($type) {
+/*
+ *  biblio_oai_xc_getNid - using the md5 of an url find the record and return the nid (node ID) if found
+ */
+function biblio_oai_xc_getNid($field) 
+{
+	$sql = "SELECT nid, biblio_md5, biblio_url FROM biblio where biblio_md5 = '".$field."'";
+
+  $result = db_query($sql);
+	
+  $row = db_fetch_object($result);
+  
+  if ($row) {
+  	$nid = $row->nid;
+  	
+  	return $nid;
+  }
+
+	return 0;
+}
+
+/*
+ *  biblio_oai_xc_gettypeid - 
+ */
+function biblio_oai_xc_gettypeid($type) 
+{
 	$sql = "SELECT * FROM biblio_types WHERE name = '".$type."'";
 	$result = db_query($sql);
-
-	logmsg($sql);
 
 	if ($row = db_fetch_object($result)) {
 		return $row->tid;
 	}
 	return;
 }
+
+// ****************************************
+// ****************************************
+// ****************************************
