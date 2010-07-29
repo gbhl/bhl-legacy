@@ -7,9 +7,13 @@
 
 // modified DLH 2010/07/26 for compatibility for OAI bridge to work with 6.x-1-x version of the Biblio module.
 
-function logmsg($msg)
+
+/*
+ *  logmsg - write to logs
+ */
+function logmsg($msg, $type = 'biblio oai xc')
 {
-	log_info('biblio oai xc', $msg);
+	log_info($type, $msg);
 }
 
 /*
@@ -55,23 +59,56 @@ function _biblio_oai_xc_view($node) {
 }
 
 function _biblio_oai_xc_insert($node) {
-	logmsg('_biblio_oai_xc_insert: ' . $node->biblio_md5);
+	//logmsg('_biblio_oai_xc_insert: ' . $node->biblio_md5);
 	
-	$biblio_md5 = $node->biblio_md5;
+	$biblio_md5_orig = $node->biblio_md5;
+	$biblio_url = $node->biblio_url;
+	$nid        = $node->nid;
+	logmsg('_biblio_oai_xc_insert: ' . $biblio_md5);
 
   if (!isset($biblio_md5)) {
   	return;
   }
-  
+
+  // flag: true = insert, false update or ignore
   $flagInsert = true;
-  if ($node->nid) {
+
+  // See if we already have an entry for this item
+//  if (!empty($biblio_url)) {
+//		if ($dup = biblio_oai_xc_check_md5($biblio_md5))
+//		{
+//			//logmsg('insert check dup:' . $dup);
+//			// Retrieve the existing node so that we can do an update instead of an insert
+//			logmsg('nid:[' . $nid . '] insert dup:' . $dup . ' url:[' . $biblio_url . '] md5:' . $biblio_md5, 'Insert dup');
+//			$node->nid = $dup; // this forces an update instead of an insert later on
+//			$flagInsert = false;
+//		}
+//  } else {
+  	//logmsg('Empty biblio url', 'biblio url');
+//  }
+
+		$biblio_md5 = md5($biblio_url);
+		$count = biblio_oai_xc_check_md5($biblio_url);
+		if ($count > 0) // it is a duplicate
+		{
+			//logmsg('insert check dup:' . $dup);
+			// Retrieve the existing node so that we can do an update instead of an insert
+			logmsg('nid:[' . $nid . '] count:' . $count . ' url:[' . $biblio_url . '] md5:' . $biblio_md5 . ' orig md5:' . $biblio_md5_orig, 'Insert dup');
+			//$node->nid = $nid; // this forces an update instead of an insert later on
+			$flagInsert = false;
+		}
+
+  // if we have a nid (node ID), then record already exists
+  if ($nid > 0) {
   	$flagInsert = false;
   }
+  
+  // if new record, save it, else skip it
   if ($flagInsert) {
-  	logmsg('Insert new record: ' . $node->biblio_md5);
+  	logmsg('Insert new record: ' . $biblio_md5, 'biblio oai xc Insert Callback');
   	drupal_write_record('biblio', $node);
   } else {
-  	logmsg('Skip existing: ' . $node->biblio_md5);
+  	logmsg('Skip existing: ' . $biblio_md5, 'biblio oai xc Insert Callback');
   	//logmsg('Update existing: ' . $node->biblio_md5);
   	//drupal_write_record('biblio', $node, 'nid');
   }
@@ -104,6 +141,8 @@ function biblio_oai_xc_oaiharvester_process_record($record) {
  */
 function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
 {
+	$updateFlag = false;
+
 	logmsg('biblio_oai_xc_oaiharvester_process_record_oai_dc');
 
   $raw = $record['metadata']['childNode'];
@@ -121,15 +160,27 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
   }  
 
   // See if we already have an entry for this item
-  if (!empty($biblio_url)) {
-	if ($dup = biblio_oai_xc_check_md5(md5($biblio_url)))
-	{
-		logmsg('dc dup:' . $dup);
-		// Retrieve the existing node so that we can do an update instead of an insert
-		$node = node_load($dup);
-		$node->nid = $dup; // this forces an update instead of an insert later on
-	}
-  }
+ //if (!empty($biblio_url)) {
+//		if ($dup = biblio_oai_xc_check_md5(md5($biblio_url)))
+//		{
+//			logmsg('dc dup:' . $dup . ' url:[' . $biblio_url . ']', 'biblio oai xc URL');
+//			// Retrieve the existing node so that we can do an update instead of an insert
+//			$node = node_load($dup);
+//			$node->nid = $dup; // this forces an update instead of an insert later on
+//			$updateFlag = true;
+//		}
+  //}
+
+		$biblio_md5 = md5($biblio_url);
+		$count = biblio_oai_xc_check_md5($biblio_url);
+		if ($count > 0) // it is a duplicate
+		{
+			//logmsg('insert check dup:' . $dup);
+			// Retrieve the existing node so that we can do an update instead of an insert
+			logmsg('count:' . $count . ' url:[' . $biblio_url . '] md5:' . $biblio_md5, 'Insert dup');
+			$node->nid = $nid; // this forces an update instead of an insert later on
+			$updateFlag = true;
+		}
   
 
   // Fill in the updated information  
@@ -176,7 +227,10 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
   }
 
   if (!empty($node)) {
-    biblio_save_node($node);
+    if ($updateFlag == false) {  // do a regular insert via the other calls...
+	    biblio_save_node($node);
+	  }
+	  // FIXME: else it's an update, and blocking it for the moment. DLH 07/28/2010
   }
 
   return ;
@@ -228,16 +282,28 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   }  
 
   // See if we already have an entry for this item
-  if (!empty($biblio_url)) {
-	if ($dup = biblio_oai_xc_check_md5(md5($biblio_url)))
-	{
-		logmsg('mods dup:' . $dup);
-		// Retrieve the existing node so that we can do an update instead of an insert
-		$node = node_load($dup);
-		$node->nid = $dup; // this forces an update instead of an insert later on
-		$updateFlag = true;
-	}
-  }  
+  //if (!empty($biblio_url)) {
+//		if ($dup = biblio_oai_xc_check_md5(md5($biblio_url)))
+//		{
+//			logmsg('mods dup:' . $dup);
+//			// Retrieve the existing node so that we can do an update instead of an insert
+//			logmsg('dc dup:' . $dup . ' url:[' . $biblio_url . ']', 'biblio oai xc URL');
+//			$node = node_load($dup);
+//			$node->nid = $dup; // this forces an update instead of an insert later on
+//			$updateFlag = true;
+//		}
+  //}  
+
+		$biblio_md5 = md5($biblio_url);
+		$count = biblio_oai_xc_check_md5($biblio_url);
+		if ($count > 0) // it is a duplicate
+		{
+			//logmsg('insert check dup:' . $dup);
+			// Retrieve the existing node so that we can do an update instead of an insert
+			logmsg('count:' . $count . ' url:[' . $biblio_url . '] md5:' . $biblio_md5, 'Insert dup');
+			$node->nid = $nid; // this forces an update instead of an insert later on
+			$updateFlag = true;
+		}
 
   // Add the identifiers to the node
   $node['biblio_url'] = $biblio_url;
@@ -518,9 +584,12 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   return;
 }
 
-function biblio_oai_xc_check_md5($md5) {
+function biblio_oai_xc_check_md5($url) {
 
-		$sql = "SELECT nid, biblio_md5, biblio_url FROM biblio where biblio_md5 = '".$md5."'";
+		//$sql = "SELECT nid, biblio_md5, biblio_url FROM biblio where biblio_md5 = '".$md5."'";
+		//$sql = "SELECT count(*) as total FROM biblio where biblio_md5 = '".$md5."'";
+		$sql = "SELECT count(*) as total FROM biblio where biblio_url = '".$url."'";
+		//      SELECT nid, biblio_md5, biblio_url FROM biblio where biblio_url = 'http://hdl.handle.net/10088/7030';
 
     $result = db_query($sql);
 		
@@ -528,11 +597,21 @@ function biblio_oai_xc_check_md5($md5) {
 
     $row = db_fetch_object($result);
     
+//    if ($row) {
+//    	$nid = $row->nid;
+//    	logmsg('Nid:[' . $nid . ']', 'biblio oai xc DUP CHECK');
+//    	
+//	  	return $nid;
+//    }
+
     if ($row) {
-	  	return $row->nid;
+    	$count = $row->total;
+    	logmsg('count:[' . $count . ']', 'biblio oai xc DUP CHECK');
+    	
+	  	return $count;
     }
     
-	return;
+	return 0;
 }
 
 function biblio_oai_xc_gettypeid($type) {
