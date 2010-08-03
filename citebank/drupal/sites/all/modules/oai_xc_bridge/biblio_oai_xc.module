@@ -72,6 +72,14 @@ function _biblio_oai_xc_view($node)
 }
 
 /*
+ *  _biblio_oai_xc_update - 
+ */
+function _biblio_oai_xc_update($node) 
+{
+	logmsg('_biblio_oai_xc_update');
+}
+
+/*
  *  _biblio_oai_xc_insert - 
  */
 function _biblio_oai_xc_insert($node) 
@@ -135,6 +143,11 @@ function biblio_oai_xc_oaiharvester_process_record($record)
 		case 'mods':
 			biblio_oai_xc_oaiharvester_process_record_mods($record);
 			break;
+
+		// MARC21
+//		case 'marc':
+//			biblio_oai_xc_oaiharvester_process_record_marc($record);
+//			break;
   }
   
   return;
@@ -223,8 +236,30 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
   if (!empty($node)) {
     if ($updateFlag == false) {  // do a regular insert via the other calls...
 	    biblio_save_node($node);
-	  }
-	  // FIXME: else it's an update, and blocking it for the moment. DLH 07/28/2010
+    } else {
+    	// else it's an update, set the nid and maybe the revision.
+    	$fields = biblio_oai_xc_getNid($biblio_url);
+    	if ($fields) {
+    		$nid = $fields['nid'];
+    		$vid = $fields['vid'];
+    	}
+
+    	if ($nid) {
+    		$node['nid'] = $nid;
+
+	    	//$revisionNid = biblio_oai_xc_getRevision($nid);
+    	}
+
+    	//if ($revisionNid) {
+    	//	$node['revision'] = $revisionNid;  // prevents duplicate entry to biblio_contributor
+    	//}
+
+    	// take array, convert it into an object
+    	$nodeObj = convertToObj($node);
+    	
+    	logmsg('UPDATE nid:[' . $nodeObj->nid . '] nidA:[' . $node['nid'] . '] url:' . $biblio_url, 'DC Record UPDATE');
+    	biblio_save_node($node);
+    }
   }
 
   return;
@@ -240,6 +275,7 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   $raw = $record['metadata']['childNode'];
 
 	logmsg('biblio_oai_xc_oaiharvester_process_record_mods');
+	logmsg('record' . print_r($record, true));
 
   // Set up an XPath document
   $doc = new DOMDocument;
@@ -247,6 +283,23 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   $xpath = new DOMXPath($doc);
   $xpath->registerNamespace('x', 'http://www.loc.gov/mods/v3');
   
+  // MODS DATA PARSER parse data
+  $strdoc = $doc->saveXML();
+  logmsg('record: ' . $strdoc, 'STRDOC');
+  $strxml = str_replace('mods:', '', $strdoc);
+  $xml = simplexml_load_string($strxml);
+  logmsg('title:' . $xml->titleInfo->title, 'XMLSTR');
+  
+  logmsg('url:' . $xml->identifier, 'XMLSTR');
+  
+  foreach ($xml->subject as $subject) {
+  	$subjects .= $subject->topic . ',';
+  }
+  $subjects = rtrim($subjects, ',');
+  logmsg('subjects:' . $subjects, 'XMLSTR');
+  
+  // create a new function, hand it the xml string, parse the data, put into an array: biblio['title'] = $xml->titleInfo->title;  ...etc
+
   // Read any identifiers for the item
   $identifiers = $xpath->query('/x:mods/x:identifier');
 
@@ -582,11 +635,507 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
     
     if ($updateFlag == false) {  // do a regular insert via the other calls...
     	biblio_save_node($node);
+    } else {
+    	// else it's an update, set the nid and maybe the revision.
+    	$fields = biblio_oai_xc_getNid($biblio_url);
+    	if ($fields) {
+    		$nid = $fields['nid'];
+    		$vid = $fields['vid'];
+    	}
+
+    	if ($nid) {
+    		$node['nid'] = $nid;
+
+	    	//$revisionNid = biblio_oai_xc_getRevision($nid);
+    	}
+
+    	// if no vid, set it to the nid, yes, N as NODE id, yes, set the V id to N id
+    	if ($node['vid'] == 0) {
+    		$node['vid'] = $vid;
+    	}
+
+    	//if ($revisionNid) {
+    	//	$node['revision'] = $revisionNid;  // prevents duplicate entry to biblio_contributor
+    	//}
+
+    	// take array, convert it into an object
+    	//$nodeObj = convertToObj($node);
+    	
+    	//logmsg('UPDATE nid:[' . $nodeObj->nid . '] nidA:[' . $node['nid'] . '] url:' . $biblio_url, 'MODS Record UPDATE');
+    	
+    	// if node nid, then it will update
+    	// if node vid, then 
+    	
+    	// if node revision, then it will also update biblio
+    	//    which is where we have our trouble
+    	
+    	logmsg('UPDATE nidA:[' . $node['nid'] . '] url:' . $biblio_url, 'MODS Record UPDATE');
+    	my_biblio_save_node($node);
     }
-    // FIXME: else it's an update, and blocking it for the moment. DLH 07/28/2010
   }
 
   return;
+}
+
+function getCountNid($nid)
+{
+	$total = 0 ;
+	
+	$sql = "SELECT count(*) AS total FROM  `test1`.`biblio` WHERE nid = {$nid}";
+	
+	db_query($sql);
+
+  $row = db_fetch_object($result);
+  
+  if ($row) {
+  	$total = $row->total;
+  	
+  	return $total;
+  }
+
+	return $total;	
+}
+
+function my_biblio_save_node($node, $batch = FALSE, $session_id = NULL, $save_node = TRUE) {
+  $options = variable_get('node_options_biblio', array ('status'));
+  if (module_exists('i18n') && variable_get('i18n_node_biblio', 0) && variable_get('language_content_type_biblio', 0) ){
+    $node['language'] = module_invoke('i18n', 'default_language');
+  }
+  $node_template = array (
+      'type' => 'biblio',
+      'comment' => variable_get('comment_biblio', 0),
+      'promote' => in_array('promote', $options),
+      'moderate' => in_array('moderate', $options),
+      'sticky' => in_array('sticky', $options),
+      'format' => 0,
+      'status' => in_array('status', $options),
+  );
+
+  $node = (object) array_merge($node, $node_template);
+	log_info('IMPORTEXPORT', ' node nid:[' . $node->nid . ']');
+  if(!isset($node->biblio_type)) $node->biblio_type = 129; // default to misc if not set.
+  if ($batch && $session_id){ // we are batch processing some import data
+    $node = serialize($node);
+    db_query("INSERT INTO {biblio_import_cache} (session_id, data) VALUES ('%s', %b)", $session_id, $node);
+    return;
+  }
+  elseif ($save_node) { // $save_node = TRUE, the normal save path
+  	log_info('IMPORTEXPORTSAVE', ' node nid:[' . $node->nid . ']');
+    my_node_save($node);
+    return (isset($node->nid)) ? $node->nid : 0;
+  }
+  else { // $save_node = FALSE, primarily used to parse data and return it to the input form
+    return (array)$node;
+  }
+}
+
+/**
+ * Save a node object into the database.
+ */
+function my_node_save(&$node) {
+  // Let modules modify the node before it is saved to the database.
+  node_invoke_nodeapi($node, 'presave');
+  global $user;
+
+  // Insert a new node.
+  $node->is_new = empty($node->nid);
+  $nid = ($node->nid ? $node->nid : 0);
+  $count = getCountNid($nid);
+//  if ($count > 0) {
+//  	$node->is_new = false;
+//  } else {
+//  	$node->is_new = true;
+//  }
+  if ($node->is_new) {
+  	logmsg('node is new nid:[' . $node->nid . ']', 'NODENEW');
+  } else {
+  	logmsg('node exists nid:[' . $node->nid . ']', 'NODENEW');
+  }
+
+  if ($node->is_new || !empty($node->revision)) {
+    // When inserting a node, $node->log must be set because
+    // {node_revisions}.log does not (and cannot) have a default
+    // value.  If the user does not have permission to create
+    // revisions, however, the form will not contain an element for
+    // log so $node->log will be unset at this point.
+    if (!isset($node->log)) {
+      $node->log = '';
+    }
+  }
+  elseif (empty($node->log)) {
+    // When updating a node, however, avoid clobbering an existing
+    // log entry with an empty one.
+    unset($node->log);
+  }
+
+  // For the same reasons, make sure we have $node->teaser and
+  // $node->body set.
+  if (!isset($node->teaser)) {
+    $node->teaser = '';
+  }
+  if (!isset($node->body)) {
+    $node->body = '';
+  }
+
+  // Save the old revision if needed.
+  if (!$node->is_new && !empty($node->revision) && $node->vid) {
+    $node->old_vid = $node->vid;
+  }
+
+  $time = time();
+  if (empty($node->created)) {
+    $node->created = $time;
+  }
+  // The changed timestamp is always updated for bookkeeping purposes (revisions, searching, ...)
+  $node->changed = $time;
+
+  $node->timestamp = $time;
+  $node->format = isset($node->format) ? $node->format : FILTER_FORMAT_DEFAULT;
+
+	log_info('MYNODESAVE', ' node nid:[' . $node->nid . '] new:[' . $node->is_new . ']');
+  // Generate the node table query and the node_revisions table query.
+  if ($node->is_new) {
+		log_info('MYNODESAVE', 'INSERT');
+    _node_save_revision($node, $user->uid);
+    drupal_write_record('node', $node);
+    db_query('UPDATE {node_revisions} SET nid = %d WHERE vid = %d', $node->nid, $node->vid);
+    $op = 'insert';
+  }
+  else {
+  	// this is where it UPDATES supposedly, and with the third argument 'nid' in drupal_write_record, it is SUPPOSED TO BE an update
+	log_info('MYNODESAVE', 'UPDATE  nid:['.$node->nid.'] vid:['.$node->vid.']');
+    drupal_write_record('node', $node, 'nid');
+    log_info('MYNODESAVE', 'UPDATE1');
+    if (!empty($node->revision)) {
+    	    log_info('MYNODESAVE', 'UPDATE2');
+      _node_save_revision($node, $user->uid);
+          log_info('MYNODESAVE', 'UPDATE3');
+      db_query('UPDATE {node} SET vid = %d WHERE nid = %d', $node->vid, $node->nid);
+          log_info('MYNODESAVE', 'UPDATE4');
+    }
+    else {
+    	// update the revision vid
+    	    log_info('MYNODESAVE', 'UPDATE5');
+      _node_save_revision($node, $user->uid, 'vid');
+          log_info('MYNODESAVE', 'UPDATE6');
+    }
+    $op = 'update';
+  }
+	log_info('MYNODESAVE', 'UPDATE7 ' . $op . ' nid:[' . $node->nid . '] NODE:' . print_r($node, true));
+
+  // Call the node specific callback (if any).
+  //my_node_invoke($node, $op);
+  node_invoke($node, $op);
+	log_info('MYNODESAVE', 'UPDATE8 ' . $op);
+  node_invoke_nodeapi($node, $op);
+	log_info('MYNODESAVE', 'UPDATE9');
+
+  // Update the node access table for this node.
+  node_access_acquire_grants($node);
+	log_info('MYNODESAVE', 'UPDATE10');
+
+  // Clear the page and block caches.
+  cache_clear_all();
+}
+
+/**
+ * Invoke a node hook.
+ *
+ * @param &$node
+ *   Either a node object, node array, or a string containing the node type.
+ * @param $hook
+ *   A string containing the name of the hook.
+ * @param $a2, $a3, $a4
+ *   Arguments to pass on to the hook, after the $node argument.
+ * @return
+ *   The returned value of the invoked hook.
+ */
+function my_node_invoke(&$node, $hook, $a2 = NULL, $a3 = NULL, $a4 = NULL) {
+  if (node_hook($node, $hook)) {
+    $module = node_get_types('module', $node);
+    if ($module == 'node') {
+      $module = 'node_content'; // Avoid function name collisions.
+    }
+    log_info('MYNODEINVOKE', 'MODULE: [' . $module . '] hook:[' . $hook . ']');
+    $function = $module .'_'. $hook;
+    return ($function($node, $a2, $a3, $a4));
+  }
+}
+
+/*
+ *  convertToObj - convert an array into an object
+ */
+function convertToObj($array) 
+{
+	$object->nid = $array['nid'];
+	logmsg('Array ***' . print_r($array, true) . '***', 'DUMP ARRAY');
+	
+	$object->biblio_url  = $array['biblio_url'];
+	$object->biblio_isbn  = $array['biblio_isbn'];
+	$object->biblio_issn  = $array['biblio_issn'];
+	$object->title  = $array['title'];
+	$object->biblio_place_published  = $array['biblio_place_published'];
+	$object->biblio_publisher  = $array['biblio_publisher'];
+	$object->biblio_year  = $array['biblio_year'];
+	$object->biblio_date  = $array['biblio_date'];
+	$object->biblio_lang  = $array['biblio_lang'];
+	$object->biblio_contributors  = $array['biblio_contributors'];
+//	 => 
+//	Array 
+//	( 
+//		[1] => Array 
+//		( 
+//			[0] => Array 
+//			( 
+//				[name] => Norris, James N. 
+//				[auth_type] => 1 
+//			) 
+//		) 
+//	) 
+	$object->biblio_keywords  = $array['biblio_keywords'];
+//	 => 
+//	Array 
+//	( 
+//		[0] => Gulf of California 
+//		[1] => Marine algae 
+//		[2] => Green algae 
+//		[3] => Chlorophyta 
+//		[4] => Brown algae 
+//		[5] => Phaeophyceae 
+//	) 
+	$object->biblio_type  = $array['biblio_type'];
+	$object->biblio_md5  = $array['biblio_md5'];
+	
+/*
+nid
+vid
+biblio_type
+biblio_number
+biblio_other_number
+biblio_secondary_title
+biblio_tertiary_title
+biblio_edition
+biblio_publisher
+biblio_place_published
+biblio_year
+biblio_volume
+biblio_pages
+biblio_date
+biblio_isbn
+biblio_lang
+biblio_abst_e
+biblio_abst_f
+biblio_full_text
+biblio_url
+biblio_issue
+biblio_type_of_work
+biblio_accession_number
+biblio_call_number
+biblio_notes
+biblio_custom1
+biblio_custom2
+biblio_custom3
+biblio_custom4
+biblio_custom5
+biblio_custom6
+biblio_custom7
+biblio_research_notes
+biblio_number_of_volumes
+biblio_short_title
+biblio_alternate_title
+biblio_original_publication
+biblio_reprint_edition
+biblio_translated_title
+biblio_section
+biblio_citekey
+biblio_coins
+biblio_doi
+biblio_issn
+biblio_auth_address
+biblio_remote_db_name
+biblio_remote_db_provider
+biblio_label
+biblio_access_date
+biblio_refereed
+biblio_md5
+
+
+[biblio_url] => http://hdl.handle.net/10088/8631 
+[biblio_isbn] => 
+[biblio_issn] => 
+[title] => Marine Algae of the Northern Gulf of California: Chlorophyta and Phaeophyceae. 
+[biblio_place_published] => 
+[biblio_publisher] => Smithsonian Institution Scholarly Press 
+[biblio_year] => 9999 
+[biblio_date] => 2010-02-16 
+[biblio_lang] => en 
+[biblio_contributors] => 
+	Array 
+	( 
+		[1] => Array 
+		( 
+			[0] => Array 
+			( 
+				[name] => Norris, James N. 
+				[auth_type] => 1 
+			) 
+		) 
+	) 
+[biblio_keywords] => 
+	Array 
+	( 
+		[0] => Gulf of California 
+		[1] => Marine algae 
+		[2] => Green algae 
+		[3] => Chlorophyta 
+		[4] => Brown algae 
+		[5] => Phaeophyceae 
+	) 
+[biblio_type] => 100 
+[biblio_md5] => 124fd316ef09a89930b2a13f73c56bee 
+[nid] => 14122 
+
+*/
+	
+  return $object;
+}
+
+/*
+ *  convertArrayToObject - convert an array into an object
+ */
+function convertArrayToObject($array) 
+{
+	$object->nid = $array['nid'];
+	logmsg('Array ***' . print_r($array, true) . '***', 'DUMP ARRAY');
+	
+	$object->biblio_url  = $array['biblio_url'];
+	$object->biblio_isbn  = $array['biblio_isbn'];
+	$object->biblio_issn  = $array['biblio_issn'];
+	$object->title  = $array['title'];
+	$object->biblio_place_published  = $array['biblio_place_published'];
+	$object->biblio_publisher  = $array['biblio_publisher'];
+	$object->biblio_year  = $array['biblio_year'];
+	$object->biblio_date  = $array['biblio_date'];
+	$object->biblio_lang  = $array['biblio_lang'];
+	$object->biblio_contributors  = $array['biblio_contributors'];
+//	 => 
+//	Array 
+//	( 
+//		[1] => Array 
+//		( 
+//			[0] => Array 
+//			( 
+//				[name] => Norris, James N. 
+//				[auth_type] => 1 
+//			) 
+//		) 
+//	) 
+	$object->biblio_keywords  = $array['biblio_keywords'];
+//	 => 
+//	Array 
+//	( 
+//		[0] => Gulf of California 
+//		[1] => Marine algae 
+//		[2] => Green algae 
+//		[3] => Chlorophyta 
+//		[4] => Brown algae 
+//		[5] => Phaeophyceae 
+//	) 
+	$object->biblio_type  = $array['biblio_type'];
+	$object->biblio_md5  = $array['biblio_md5'];
+	
+/*
+nid
+vid
+biblio_type
+biblio_number
+biblio_other_number
+biblio_secondary_title
+biblio_tertiary_title
+biblio_edition
+biblio_publisher
+biblio_place_published
+biblio_year
+biblio_volume
+biblio_pages
+biblio_date
+biblio_isbn
+biblio_lang
+biblio_abst_e
+biblio_abst_f
+biblio_full_text
+biblio_url
+biblio_issue
+biblio_type_of_work
+biblio_accession_number
+biblio_call_number
+biblio_notes
+biblio_custom1
+biblio_custom2
+biblio_custom3
+biblio_custom4
+biblio_custom5
+biblio_custom6
+biblio_custom7
+biblio_research_notes
+biblio_number_of_volumes
+biblio_short_title
+biblio_alternate_title
+biblio_original_publication
+biblio_reprint_edition
+biblio_translated_title
+biblio_section
+biblio_citekey
+biblio_coins
+biblio_doi
+biblio_issn
+biblio_auth_address
+biblio_remote_db_name
+biblio_remote_db_provider
+biblio_label
+biblio_access_date
+biblio_refereed
+biblio_md5
+
+
+[biblio_url] => http://hdl.handle.net/10088/8631 
+[biblio_isbn] => 
+[biblio_issn] => 
+[title] => Marine Algae of the Northern Gulf of California: Chlorophyta and Phaeophyceae. 
+[biblio_place_published] => 
+[biblio_publisher] => Smithsonian Institution Scholarly Press 
+[biblio_year] => 9999 
+[biblio_date] => 2010-02-16 
+[biblio_lang] => en 
+[biblio_contributors] => 
+	Array 
+	( 
+		[1] => Array 
+		( 
+			[0] => Array 
+			( 
+				[name] => Norris, James N. 
+				[auth_type] => 1 
+			) 
+		) 
+	) 
+[biblio_keywords] => 
+	Array 
+	( 
+		[0] => Gulf of California 
+		[1] => Marine algae 
+		[2] => Green algae 
+		[3] => Chlorophyta 
+		[4] => Brown algae 
+		[5] => Phaeophyceae 
+	) 
+[biblio_type] => 100 
+[biblio_md5] => 124fd316ef09a89930b2a13f73c56bee 
+[nid] => 14122 
+
+*/
+	
+  return $object;
 }
 
 /*
@@ -637,7 +1186,28 @@ function biblio_oai_xc_check_md5($field)
  */
 function biblio_oai_xc_getNid($field) 
 {
-	$sql = "SELECT nid, biblio_md5, biblio_url FROM biblio where biblio_md5 = '".$field."'";
+	$sql = "SELECT nid, vid, biblio_md5, biblio_url FROM biblio where biblio_url = '".$field."'";
+
+  $result = db_query($sql);
+	
+  $row = db_fetch_object($result);
+  
+  if ($row) {
+  	$fields['nid'] = $row->nid;
+  	$fields['vid'] = $row->vid;
+  	
+  	return $fields;
+  }
+
+	return 0;
+}
+
+/*
+ *  biblio_oai_xc_getRevision - 
+ */
+function biblio_oai_xc_getRevision($field) 
+{
+	$sql = "SELECT nid, vid FROM biblio_contributor where nid = '".$field."'";
 
   $result = db_query($sql);
 	
@@ -664,6 +1234,104 @@ function biblio_oai_xc_gettypeid($type)
 		return $row->tid;
 	}
 	return;
+}
+
+/*
+ *  biblio_oai_xc_parseData_Marc21 - 
+ */
+function biblio_oai_xc_parseData_Marc21($xmlstr)
+{
+	
+	
+	
+	return $data;
+}
+
+/*
+ *  biblio_oai_xc_parseData_Mods - parse a MODS format input data, output in a biblio data array
+ *  strdoc is xml as string.  flag true = array output, false = object output
+ */
+function biblio_oai_xc_parseData_Mods($strdoc, $flag = true)
+{
+	$flagMakeArray = $flag;
+	$flagMakeObject = ($flag ? false : true);  // if not array
+	
+  // MODS DATA PARSER parse data
+  
+  // peel data from input
+  // put into variables,
+  // make an array or object of the data,
+  // return blob of data in ordered fashion
+
+  //logmsg('record: ' . $strdoc, 'STRDOC');
+
+  $strxml = str_replace('mods:', '', $strdoc);
+
+  $xml = simplexml_load_string($strxml);
+
+  //logmsg('title:' . $xml->titleInfo->title, 'XMLSTR');
+  $data['title'] = $xml->titleInfo->title;
+  
+  //logmsg('url:' . $xml->identifier, 'XMLSTR');
+  $biblio_url = $xml->identifier;
+  
+  foreach ($xml->subject as $subject) {
+  	$subjects .= $subject->topic . ',';
+  }
+
+  $subjects = rtrim($subjects, ',');
+  //logmsg('subjects:' . $subjects, 'XMLSTR');
+	
+	$biblio_isbn = '';
+	$biblio_issn = '';
+
+  $node['biblio_url']             = $biblio_url;
+  $node['biblio_isbn']            = $biblio_isbn;
+  $node['biblio_issn']            = $biblio_issn;
+  $node['title']                  = '';
+  $node['biblio_place_published'] = '';
+	$node['biblio_place_published'] = '';
+	$node['biblio_publisher']       = '';
+  $node['biblio_year']            = 9999;
+  $node['biblio_date']            = '';
+  $node['biblio_lang']            = '';
+  $node['biblio_contributors']    = array();
+  $node['biblio_keywords']        = array();
+  $node['biblio_call_number']     = '';
+  $node['biblio_type']            = 100;
+  $node['biblio_secondary_title'] = '';
+  $node['biblio_volume']          = '';
+  $node['biblio_issue']           = '';
+  $node['biblio_volume']          = '';
+  $node['biblio_section']         = '';
+  $node['biblio_pages']           = '';
+  $node['biblio_year']            = '';
+  $node['biblio_md5']             = '';
+  $node['nid']                    = '';
+  $node['revision']               = '';
+
+  // create an array of the data
+  if ($flagMakeArray) {
+	  $data = $node;
+	}
+
+  // create an object of the data
+  if ($flagMakeObject) {
+  	$data = convertArrayToObject($node);
+  }
+	
+	return $data;
+}
+
+/*
+ *  biblio_oai_xc_parseData_DublinCore - 
+ */
+function biblio_oai_xc_parseData_DublinCore($xmlstr)
+{
+	
+	
+	
+	return $data;
 }
 
 // ****************************************
