@@ -670,7 +670,8 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
     	//    which is where we have our trouble
     	
     	logmsg('UPDATE nidA:[' . $node['nid'] . '] url:' . $biblio_url, 'MODS Record UPDATE');
-    	my_biblio_save_node($node);
+    	//my_biblio_save_node($node);
+    	biblio_save_node($node);
     }
   }
 
