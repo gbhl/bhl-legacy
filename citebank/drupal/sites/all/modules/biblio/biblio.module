@@ -1551,12 +1551,14 @@ function biblio_update($node) {
   require_once(drupal_get_path('module', 'biblio') .'/biblio.keywords.inc');
   _biblio_prepare_submit($node);
   // Update the node in the database:
-  if ($node->revision) {
-    drupal_write_record('biblio', $node);
-  }
-  else {
+  
+  // cut the insert, updateing should not insert!
+  //if ($node->revision) {
+  //  drupal_write_record('biblio', $node);
+  //}
+  //else {
     drupal_write_record('biblio', $node, 'vid');
-  }
+  //}
 
   biblio_update_contributors($node);
   biblio_update_keywords($node);
