@@ -1,0 +1,177 @@
+#!/bin/bash
+
+START_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
+PUID=`date +%s`
+WORK_DIR="grabby#.${PUID}"
+SPLITS="6"
+
+DEST_DIR="/root/mnt/glusterfs/www"
+DEST_USER="www-data"
+DEST_GROUP="www-data"
+
+LOG_DIR="/var/log/grabbyd"
+VERSION="2.3"
+
+if [ ! -d ${LOG_DIR} ]; then 
+	mkdir ${LOG_DIR}
+fi
+
+echo "[`date "+%H:%M:%S"`] grabbyd ${VERSION} started (${PUID})"
+
+
+cd /tmp
+mkdir ${WORK_DIR} 
+cd ${WORK_DIR}
+
+echo "[`date "+%H:%M:%S"`] Checking out latest version of iaidentifiers"
+#.txtgrabbyd ${VERSION} started (${PUID})"
+
+#svn checkout http://bhl-bits.googlecode.com/svn/trunk/iaidentifiers/ . > /dev/null
+
+if [ -d priorlists ]; then 
+	rm -rf priorlists
+fi
+
+# here do the diff of the current iaidentifiers and the PREV version instead of next line
+# hardcode this var for now, later list of diffs will be smaller
+
+#csplit iaidentifiers.txt 10000 {${SPLITS}} > /dev/null
+
+#DNLD_LIST="xx00"
+DNLD_LIST="/root/test_list"
+
+sum=0; num=1; full=`cat ${DNLD_LIST} | wc -l` 
+
+echo "[`date "+%H:%M:%S"`] File ${DNLD_LIST} lists ${full} records to be downloaded"
+#echo "[${START_TIME}] Download of ${DNLD_LIST} starting"
+echo "[`date "+%H:%M:%S"`] Download of ${DNLD_LIST} starting"
+
+
+########################################
+# Start the loop
+########################################
+cat ${DNLD_LIST} | while read BOOK_ID
+do
+sum=$(($sum + $num))
+
+
+
+        DEST_LETTER=`echo ${BOOK_ID}|nawk '{print substr($NAME,1,1)}'`
+        #echo " [ $sum/$BASE_NUM ] Copying $NAME into $DEST_DIR/$DEST_LETTER ... " >>$0.$PUID 2>&1
+        #echo " [ $sum/$BASE_NUM ] Copying $NAME into $DEST_DIR/$DEST_LETTER ... "
+	
+	echo "[`date "+%H:%M:%S"`] Changing to ${DEST_DIR}/${DEST_LETTER}"
+
+	if [ ! -d ${DEST_DIR}/${DEST_LETTER} ]; then
+		mkdir -p ${DEST_DIR}/${DEST_LETTER}
+	fi
+
+	cd ${DEST_DIR}/${DEST_LETTER}
+
+	
+	echo "[`date "+%H:%M:%S"`] Downloading ${num}/${full} ${BOOK_ID}"
+
+sum=$(($sum + 1))
+done
+	exit 0
+
+#wget --user-agent="Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.2; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)" --tries=20 --span-hosts --recursive --level=1 --continue --no-parent --no-host-directories --reject index.html --cut-dirs=2 --execute robots=off http://www.archive.org/download/${BOOK_ID} 
+wget --user-agent="Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.2; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)" --tries=20 --span-hosts --recursive --level=1 --continue --no-parent --no-host-directories --reject html --cut-dirs=2 --execute robots=off http://www.archive.org/download/${BOOK_ID} 
+
+        cp -R $BASE_DIR/$NAME $DEST_DIR/$DEST_LETTER/ >>$0.$PUID 2>&1
+        #mv -f $BASE_DIR/$NAME $DEST_DIR/$DEST_LETTER/ >>$0.$PUID 2>&1
+        #rsync -ave $BASE_DIR/$NAME $DEST_DIR/$DEST_LETTER/ >>$0.$PUID 2>&1
+        chown -R $DEST_USER:$DEST_GROUP $DEST_DIR/$DEST_LETTER/$NAME >>$0.$PUID 2>&1
+        chmod -R 755 $DEST_DIR/$DEST_LETTER/$NAME >>$0.$PUID 2>&1
+
+
+echo; echo "    Generating SHA1 sums..."
+shasum ${BOOK_ID}/* > /tmp/shasums_${BOOK_ID} 
+echo; echo "    Checking SHA1 sums..."; echo 
+shasum -c /tmp/shasums_${BOOK_ID} > /tmp/cksums_${BOOK_ID}
+if [ `grep FAILED /tmp/cksums_${BOOK_ID} | wc -l` -gt '0' ]; then
+	mv ${BOOK_ID} failed
+	mv /tmp/cksums_${BOOK_ID} failed/${BOOK_ID}
+	mv /tmp/shasums_${BOOK_ID} failed/${BOOK_ID}
+else
+	rm /tmp/cksums_${BOOK_ID}
+	rm /tmp/shasums_${BOOK_ID}
+	mv ${BOOK_ID} complete
+fi
+
+########################################
+# End loop, save download list to done
+########################################
+done
+mv ${1} done/${PUID}.${1}
+
+
+exit 0
+
+
+
+
+
+
+
+
+
+
+
+
+########################################
+# Summarize downloads, time, etc
+########################################
+TOTAL_DATA=`du -hc complete failed | tail -n1`
+TOTAL_COMPLETE=`ls complete/ | wc -l`
+TOTAL_FAILED=`ls failed/ | wc -l`
+START_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
+END_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
+START=`date +%s`
+END=`date +%s`
+ELAPSED=`expr $END - $START`
+echo "<h3>grabby progress - completed</h3>" > status
+echo "<ul>" >> status
+echo "<li>Process uid was ${PUID}</li>" >> status
+echo "<li>Started at ${START_TIME}</li>" >> status
+echo "<li>Finished at ${END_TIME}</li>" >> status
+echo "<li>${TOTAL_COMPLETE} books downloaded successfully</li>" >> status
+echo "<li>${TOTAL_FAILED} books failed to download</li>" >> status
+echo "<li>Download took ${ELAPSED} seconds</li>" >> status
+echo "<li>Total data downloaded `du -hc complete/ failed/ | tail -n1`</li>" >> status
+echo "</ul><hr>" >> status
+cp status done/${PUID}.status
+
+exit 0
+
+
+
+############## The following code is from 'sortr.sh' and is to be migrated to take action after the above.
+
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+        echo "Usage: `basename $0` base_dir instance_num"
+        exit 1
+fi
+if [ ! -d ${1} ]; then
+        echo "Fail: directory ${1} not found"
+        exit 1
+fi
+
+BASE_DIR=${1}
+
+
+
+
+BASE_NUM=`ls -l ${1} | wc -l`
+sum=0; num=1
+START_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
+PUID=`date +%s-${2}`
+
+
+echo "" >> $0.$PUID 2>&1
+echo -n " Number of possible errors: " >> $0.$PUID 2>&1
+echo "`grep cannot $0.$PUID | wc -l`" >> $0.$PUID 2>&1
+
+exit 0
