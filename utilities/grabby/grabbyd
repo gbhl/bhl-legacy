@@ -2,10 +2,11 @@
 
 START_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
 PUID=`date +%s`
-WORK_DIR="grabby#.${PUID}"
+WORK_DIR="/tmp/grabby.${PUID}"
 SPLITS="6"
 
-DEST_DIR="/root/mnt/glusterfs/www"
+#DEST_DIR="/root/mnt/glusterfs/www"
+DEST_DIR="/mnt/glusterfs/www"
 DEST_USER="www-data"
 DEST_GROUP="www-data"
 
@@ -24,14 +25,14 @@ chown $DEST_USER:$DEST_GROUP ${WWWFILE}
 
 VERSION="2.3"
 
-set -C
+#set -C
 
 #echo $LOGFILE
 
 echo "[`date "+%H:%M:%S"`] grabbyd ${VERSION} starting (PID $$)"
 echo "[`date "+%H:%M:%S"`] grabbyd ${VERSION} starting (PID $$)" >> $LOGFILE 2>&1
 
-cd /tmp
+#cd /tmp
 mkdir ${WORK_DIR} 
 cd ${WORK_DIR}
 
@@ -52,7 +53,8 @@ fi
 #### svn diff or ?
 
 #DNLD_LIST="xx00"
-DNLD_LIST="/root/test_list"
+#DNLD_LIST="/root/test_list"
+DNLD_LIST="/root/xx00"
 
 sum=0; num=1; full=`cat ${DNLD_LIST} | wc -l` 
 
@@ -93,8 +95,8 @@ sum=$(($sum + $num))
 #wget --user-agent="Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.2; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)" --tries=20 --span-hosts --recursive --level=1 --continue --no-parent --no-host-directories --reject index.html --cut-dirs=2 --execute robots=off http://www.archive.org/download/${BOOK_ID} 
 wget --user-agent="Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.2; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)" --tries=20 --span-hosts --recursive --level=1 --continue --no-parent --no-host-directories --reject html --cut-dirs=2 --execute robots=off http://www.archive.org/download/${BOOK_ID} 
 
-	echo "[`date "+%H:%M:%S"`]	Download completed" 
-	echo "[`date "+%H:%M:%S"`]	Download completed" >> $LOGFILE 2>&1
+	echo "[`date "+%H:%M:%S"`]	File transfer completed" 
+	echo "[`date "+%H:%M:%S"`]	File transfer completed" >> $LOGFILE 2>&1
 
 #wget --user-agent="Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.2; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)" --tries=20 --span-hosts --recursive --level=1 --continue --no-parent --no-host-directories --reject index.html --cut-dirs=2 --execute robots=off http://www.archive.org/download/${BOOK_ID} 
 #wget --user-agent="Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.2; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)" --tries=20 --span-hosts --recursive --level=1 --continue --no-parent --no-host-directories --reject html --cut-dirs=2 --execute robots=off http://www.archive.org/download/${BOOK_ID} 
@@ -142,9 +144,9 @@ else
         chmod -R 755 ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}
 fi
 
-	echo "[`date "+%H:%M:%S"`]	SUMMARY: ${BOOK_ID} (${num}/${full})  Number of files: `ls -1 ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|wc -l`  Size of files: `du -hc ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|tail -n1`"
-	echo "[`date "+%H:%M:%S"`]	SUMMARY: ${BOOK_ID} (${num}/${full})  Number of files: `ls -1 ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|wc -l`  Size of files: `du -hc ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|tail -n1`" >> $LOGFILE 2>&1
-	echo "[`date "+%H:%M:%S"`]	SUMMARY: ${BOOK_ID} (${num}/${full})  Number of files: `ls -1 ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|wc -l`  Size of files: `du -hc ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|tail -n1`" >> $WWWFILE 2>&1
+	echo "[`date "+%H:%M:%S"`]	DOWNLOAD COMPLETED: (${num}/${full})  ${BOOK_ID}  Number of files: `ls -1 ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|wc -l`  Size of files: `du -hc ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|tail -n1`"
+	echo "[`date "+%H:%M:%S"`]	DOWNLOAD COMPLETED: (${num}/${full})  ${BOOK_ID}  Number of files: `ls -1 ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|wc -l`  Size of files: `du -hc ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|tail -n1`" >> $LOGFILE 2>&1
+	echo "[`date "+%H:%M:%S"`]	DOWNLOAD COMPLETED: (${num}/${full})  ${BOOK_ID}  Number of files: `ls -1 ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|wc -l`  Size of files: `du -hc ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}|tail -n1`" >> $WWWFILE 2>&1
 	#echo "[`date "+%H:%M:%S"`]	Full path is ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}"
 	#echo "[`date "+%H:%M:%S"`]	Full path is ${DEST_DIR}/${DEST_LETTER}/${BOOK_ID}" >> $LOGFILE 2>&1
 
@@ -168,6 +170,9 @@ END_TIME=`date "+%H:%M:%S %Y-%m-%d%n"`
 	echo "[`date "+%H:%M:%S"`] Run completed at ${END_TIME}"
 	echo "[`date "+%H:%M:%S"`] Run completed at ${END_TIME}" >> $LOGFILE 2>&1
 	echo "[`date "+%H:%M:%S"`] Run completed at ${END_TIME}" >> $WWWFILE 2>&1
+
+#cd /tmp
+rm -rf ${WORK_DIR} 
 
 	echo "[`date "+%H:%M:%S"`] grabbyd ${VERSION} stopping (PID $$)"
 	echo "[`date "+%H:%M:%S"`] grabbyd ${VERSION} stopping (PID $$)" >> $LOGFILE 2>&1
