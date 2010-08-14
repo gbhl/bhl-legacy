@@ -21,6 +21,9 @@ WWWFILE=$DEST_DIR/status/$DATE.www.log
 mkdir -p $DEST_DIR/status
 touch ${WWWFILE}
 chown $DEST_USER:$DEST_GROUP ${WWWFILE}
+#chown $DEST_USER:$DEST_GROUP ${WWWFILE}
+unlink current > /dev/null
+ln -s current ${WWWFILE}
 #$DEST_DIR/status/$DATE.www.log
 
 VERSION="2.3"
