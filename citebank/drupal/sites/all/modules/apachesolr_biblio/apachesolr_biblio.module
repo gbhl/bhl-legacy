@@ -1,0 +1,267 @@
+<?php
+// $Id: apachesolr_biblio.module,v 1.2 2009/11/07 04:02:13 davidlesieur Exp $
+
+function apachesolr_biblio_menu() {
+  $items = array();
+  $items['admin/settings/biblio/solr'] = array(
+    'title' => 'Solr index',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('apachesolr_biblio_fields_form'),
+    'access arguments' => array('administer biblio'),
+    'file' => 'apachesolr_biblio.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10
+  );
+  return $items;
+}
+
+function apachesolr_biblio_theme() {
+  return array(
+    'apachesolr_biblio_fields_form' => array(
+        'file' => 'apachesolr_biblio.admin.inc',
+        'arguments' => array('form'),
+    ),
+  );
+}
+
+// These are the fields as biblio knows about them
+function apachesolr_biblio_get_raw_fields() {
+  // get all of the field info
+  $fields = array();
+  $result = db_query("SELECT bf.fid, bf.name, bf.type, bftd.title
+                      FROM {biblio_fields} AS bf
+                      INNER JOIN {biblio_field_type} AS bft ON bft.fid = bf.fid
+                      INNER JOIN {biblio_field_type_data} AS bftd ON bftd.ftdid = bft.ftdid
+                      WHERE bft.tid = 0
+                      ORDER BY bft.weight DESC");
+  while ($row = db_fetch_array($result)) {
+    $fields[$row['fid']] = $row;
+  }
+  return $fields;
+}
+
+// These are the fields as apachesolr_biblio knows about them.
+function apachesolr_biblio_get_fields() {
+  // get current settings
+  $result = db_query("SELECT * FROM {apachesolr_biblio_fields}");
+  $fields = array();
+  while ($row = db_fetch_array($result)) {
+    $fields[$row['fid']] = $row;
+  }
+  $fields['contributors'] = variable_get('apachesolr_biblio_index_authors', 1);
+  $fields['biblio_type'] = variable_get('apachesolr_biblio_index_biblio_type', 1);
+  return $fields;
+}
+
+function apachesolr_biblio_apachesolr_update_index(&$document, $node) {
+  // Only do stuff with biblio nodes.
+  if ($node->type != 'biblio') {
+    return;
+  }
+  $fields = apachesolr_biblio_get_fields();
+  foreach ($fields as $fid => $biblio) {
+    if ($biblio['indexed'] && isset($node->{$biblio['name']})) {
+      //$biblio['multiple'] = ($biblio['index_type'] == 'date') ? TRUE : FALSE;
+      $index_key = apachesolr_index_key($biblio);
+      $value = NULL;
+      if ($value = apachesolr_biblio_format_value($node->{$biblio['name']}, $biblio['index_type'], $biblio['multiple'])) {
+        if (is_array($value)) {
+          foreach($value as $v) {
+            $document->setMultiValue($index_key, $v);
+          }
+        }
+        else {
+          $document->$index_key = apachesolr_clean_text($value);
+        }
+      }
+    }
+  }
+  // Handle authors.
+  if (variable_get('apachesolr_biblio_index_authors', 1)) {
+    $value = array();
+    foreach ($node->biblio_contributors as $keys) {
+      foreach ($keys as $key) {
+        if (isset($key['name'])) {
+          $document->setMultiValue('sm_biblio_contributors', apachesolr_clean_text($key['name']));
+        }
+      }
+    }
+  }
+  // Handle publication types.
+  if (variable_get('apachesolr_biblio_index_biblio_type', 1)) {
+    $document->setField(apachesolr_biblio_type_key(), apachesolr_clean_text(apachesolr_biblio_type_name($node->biblio_type)));
+  }
+}
+
+function apachesolr_biblio_format_value($value, $format, $multiple) 
+{
+  switch ($format) 
+  {
+    case 'string':
+    	// if multiple strings make it an array
+      switch ($multiple) 
+      {
+      	case true:
+      		$values = array();
+      		$values[] = $value;  // FIXME: do more here? probably  
+      		$ret = $values;
+      		break;
+      	case false:
+		      // Do nothing
+		      $ret = $value;
+		      break;
+    	}
+
+    case 'date':
+      // Dates have lots of special cases.
+      // First, there are four identified formats that have to be taken care of.
+      // 1999           represents 12 months in the year
+      // 1999 Mar
+      // 1999 Mar 6
+      // 1999 Mar-Jun   represents a range of months
+      $values = array();
+      $parts = split(' ', $value);
+      $months = array('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
+      $range = split('-', $parts[1]);
+      if (count($parts) == 1) {
+        foreach ($months as $m) {
+          $values[] = date('Y-m-d\TH:i:s\Z', strtotime("$m $value"));
+        }
+      }
+      elseif (count($range) > 1) {
+        $startpos = array_search(strtolower($range[0]), $months);
+        $endpos = array_search(strtolower($range[1]), $months);
+        foreach (array_slice($months, $startpos, $endpos - $startpos + 1) as $m) {
+          if (count($parts) == 2) {
+            $value = "$m {$parts[0]}";
+          }
+          $values[] = date('Y-m-d\TH:i:s\Z', strtotime($value));
+        }
+      }
+      else {
+        if (count($parts) == 2) {
+          $value = "{$parts[1]} {$parts[0]}";
+        }
+        elseif (count($parts) == 3) {
+          $value = "{$parts[1]} {$parts[2]}, {$parts[0]}";
+        }
+        $values[] = date('Y-m-d\TH:i:s\Z', strtotime($value));
+      }
+      $ret = $values;
+      break;
+  }
+  
+  return $ret;
+}
+
+/**
+ * Return the name of the specified biblio type.
+ */
+function apachesolr_biblio_type_name($biblio_type) {
+  return db_result(db_query('SELECT name FROM {biblio_types} WHERE tid = %d', $biblio_type));
+}
+
+/**
+ * Return the index name for biblio types.
+ */
+function apachesolr_biblio_type_key() {
+  return apachesolr_index_key(
+    array(
+      'name' => 'biblio_type',
+      'multiple' => FALSE,
+      'index_type' => 'string',
+    )
+  );
+}
+
+/**
+ * Implementation of hook_apachesolr_facets().
+ *
+ * Returns an array keyed by block delta.
+ */
+function apachesolr_biblio_apachesolr_facets() {
+  // Static caching because every biblio facet block can
+  // potentially call this function.
+  static $facets = array();
+  if (empty($facets)) {
+    $fields = apachesolr_biblio_get_fields();
+    foreach ($fields as $fid => $biblio) {
+      if ($biblio['indexed']) {
+        $key = apachesolr_index_key($biblio);
+        $title = db_result(db_query("SELECT title FROM {biblio_field_type_data} WHERE ftdid = %d", $fid));
+        $facets[$key] = array(
+          'info' => t('Biblio: Filter by !title', array('!title' => $title)),
+          'name' => $title,
+          'facet_field' => $key,
+          'content types' => array('biblio'),
+        );
+      }
+    }
+    // Contributors are a special case.
+    $facets['sm_biblio_contributors'] = array(
+      'info' => t('Biblio: Filter by Citation Contributor'),
+      'name' => 'Citation Contributor',
+      'facet_field' => 'sm_biblio_contributors',
+      'content types' => array('biblio'),
+    );
+    // Publication types.
+    $key = apachesolr_biblio_type_key();
+    $facets[$key] = array(
+      'info' => t('Biblio: Filter by Publication Type'),
+      'name' => t('Publication Type'),
+      'facet_field' => $key,
+      'content types' => array('biblio'),
+    );
+  }
+  return $facets;
+}
+
+/**
+ * Implementation of hook_block().
+ */
+function apachesolr_biblio_block($op = 'list', $delta = 0, $edit = array()) {
+  $module = 'apachesolr_biblio';
+  switch ($op) {
+    case 'list':
+      $enabled_facets = apachesolr_get_enabled_facets($module);
+      $facets = apachesolr_biblio_apachesolr_facets();
+      // Add the blocks
+      $blocks = array();
+      foreach ($enabled_facets as $delta => $facet_field) {
+        if (isset($facets[$delta])) {
+          $blocks[$delta] = $facets[$delta] + array('cache' => BLOCK_CACHE_PER_PAGE,);
+        }
+      }
+      return $blocks;
+
+    case 'view':
+      if (apachesolr_has_searched()) {
+        // Get the query and response. Without these no blocks make sense.
+        $response = apachesolr_static_response_cache();
+        if (empty($response)) {
+          return;
+        }
+
+        $facets = apachesolr_get_enabled_facets($module);
+        if (empty($facets[$delta])) {
+          return;
+        }
+
+        $query = apachesolr_current_query();
+        if (!apachesolr_block_visibility($query, 'alzsearch', $delta)) {
+          return;
+        }
+
+        $facets = apachesolr_biblio_apachesolr_facets();
+        return apachesolr_facet_block($response, $query, $module, $delta, $delta, t('Filter by !field', array('!field' => $facets[$delta]['name'])));
+      }
+      break;
+
+    case 'configure':
+      return apachesolr_facetcount_form($module, $delta);
+
+    case 'save':
+      apachesolr_facetcount_save($edit);
+      break;
+  }
+}

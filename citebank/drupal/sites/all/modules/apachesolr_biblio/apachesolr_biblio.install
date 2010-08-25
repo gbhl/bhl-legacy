@@ -1,0 +1,52 @@
+<?php
+// $Id: apachesolr_biblio.install,v 1.1 2009/09/23 12:18:20 robertDouglass Exp $
+
+function apachesolr_biblio_schema() {
+  $schema = array();
+  $schema['apachesolr_biblio_fields'] = array (
+    'fields' => array (
+      'fid' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+        'default' => 0,
+        'description' =>'{biblio_fields}.fid of the field.',
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '128',
+        'not null' => TRUE,
+        'default' => ''
+      ),
+      'index_type' => array(
+        'type' => 'char',
+        'length' => '10',
+        'not null' => TRUE,
+        'default' => 'string',
+        'description' => 'The field type for schema.xml in the Solr index.'
+      ),
+      'indexed' => array (
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Whether this field should be indexed.',
+      ),
+      'multiple' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Is the data multiple, such as list of keywords?  1 = multiple.'
+      ),
+    ),
+    'primary key' => array('fid'),
+  );
+  return $schema;
+}
+
+function apachesolr_biblio_install() {
+  drupal_install_schema('apachesolr_biblio');
+}
+
+function apachesolr_biblio_uninstall() {
+  drupal_uninstall_schema('apachesolr_biblio');
+}
