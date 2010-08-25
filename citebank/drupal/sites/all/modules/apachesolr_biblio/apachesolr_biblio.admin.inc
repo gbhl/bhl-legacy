@@ -2,7 +2,6 @@
 //$Id: apachesolr_biblio.admin.inc,v 1.2 2009/11/07 04:02:13 davidlesieur Exp $
 function apachesolr_biblio_fields_form($form_state) {
   $defaults = apachesolr_biblio_get_fields();
-  watchdog('apsb_fields', print_r($defaults, true), NULL, WATCHDOG_INFO, NULL);
   $form['contributors'] = array(
     '#type' => 'checkbox',
     '#title' => t('Contributors'),
@@ -62,10 +61,6 @@ function apachesolr_biblio_fields_form($form_state) {
       '#options' => array('0' => t('Single'), '1' => t('Multiple')),
       '#default_value' => $defaults[$key]['multiple']
     );
-    
-    if ($key == 24) {
-    	watchdog('apsb_fieldsFld', '***' . $key . ' Multiple:['.$defaults[$key]['multiple'].']***', NULL, WATCHDOG_INFO, NULL);
-    }
   }
 
   $form['submit'] = array(
