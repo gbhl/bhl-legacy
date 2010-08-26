@@ -64,6 +64,7 @@ function apachesolr_biblio_apachesolr_update_index(&$document, $node) {
       //$biblio['multiple'] = ($biblio['index_type'] == 'date') ? TRUE : FALSE;
       $index_key = apachesolr_index_key($biblio);
       $value = NULL;
+
       if ($value = apachesolr_biblio_format_value($node->{$biblio['name']}, $biblio['index_type'], $biblio['multiple'])) {
         if (is_array($value)) {
           foreach($value as $v) {
@@ -111,6 +112,7 @@ function apachesolr_biblio_format_value($value, $format, $multiple)
 		      $ret = $value;
 		      break;
     	}
+    	break;
 
     case 'date':
       // Dates have lots of special cases.
