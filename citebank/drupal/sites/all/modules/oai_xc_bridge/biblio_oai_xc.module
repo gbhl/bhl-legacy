@@ -13,7 +13,7 @@
  */
 function logmsg($msg, $type = 'biblio oai xc')
 {
-	log_info($type, $msg);
+	;//log_info($type, $msg);
 }
 
 /*
@@ -259,6 +259,49 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
 
   return;
 }
+
+/*
+-Publication Type
+-Date Published
+-Year of Publication
+-Journal Title
+-Authors & Secondary Authors
+-Publisher
+-Keywords
+-Edition
+
+
+Publication Type
+	biblio_type      '/x:mods/x:genre'
+		book    100
+		series  100 (book)
+		article 102 
+		default 100 (book)
+
+Date Published
+
+Year of Publication
+	biblio_year
+	biblio_date
+	
+Journal Title
+	
+
+Authors
+	biblio_contributors
+	
+Secondary Authors
+
+Publisher
+	biblio_publisher
+	
+Keywords           /x:mods/x:subject
+	biblio_keywords
+	
+Edition
+	biblio_edition
+
+*/
 
 /*
  *	biblio_oai_xc_oaiharvester_process_record_mods - Harvest records that use the mods metadata format
