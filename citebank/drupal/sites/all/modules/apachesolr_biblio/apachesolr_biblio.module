@@ -58,17 +58,20 @@ function apachesolr_biblio_apachesolr_update_index(&$document, $node) {
   if ($node->type != 'biblio') {
     return;
   }
+  
   $fields = apachesolr_biblio_get_fields();
+  
   foreach ($fields as $fid => $biblio) {
     if ($biblio['indexed'] && isset($node->{$biblio['name']})) {
-      //$biblio['multiple'] = ($biblio['index_type'] == 'date') ? TRUE : FALSE;
+
       $index_key = apachesolr_index_key($biblio);
       $value = NULL;
 
       if ($value = apachesolr_biblio_format_value($node->{$biblio['name']}, $biblio['index_type'], $biblio['multiple'])) {
         if (is_array($value)) {
+        	// we need a single element put into $document->setMultiValue
           foreach($value as $v) {
-            $document->setMultiValue($index_key, $v);
+            	$document->setMultiValue($index_key, $v);
           }
         }
         else {
@@ -77,9 +80,9 @@ function apachesolr_biblio_apachesolr_update_index(&$document, $node) {
       }
     }
   }
+  
   // Handle authors.
   if (variable_get('apachesolr_biblio_index_authors', 1)) {
-    $value = array();
     foreach ($node->biblio_contributors as $keys) {
       foreach ($keys as $key) {
         if (isset($key['name'])) {
@@ -88,6 +91,7 @@ function apachesolr_biblio_apachesolr_update_index(&$document, $node) {
       }
     }
   }
+  
   // Handle publication types.
   if (variable_get('apachesolr_biblio_index_biblio_type', 1)) {
     $document->setField(apachesolr_biblio_type_key(), apachesolr_clean_text(apachesolr_biblio_type_name($node->biblio_type)));
@@ -103,10 +107,15 @@ function apachesolr_biblio_format_value($value, $format, $multiple)
       switch ($multiple) 
       {
       	case true:
-      		$values = array();
-      		$values[] = $value;  // FIXME: do more here? probably  
-      		$ret = $values;
+      		if (is_array($value)) {
+      			$ret = $value;
+      		} else {
+	      		$values = array();
+	      		$values[] = $value;  // FIXME: do more here? probably  
+	      		$ret = $values;
+      		}
       		break;
+      		
       	case false:
 		      // Do nothing
 		      $ret = $value;
@@ -122,13 +131,31 @@ function apachesolr_biblio_format_value($value, $format, $multiple)
       // 1999 Mar 6
       // 1999 Mar-Jun   represents a range of months
       $values = array();
-      $parts = split(' ', $value);
+      $parts = explode(' ', $value);
       $months = array('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
-      $range = split('-', $parts[1]);
+      $range = explode('-', $parts[1]);
+      
+      // we need to decide something basic here, does '1999' REALLY mean 12 months in the year?
+      // well, let us have the configuration decide, if single, it means just that the year, 
+      // if multiple, then, okay, go ahead with this bizarre assumption and generate 12 months.
       if (count($parts) == 1) {
-        foreach ($months as $m) {
-          $values[] = date('Y-m-d\TH:i:s\Z', strtotime("$m $value"));
-        }
+	    	// if multiple 
+	      switch ($multiple) 
+	      {
+	      	case true:  // make multiple dates
+			      // 1999           represents 12 months in the year
+		        // I don't agree with this being what we want, so commenting it out
+		        //foreach ($months as $m) {
+		        //  $values[] = date('Y-m-d\TH:i:s\Z', strtotime("$m $value"));
+		        //}
+			      $values[] = date('Y-m-d\TH:i:s\Z', strtotime($value));
+		        $ret = $values;
+		        break;
+
+	      	case false:  // make just one single date
+			      $ret = date('Y-m-d\TH:i:s\Z', strtotime($value));
+			      break;
+	    	}
       }
       elseif (count($range) > 1) {
         $startpos = array_search(strtolower($range[0]), $months);
@@ -139,6 +166,7 @@ function apachesolr_biblio_format_value($value, $format, $multiple)
           }
           $values[] = date('Y-m-d\TH:i:s\Z', strtotime($value));
         }
+        $ret = $values;
       }
       else {
         if (count($parts) == 2) {
@@ -148,8 +176,8 @@ function apachesolr_biblio_format_value($value, $format, $multiple)
           $value = "{$parts[1]} {$parts[2]}, {$parts[0]}";
         }
         $values[] = date('Y-m-d\TH:i:s\Z', strtotime($value));
+        $ret = $values;
       }
-      $ret = $values;
       break;
   }
   
