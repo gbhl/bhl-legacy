@@ -7,6 +7,11 @@
 
 // modified DLH 2010/07/26 for compatibility for OAI bridge to work with 6.x-1-x version of the Biblio module.
 
+// Publication Types
+if (!defined(PUBLICATION_TYPE_BOOK)) {
+	define('PUBLICATION_TYPE_BOOK', 100);
+	define('PUBLICATION_TYPE_ARTICLE', 102);
+}
 
 /*
  *  logmsg - write to logs
@@ -308,6 +313,21 @@ Edition
  */
 function biblio_oai_xc_oaiharvester_process_record_mods($record)
 {
+/*
+	list of important data fields (conceptual name)
+
+	// BIBLIO_FIELD_TOPIC: Publication Type
+	// BIBLIO_FIELD_TOPIC: Date Published
+	// BIBLIO_FIELD_TOPIC: Year of Publication
+	// BIBLIO_FIELD_TOPIC: Journal Title
+	// BIBLIO_FIELD_TOPIC: Authors
+	// BIBLIO_FIELD_TOPIC: Secondary Authors
+	// BIBLIO_FIELD_TOPIC: Publisher
+	// BIBLIO_FIELD_TOPIC: Keywords
+	// BIBLIO_FIELD_TOPIC: Edition
+
+*/
+
 	$updateFlag = false;  // are we an insert or update?  if true then is an update
 	
   $raw = $record['metadata']['childNode'];
@@ -338,6 +358,9 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 //  
 //  // create a new function, hand it the xml string, parse the data, put into an array: biblio['title'] = $xml->titleInfo->title;  ...etc
 
+	// BIBLIO_FIELD: url
+	// BIBLIO_FIELD: isbn
+	// BIBLIO_FIELD: issn
   // Read any identifiers for the item
   $identifiers = $xpath->query('/x:mods/x:identifier');
 
@@ -388,6 +411,8 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   // Get the title information
   $titleInfoList = $xpath->query('/x:mods/x:titleInfo');
   
+	// BIBLIO_FIELD_TOPIC: Journal Title
+	// BIBLIO_FIELD: title
   foreach ($titleInfoList as $titleInfo) {
 		// Only use titles that apply to MARC 245a/b/n/p by ignoring any with the 'type' attribute
 
@@ -413,6 +438,9 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 		}
   }
   
+	// BIBLIO_FIELD_TOPIC: Publisher
+	// BIBLIO_FIELD: place_published
+	// BIBLIO_FIELD: publisher
   // Get the publishing information
   $originInfo = $xpath->query('/x:mods/x:originInfo');
 
@@ -435,7 +463,11 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   // Get the date information
   $node['biblio_year'] = 9999;
   $node['biblio_date'] = '';
-  
+
+	// BIBLIO_FIELD_TOPIC: Date Published
+	// BIBLIO_FIELD_TOPIC: Year of Publication
+	// BIBLIO_FIELD: year
+	// BIBLIO_FIELD: date
   $dates = $xpath->query('/x:mods/x:originInfo/x:dateIssued');
 
   if ($dates->length > 0) {
@@ -458,6 +490,7 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 		}
   }
   
+	// BIBLIO_FIELD: lang
   // Get the language
   $languageElement = $xpath->query('/x:mods/x:language');
 
@@ -469,6 +502,9 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 		}
 	}  
 
+	// BIBLIO_FIELD_TOPIC: Authors
+	// BIBLIO_FIELD_TOPIC: Secondary Authors
+	// BIBLIO_FIELD: contributors, authors
   // Get the authors
   $node['biblio_contributors'] = array();
   $names = $xpath->query('/x:mods/x:name');
@@ -534,6 +570,8 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
     $node['biblio_contributors'][1][] = array('name' => $authorName, 'auth_type' => $auth_type);
   }  
   
+	// BIBLIO_FIELD_TOPIC: Keywords
+	// BIBLIO_FIELD: keywords
   // Get the subjects (keywords)
   $node['biblio_keywords'] = array();
   $subjects = $xpath->query('/x:mods/x:subject');
@@ -558,6 +596,7 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 		}
   }  
   
+	// BIBLIO_FIELD: call_number (classification)
   // Look for a call number in the item's classification entries
   $classifications = $xpath->query('/x:mods/x:classification');
 
@@ -572,6 +611,8 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 		}
   }  
   
+	// BIBLIO_FIELD_TOPIC: Publication Type
+	// BIBLIO_FIELD: type (book, article)
   // Identify the type of item
   $genres = $xpath->query('/x:mods/x:genre');
 
@@ -580,33 +621,41 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 		switch ($genres->item(0)->nodeValue)
 		{
 			case 'book':
-				$node['biblio_type'] = 100;	// book
+				$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// book
 				break;
 
 			case 'series':
-				$node['biblio_type'] = 100;	// book
+				$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// book
 				break;
 
 			case 'article':
-				$node['biblio_type'] = 102;	// journal article
+				$node['biblio_type'] = PUBLICATION_TYPE_ARTICLE;	// journal article
 				break;
 
 			default:
-				$node['biblio_type'] = 100;	// book
+				$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// book
 				break;
 		}  
   }
 
   if (empty($node['biblio_type'])) {
-  	$node['biblio_type'] = 100;	// No matches in the feed, so default to "Book"
+  	$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// No matches in the feed, so default to "Book"
   }
   
+	// BIBLIO_FIELD_TOPIC: Journal Title
+	// articles
+	// BIBLIO_FIELD: secondary_title
+	// BIBLIO_FIELD: volume
+	// BIBLIO_FIELD: issue
+	// BIBLIO_FIELD: section
+	// BIBLIO_FIELD: pages
+	// BIBLIO_FIELD: year
   // Check for page and volume information for journals
   $relatedItems = $xpath->query('/x:mods/x:relatedItem');
 
   foreach ($relatedItems as $relatedItem) {
 
-		if ($relatedItem->getAttribute('type') == 'host' && $node['biblio_type'] == 102) {
+		if ($relatedItem->getAttribute('type') == 'host' && $node['biblio_type'] == PUBLICATION_TYPE_ARTICLE) {
 			// Get journal title
 			$journalTitleInfo = $relatedItem->getElementsByTagName('titleInfo');
 
@@ -660,6 +709,37 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 			}
 		}
   }
+
+	// BIBLIO_FIELD_TOPIC: Edition
+	// BIBLIO_FIELD: Edition:  originInfo   edition
+  $bookEditionItems = $xpath->query('/x:mods/x:originInfo');
+  $articleEditionItems = $xpath->query('/x:mods/x:classificationType');
+  
+	// look for book or article edition (article may be on a different branch, a second originInfo)
+  switch($node['biblio_type']) 
+  {
+  	case PUBLICATION_TYPE_BOOK:
+  	default:
+  		$editionItems = $bookEditionItems;
+  		break;
+
+  	case PUBLICATION_TYPE_ARTICLE:
+  		$editionItems = $articleEditionItems;
+  		break;
+  }
+
+	$editionInfo = '';
+	$node['biblio_edition'] = '';
+	
+	// extract the edition info
+	if (count($editionItems > 0)) {
+		foreach ($editionItems as $editionItem) {
+			$editionInfo = $editionItem->getElementsByTagName('edition')->item(0)->nodeValue;
+			break;
+		}
+	}
+	
+	$node['biblio_edition'] = $editionInfo;
   
   // Generate an md5 hash and save the item
   if (!empty($biblio_url)) {
