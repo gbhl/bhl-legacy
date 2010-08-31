@@ -11,6 +11,7 @@
 if (!defined(PUBLICATION_TYPE_BOOK)) {
 	define('PUBLICATION_TYPE_BOOK', 100);
 	define('PUBLICATION_TYPE_ARTICLE', 102);
+	define('PUBLICATION_TYPE_JOURNAL', 1000);
 }
 
 /*
@@ -612,13 +613,13 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   }  
   
 	// BIBLIO_FIELD_TOPIC: Publication Type
-	// BIBLIO_FIELD: type (book, article)
+	// BIBLIO_FIELD: type (book, article, journal)
   // Identify the type of item
   $genres = $xpath->query('/x:mods/x:genre');
 
   if ($genres->length > 0) {
 
-		switch ($genres->item(0)->nodeValue)
+		switch (strtolower($genres->item(0)->nodeValue))
 		{
 			case 'book':
 				$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// book
@@ -629,7 +630,11 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 				break;
 
 			case 'article':
-				$node['biblio_type'] = PUBLICATION_TYPE_ARTICLE;	// journal article
+				$node['biblio_type'] = PUBLICATION_TYPE_ARTICLE;	// article
+				break;
+
+			case 'journal':
+				$node['biblio_type'] = PUBLICATION_TYPE_JOURNAL;	// journal
 				break;
 
 			default:
