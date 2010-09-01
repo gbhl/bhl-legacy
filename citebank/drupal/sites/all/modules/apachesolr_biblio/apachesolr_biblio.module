@@ -175,7 +175,7 @@ function apachesolr_biblio_format_value($value, $format = 'string', $multiple = 
       
       // we need to decide something basic here, does '1999' REALLY mean 12 months in the year?
       // well, let us have the configuration decide, if single, it means just that the year, 
-      // if multiple, then, okay, go ahead with this bizarre assumption and generate 12 months.
+      // if multiple, then, okay, go ahead with this bizarre assumption and generate 12 months. Or actually, not.
       if (count($parts) == 1) {
 	    	// if multiple 
 	      switch ($multiple) 
