@@ -1,6 +1,21 @@
 <?php
 // $Id: apachesolr_biblio.module,v 1.2 2009/11/07 04:02:13 davidlesieur Exp $
 
+/**
+ * @file
+ * Bridge between Biblio data to Solr indexing.
+ *
+ * Takes biblio data and preps it for solr indexing.
+ * based on version: apachesolr_biblio.module,v 1.2 2009/11/07 04:02:13 davidlesieur
+ * 
+ * 
+ * It likely may need further work.
+ *
+ */
+
+/**
+ * Implementation of the menu.
+ */
 function apachesolr_biblio_menu() {
   $items = array();
   $items['admin/settings/biblio/solr'] = array(
@@ -15,6 +30,9 @@ function apachesolr_biblio_menu() {
   return $items;
 }
 
+/**
+ * Implementation of the theme.
+ */
 function apachesolr_biblio_theme() {
   return array(
     'apachesolr_biblio_fields_form' => array(
@@ -24,7 +42,9 @@ function apachesolr_biblio_theme() {
   );
 }
 
-// These are the fields as biblio knows about them
+/**
+ * These are the fields as biblio knows about them.
+ */
 function apachesolr_biblio_get_raw_fields() {
   // get all of the field info
   $fields = array();
@@ -40,7 +60,9 @@ function apachesolr_biblio_get_raw_fields() {
   return $fields;
 }
 
-// These are the fields as apachesolr_biblio knows about them.
+/**
+ * These are the fields as apachesolr_biblio knows about them.
+ */
 function apachesolr_biblio_get_fields() {
   // get current settings
   $result = db_query("SELECT * FROM {apachesolr_biblio_fields}");
@@ -53,6 +75,9 @@ function apachesolr_biblio_get_fields() {
   return $fields;
 }
 
+/**
+ * Handles processing the indexing prep.
+ */
 function apachesolr_biblio_apachesolr_update_index(&$document, $node) {
   // Only do stuff with biblio nodes.
   if ($node->type != 'biblio') {
@@ -98,7 +123,11 @@ function apachesolr_biblio_apachesolr_update_index(&$document, $node) {
   }
 }
 
-function apachesolr_biblio_format_value($value, $format, $multiple) 
+// NOTE: TODO: explore further expanding the handling of dates.
+/**
+ * Possibly converts data if needed, dates put in format for solr, etc.
+ */
+function apachesolr_biblio_format_value($value, $format = 'string', $multiple = false) 
 {
   switch ($format) 
   {
@@ -111,7 +140,7 @@ function apachesolr_biblio_format_value($value, $format, $multiple)
       			$ret = $value;
       		} else {
 	      		$values = array();
-	      		$values[] = $value;  // FIXME: do more here? probably  
+	      		$values[] = $value;
 	      		$ret = $values;
       		}
       		break;
@@ -124,12 +153,21 @@ function apachesolr_biblio_format_value($value, $format, $multiple)
     	break;
 
     case 'date':
+      // previous code comments:
       // Dates have lots of special cases.
       // First, there are four identified formats that have to be taken care of.
       // 1999           represents 12 months in the year
       // 1999 Mar
       // 1999 Mar 6
       // 1999 Mar-Jun   represents a range of months
+      // **********************
+      
+      // DLH
+      // what about these? (2000 - 2005, MDCCLXXIII., [1887-1924], 1902-1991., 1908., [1903], [1911?-)
+      // if your data is like these, then set datatype to string in your configuration instead of date?
+      // I think this could go many ways, not all of which are explored here.
+      // Solr, will need, ds_* and dm_* (date single, date multiple) as some sort of full date format it seems.
+      
       $values = array();
       $parts = explode(' ', $value);
       $months = array('jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
@@ -148,12 +186,25 @@ function apachesolr_biblio_format_value($value, $format, $multiple)
 		        //foreach ($months as $m) {
 		        //  $values[] = date('Y-m-d\TH:i:s\Z', strtotime("$m $value"));
 		        //}
-			      $values[] = date('Y-m-d\TH:i:s\Z', strtotime($value));
+			      //$values[] = date('Y-m-d\TH:i:s\Z', strtotime($value));
+			      if (strlen($value) == 4) {
+			      	$values[] = $value . '-01-01T00:00:00Z';  // the raw year, 1999 for example plus standard date format
+			      } else {
+			      	if (is_numeric($value)) {
+				      	$values[] = date('Y-m-d\TH:i:s\Z', strtotime($value));
+			      	} else {
+				      	$values[] = $value . '-01-01T00:00:00Z';
+			      	}
+			      }
 		        $ret = $values;
 		        break;
 
 	      	case false:  // make just one single date
-			      $ret = date('Y-m-d\TH:i:s\Z', strtotime($value));
+	      		if (strlen($value) == 4) {
+	      			$ret = $value . '-01-01T00:00:00Z';  // the raw year, 1999 for example, don't make a full current date out of it
+	      		} else {
+			      	$ret = date('Y-m-d\TH:i:s\Z', strtotime($value));
+			      }
 			      break;
 	    	}
       }
