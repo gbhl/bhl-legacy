@@ -1,5 +1,5 @@
 <?php
-//$Id: biblio.contributors.inc,v 1.1.2.33.2.3 2010/01/21 22:14:19 rjerome Exp $
+//$Id: biblio.contributors.inc,v 1.1.2.35 2010/06/23 02:21:30 rjerome Exp $
 /**
  * @param $aid
  * @return unknown_type
@@ -68,6 +68,7 @@ function biblio_authors_add_etal (&$authors, $type) {
  */
 function biblio_parse_contributors($contributors) {
   $result = array();
+  if (!count($contributors)) return;
   foreach ($contributors as $cat => $authors) {
     $etal = array();
     foreach ($authors as $author) {
@@ -174,8 +175,17 @@ function biblio_update_contributor(&$author) {
  * @return success of database operations
  */
 function _save_contributors(&$contributors, $nid, $vid, $update = FALSE) {
+	// DLH bugfix
+	// a bit of defensive programming here, make sure you have some data to work with!
+	// if contributors is not an array, fail out
+  if (!is_array($contributors) {
+		// what do we do when contributors is NOT an array?
+		return false;
+	}
+
   $md5 = _loadMD5();
   db_query('DELETE FROM {biblio_contributor} WHERE nid = %d AND vid = %d', array($nid, $vid));
+
   foreach ($contributors as $cat => $authors) {
     foreach ($authors as $key => $author) {
       if(empty($author['lastname'])) {
@@ -240,7 +250,6 @@ function _save_contributors(&$contributors, $nid, $vid, $update = FALSE) {
  * @return unknown_type
  */
 function biblio_parse_author($author_array, $cat = 0) {
-
   if ($cat == 5){
     $author_array['firstname'] = '';
     $author_array['initials'] = '';
