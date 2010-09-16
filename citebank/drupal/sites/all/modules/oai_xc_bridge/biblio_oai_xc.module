@@ -11,7 +11,7 @@
 if (!defined(PUBLICATION_TYPE_BOOK)) {
 	define('PUBLICATION_TYPE_BOOK', 100);
 	define('PUBLICATION_TYPE_ARTICLE', 102);
-	define('PUBLICATION_TYPE_JOURNAL', 1000);
+	define('PUBLICATION_TYPE_JOURNAL', 131);
 }
 
 /*
@@ -20,6 +20,51 @@ if (!defined(PUBLICATION_TYPE_BOOK)) {
 function logmsg($msg, $type = 'biblio oai xc')
 {
 	;//log_info($type, $msg);
+}
+
+/*
+ *  biblio_oai_xc_loadPublicationTypes - get number values for word values of publication types
+ */
+function biblio_oai_xc_loadPublicationTypes()
+{
+	static $biblioTypes = array();
+	
+		if ($biblioTypes) {
+			; // done
+		} else {
+			$sql = 'SELECT * FROM {biblio_types}';
+			$res = db_query($sql);
+	
+			if ($res) {
+			
+				while ($data = db_fetch_object($res)) {
+					$key  = $data->tid;
+					$name = $data->name;
+	
+					$biblioTypes[strtolower($name)] = $key;
+				}
+				
+				// add a couple items that are not in the given set
+				$biblioTypes['series']               = $biblioTypes['book'];
+				$biblioTypes['article']              = $biblioTypes['journal article'];
+	
+			} else {
+				// failed, so fall back on bad hard coding
+				// these should match what is in table: biblio_types
+				//   and match what biblio_install, _add_publication_types() sets up
+				$biblioTypes['book']                 = 100;
+				$biblioTypes['journal article']      = 102;
+	
+				$biblioTypes['series']               = $biblioTypes['book'];
+				$biblioTypes['article']              = $biblioTypes['journal article'];
+	
+				$biblioTypes['journal']              = 131;
+				$biblioTypes['original description'] = 132;
+				$biblioTypes['treatment']            = 133;
+			}
+	}
+	
+	return $biblioTypes;
 }
 
 /*
@@ -617,35 +662,54 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   // Identify the type of item
   $genres = $xpath->query('/x:mods/x:genre');
 
+	// this should do a one time load of the types from the database
+	$biblioTypes = biblio_oai_xc_loadPublicationTypes();
+	
   if ($genres->length > 0) {
 
-		switch (strtolower($genres->item(0)->nodeValue))
-		{
-			case 'book':
-				$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// book
-				break;
-
-			case 'series':
-				$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// book
-				break;
-
-			case 'article':
-				$node['biblio_type'] = PUBLICATION_TYPE_ARTICLE;	// article
-				break;
-
-			case 'journal':
-				$node['biblio_type'] = PUBLICATION_TYPE_JOURNAL;	// journal
-				break;
-
-			default:
-				$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// book
-				break;
-		}  
-  }
-
-  if (empty($node['biblio_type'])) {
-  	$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// No matches in the feed, so default to "Book"
-  }
+		//switch (strtolower($genres->item(0)->nodeValue))
+		$pubTypeName = strtolower($genres->item(0)->nodeValue);
+		
+		// find the number code for the publication type, if none, default to what a book value is.
+		$typeName = (isset($pubTypeName) ? $pubTypeName : 'book');
+		$typeCode = (isset($biblioTypes[$typeName]) ? $biblioTypes[$typeName] :  $biblioTypes['book']);
+		$node['biblio_type'] = $typeCode;
+		// note: biblio.biblio_type = biblio_types.tid  see biblio.install  _add_publication_types()
+		
+//		switch ($pubTypeName)
+//		{
+//			case 'book':
+//				//$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// book
+//				$node['biblio_type'] = $biblioTypes[$pubTypeName];	// book
+//				break;
+//
+//			case 'series':
+//				//$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// book
+//				$node['biblio_type'] = $biblioTypes[$pubTypeName];	// book
+//				break;
+//
+//			case 'article':
+//			case 'journal article':
+//				//$node['biblio_type'] = PUBLICATION_TYPE_ARTICLE;	// article
+//				$node['biblio_type'] = $biblioTypes[$pubTypeName];	// book
+//				break;
+//
+//			case 'journal':
+//				//$node['biblio_type'] = PUBLICATION_TYPE_JOURNAL;	// journal
+//				$node['biblio_type'] = $biblioTypes[$pubTypeName];	// book
+//				break;
+//
+//			default:
+//				//$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// book
+//				$node['biblio_type'] = $biblioTypes['book'];	// book
+//				break;
+//		}  
+//  }
+//
+//  if (empty($node['biblio_type'])) {
+//  	//$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// No matches in the feed, so default to "Book"
+//  	$node['biblio_type'] = $biblioTypes['book'];	// book
+//  }
   
 	// BIBLIO_FIELD_TOPIC: Journal Title
 	// articles
@@ -660,7 +724,8 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 
   foreach ($relatedItems as $relatedItem) {
 
-		if ($relatedItem->getAttribute('type') == 'host' && $node['biblio_type'] == PUBLICATION_TYPE_ARTICLE) {
+		//if ($relatedItem->getAttribute('type') == 'host' && $node['biblio_type'] == PUBLICATION_TYPE_ARTICLE) {
+		if ($relatedItem->getAttribute('type') == 'host' && $node['biblio_type'] == $biblioTypes['article']) {
 			// Get journal title
 			$journalTitleInfo = $relatedItem->getElementsByTagName('titleInfo');
 
@@ -723,12 +788,14 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 	// look for book or article edition (article may be on a different branch, a second originInfo)
   switch($node['biblio_type']) 
   {
-  	case PUBLICATION_TYPE_BOOK:
+  	case $biblioTypes['book']:
+  	//case PUBLICATION_TYPE_BOOK:
   	default:
   		$editionItems = $bookEditionItems;
   		break;
 
-  	case PUBLICATION_TYPE_ARTICLE:
+  	case $biblioTypes['article']:
+  	//case PUBLICATION_TYPE_ARTICLE:
   		$editionItems = $articleEditionItems;
   		break;
   }
@@ -785,7 +852,7 @@ function getCountNid($nid)
 {
 	$total = 0 ;
 	
-	$sql = "SELECT count(*) AS total FROM  `test1`.`biblio` WHERE nid = {$nid}";
+	$sql = "SELECT count(*) AS total FROM  {biblio} WHERE nid = {$nid}";
 	
 	db_query($sql);
 
@@ -799,6 +866,62 @@ function getCountNid($nid)
 
 	return $total;	
 }
+
+/*
+Publication Type
+Date Published
+Year of Publication
+Journal Title
+Authors
+Secondary Authors
+Publisher
+Keywords
+Edition
+
+$publicationType, $datePublished, $yearOfPublication, $title, $authors, $secondaryAuthors, $publisher, $keywords, $edition
+*/
+/**
+ *  addBiblioEssentialFields - map the core data 
+ */
+function addBiblioEssentialFields($node,
+	$publicationType = PUBLICATION_TYPE_BOOK, 
+	$datePublished = '', 
+	$yearOfPublication = '9999', 
+	$title = '', 
+	$authors = '', 
+	$secondaryAuthors = '', 
+	$publisher = '', 
+	$keywords = '', 
+	$edition = '') 
+{
+	
+  $node['biblio_title']           = $title;
+	$node['biblio_publisher']       = $publisher;
+  $node['biblio_year']            = $yearOfPublication;
+  $node['biblio_date']            = $datePublished;
+
+  if (is_array($authors)) {
+	  $node['biblio_contributors']  = $authors;
+	} else {
+		$authorsArray = array();
+		$authorsArray = $authors;
+	  $node['biblio_contributors']  = array($authorsArray);
+	}
+  
+  if (is_array($keywords)) {
+	  $node['biblio_keywords']      = $keywords;
+	} else {
+		$keywordArray = array();
+		$keywordArray = $keywords;
+	  $node['biblio_keywords']      = array($keywordArray);
+	}
+
+  $node['biblio_type']            = $publicationType;
+
+	
+	return $node;
+}
+
 
 /*
  *  convertToObj - convert an array into an object
@@ -1081,7 +1204,7 @@ biblio_md5
  */
 function biblio_oai_xc_isRecord($field) 
 {
-	$sql = "SELECT count(*) as total FROM biblio where biblio_url = '".$field."'";
+	$sql = "SELECT count(*) as total FROM {biblio} where biblio_url = '".$field."'";
 	
 	$result = db_query($sql);
 	
@@ -1101,7 +1224,7 @@ function biblio_oai_xc_isRecord($field)
  */
 function biblio_oai_xc_check_md5($field) 
 {
-	$sql = "SELECT count(*) as total FROM biblio where biblio_md5 = '".$field."'";
+	$sql = "SELECT count(*) as total FROM {biblio} where biblio_md5 = '".$field."'";
 
   $result = db_query($sql);
 	
@@ -1121,7 +1244,7 @@ function biblio_oai_xc_check_md5($field)
  */
 function biblio_oai_xc_getNid($field) 
 {
-	$sql = "SELECT nid, vid, biblio_md5, biblio_url FROM biblio where biblio_url = '".$field."'";
+	$sql = "SELECT nid, vid, biblio_md5, biblio_url FROM {biblio} where biblio_url = '".$field."'";
 
   $result = db_query($sql);
 	
@@ -1142,7 +1265,7 @@ function biblio_oai_xc_getNid($field)
  */
 function biblio_oai_xc_getRevision($field) 
 {
-	$sql = "SELECT nid, vid FROM biblio_contributor where nid = '".$field."'";
+	$sql = "SELECT nid, vid FROM {biblio_contributor} where nid = '".$field."'";
 
   $result = db_query($sql);
 	
@@ -1162,7 +1285,7 @@ function biblio_oai_xc_getRevision($field)
  */
 function biblio_oai_xc_gettypeid($type) 
 {
-	$sql = "SELECT * FROM biblio_types WHERE name = '".$type."'";
+	$sql = "SELECT * FROM {biblio_types} WHERE name = '".$type."'";
 	$result = db_query($sql);
 
 	if ($row = db_fetch_object($result)) {
