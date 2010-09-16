@@ -311,6 +311,8 @@ function drupal_get_destination() {
  */
 function drupal_goto($path = '', $query = NULL, $fragment = NULL, $http_response_code = 302) {
 
+	if (substr($_SERVER['SCRIPT_FILENAME'],-8) == 'cron.php') return;  // DLH FIXME: fixes cron issue
+
   $destination = FALSE;
   if (isset($_REQUEST['destination'])) {
     $destination = $_REQUEST['destination'];
