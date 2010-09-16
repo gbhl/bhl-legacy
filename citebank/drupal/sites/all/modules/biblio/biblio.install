@@ -1110,6 +1110,11 @@ function _add_publication_types()
   $types[] = array(129,'Miscellaneous'  ,NULL,30);
   $types[] = array(130,'Miscellaneous Section'  ,NULL,31);
 
+  // dlh: mods for citebank
+  $types[] = array(131,'Journal'	,NULL,32);
+  $types[] = array(132,'Original Description'	,NULL,33);
+  $types[] = array(133,'Treatment'	,NULL,34);
+
   foreach($types as $record)
   {
     $result[] = update_sql("INSERT INTO {biblio_types} (tid, name, description, weight) VALUES ('" . implode("', '", $record) . "')");
