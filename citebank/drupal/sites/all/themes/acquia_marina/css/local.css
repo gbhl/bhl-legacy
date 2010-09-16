@@ -1,0 +1,46 @@
+/* $Id$ */
+
+/****************************/
+/* LOCAL CSS                */
+/****************************/
+
+/* Put your custom CSS and CSS overrides in this file and  */
+/* rename it local.css.  By restricting your CSS changes   */
+/* to local.css, your changes will not be overwritten when */
+/* upgrading to a new version of this theme.  You can also */
+/* use a local-rtl.css file for the equivalent in RTL.     */
+
+/* Steps to activate local.css:                       */
+/* 1. Add your custom CSS to this file                */
+/* 2. Rename this file to local.css                   */
+/* 3. Clear cached data at admin/settings/performance */
+
+html {
+  background: #F4F7E7;                               /* background & font color */
+  color: #666;
+}
+
+.header-site-info-inner {
+  padding: 0px 0;
+}
+
+
+#header-top-wrapper {
+  background: #e1e1e1;
+  border-bottom: 1px solid #ccc;
+  padding-top: 0px;
+}
+
+
+.preface-top-wrapper {
+  background: #144A6E url(../images/preface-wrapper-bg.png) repeat-x top;
+  color: #fff;
+  min-height: 4px;
+  padding-top: 15px;
+}
+
+.main-wrapper {
+  background: #f5f7e7 url(../images/content-gradient.png) repeat-x 0 1px;
+  padding-top: 20px;
+}
+

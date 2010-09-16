@@ -1,0 +1,28 @@
+/*
+ * IE (less than 7) Bug Fixes
+ *
+ * Hacks to fix problems that Internet Explorer 6 and below cause.
+ *
+ */
+
+/*
+ * Min-Width Hack
+ */
+
+/* Hide the following from IE/MAC as this doesn't need the fix... \*/
+#wrapper1, #wrapper2, #wrapper3 {
+  width: auto;
+}
+#wrapper1 {
+padding-left:800px; /* Set min-width here [1/2] */
+height: 1px;
+}
+#wrapper1 #wrapper2 {
+height: 1px;
+}
+#wrapper1 #wrapper2 #wrapper3 {
+margin-left:-800px; /* Set min-width here [2/2] */
+position: relative;
+height: 1px;
+}
+?* End of IE/MAC hide */

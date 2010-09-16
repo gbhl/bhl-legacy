@@ -1,0 +1,35 @@
+/* Positioning */
+#preview {
+  overflow: hidden;
+  max-width: 100%;
+}
+#preview, #preview #img {
+  width: 480px;
+  height: 371px;
+}
+#preview #gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 10000px;
+  z-index: 2;
+}
+#preview #text {
+  position: absolute;
+  left: 201px;
+  width: 276px;
+  top: 160px;
+  height: 204px;
+  z-index: 4;
+  overflow: hidden;
+}
+#preview #img {
+  position: relative;
+  z-index: 3;
+}
+#preview #gradient .gradient-line {
+  height: 10px;
+  overflow: hidden;
+}
+

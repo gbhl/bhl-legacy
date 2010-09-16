@@ -1,0 +1,64 @@
+name = AD Blueprint
+description = Tableless multi-column valid theme with color module implementation.
+core = 6.x
+engine = phptemplate
+
+regions[page_top] = Page Top
+regions[top_left] = Top Left
+regions[top_right] = Top Right
+regions[top_col13] = Top Column 1 of 3
+regions[top_col23] = Top Column 2 of 3
+regions[top_col33] = Top Column 3 of 3
+regions[top_col14] = Top Column 1 of 4
+regions[top_col24] = Top Column 2 of 4
+regions[top_col34] = Top Column 3 of 4
+regions[top_col44] = Top Column 3 of 4
+regions[left_header] = Left of Header
+regions[right_header] = Right of Header
+regions[header] = Header
+regions[header_left] = Header Left
+regions[header_right] = Header Right
+regions[header_col13] = Header Column 1 of 3
+regions[header_col23] = Header Column 2 of 3
+regions[header_col33] = Header Column 3 of 3
+regions[left] = Left Sidebar
+regions[sidebar_left2] = Left Sidebar 2
+regions[right] = Right Sidebar
+regions[sidebar_right2] = Right Sidebar 2
+regions[above_content] = Above content
+regions[above_left] = Above Left
+regions[above_right] = Above Right
+regions[content] = Below content
+regions[below_left] = Below Left
+regions[below_right] = Below Right
+regions[footer_col13] = Footer Column 1 of 3
+regions[footer_col23] = Footer Column 2 of 3
+regions[footer_col33] = Footer Column 3 of 3
+regions[footer_left] = Footer Left
+regions[footer_right] = Footer Right
+regions[footer] = Footer
+regions[bottom_col14] = Bottom Column 1 of 4
+regions[bottom_col24] = Bottom Column 2 of 4
+regions[bottom_col34] = Bottom Column 3 of 4
+regions[bottom_col44] = Bottom Column 3 of 4
+regions[bottom_col13] = Bottom Column 1 of 3
+regions[bottom_col23] = Bottom Column 2 of 3
+regions[bottom_col33] = Bottom Column 3 of 3
+regions[bottom_left] = Bottom Left
+regions[bottom_right] = Bottom Right
+regions[page_bottom] = Page Bottom
+
+
+; Information added by drupal.org packaging script on 2008-11-30
+version = "6.x-2.4"
+core = "6.x"
+project = "ad_blueprint"
+datestamp = "1228069202"
+
+
+; Information added by drupal.org packaging script on 2009-02-08
+version = "6.x-2.6"
+core = "6.x"
+project = "ad_blueprint"
+datestamp = "1234094409"
+

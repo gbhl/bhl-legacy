@@ -1,0 +1,827 @@
+/*
+ * Core Layout
+ *
+ * The styles for the layout with the standard Drupal regions.
+ *
+ */
+
+body {
+  text-align: center; /* IE centering bug fix: 1st/2 parts */
+  font-size: 100%; /* Fixes exaggerate font resizing bug eith em's in IE */
+  min-width: 760px; /* There is an IE fix to make this work in ie_lt7.css */
+  margin: 0;
+  padding: 0;
+}
+
+#wrapper1, #wrapper2, #wrapper3 {
+  width: 100%;
+}
+
+#wrapper4 {
+  width: 95%;
+  margin: 0 auto;
+  text-align: left; /* IE centering bug fix: 2nd/2 parts */
+  overflow: visible;
+}
+
+#logo-sitename {
+  float: left;
+}
+
+#logo {
+  float: left;
+}
+
+#header .site-name {
+  float: left;
+}
+
+#header .site-slogan {
+  display: block;
+}
+
+#search-box {
+  float: right;
+}
+
+#header {
+  float: left;
+  width: 100%;
+  margin-right: -100%;
+}
+
+.header-inner {
+  position: relative; /* So that #search-box can be absolutely positioned to top right */
+}
+
+#header-both {
+  margin: 0 180px;
+}
+
+#left-header {
+  float: left;
+  width: 170px;
+  margin-right: -170px;
+}
+
+#right-header {
+  float: right;
+  width: 170px;
+  margin-left: -170px;
+}
+
+#header-region {
+  width: 100%;
+  overflow: hidden;
+}
+
+#main {
+  float: left;
+  width: 100%;
+  margin-right: -100%;
+}
+
+body.both #main-inner, body.left .right-2-present #main-inner, body.right .left-2-present #main-inner {
+  margin: 0 180px;
+}
+
+body.both .left-2-present #main-inner, body.left .left-2-present .right-2-present #main-inner {
+  margin: 0 180px 0 360px;
+}
+
+body.both .right-2-present #main-inner, body.right .left-2-present .right-2-present #main-inner {
+  margin: 0 360px 0 180px;
+}
+
+body.both .left-2-present .right-2-present #main-inner {
+  margin: 0 360px;
+}
+
+body.left #main-inner {
+  margin-left: 180px;
+}
+
+body.left .left-2-present #main-inner {
+  margin-left: 360px;
+}
+
+body.right #main-inner {
+  margin-right: 180px;
+}
+
+body.right .right-2-present #main-inner {
+  margin-right: 360px;
+}
+
+#main-inner2 {
+  width: 100%; /* Fixes IE Overflow bug */
+  overflow: hidden;
+}
+
+#primary, #secondary {
+  height: 1.6em;
+  overflow: hidden;
+}
+
+#sidebar-left {
+  float: left;
+  width: 170px;
+  margin-right: -170px;
+}
+
+#sidebar-right {
+  float: right;
+  width: 170px;
+  margin-left: -170px;
+}
+
+.sidebar .block {
+  width: 170px;
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+}
+
+#footer {
+  width: 100%; /* Fixes IE Overflow bug */
+  overflow: hidden;
+}
+
+/*
+ * Other Layout
+ *
+ * The styles for non-standard Drupal regions
+ *
+ */
+
+#upper-regions, #lower-regions {
+  text-align: left; /* 2nd part of IE centering bug */
+  overflow: hidden; /* To clear the floats it contains */
+}
+
+/* Page Top - page_top */
+
+#page-top {
+  width: 100%; /* Fixes IE Overflow bug */
+  overflow: hidden;
+}
+
+/* Left - top_left, bottom_left */
+
+.col-left {
+  float: left;
+  width: 50%;
+  margin-right: -50%;  /* Fixes IE bug where 50%+50% width is bigger than 100% */
+}
+
+.col-left-inner {
+  margin-right: 3px;
+}
+
+.col-left-inner2 {
+  overflow: hidden;
+  width: 100%; /* Fixes IE overflow bug */
+}
+
+/* Right - top_right, bottom_right */
+
+.col-right {
+  float: right;
+  width: 50%;
+}
+
+.col-right-inner {
+  margin-left: 3px;
+}
+
+.col-right-inner2 {
+  overflow: hidden;
+  width: 100%; /* Fixes IE overflow bug */
+}
+
+/* Columns 1 to 3 of 3 - top_col13, top_col23, top_col33, bottom_col13, bottom_col23, bottom_col33 */
+
+.col13 {
+  float: left;
+  width: 33%;
+  margin-right: -33%;
+}
+
+.col23 {
+  float: left;
+  width: 34%;
+  margin-left: 33%;
+  display: inline;
+}
+
+.col33 {
+  float: right;
+  width: 33%;
+  margin-left: -33%;
+}
+
+.col13-inner {
+  margin-right: 4px;
+}
+
+.col23-inner {
+  margin: 0 2px;
+}
+
+.col33-inner {
+  margin-left: 4px;
+}
+
+.col13-inner2, .col23-inner2, .col33-inner2 {
+  overflow: hidden;
+  width: 100%; /* Fixes IE overflow bug */
+}
+
+/* Columns 1 to 4 of 4 - top_col14, top_col24, top_col34, top_col44, bottom_col14, bottom_col24, bottom_col34, bottom_col44 */
+
+.col14, .col24, .col34, .col44 {
+  float: left;
+  width: 25%;
+}
+
+.col14 {
+  margin-right: -25%;
+}
+
+.col24 {
+  margin: 0 -50% 0 25%;
+  display: inline;
+}
+
+.col34 {
+  margin: 0 -75% 0 50%;
+  display: inline;
+}
+
+.col44 {
+  margin: 0 -100% 0 75%;
+  display: inline;
+}
+
+.col14-inner {
+  margin-right: 3px;
+}
+
+.col24-inner, .col34-inner {
+  margin: 0 3px;
+}
+
+.col44-inner {
+  margin-left: 3px;
+}
+
+.col14-inner2, .col24-inner2, .col34-inner2, .col44-inner2 {
+  overflow: hidden;
+  width: 100%; /* Fixes IE overflow bug */
+}
+
+/* Header sidebars - left_header, right_header */
+
+#header-left {
+  margin-left: 180px;
+  overflow: hidden;
+}
+
+#header-right {
+  margin-right: 180px;
+  overflow: hidden;
+}
+
+/* Second Sidebrs - sidebar_left2, sidebar_right2 */
+
+#sidebar-left2 {
+  float: left;
+  width: 350px;
+  margin-right: -350px;
+}
+
+#sidebar-left2-inner {
+  margin-left: 180px;
+}
+
+#sidebar-right2 {
+  float: right;
+  width: 350px;
+  margin-left: -350px;
+}
+
+#sidebar-right2-inner {
+  margin-right: 180px;
+}
+
+/* Page Bottom - page_bottom */
+
+#page-bottom {
+  width: 100%; /* Fixes IE Overflow bug */
+  overflow: hidden;
+}
+
+/*
+ * Admin Pages
+ */
+
+div.admin .left {
+  margin-left:1%;
+}
+
+div.admin .right {
+  margin-right:1%;
+}
+
+/*
+ * Clear Fix
+ */
+
+/* Used rather than clear-block because this prevents white-space on
+   resize in IE 5 */
+.clear-this {
+  width: 100%;
+  overflow: hidden;
+}
+
+/*
+ * HTML Styles
+ */
+
+body {
+  font: 90% Verdana, Arial, Helvetica, sans-serif;
+}
+
+#wrapper1 {
+  padding-bottom: 20px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	margin: 0.2em 0;
+	padding: 0;
+  font-family: Helvetica, Arial, "Lucida Grande", Verdana, sans-serif;
+  font-weight: 500;
+}
+
+h3, h4, h5, h3 a, h4 a, h5 a {
+  color: #111;
+}
+
+h1, h1 a {
+	font-size: 2em;
+	color: #3b4a25;
+	text-decoration: none;
+}
+
+h2, h2 a {
+	font-size: 1.5em;
+	color: #3b4a25;
+	text-decoration: none;
+}
+
+h1 a:hover, h2 a:hover {
+  color: #6a7c50;
+}
+
+h3 {
+	font-size: 1.2em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.8em;
+}
+
+h6 {
+  font-size: 0.7em;
+}
+
+strong {
+  font-weight: bold;
+}
+
+p {
+  margin: 0 0 1.5em 0;
+}
+
+a {
+  text-decoration: underline;
+  color: #3E4967;
+}
+
+a:hover {
+  color: #000;
+}
+
+blockquote {
+  margin: 1.5em 0 1.5em 1.5em;
+  color: #666;
+  background: url('images/quote.png') .5em top no-repeat;
+  padding: 0 20px 0 30px;
+}
+
+hr {
+  background: #B2CCFF; 
+  color: #B2CCFF;
+  clear: both; 
+  float: none; 
+  width: 100%; 
+  height: 0.1em;
+  margin: 0 0 1.4em 0;
+  border: none; 
+}
+
+* html hr { margin: 0 0 1.2em 0; } /* IE6 fix */
+
+pre {
+  margin-bottom: 1.3em;
+  background: #eee;
+  border:0.1em solid #ddd;
+  padding:1.5em;
+}
+
+input {
+  border: 1px solid #cccccc;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li.leaf, li.collapsed, li.expanded {
+  list-style-image: url('images/bullet.gif');
+}
+
+ul ul li.leaf, ul ul li.collapsed, ul ul li.expanded {
+  list-style-image: url('images/diamond.gif');
+}
+
+ul ul ul li.leaf, ul ul ul li.collapsed, ul ul ul li.expanded {
+  list-style-image: url('images/bullet2.gif');
+}
+
+ul ul ul ul li.leaf, ul ul ul ul li.collapsed, ul ul ul ul li.expanded {
+  list-style-image: url('images/bullet.gif');
+}
+
+ul ul ul ul ul li.leaf, ul ul ul ul ul li.collapsed, ul ul ul ul ul li.expanded {
+  list-style-image: url('images/diamond.gif');
+}
+
+li a.active{
+  color: #3E4900;
+}
+
+ol {
+  margin-left: 35px;
+}
+
+/*
+ * Theme-Specific
+ */
+
+/*
+ * Layout
+ */
+
+body.both #main-inner, body.left .right-2-present #main-inner, body.right .left-2-present #main-inner {
+  margin: 0 200px;
+}
+
+body.both .left-2-present #main-inner, body.left .left-2-present .right-2-present #main-inner {
+  margin: 0 200px 0 350px;
+}
+
+body.both .right-2-present #main-inner, body.right .left-2-present .right-2-present #main-inner {
+  margin: 0 350px 0 200px;
+}
+
+body.both .left-2-present .right-2-present #main-inner {
+  margin: 0 350px;
+}
+
+body.left #main-inner {
+  margin-left: 200px;
+}
+
+body.left .left-2-present #main-inner {
+  margin-left: 350px;
+}
+
+body.right #main-inner {
+  margin-right: 200px;
+}
+
+body.right .right-2-present #main-inner {
+  margin-right: 350px;
+}
+
+.header-inner {
+  padding-left: 60px;
+}
+
+.site-name {
+  margin: 1em 0;
+}
+
+.site-name a, .site-name a:hover {
+  color: #111111;
+  font-size: 1.2em;
+}
+
+.site-slogan {
+  color: #333333;
+  font-size: 1.2em;
+  font-style:italic;
+  margin: 0;
+}
+
+#sidebar-left {
+  float: left;
+  width: 188px;
+  margin: 0 -199px 0 1px;
+}
+
+#sidebar-right {
+  float: right;
+  width: 188px;
+  margin: 0 1px 0 -199px;
+}
+
+.sidebar .block {
+  width: 188px;
+  overflow: hidden;
+}
+
+#header-left {
+  margin-left: 188px;
+  overflow: hidden;
+}
+
+#header-right {
+  margin-right: 188px;
+  overflow: hidden;
+}
+
+#sidebar-left2 {
+  float: left;
+  width: 388px;
+  margin-right: -388px;
+}
+
+#sidebar-left2-inner {
+  margin-left: 200px;
+}
+
+#sidebar-right2 {
+  float: right;
+  width: 388px;
+  margin-left: -388px;
+}
+
+#sidebar-right2-inner {
+  margin-right: 200px;
+}
+
+/*
+ * Page Design
+ *
+ * Mostly borders and background that create the general feel of the page.
+ *
+ */
+
+#main-outer {
+  margin-bottom: 20px;
+  border-width: 0 1px 1px 1px;
+  border-style: solid;
+  border-color: #cccccc;
+}
+
+#main-outer2 {
+  width: 100%;
+  overflow: hidden;
+}
+
+body.both #main-outer, body.left #main-outer {
+  background: url('images/bg.gif') repeat-y;
+}
+
+body.both #main-outer2, body.right #main-outer2 {
+  background: url('images/bg2.gif') repeat-y right;
+}
+
+#header {
+  border-top: 3px solid #668040;
+}
+
+#search-box {
+  margin: 10px;
+}
+
+#primary, #secondary {
+  display: block;
+  height: 32px;
+  background: #668040;
+  font-size: 15px;
+  padding-left: 50px;
+}
+
+#primary li, #secondary li {
+  float: left;
+  padding: 0;
+}
+
+#primary a, #secondary a {
+  display: block;
+  color: #f2ffdf;
+  padding: 7px 15px;
+  text-decoration: none;
+}
+
+#primary a:hover, #secondary a:hover {
+  background: #485a2d;;
+}
+
+#sidebar-left-inner, #sidebar-right-inner, #sidebar-left2-inner2, #sidebar-right2-inner2 {
+  padding:25px 20px 10px;
+}
+
+.sidebar .block {
+  width: 148px;
+}
+
+#sidebar-left .block h2, #sidebar-right .block h2 {
+  color: #111;
+  font-size: 1.1em;
+}
+
+#mission {
+  background:#f1f1f1;
+  border:1px solid #CCC;
+  padding:10px;
+  margin: 25px 48px 0;
+}
+
+.inner {
+  padding: 25px 48px 20px;
+}
+
+.inner h3, .inner h3 a {
+	display: block;
+	width: 100%;
+	color: #3b4a25;
+	border-bottom: 2px dotted #aaaaaa;
+}
+
+#footer {
+  text-align: center;
+  font-size: 0.8em;
+  color: #333333;
+}
+
+#footer a {
+  color: #333333;
+}
+
+/*
+** Module specific styles
+*/
+
+.feed-icon img {
+  margin-top:15px;
+}
+
+#aggregator .feed-source {
+ background-color: #eee;
+ border: 1px solid #ccc;
+ padding: 1em;
+ margin: 1em 0;
+}
+
+#aggregator .news-item .categories, #aggregator .source, #aggregator .age {
+ color: #999;
+ font-style: italic;
+ font-size: 0.9em;
+}
+
+#aggregator .title {
+ margin-bottom: 0.5em;
+ font-size: 1em;
+}
+
+#aggregator h3 {
+ margin-top: 1em;
+}
+
+#forum table {
+ width: 100%;
+}
+
+#forum td {
+ padding: 0.5em;
+}
+
+#forum td.forum a{
+text-decoration:none;
+}
+
+#forum td.forum, #forum td.posts {
+ background-color: #eee;
+}
+
+#forum td.topics, #forum td.last-reply {
+ background-color: #ddd;
+}
+
+#forum td.container {
+ background-color: #ccc;
+}
+
+#forum td.container a {
+ color: #555;
+ text-decoration:none;
+}
+
+#forum td.statistics, #forum td.settings, #forum td.pager {
+ height: 1.5em;
+ border: 1px solid #bbb;
+}
+
+#forum td .name {
+ color: #96c;
+}
+
+#forum td .links {
+ padding-top: 0.7em;
+ font-size: 0.9em;
+}
+
+#profile .profile {
+ clear: both;
+ border: 1px solid #abc;
+ padding: .5em;
+ margin: 1em 0em;
+}
+
+#profile .profile .name {
+ padding-bottom: 0.5em;
+}
+
+.block-forum h3 {
+ margin-bottom: .5em;
+}
+
+div.admin-panel .description {
+ color: #999;
+}
+
+div.admin-panel .body {
+ background: #f4f4f4;
+}
+
+div.admin-panel h3 {
+ background-color: #668040;
+ color: #ffffff;
+ padding: 5px 0;
+ margin: 0;
+}
+
+.node img{
+  border:1px solid #CCC;
+  margin:5px;
+}
+
+.poll .bar {
+ background:#E7E7E7;
+ border:#9C9C9C 1px solid;
+}
+
+.poll .bar .foreground{
+ background:#CECDCE;
+ border-right:#9C9C9C 1px solid;
+}
+
+.block-image IMG{
+ border:1px solid #CECECE; padding:3px;
+}
+
+.block-user .item-list ul li{
+ list-style-type:none;
+ margin:0;
+ margin-top:5px;
+}
+
+.block-user .item-list ul{
+ padding:0;
+}
+
+/*******************************************************************
+* Color Module: Don't touch                                       *
+*******************************************************************/
+
+div.admin-panel h3 {
+ color: #ffffff;
+}

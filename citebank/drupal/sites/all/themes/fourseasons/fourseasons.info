@@ -1,0 +1,15 @@
+; $Id: fourseasons.info,v 1.1.2.4 2008/06/08 23:04:25 derjochenmeyer Exp $
+name = 4 Seasons
+description = A clean 3 column, fixed width theme (960px).
+core = 6.x
+engine = phptemplate
+regions[left] = Left sidebar
+regions[right] = Right sidebar
+regions[content] = Content
+regions[footer] = Footer
+; Information added by drupal.org packaging script on 2008-06-09
+version = "6.x-1.20"
+core = "6.x"
+project = "fourseasons"
+datestamp = "1212971109"
+
