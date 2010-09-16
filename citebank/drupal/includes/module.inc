@@ -458,22 +458,8 @@ function module_invoke() {
   $hook = $args[1];
   unset($args[0], $args[1]);
   $function = $module .'_'. $hook;
-  
-  // hack to fix drupals problem with PHP 5.3
-  // *****
-	$Args = array(); 
-	foreach ($args as $k => &$arg) { 
-		$Args[$k] = &$arg; 
-	}   
-  // *****
-  
   if (module_hook($module, $hook)) {
-  	//$message = 'Module[' . $module . '] hook[' . $hook . '] function[' . $function . '] ';	// FIXME: debugging
-  	//drupal_set_message($message, 'debug');	// FIXME: debugging
-  	//$type = 'module_invoke';
-  	//watchdog($type, $message, NULL, WATCHDOG_INFO, NULL);
-    //return call_user_func_array($function, $args);
-    return call_user_func_array($function, $Args);  // use the hacked Args list, make PHP happy with Drupals sloppiness
+    return call_user_func_array($function, $args);
   }
 }
 /**
@@ -494,7 +480,6 @@ function module_invoke_all() {
   $return = array();
   foreach (module_implements($hook) as $module) {
     $function = $module .'_'. $hook;
-    //if ($hook == 'cron') watchdog('cron', "hit $module cron");   // FIXME: DEBUG: DLH debugging cron issue
     $result = call_user_func_array($function, $args);
     if (isset($result) && is_array($result)) {
       $return = array_merge_recursive($return, $result);

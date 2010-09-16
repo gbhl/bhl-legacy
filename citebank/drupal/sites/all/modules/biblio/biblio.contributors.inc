@@ -1,5 +1,5 @@
 <?php
-//$Id: biblio.contributors.inc,v 1.1.2.35 2010/06/23 02:21:30 rjerome Exp $
+//$Id: biblio.contributors.inc,v 1.1.2.36 2010/07/06 20:26:47 rjerome Exp $
 /**
  * @param $aid
  * @return unknown_type
@@ -175,17 +175,9 @@ function biblio_update_contributor(&$author) {
  * @return success of database operations
  */
 function _save_contributors(&$contributors, $nid, $vid, $update = FALSE) {
-	// DLH bugfix
-	// a bit of defensive programming here, make sure you have some data to work with!
-	// if contributors is not an array, fail out
-  if (!is_array($contributors) {
-		// what do we do when contributors is NOT an array?
-		return false;
-	}
-
   $md5 = _loadMD5();
+  $rank = 0;
   db_query('DELETE FROM {biblio_contributor} WHERE nid = %d AND vid = %d', array($nid, $vid));
-
   foreach ($contributors as $cat => $authors) {
     foreach ($authors as $key => $author) {
       if(empty($author['lastname'])) {
@@ -204,7 +196,7 @@ function _save_contributors(&$contributors, $nid, $vid, $update = FALSE) {
         'nid' => $nid,
         'vid' => $vid,
         'cid' => $author['cid'],
-        'rank' => ((isset($author['rank']) && is_numeric($author['rank'])) ? $author['rank'] : $key),
+        'rank' => $rank++, //((isset($author['rank']) && is_numeric($author['rank'])) ? $author['rank'] : $key),
         'auth_type' => $author['auth_type'],
         'auth_category' => $cat,
       );

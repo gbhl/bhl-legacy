@@ -6,7 +6,7 @@
 //
 // Modified for use in biblio by Ron Jerome
 //
-// $Id: biblio_style_mla.inc,v 1.7.2.10 2009/09/30 15:48:25 rjerome Exp $
+// $Id: biblio_style_mla.inc,v 1.7.2.16 2010/05/03 00:57:36 rjerome Exp $
 /**
  * Get the style information
  *
@@ -67,21 +67,21 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
     case 105: //Newspaper Article
     case 106: //Magazine Article
       if(!empty($authors)) {
-        if (!ereg("\. *$", $authors))
-        $output .= $authors . ".";
-        else
+        $output .= '<span class="biblio-authors">';
         $output .= $authors;
+        if (!preg_match("/\. *$/", $authors)) $output .= ".";
+        $output .= '</span>';
       }
 
       if (!empty($node->title))      // title
       {
         if (!empty($authors)) $output .= " ";
         $output .= '"' ;
-        $output .= '<span class="biblio-title">';
-        $url = biblio_get_title_url_info($node);
+        $output .= '<span class="biblio-title-mla">';
+        $url = biblio_get_title_url_info($node, $base, $inline);
         $output .= l($node->title, $url['link'], $url['options']);
-        $output .= ". </span> \n";
-        if (!ereg("[?!.]$", $node->title)) $output .= ".";
+        $output .= "</span>";
+        if (!preg_match("/[?!.]$/", $node->title)) $output .= ".";
         $output .= '"';
       }
 
@@ -163,35 +163,32 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
         }
       }
 
-      if (!ereg("\. *$", $output))
-      $output .= ".";
+      if (!preg_match("/\. *$/", $output)) $output .= ".";
 
       break;
     case 101: //Book Chapter
     case 103: //Conference Paper
       if(!empty($authors)) {
-        if (!ereg("\. *$", $authors)) {
-          $output .= $authors . ".";
-        }
-        else {
-          $output .= $authors;
-        }
-
+        $output .= '<span class="biblio-authors">';
+        $output .= $authors;
+        if (!preg_match("/\. *$/", $authors)) $output .= ".";
+        $output .= '</span>';
+      }
         if (!empty($node->title))      // title
         {
           if (!empty($authors))  $output .= " ";
 
-          $output .= '"<i>' ;
-          $output .= '<span class="biblio-title">';
-          $url = biblio_get_title_url_info($node);
+          //$output .= '"<i>' ;
+          $output .= '"<span class="biblio-title-mla">';
+          $url = biblio_get_title_url_info($node, $base, $inline);
           $output .= l($node->title, $url['link'], $url['options']);
-          $output .= ". </span> \n";
-          $output .= '</i>';
-          if (!ereg("[?!.]$", $node->title)) $output .= ".";
+          $output .= "</span>";
+         // $output .= '</i>';
+          if (!preg_match("/[?!.]$/", $node->title)) $output .= ".";
           $output .= '"';
         }
 
-        $publication = ereg_replace("[ \r\n]*\(Eds?:[^\)\r\n]*\)", "", $node->biblio_secondary_title);
+        $publication = preg_replace("/[ \r\n]*\(Eds?:[^\)\r\n]*\)/", "", $node->biblio_secondary_title);
         if (!empty($publication))      // publication
         $output .= " <i>$publication</i>";
 
@@ -216,8 +213,7 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
             'encodeHTML' => true
           );
           $editor = theme('biblio_format_authors', $node->biblio_contributors[2], $editor_options, $inline);
-
-          if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output)) $output .= ".";
+          _period_if_needed($output);
 
           if (count($node->biblio_contributors[2]) > 1) { // there are at least two editors (separated by ';')
             $output .= " Eds. " . $editor;
@@ -229,7 +225,7 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
 
         if (!empty($node->biblio_edition) && !preg_match("/^(1|1st|first|one)( ed\.?| edition)?$/i", $node->biblio_edition))      // edition
         {
-          if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output)) $output .= ".";
+          _period_if_needed($output);
 
           if (preg_match("/^\d{1,3}$/", $node->biblio_edition)) // if the edition field contains a number of up to three digits, we assume it's an edition number (such as "2nd ed.")
           {
@@ -261,13 +257,13 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
 
         if (!empty($node->biblio_volume))      // volume
         {
-          if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output)) $output .= ".";
+          _period_if_needed($output);
           $output .= " Vol. " . $node->biblio_volume;
         }
 
-        if (!empty($node->biblio_alternate_title) OR !empty($node->biblio_tertiary_title)) // if there's either a full or an abbreviated series title
+        if (!empty($node->biblio_alternate_title) || !empty($node->biblio_tertiary_title)) // if there's either a full or an abbreviated series title
         {
-          if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output)) $output .= ".";
+          _period_if_needed($output);
           $output .= " ";
 
           if (!empty($node->biblio_alternate_title)) {
@@ -288,57 +284,56 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
           }
         }
 
-        if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output)) $output .= ".";
-
+        _period_if_needed($output);
         if (!empty($node->biblio_place_published)) {     // place
           $output .= " " . $node->biblio_place_published;
         }
         if (!empty($node->biblio_publisher))      // publisher
         {
           if (!empty($node->biblio_place_published))  $output .= ":";
-          $output .= " " . $node->biblio_publisher;
+          $output .= " " . $node->biblio_publisher. ", " ;
         }
 
         if (!empty($node->biblio_year))      // year
         {
-          $output .= ", " . $node->biblio_year;
+          $output .= " " . $node->biblio_year .". ";
         }
-
+        _period_if_needed($output);
         if (!empty($node->biblio_pages)) {     // pages
           $output .= theme_biblio_page_number($node->biblio_pages);
         }
-        if (!ereg("\. *$", $output))  $output .= ".";
-      }
+        _period_if_needed($output);
+        //if (!preg_match("/\. *$/", $output))  $output .= ".";
+
       break;
 
     default : // all other types
 
       if (!empty($authors))      // author
       {
-        if (!ereg("\. *$", $authors))
-        $output .= $authors . ".";
-        else
+        $output .= '<span class="biblio-authors">';
         $output .= $authors;
+        if (!preg_match("/\.*$/", $authors)) $output .= ".";
+        $output .= '</span>';
       }
 
       if (!empty($node->title))      // title
       {
-        $url = biblio_get_title_url_info($node);
+        $url = biblio_get_title_url_info($node, $base, $inline);
         if (!empty($authors))
         $output .= " ";
 
         if (!empty($node->thesis))      // thesis
         {
-          $output .= '<span class="biblio-title">';
+          $output .= '<span class="biblio-title-mla">';
           $output .= '"' . l($node->title, $url['link'], $url['options']);
           $output .= '</span>';
-          if (!ereg("[?!.]$", $node->title))
-          $output .= ".";
+          if (!preg_match("/[?!.]$/", $node->title)) $output .= ".";
           $output .= '"';
         }
         else // not a thesis
         $output .= '<i>';
-        $output .= '<span class="biblio-title">';
+        $output .= '<span class="biblio-title-mla">';
         $output .= l($node->title, $url['link'], $url['options']);
         $output .= '</span>';
         $output .= '</i>';
@@ -362,7 +357,7 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
           'encodeHTML' => true
         );
         $editor = theme('biblio_format_authors', $node->biblio_contributors[2], $editor_options, $inline);
-        if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output)) $output .= ".";
+        _period_if_needed($output);
 
         if (count($node->biblio_contributors[2] > 1)) {// there are at least two editors (separated by ';')
           $output .= " Eds. " . $editor;
@@ -374,7 +369,7 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
 
       if (!empty($node->biblio_edition) && !preg_match("/^(1|1st|first|one)( ed\.?| edition)?$/i", $node->biblio_edition))      // edition
       {
-        if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output)) $output .= ".";
+        _period_if_needed($output);
 
         if (preg_match("/^\d{1,3}$/", $node->biblio_edition)) // if the edition field contains a number of up to three digits, we assume it's an edition number (such as "2nd ed.")
         {
@@ -406,13 +401,13 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
 
       if (!empty($node->biblio_volume))      // volume
       {
-        if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output)) $output .= ".";
+        _period_if_needed($output);
         $output .= " Vol. " . $node->biblio_volume;
       }
 
       if (!empty($node->biblio_alternate_title) OR !empty($node->biblio_secondary_title)) // if there's either a full or an abbreviated series title
       {
-        if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output))  $output .= ".";
+        _period_if_needed($output);
         $output .= " ";
 
         if (!empty($node->biblio_alternate_title)) {
@@ -438,8 +433,7 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
         // TODO: a published dissertation needs to be formatted differently!
         //       see e.g. example at: <http://web.csustan.edu/english/reuben/pal/append/AXI.HTML>
 
-        if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output))
-        $output .= ".";
+        _period_if_needed($output);
 
         // TODO: I've also seen MLA examples that separate thesis name, name of institution and year by dots. ?:-|
         //       Also, do we need to use the abbreviation "Diss." instead of "Ph.D. thesis"? What about other thesis types then?
@@ -449,7 +443,7 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
       }
       else // not a thesis
       {
-        if (!ereg("[?!.][ \"" . '</i>' . "]*$", $output))  $output .= ".";
+        _period_if_needed($output);
 
         if (!empty($node->biblio_place_published)) {     // place
           $output .= " " . $node->biblio_place_published;
@@ -471,14 +465,14 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
 
         if (!empty($node->online_citation))      // online_citation
         {
-          if (!ereg("\. *$", $output)) $output .= ".";
+          if (!preg_match("/\. *$/", $output)) $output .= ".";
 
           $output .= " " . $node->online_citation;
         }
 
         if (!empty($node->doi))      // doi
         {
-          if (!ereg("\. *$", $output)) $output .= ".";
+          if (!preg_match("/\. *$/", $output)) $output .= ".";
 
           if ($encodeHTML) {
             $output .= " " . $today . encodeHTML(" <http://dx.doi.org/" . $node->doi . ">");
@@ -489,7 +483,7 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
         }
         elseif (!empty($node->url))      // url
         {
-          if (!ereg("\. *$", $output)) $output .= ".";
+          if (!preg_match("/\. *$/", $output)) $output .= ".";
 
           if ($encodeHTML) {
             $output .= " " . $today . encodeHTML(" <" . $node->url . ">");
@@ -500,9 +494,12 @@ function biblio_style_mla($node, $base = 'biblio', $inline = false) {
         }
       }
 
-      if (!ereg("\. *$", $output)) $output .= ".";
+      if (!preg_match("/\. *$/", $output)) $output .= ".";
       break;
   }
-
   return filter_xss($output, biblio_get_allowed_tags());
+}
+
+function _period_if_needed(&$output) {
+  if (!preg_match("/[?!.][ \"" . '<\/i>' . "]*$/", $output)) $output .= ".";
 }

@@ -10,7 +10,7 @@
 
 // Modified for use in biblio by Ron Jerome
 //
-// $Id: biblio_style_chicago.inc,v 1.4.2.9 2009/09/30 15:48:25 rjerome Exp $
+// $Id: biblio_style_chicago.inc,v 1.4.2.14 2010/05/03 00:57:36 rjerome Exp $
 /**
  * Get the style information
  *
@@ -73,21 +73,21 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
     case 105: //Newspaper Article
     case 106: //Magazine Article
       if(!empty($authors)) {
-        if (!ereg("\. *$", $authors))
-        $output .= $authors . ".";
-        else
+        $output .= '<span class="biblio-authors">';
         $output .= $authors;
+        if (!preg_match("/\. *$/", $authors)) $output .= ".";
+        $output .= '</span>';
       }
 
       if (!empty($node->title))      // title
       {
         if (!empty($authors)) $output .= " ";
         $output .= '"' ;
-        $output .= '<span class="biblio-title">';
-        $url = biblio_get_title_url_info($node);
+        $output .= '<span class="biblio-title-chicago">';
+        $url = biblio_get_title_url_info($node, $base, $inline);
         $output .= l($node->title, $url['link'], $url['options']);
-        $output .= ". </span> \n";
-        if (!ereg("[?!.]$", $node->title)) $output .= ".";
+        $output .= "</span>";
+        if (!preg_match("/[?!.]$/", $node->title)) $output .= ".";
         $output .= '"';
       }
 
@@ -160,35 +160,32 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
 
       }
 
-      if (!ereg("\. *$", $output))
-      $output .= ".";
+      if (!preg_match("/\. *$/", $output)) $output .= ".";
 
       break;
     case 101: //Book Chapter
     case 103: //Conference Paper
       if(!empty($authors)) {
-        if (!ereg("\. *$", $authors)) {
-          $output .= $authors . ".";
-        }
-        else {
-          $output .= $authors;
-        }
+        $output .= '<span class="biblio-authors">';
+        $output .= $authors;
+        if (!preg_match("/\. *$/", $authors)) $output .= ".";
+        $output .= '</span>';
       }
       if (!empty($node->title))      // title
       {
         if (!empty($authors))  $output .= " ";
 
         $output .= '"<i>' ;
-        $output .= '<span class="biblio-title">';
-        $url = biblio_get_title_url_info($node);
+        $output .= '<span class="biblio-title-chicago">';
+        $url = biblio_get_title_url_info($node, $base, $inline);
         $output .= l($node->title, $url['link'], $url['options']);
-        $output .= ". </span> \n";
+        $output .= "</span>";
         $output .= '</i>';
-        if (!ereg("[?!.]$", $node->title)) $output .= ".";
+        if (!preg_match("/[?!.]$/", $node->title)) $output .= ".";
         $output .= '"';
       }
 
-      $publication = ereg_replace("[ \r\n]*\(Eds?:[^\)\r\n]*\)", "", $node->biblio_secondary_title);
+      $publication = preg_replace("/[ \r\n]*\(Eds?:[^\)\r\n]*\)/", "", $node->biblio_secondary_title);
       if (!empty($publication))      // publication
       $output .= " In <i>$publication</i>";
 
@@ -223,8 +220,7 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
 
       if (!empty($node->biblio_edition) && !preg_match("/^(1|1st|first|one)( ed\.?| edition)?$/i", $node->biblio_edition))      // edition
       {
-        if (!ereg("[?!.][ \"<i>]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"<i>]*$/", $output)) $output .= ".";
 
         if (preg_match("/^\d{1,3}$/", $node->biblio_edition)) // if the edition field contains a number of up to three digits, we assume it's an edition number (such as "2nd ed.")
         {
@@ -246,16 +242,14 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
 
       if (!empty($node->biblio_volume))      // volume
       {
-        if (!ereg("[?!.][ \"<i>]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"<i>]*$/", $output)) $output .= ".";
 
         $output .= " Vol. " . $node->biblio_volume;
       }
 
       if (!empty($node->biblio_alternate_title) OR !empty($node->biblio_tertiary_title)) // if there's either a full or an abbreviated series title
       {
-        if (!ereg("[?!.][ \"<i>]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"<i>]*$/", $output))  $output .= ".";
 
         $output .= " ";
 
@@ -276,8 +270,7 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
         $output .= ", no. " . $node->biblio_issue; // is it correct to format series issues similar to journal article issues?
       }
 
-      if (!ereg("[?!.][ \"<i>]*$", $output))
-      $output .= ".";
+      if (!preg_match("/[?!.][ \"<i>]*$/", $output)) $output .= ".";
 
       if (!empty($node->biblio_place_published))      // place
       $output .= " " . $node->biblio_place_published;
@@ -293,49 +286,47 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
       if (!empty($node->biblio_year))      // year
       $output .= ", " . $node->biblio_year;
 
-      if (!ereg("\. *$", $output))
-      $output .= ".";
+      if (!preg_match("/\. *$/", $output)) $output .= ".";
 
       break;
 
     default : // all other types
       //TODO
-      //        if (ereg("[ \r\n]*\(ed\)", $node->author)) // single editor
+      //        if (preg_match("[ \r\n]*\(ed\)", $node->author)) // single editor
       //          $author = $author . ", ed";
-      //        elseif (ereg("[ \r\n]*\(eds\)", $node->author)) // multiple editors
+      //        elseif (preg_match("[ \r\n]*\(eds\)", $node->author)) // multiple editors
       //          $author = $author . ", eds";
 
       if (!empty($authors))      // author
       {
-        if (!ereg("\. *$", $authors))
-        $output .= $authors . ".";
-        else
+        $output .= '<span class="biblio-authors">';
         $output .= $authors;
+        if (!preg_match("/\. *$/", $authors)) $output .= ".";
+        $output .= '</span>';
       }
 
       if (!empty($node->title))      // title
       {
-        $url = biblio_get_title_url_info($node);
+        $url = biblio_get_title_url_info($node, $base, $inline);
         if (!empty($authors))
         $output .= " ";
 
         if (!empty($node->thesis))      // thesis
         {
-          $output .= '<span class="biblio-title">';
+          $output .= '<span class="biblio-title-chicago">';
           $output .= '"' . l($node->title, $url['link'], $url['options']);
-          $output .= ". </span> \n";
-          if (!ereg("[?!.]$", $node->title))
-          $output .= ".";
+          $output .= "</span>";
+          if (!preg_match("/[?!.]$/", $node->title)) $output .= ".";
           $output .= '"';
         }
         else // not a thesis
         $output .= '<i>';
-        $output .= '<span class="biblio-title">';
+        $output .= '<span class="biblio-title-chicago">';
         $output .= l($node->title, $url['link'], $url['options']);
-        $output .= ". </span> \n";
+        $output .= "</span>";
         $output .= '</i>';
       }
-      $publication = ereg_replace("[ \r\n]*\(Eds?:[^\)\r\n]*\)", "", $node->biblio_secondary_title);
+      $publication = preg_replace("/[ \r\n]*\(Eds?:[^\)\r\n]*\)/", "", $node->biblio_secondary_title);
       if (!empty($publication))      // publication
       $output .= " In <i>$publication</i>";
 
@@ -363,8 +354,7 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
 
       if (!empty($node->biblio_edition) && !preg_match("/^(1|1st|first|one)( ed\.?| edition)?$/i", $node->biblio_edition))      // edition
       {
-        if (!ereg("[?!.][ \"<i>]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"<i>]*$/", $output)) $output .= ".";
 
         if (preg_match("/^\d{1,3}$/", $node->biblio_edition)) // if the edition field contains a number of up to three digits, we assume it's an edition number (such as "2nd ed.")
         {
@@ -378,24 +368,21 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
         else
         $editionSuffix = "";
 
-        if (!preg_match("/( ed\.?| edition)$/i", $node->biblio_edition))
-        $editionSuffix .= " ed.";
+        if (!preg_match("/( ed\.?| edition)$/i", $node->biblio_edition)) $editionSuffix .= " ed.";
 
         $output .= " " . $node->biblio_edition . $editionSuffix;
       }
 
       if (!empty($node->biblio_volume))      // volume
       {
-        if (!ereg("[?!.][ \"<i>]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"<i>]*$/", $output)) $output .= ".";
 
         $output .= " Vol. " . $node->biblio_volume;
       }
 
       if (!empty($node->biblio_alternate_title) OR !empty($node->biblio_tertiary_title)) // if there's either a full or an abbreviated series title
       {
-        if (!ereg("[?!.][ \"<i>]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"<i>]*$/", $output)) $output .= ".";
 
         $output .= " ";
 
@@ -418,16 +405,14 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
 
       if (!empty($node->thesis))      // thesis
       {
-        if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output))  $output .= ".";
 
         $output .= " " . $node->thesis;
         $output .= ", " . $node->biblio_publisher;
       }
       else // not a thesis
       {
-        if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output)) $output .= ".";
 
         if (!empty($node->biblio_place_published))      // place
         $output .= " " . $node->biblio_place_published;
@@ -452,16 +437,14 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
 
         if (!empty($node->online_citation))      // online_citation
         {
-          if (!ereg("\. *$", $output))
-          $output .= ".";
+          if (!preg_match("/\. *$/", $output))  $output .= ".";
 
           $output .= " " . $node->online_citation;
         }
 
         if (!empty($node->doi))      // doi
         {
-          if (!ereg("\. *$", $output))
-          $output .= ".";
+          if (!preg_match("/\. *$/", $output)) $output .= ".";
 
           if ($encodeHTML)
           $output .= " " . encodeHTML("http://dx.doi.org/" . $node->doi) . " (accessed " . $today . ")";
@@ -470,8 +453,7 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
         }
         elseif (!empty($node->biblio_url))      // url
         {
-          if (!ereg("\. *$", $output))
-          $output .= ".";
+          if (!preg_match("/\. *$/", $output)) $output .= ".";
 
           if ($encodeHTML)
           $output .= " " . encodeHTML($node->biblio_url) . " (accessed " . $today . ")";
@@ -481,8 +463,7 @@ function biblio_style_chicago($node, $base = 'biblio', $inline = false) {
 
       }
 
-      if (!ereg("\. *$", $output))
-      $output .= ".";
+      if (!preg_match("/\. *$/", $output)) $output .= ".";
       break;
   }
 

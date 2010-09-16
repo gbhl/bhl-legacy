@@ -15,7 +15,7 @@
 
 // Modified for use in biblio by Ron Jerome
 //
-// $Id: biblio_style_ama.inc,v 1.1.2.9 2009/09/30 15:48:25 rjerome Exp $
+// $Id: biblio_style_ama.inc,v 1.1.2.17 2010/05/03 00:57:36 rjerome Exp $
 /**
  * Get the style information
  *
@@ -47,8 +47,8 @@ function biblio_style_ama_author_options() {
 }
 
 function biblio_style_ama($node, $base = 'biblio', $inline = false) {
-  $markupPatternsArray = array("italic-prefix" => '<i>',
-                               "italic-suffix" => '</i>',
+  $markupPatternsArray = array("italic-prefix" => "<i>",
+                               "italic-suffix" => "<\/i>",
                                "endash" => '-');
   $author_options = biblio_style_ama_author_options();
   $authors = theme('biblio_format_authors', $node->biblio_contributors[1], $author_options, $inline);
@@ -65,21 +65,21 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
     case 105: //Newspaper Article
     case 106: //Magazine Article
       if(!empty($authors)) {
-        if (!ereg("\. *$", $authors))
-        $output .= $authors . ".";
-        else
+        $output .= '<span class="biblio-authors">';
         $output .= $authors;
+        if (!preg_match("/\. *$/", $authors)) $output .= ".";
+        $output .=  "</span>";
       }
 
       if (!empty($node->title))      // title
       {
         if (!empty($authors)) $output .= " ";
         $output .= '"' ;
-        $output .= '<span class="biblio-title">';
-        $url = biblio_get_title_url_info($node);
+        $output .= '<span class="biblio-title-ama">';
+        $url = biblio_get_title_url_info($node, $base, $inline);
         $output .= l($node->title, $url['link'], $url['options']);
-        $output .= "</span>, \n";
-        if (!ereg("[?!.]$", $node->title)) $output .= ".";
+        $output .= "</span>";
+        if (!preg_match("/[?!.]$/", $node->title)) $output .= ".";
         $output .= '"';
       }
 
@@ -87,11 +87,11 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
       // if this is not the case, the output string will begin with a space. However, any preceding/trailing whitespace will be removed at the cleanup stage (see below)
 
       if (!empty($node->biblio_alternate_title))      // abbreviated journal name
-      $output .= " " . $markupPatternsArray["italic-prefix"] . $node->biblio_alternate_title . $markupPatternsArray["italic-suffix"];
+      $output .= " <i>" . $node->biblio_alternate_title . "</i>";
 
       // if there's no abbreviated journal name, we'll use the full journal name
       elseif (!empty($node->biblio_secondary_title))      // publication (= journal) name
-      $output .= " " . $markupPatternsArray["italic-prefix"] . $node->biblio_secondary_title . $markupPatternsArray["italic-suffix"];
+      $output .= " <i>"  . $node->biblio_secondary_title . "</i>";
 
       if ($node->biblio_type == 105 || $node->biblio_type == 106 AND !preg_match("/^\d+$/", $node->biblio_volume)) // for newspaper articles (and magazine articles if w/o volume number), volume (=month) and issue (=day) information is printed before the year
       {
@@ -169,31 +169,28 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
 
       }
 
-      if (!ereg("\. *$", $output))
-      $output .= ".";
+      if (!preg_match("/\. *$/", $output)) $output .= ".";
 
       break;
     case 101: //Book Chapter
     case 103: //Conference Paper
       if(!empty($authors)) {
-        if (!ereg("\. *$", $authors)) {
-          $output .= $authors . ".";
-        }
-        else {
-          $output .= $authors;
-        }
+        $output .= '<span class="biblio-authors">';
+        $output .= $authors;
+        if (!preg_match("/\. *$/", $authors)) $output .= ".";
+        $output .= '</span>';
       }
       if (!empty($node->title))      // title
       {
         if (!empty($authors))  $output .= " ";
 
         $output .= '"<i>' ;
-        $output .= '<span class="biblio-title">';
-        $url = biblio_get_title_url_info($node);
+        $output .= '<span class="biblio-title-ama">';
+        $url = biblio_get_title_url_info($node, $base, $inline);
         $output .= l($node->title, $url['link'], $url['options']);
-        $output .= "</span>, \n";
+        $output .= "</span>";
         $output .= '</i>';
-        if (!ereg("[?!.]$", $node->title)) $output .= ".";
+        if (!preg_match("/[?!.]$/", $node->title)) $output .= ".";
         $output .= '"';
       }
 
@@ -224,31 +221,29 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
         $output .= "ed";
       }
 
-      $publication = ereg_replace("[ \r\n]*\(Eds?:[^\)\r\n]*\)", "", $node->biblio_secondary_title);
+      $publication = preg_replace("/[ \r\n]*\(Eds?:[^\)\r\n]*\)/", "", $node->biblio_secondary_title);
       if (!empty($publication))      // publication
       {
-        if (!ereg("[?!.] *$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.] *$/", $output))  $output .= ".";
 
         if (empty($editor))
         $output .= " In:";
 
         // TODO: container titles should be formatted in heading caps, however, this doesn't yet work correctly if the publication title contains HTML entities
-        $output .= " " . $markupPatternsArray["italic-prefix"] . $publication . $markupPatternsArray["italic-suffix"];
+        $output .= " <i>" . $publication . "</i>";
         //        $output .= " " . $markupPatternsArray["italic-prefix"] . changeCase("heading", $publication) . $markupPatternsArray["italic-suffix"]; // function 'changeCase()' is defined in 'include.inc.php'
       }
 
       if (!empty($node->biblio_volume))      // volume
       {
-        if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output))   $output .= ".";
 
         $output .= " Vol. " . $node->biblio_volume;
       }
 
       if (!empty($node->biblio_edition) && !preg_match("/^(1|1st|first|one)( ed\.?| edition)?$/i", $node->biblio_edition))      // edition
       {
-        if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
+        if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output))
         $output .= ".";
 
         if (preg_match("/^\d{1,3}$/", $node->biblio_edition)) // if the edition field contains a number of up to three digits, we assume it's an edition number (such as "2nd ed.")
@@ -269,8 +264,7 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
         $output .= " " . $node->biblio_edition . $editionSuffix;
       }
 
-      if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
-      $output .= ".";
+      if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output)) $output .= ".";
 
       if (!empty($node->biblio_place_published))      // place
       $output .= " " . $node->biblio_place_published;
@@ -291,8 +285,7 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
 
       if (!empty($node->biblio_alternate_title) OR !empty($node->biblio_tertiary_title)) // if there's either a full or an abbreviated series title
       {
-        if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output)) $output .= ".";
 
         $output .= " ";
 
@@ -313,8 +306,7 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
         $output .= "(" . $node->biblio_issue . ")"; // is it correct to format series issues similar to journal article issues?
       }
 
-      if (!ereg("\. *$", $output))
-      $output .= ".";
+      if (!preg_match("/\. *$/", $output)) $output .= ".";
 
       break;
 
@@ -327,10 +319,10 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
 
       if (!empty($authors))      // author
       {
-        if (!ereg("\. *$", $authors))
-        $output .= $authors . ".";
-        else
+        $output .= '<span class="biblio-authors">';
         $output .= $authors;
+        if (!preg_match("/\. *$/", $authors)) $output .= ".";
+        $output .= '</span>';
       }
 
       if (!empty($node->title))      // title
@@ -340,10 +332,10 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
 
         $output .= '<i>';
         // TODO: book/volume/report/etc titles should be formatted in heading caps, however, this doesn't yet work correctly if the publication title contains HTML entities
-        $output .= '<span class="biblio-title">';
-        $url = biblio_get_title_url_info($node);
+        $output .= '<span class="biblio-title-ama">';
+        $url = biblio_get_title_url_info($node, $base, $inline);
         $output .= l($node->title, $url['link'], $url['options']);
-        $output .= "</span>, \n";
+        $output .= "</span>";
         $output .= '</i>';
       }
       if ($node->biblio_type == "Software") // for software, add software label
@@ -351,7 +343,7 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
 
       if (!empty($node->biblio_volume) AND ($node->biblio_type != "Software"))      // volume
       {
-        if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
+        if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output))
         $output .= ".";
 
         $output .= " Vol. " . $node->biblio_volume;
@@ -359,7 +351,7 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
 
       if (!empty($node->biblio_edition))      // edition
       {
-        if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
+        if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output))
         $output .= ".";
 
         if ($row['type'] == "Software")      // software edition (=version)
@@ -406,8 +398,7 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
         );
 
         $editor = theme('biblio_format_authors', $node->biblio_contributors[2], $editor_options, $inline);
-        if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output))  $output .= ".";
 
         $output .= " " . $editor;
         if (count ($node->biblio_contributors[2]) > 1) // there are at least two editors (separated by ';')
@@ -420,8 +411,7 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
       // TODO: do we need to use the term "[dissertation]" instead of "[Ph.D. thesis]", etc? What about other thesis types then?
       $output .= " [" . $row['thesis'] . "]";
 
-      if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
-      $output .= ".";
+      if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output))  $output .= ".";
 
       if (!empty($node->biblio_place_published))      // place
       $output .= " " . $node->biblio_place_published;
@@ -452,8 +442,7 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
 
       if (!empty($node->biblio_alternate_title) OR !empty($node->biblio_tertiary_title)) // if there's either a full or an abbreviated series title
       {
-        if (!ereg("[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$", $output))
-        $output .= ".";
+        if (!preg_match("/[?!.][ \"" . $markupPatternsArray["italic-suffix"] . "]*$/", $output))  $output .= ".";
 
         $output .= " ";
 
@@ -482,16 +471,14 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
 
         if (!empty($row['online_citation']))      // online_citation
         {
-          if (!ereg("\. *$", $output))
-          $output .= ".";
+          if (!preg_match("/\. *$/", $output)) $output .= ".";
 
           $output .= $row['online_citation'];
         }
 
         if (!empty($row['doi']))      // doi
         {
-          if (!ereg("\. *$", $output))
-          $output .= ".";
+          if (!preg_match("/\. *$/", $output))  $output .= ".";
 
           if ($encodeHTML)
           $output .= " " . encodeHTML("http://dx.doi.org/" . $row['doi']) . ". Accessed " . $today;
@@ -500,8 +487,7 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
         }
         elseif (!empty($row['url']))      // url
         {
-          if (!ereg("\. *$", $output))
-          $output .= ".";
+          if (!preg_match("/\. *$/", $output))  $output .= ".";
 
           if ($encodeHTML)
           $output .= " " . encodeHTML($row['url']) . ". Accessed " . $today;
@@ -511,8 +497,7 @@ function biblio_style_ama($node, $base = 'biblio', $inline = false) {
 
       }
 
-      if (!ereg("\. *$", $output))
-      $output .= ".";
+      if (!preg_match("/\. *$/", $output))  $output .= ".";
       break;
   }
 

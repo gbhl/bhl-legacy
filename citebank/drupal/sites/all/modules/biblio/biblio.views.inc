@@ -1,5 +1,5 @@
 <?php
-// $Id: biblio.views.inc,v 1.4.2.14.2.1 2010/02/19 22:12:13 rjerome Exp $
+// $Id: biblio.views.inc,v 1.4.2.17 2010/05/13 02:31:00 rjerome Exp $
 function biblio_views_plugins() {
 // Not ready for prime time!!!
 //  return array(
@@ -80,6 +80,14 @@ function biblio_views_handlers() {
       'biblio_handler_filter_biblio_keyword_kid' => array(
         'parent' => 'views_handler_filter_many_to_one',
       ),
+/*
+ *  Arguments
+ */
+      'biblio_handler_argument_many_to_one' => array(
+        'parent' => 'views_handler_argument_many_to_one',
+      ),
+
+
       )
   );
 }
@@ -174,8 +182,15 @@ function biblio_views_data() {
     'help'    => t('The type of publication: Journal, Book, Conference Paper, etc.')
   );
   $data['tid'] =  array(
+    'argument' => array(
+      'handler' => 'biblio_handler_argument_many_to_one',
+      'name table' => 'biblio_types',
+      'name field' => 'name',
+      'empty name field' => t('No Type'),
+      'numeric' => TRUE,
+    ),
     'filter'  => array('handler' => 'biblio_handler_filter_biblio_type'),
-    'title'   => t('Type of Publication'),
+    'title'   => t('Type ID of Publication'),
     'help'    => t('The type of publication: Journal, Book, Conference Paper, etc.')
   );
 
@@ -204,7 +219,7 @@ function biblio_views_data() {
     'title' => t('Author ID'),
     'help' => t('Filter by author id.'),
     'argument' => array(
-      'handler'    => 'views_handler_argument_many_to_one',
+      'handler'    => 'biblio_handler_argument_many_to_one',
       'name table' => 'biblio_contributor_data',
       'name field' => 'lastname',
       'empty name field' => t('No Author'),
@@ -292,7 +307,7 @@ function biblio_views_data() {
       'handler' => 'biblio_handler_field_biblio_keyword_kid',
     ),
     'argument' => array(
-      'handler' => 'views_handler_argument_many_to_one',
+      'handler' => 'biblio_handler_argument_many_to_one',
       'name table' => 'biblio_keyword_data',
       'name field' => 'word',
       'empty name field' => t('No Keyword'),
@@ -334,8 +349,8 @@ function biblio_views_data() {
     );
   $data['word'] =  array(
     'field'     => array('handler' => 'biblio_handler_field_biblio_keyword_data_word'),
-    'filter'    => array('handler' => 'views_handler_filter'),
-    'argument'  => array('handler' => 'views_handler_argument'),
+    'filter'    => array('handler' => 'views_handler_filter_string'),
+    'argument'  => array('handler' => 'views_handler_argument_string'),
     'sort'      => array('handler' => 'views_handler_sort'),
     'title'     => t('Keyword'),
     'skip base' => array('node', 'node_revision'),

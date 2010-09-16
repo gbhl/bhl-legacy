@@ -1,5 +1,5 @@
 <?php
-// $Id: biblio_theme.inc,v 1.8.2.95.2.7 2010/02/19 22:12:13 rjerome Exp $
+// $Id: biblio_theme.inc,v 1.8.2.112 2010/08/30 00:51:19 rjerome Exp $
 /**
  *
  *   Copyright (C) 2006-2008  Ron Jerome
@@ -33,15 +33,46 @@ function theme_biblio_coin_button($element) {
  * @param $openURL
  * @return unknown_type
  */
-function theme_biblio_openurl($openURL) {
-  $openurl_image = variable_get('biblio_openurlimage', '');
-  if ($openurl_image != '') {
-    $output .= '<div class="biblio-openurl-image"><a href="'. $openURL .'"target=_blank><img border="0" src="'. $openurl_image .'" /></a></div>';
+function theme_biblio_openurl($node) {
+  global $user;
+  $openURLResolver = '';
+  if (isset($user->biblio_baseopenurl)  &&
+      !empty($user->biblio_baseopenurl) &&
+      variable_get('biblio_show_openurl_profile_form', '1'))
+  {
+    $openURLResolver = $user->biblio_baseopenurl;
   }
   else {
-    $output .= '<div class="biblio-openurl-text"><a href="'. $openURL .'" target=_blank>'. t('Find It Via OpenURL!') .'</a></div>';
+    $openURLResolver = variable_get('biblio_baseopenurl', '');
   }
-  return $output;
+  if (!empty($openURLResolver)) {
+    $openURLResolver = check_plain($openURLResolver);
+    $openurl_query_options = biblio_openURL($node);
+    $openurl_image = check_plain(variable_get('biblio_openurlimage', ''));
+
+    if ($openurl_image != '') {
+      return array(
+        'title'      => '<img border="0" src="'. $openurl_image .'" />',
+        'href'       => $openURLResolver,
+        'html'       => TRUE,
+        'attributes' => array(
+          'class'      => 'biblio-openurl-image',
+        ),
+        'query'      => $openurl_query_options,
+      );
+    }
+    else {
+      return array(
+        'title'      => t('Find It Via OpenURL!'),
+        'href'       => $openURLResolver,
+        'attributes' => array(
+          'class'      => 'biblio-openurl-text',
+        ),
+        'query'      => $openurl_query_options,
+      );
+    }
+  }
+  return;
 }
 
 /**
@@ -49,36 +80,27 @@ function theme_biblio_openurl($openURL) {
  * @return unknown_type
  */
 function biblio_openURL($node) {
-  global $user;
-  $openURL = '';
+  $query = array();
   // Copyright:          Matthias Steffens <mailto:refbase@extracts.de> and the file's
   //                     original author.
   // Original Author:    Richard Karnesky <mailto:karnesky@gmail.com>  //
   // Adapted for biblio: Ron Jerome
   //  global $openURLResolver; // these variables are defined in 'ini.inc.php'
   //  global $hostInstitutionAbbrevName;
-  $openURLResolver = !empty($user->biblio_baseopenurl)?$user->biblio_baseopenurl:'';
-  if (empty($openURLResolver)) $openURLResolver = variable_get('biblio_baseopenurl', '');
-  if (!empty($openURLResolver)) {
-    $co = biblio_contextObject($node);
+  $co = biblio_contextObject($node);
 
-    $sid = "biblio:". variable_get('site_name', 'Drupal');
-    $user_sid = !empty($user->biblio_openurl_sid)?$user->biblio_openurl_sid:'';
-    $co["sid"] = !empty($user_sid) ? $user_sid : variable_get('biblio_openurl_sid', $sid);
-
-    $openURL = $openURLResolver;
-    if (!ereg("\?", $openURLResolver))
-    $openURL .= "?";
-    else
-    $openURL .= "&amp;";
-    $openURL .= "ctx_ver=Z39.88-2004";
-    foreach ($co as $coKey => $coValue) {
-      $coKey = ereg_replace("rft.", "", $coKey);
-      $coKey = ereg_replace("au[0-9]*", "au", $coKey);
-      $openURL .= "&amp;". $coKey ."=". rawurlencode($coValue);
-    }
+  $query["ctx_ver"]= "Z39.88-2004";
+  foreach ($co as $coKey => $coValue) {
+    $coKey = ereg_replace("rft.", "", $coKey);
+    $coKey = ereg_replace("au[0-9]*", "au", $coKey);
+    $query[$coKey] = rawurlencode($coValue);
   }
-  return $openURL;
+
+  $sid = "biblio:". variable_get('site_name', 'Drupal');
+  $user_sid = !empty($user->biblio_openurl_sid)?$user->biblio_openurl_sid:'';
+  $query["sid"] = !empty($user_sid) ? check_plain($user_sid) : check_plain(variable_get('biblio_openurl_sid', $sid));
+
+  return $query;
 }
 
 
@@ -112,13 +134,12 @@ function theme_biblio_long($node, $base = 'biblio', $style = 'classic') {
     }
     return $output;
   }
+  $author_links = variable_get('biblio_author_links', 1);
   foreach ((array)$node->biblio_contributors[1] as $auth) {
-    $authors[] = theme('biblio_author_link', $auth['name'], $auth['cid'], $base);
+    $authors[] = $author_links ? theme('biblio_author_link', $auth) : check_plain(trim($auth['name']));
   }
   $authors = implode('; ', (array)$authors);
-  $openurl_base = variable_get('biblio_baseopenurl', '');
-  if ($openurl_base)
-    $output .= theme('biblio_openurl', biblio_openurl($node, $openurl_base));
+  $output .= theme('biblio_openurl', $node);
   $output .= '<div class="biblio_type"><h3>'. t("Publication Type") .":</h3> ". _biblio_localize_type($node->biblio_type, $node->biblio_type_name) ."</div>\n";
   $output .= '<div class="biblio_authors"><h3>'. t("Authors") .':</h3> '. $authors ."</div>\n";
   $output .= '<div class="biblio_source"><h3>'. t("Source") .': </h3> ';
@@ -197,16 +218,17 @@ function theme_biblio_tabular($node, $base = 'biblio', $teaser = false) {
   $tid = $node->biblio_type;
   $style_name = biblio_get_style();
   $style_function = "biblio_style_$style_name"."_author_options";
-  module_load_include('inc', 'biblio', "styles/biblio_style_$style_name");
+  module_load_include('inc','biblio',"biblio_style_$style_name");
   $fields = _biblio_get_field_information($node->biblio_type, TRUE);
   _biblio_localize_fields($fields);
   $rows[] = array(
-    array('data' => t('Title'), 'class' => 'biblio-row-title'),
-    array('data' => filter_xss($node->title, biblio_get_allowed_tags()))
+    array('data' => t('Title'), 'class' => 'biblio-row-title biblio-field-title-title'),
+    array('data' => filter_xss($node->title, biblio_get_allowed_tags()), 'class' => 'biblio-field-contents-title')
   );
   $rows[] = array(
-    array('data' => t('Publication Type'), 'class' => 'biblio-row-title'),
-    array('data' => isset($node->biblio_type_name) ? _biblio_localize_type($node->biblio_type, $node->biblio_type_name) : $node->biblio_type)
+    array('data' => t('Publication Type'), 'class' => 'biblio-row-title biblio-field-title-type'),
+    array('data' => isset($node->biblio_type_name) ? _biblio_localize_type($node->biblio_type, $node->biblio_type_name) : $node->biblio_type,
+           'class' => 'biblio-field-contents-type')
   );
 
   if ($node->biblio_url) {
@@ -254,10 +276,11 @@ function theme_biblio_tabular($node, $base = 'biblio', $teaser = false) {
     $rows[] = array(
       array(
         'data' => t($row['title']),
-        'class' => 'biblio-row-title'
+        'class' => 'biblio-row-title biblio-field-title-'.str_replace('_', '-', str_replace('biblio_', '', $row['name']))
       ),
       array(
-        'data' => $data
+        'data' => $data,
+        'class' => 'biblio-field-contents-'.str_replace('_', '-', str_replace('biblio_', '', $row['name']))
       )
     );
   }
@@ -288,8 +311,8 @@ function theme_biblio_authors($contributors, $style = 'classic', $cat = 1, $inli
       $author = biblio_parse_author($author, $cat); // this is needed for form preview to fill in all fields
     }
     if (strlen($author['name'])) {
-      $format = $author_style_function($author);
-      if ($author_links) $format = theme('biblio_author_link', $format, $author['cid'], $base, $inline);
+      $$author['name'] = $author_style_function($author);
+      if ($author_links) $format = theme('biblio_author_link', $author);
       // add the auth_type as css id to allow later formatting
       $author_array[] = '<span id="'.$author['auth_type'].'">'.$format.'</span>';
     }
@@ -434,6 +457,8 @@ function theme_biblio_format_authors($contributors, $options, $inline = false)
         // within initials, reduce all full first names (-> defined by a starting uppercase character, followed by one ore more lowercase characters)
         // to initials, i.e., only retain their first character
         $author['firstname'] = preg_replace("/([$upper])[$lower]+/$patternModifiers", '\\1', $author['firstname']);
+        $author['initials'] = $author['firstname'] . $author['initials'];
+        unset($author['firstname']);
         //$author['firstname'] = drupal_substr($author['firstname'], 0, 1);
         // the next line caused extra betweenInitialsDelim to appear in some circumstances
         //$author['firstname'] = preg_replace("/($space|$dash)?/$patternModifier", $options['betweenInitialsDelim'], $author['firstname']);
@@ -459,11 +484,11 @@ function theme_biblio_format_authors($contributors, $options, $inline = false)
       $shortenInitials = (isset($options['numberOfInitialsToKeep'])) ? $options['numberOfInitialsToKeep'] : FALSE;
       if ($shortenInitials) $author['initials'] = drupal_substr($author['initials'], 0, $shortenInitials);
 
-      if ($options['shortenGivenNames'] && !empty($author['firstname'])) {
-        $author['firstname'] = $author['firstname'].$options['betweenInitialsDelim'].$author['initials'];
-        if ($shortenInitials) $author['firstname'] = drupal_substr($author['firstname'], 0, $shortenInitials);
-      }
-      elseif(!empty($author['firstname'])) {
+//      if ($options['shortenGivenNames'] && !empty($author['firstname'])) {
+//        $author['firstname'] = $author['firstname'].$options['betweenInitialsDelim'].$author['initials'];
+//        if ($shortenInitials) $author['firstname'] = drupal_substr($author['firstname'], 0, $shortenInitials);
+//      }
+      if(!empty($author['firstname'])) {
         $author['firstname'] = $author['firstname'].' '.$author['initials'];
       }
       elseif(empty($author['firstname'])) {
@@ -497,7 +522,8 @@ function theme_biblio_format_authors($contributors, $options, $inline = false)
       $singleAuthorString = $author['lastname'];
     }
     if ($author_links) {
-      $singleAuthorString = theme('biblio_author_link',$singleAuthorString, $author['cid'], $base, $inline);
+      $author['name'] = $singleAuthorString;
+      $singleAuthorString = theme('biblio_author_link', $author);
     }
     else {
       $singleAuthorString = check_plain($singleAuthorString);
@@ -539,7 +565,9 @@ function theme_biblio_format_authors($contributors, $options, $inline = false)
   return $output;
 }
 
-function theme_biblio_author_link($author, $aid, $base='biblio', $inline = FALSE) {
+function theme_biblio_author_link($author) {
+  $base = variable_get('biblio_base', 'biblio');
+  $link_to_profile = variable_get('biblio_author_link_profile', 0);
   $options = array();
   $inline = $inline ? "/inline" : "";
 
@@ -549,9 +577,12 @@ function theme_biblio_author_link($author, $aid, $base='biblio', $inline = FALSE
   if (isset($_GET['order'])) {
     $options['query']['order'] = $_GET['order'];
   }
-
-  $html = l(trim($author), "$base/author/$aid".$inline,$options );
-
+  if ($link_to_profile && $author['drupal_uid'] ) {
+    return l(trim($author['name']), "user/".$author['drupal_uid']."/$base" );
+  }
+  else {
+    return l(trim($author['name']), "$base/author/". $author['cid'] .$inline, $options );
+  }
   return $html;
 }
 
@@ -643,7 +674,7 @@ function theme_biblio_page_number($origPageInfo, $pageRangeDelim = "-", $singleP
  * @return A string containing the styled (HTML) node
  */
 function theme_biblio_style($node, $base = 'biblio', $style_name = 'classic', $inline = false) {
-  module_load_include('inc', 'biblio', "styles/biblio_style_$style_name");
+  module_load_include('inc','biblio',"biblio_style_$style_name");
 
   $style_function = "biblio_style_$style_name";
   $styled_node = $style_function ($node, $base, $inline);
@@ -680,14 +711,8 @@ function theme_biblio_entry($node, $base = 'biblio', $style = 'classic', $inline
     $output .= check_markup($node->$annotation_field, $node->format, FALSE);
     $output .= '</div>';
   }
-  $openurl_base = variable_get('biblio_baseopenurl', '');
-
-  if ($openurl_base){
-    $output .= theme('biblio_openurl', biblio_openurl($node));
-  }
 
   if (biblio_access('export', $node)) {
-    $base = variable_get('biblio_base', 'biblio');
     $output .= theme('biblio_export_links',$node);
   }
 
@@ -708,7 +733,7 @@ function theme_biblio_entry($node, $base = 'biblio', $style = 'classic', $inline
  * @param $form
  * @return unknown_type
  */
-function theme_biblio_filters(& $form) {
+function theme_biblio_filters($form) {
   if (sizeof($form['current'])) {
     $output .= '<ul>';
     foreach (element_children($form['current']) as $key) {
@@ -751,7 +776,6 @@ function theme_biblio_form_filter(& $form) {
 function theme_biblio_admin_types_edit_form($form) {
   drupal_add_tabledrag('field-table', 'order', 'sibling', 'weight',NULL,NULL,false);
 
-  $base = variable_get('biblio_base', 'biblio');
   $tid = (!empty ($form['#parameters'][2])) ? $form['#parameters'][2] : FALSE;
   //  drupal_set_title($form['type_name'] ? $form['type_name']['#value'] : t('Common'));
 
@@ -807,10 +831,16 @@ function theme_biblio_download_links($node = NULL) {
     $file_count = 0;
     foreach ($node->files as $file) {
       if ($file->list) {
-        $file_count++;
-        $href = file_create_url($file->filepath);
+        if (variable_get('biblio_download_links_to_node', 0)) {
+          $href = 'biblio/view/'.$node->nid;
+        }
+        else {
+          $href = file_create_url($file->filepath);
+        }
         $text = $file->description ? $file->description : $file->filename;
+        if ($file_count) $files .= '; ';
         $files .= l($text, $href) .'&nbsp;('. format_size($file->filesize).')';
+        $file_count++;
       }
     }
     $files .= '</span>';
@@ -818,7 +848,7 @@ function theme_biblio_download_links($node = NULL) {
   if (module_exists('filefield')) { // now lets get any CCK FileField files...
     $fields = filefield_get_field_list('biblio');
     foreach ($fields as $field_name => $field) {
-      if (filefield_view_access($field_name)) {
+      if (filefield_view_access($field_name, $node)) {
         $field_files = filefield_get_node_files($node, $field_name);
         if ($field_files) {
           foreach ($field_files as $file) {
@@ -841,34 +871,122 @@ function theme_biblio_download_links($node = NULL) {
  */
 function theme_biblio_export_links($node = NULL) {
   global $pager_total_items;
-  $links = array();
   $base = variable_get('biblio_base', 'biblio');
+  $show_link = variable_get('biblio_export_links', array('rtf' => TRUE, 'tagged' => TRUE, 'xml' => TRUE, 'bibtex' => TRUE));
+  $show_link['google'] = variable_get('biblio_google_link', 1);
 
-  if (biblio_access('export', $node)) {
-    $show_link = variable_get('biblio_lookup_links', array('google' => TRUE));
-    $lookup_links = module_invoke_all('biblio_lookup_link', $node);
-    if ($show_link['google'] && !empty($node)) $lookup_links['biblio_google_scholar'] = _build_google_scholar_link($node);
-
-    $export_links = module_invoke_all('biblio_export_link', $node->nid);
-    $links = array_merge($lookup_links, $export_links);
+  $links = '';
+  if ($show_link['rtf'])    $links .= '<li> '. _build_biblio_link($base, $node, 'rtf') .'</li>';
+  if ($show_link['tagged']) $links .= '<li> '. _build_biblio_link($base, $node, 'tagged') .'</li>';
+  if ($show_link['xml'])    $links .= '<li> '. _build_biblio_link($base, $node, 'xml') .'</li>';
+  if ($show_link['bibtex']) $links .= '<li> '. _build_biblio_link($base, $node, 'bibtex') .'</li>';
+  if ($show_link['google'] && !empty($node))
+                            $links .= '<li> '. _build_biblio_link($base, $node, 'google') .'</li>';
+  if ($show_link['pubmed'] && module_exists('biblio_pm') && !(empty($node))) {
+    $links .= '<li> '._build_biblio_link($base, $node, 'pubmed')  .'</li>';
   }
+  if ($node) $openurl_link = theme('biblio_openurl', $node);
+  if (!empty($openurl_link)) {
+    $links .= '<li> '. l($openurl_link['title'], $openurl_link['href'], $openurl_link) .'</li>';
+  }
+  if (!empty($links)) $links = '<ul class="biblio-export-buttons">' . $links . '</ul>';
   if (empty($node) && !empty($links)) {
-    $output = t('Export @count results', array('@count' => $pager_total_items[0])).': ';
+    $links = t('Export @count results', array('@count' => $pager_total_items[0])).':' . $links;
   }
-  return $output . theme('links', $links, array('class' => "biblio-export-buttons"));
-
+  return $links;
 }
 
+/**
+ * Creates a link to export a node (or view) in EndNote Tagged format
+ *
+ * @param $base this is the base url (defaults to /biblio)
+ * @param $nid  the node id, if NULL then the current view is exported
+ * @return  a link (<a href=...>Tagged</a>)
+ */
+function _build_biblio_link($base, $node = NULL, $type = NULL) {
+  $nid = ($node) ? $node->nid : NULL;
+  switch ($type) {
+    case 'bibtex':
+      $link = _build_biblio_bibtex_link($base, $nid);
+      break;
+    case 'tagged':
+      $link = _build_biblio_tagged_link($base, $nid);
+      break;
+    case 'xml':
+      $link = _build_biblio_xml_link($base, $nid);
+      break;
+    case 'google':
+      $link = _build_google_scholar_link($node);
+      break;
+    case 'rtf':
+      $link = _build_biblio_rtf_link($base, $nid);
+      break;
+    case 'pubmed':
+      $link = biblio_pm_biblio_lookup_link($node);
+      $link = $link['biblio_pubmed'];
+      break;
+  }
+  if (!empty($link)) return  l($link['title'], $link['href'], $link);
+}
+
+function _build_biblio_rtf_link($base, $nid) {
+    return array(
+      'title'      => t('RTF'),
+      'href'       => "$base/export/rtf/$nid",
+      'attributes' => array(
+        'title' => t("Click to download the RTF formatted file")
+        )
+      );
+}
 
 function _build_biblio_tagged_link($base, $nid) {
   if (module_exists('popups') && !empty($nid)) {
-    $link = array('href' => "$base/export/tagged/$nid/popup", 'attributes' => array('class' => 'popups', 'title' => t("Click to get the EndNote Tagged output ")));
-  } else {
-    $link = array('href' => "$base/export/tagged/$nid", 'attributes' => array('title' => t("Click to download the EndNote Tagged formatted file")));
+    return array(
+      'title'      => t('Tagged'),
+      'href'       => "$base/export/tagged/$nid/popup",
+      'attributes' => array(
+        'class'      => 'popups',
+        'title'      => t("Click to get the EndNote Tagged output ")
+        )
+      );
   }
-  $link['title'] = t('Tagged');
-
-  return $link;
+  else {
+    return array(
+      'title'      => t('Tagged'),
+      'href'       => "$base/export/tagged/$nid",
+      'attributes' => array(
+        'title' => t("Click to download the EndNote Tagged formatted file")
+        )
+      );
+  }
+}
+/**
+ * Creates a link to export a node (or view) in BibTEX format
+ *
+ * @param $base this is the base url (defaults to /biblio)
+ * @param $nid  the node id, if NULL then the current view is exported
+ * @return  a link (<a href=...>BibTEX</a>)
+ */
+function _build_biblio_bibtex_link($base, $nid = NULL) {
+  if (module_exists('popups') && !empty($nid)) {
+    return array(
+      'title' => t('BibTex'),
+      'href' => "$base/export/bibtex/$nid/popup",
+      'attributes' => array(
+        'class' => 'popups',
+        'title' => t("Click to get the BibTEX output ")
+       )
+     );
+  }
+  else {
+    return array(
+      'title' => t('BibTex'),
+      'href' => "$base/export/bibtex/$nid",
+      'attributes' => array(
+        'title' => t("Click to download the BibTEX formatted file")
+        )
+      );
+  }
 }
 
 /**
@@ -879,26 +997,39 @@ function _build_biblio_tagged_link($base, $nid) {
  * @return  a link (<a href=...>XML</a>)
  */
 function _build_biblio_xml_link($base, $nid = NULL) {
-//  if (module_exists('popups') && !empty($nid)) {
-//    $link = array('href' => "$base/export/xml/$nid/popup", 'attributes' => array('class' => 'popups', 'title' => t("Click to get the XML output ")));
-//  } else {
-    $link = array('href' => "$base/export/xml/$nid", 'attributes' => array('title' => t("Click to download the XML formatted file")));
-//  }
-  $link['title'] = t('XML');
-
-  return $link;
+    return  array(
+      'title' => t('XML'),
+      'href' => "$base/export/xml/$nid",
+      'attributes' => array(
+        'title' => t("Click to download the XML formatted file")
+       )
+     );
 }
+
 function _build_google_scholar_link($node) {
-  $link  = 'http://scholar.google.com/scholar?as_q=';
-  $link .= '"'.str_replace(' ', '+', $node->title).'"';
-  $link .= '&btnG=Search+Scholar&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors='.$node->biblio_contributors[1][0]['lastname'];
+  $query = array();
+
+  $query['btnG'] = 'Search+Scholar';
+  $query['as_q'] = '"'.str_replace(' ', '+', $node->title).'"'; // as_q = all the words
+  $query['as_sauthors'] = $node->biblio_contributors[1][0]['lastname'];
+  $query['as_occt'] = 'any';
+  $query['as_epq'] = ''; // exact phrase
+  $query['as_oq'] = ''; // at least one of the words
+  $query['as_eq'] = ''; // without the words
+  $query['as_publication'] = ''; // published in
+  $query['as_ylo'] = ''; // lower date in date range
+  $query['as_yhi'] = ''; // upper date in date range
+  $query['as_sdtAAP'] = 1; //Search articles in all subject areas
+  $query['as_sdtp'] = 1; //include patents
 
   return array(
         'title'      => t('Google Scholar'),
-        'href'       => $link,
+        'href'       => 'http://scholar.google.com/scholar',
         'attributes' => array('title' => t("Click to search Google Scholar for this entry")),
-        );
+        'query'      => $query,
+  );
 }
+
 
 /**
  * @param $form
@@ -919,10 +1050,10 @@ function theme_biblio_contributors($form) {
     // Build the table row.
     $row = array('');
     $row[] = array('data' => drupal_render($form[$key]['name']),
-                   'class' => 'biblio-contributor');
+              		 'class' => 'biblio-contributor');
     if (!$form['#hideRole']) {
       $row[] = array('data' => drupal_render($form[$key]['auth_type']),
-                     'class' => 'biblio-contributor-type');
+      							 'class' => 'biblio-contributor-type');
     }
     $row[] = drupal_render($form[$key]['rank']);
     $rows[] = array('data' => $row, 'class' => 'draggable');
@@ -951,6 +1082,12 @@ function theme_biblio_alpha_line($type = 'author',$current = NULL, $path = NULL)
     case 'keywords':
       $path =  (ord(substr($_GET['q'],-1)) > 97) ? $_GET['q'] . "/" : substr($_GET['q'], 0, -1);
       $all = '['.l(t('Show ALL'), substr($_GET['q'], 0, -2)).']' ;
+      break;
+    case 'keyword':
+      $options['query'] = array('sort' => 'keyword');
+      $path = "$base/keyword/";
+      $all_query['query'] = array('sort' => 'keyword', 'order' => $_GET['order']);
+      $all = '['.l(t('Show ALL'), $base,$all_query).']' ;
       break;
     case 'author':
       $options['query'] = array('sort' => 'author');
@@ -982,7 +1119,7 @@ function theme_biblio_alpha_line($type = 'author',$current = NULL, $path = NULL)
   }
   $output = '<div class="biblio-alpha-line">';
   for ($i = 65; $i <= 90; $i++) {
-    if ($i == ord($current)){
+    if ($i == ord(strtoupper($current))){
       $output .= '<b>['.chr($i).']</b>&nbsp;';
     }
     else{

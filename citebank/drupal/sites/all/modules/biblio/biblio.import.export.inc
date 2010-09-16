@@ -1,6 +1,6 @@
 <?PHP
 
-// $Id: biblio.import.export.inc,v 1.7.2.70.2.4 2010/01/25 02:57:38 rjerome Exp $
+// $Id: biblio.import.export.inc,v 1.7.2.86 2010/08/23 01:04:44 rjerome Exp $
 /**
  * @file
  * Functions that are used to import and export biblio data.
@@ -66,20 +66,23 @@ function biblio_import_form() {
       '#default_value' => '',
       '#size' => 60
     );
+    $import_formats = array (
+        'none'   => t('Select type'),
+        'bib'    => t('BibTex'),
+        'tagged' => t('EndNote Tagged'),
+        'xml'    => t('EndNote 7 XML (and previous versions)'),
+        'xml8'   => t('EndNote 8 XML (and newer versions)'),
+        'marc'   => t('MARC'),
+        'ris'    => t('RIS'),
+    );
+    if (module_exists('biblio_pm')) $import_formats['pubmed'] = t('PubMed ID List');
+
     $form['filetype'] = array (
       '#type' => 'select',
       '#title' => t('File Type'),
       '#default_value' => 0,
-      '#options' => array (
-        '0'        => t('Select type'),
-        )
+      '#options' => $import_formats,
     );
-
-    $other_options = module_invoke_all('biblio_import_options');
-
-    $form['filetype']['#options'] = array_merge($form['filetype']['#options'], $other_options);
-    asort($form['filetype']['#options']);
-
     $form['batch_process'] = array (
       '#type' => 'checkbox',
       '#title' => t('Batch Process'),
@@ -115,7 +118,7 @@ function biblio_import_form() {
         '#title' => t('Copy these terms to the biblio keyword database'),
         '#return_value' => 1,
         '#default_value' =>  variable_get('biblio_copy_taxo_terms_to_keywords', 0),
-        '#description' => t('If this option is selected, the selected taxonomy terms will be copied to the '.variable_get('biblio_base_title', 'Biblio').' keyword database and be displayed as keywords (as well as taxonomy terms) for this entry.')
+        '#description' => t('If this option is selected, the selected taxonomy terms will be copied to the @biblio_title keyword database and be displayed as keywords (as well as taxonomy terms) for this entry.', array('@biblio_title' => variable_get('biblio_base_title', 'Biblio')))
       );
 
     } else {
@@ -172,9 +175,8 @@ function biblio_import_form_validate($form, & $form_state) {
  * Implementation of hook_submit() for the biblio_import_form.
  */
 function biblio_import_form_submit($form, & $form_state) {
-  global $batch_proc;
-  global $session_id;
-  global $user;
+  global  $batch_proc;
+  global  $session_id;
   if ($form_state['values']['op'] == t('Import') && isset ($form_state['values']['filetype'])) {
     if ($import_file = file_save_upload('biblio_import_file')) {
       if($form_state['values']['batch_process'] == 1) $batch_proc = 1;  // we will use batch import for larger files.
@@ -199,15 +201,17 @@ function biblio_import_form_submit($form, & $form_state) {
 
       // Added the $terms argument
       // the array of terms to be attached to the node(s)
-      $userid = (isset ($form_state['values']['userid'])) ? $form_state['values']['userid'] : $user->uid;
+      $userid = (isset ($form_state['values']['userid'])) ? $form_state['values']['userid'] : 1;
       $filetype = $form_state['values']['filetype'];
+      $filesize = sprintf("%01.1f", $import_file->filesize / 1000);
+      $filesize = " ($filesize KB)";
       if ($batch_proc) {
         $session_id = microtime();
         $batch_op = array(
-          'title' => t('Importing '.$import_file->filename),
+          'title' => t('Importing '.$import_file->filename). $filesize,
           'operations' => array(
             array('biblio_import', array($import_file, $filetype, $userid, $terms, $batch_proc, $session_id)),
-            array('biblio_import_batch_operations', array($session_id, $user, $userid, $terms)),
+            array('biblio_import_batch_operations', array($session_id, $userid, $terms)),
            ),
           'progressive' => TRUE,
           'finished' => 'biblio_import_batch_finished',
@@ -231,57 +235,72 @@ function biblio_import_form_submit($form, & $form_state) {
     }
   }
 }
-function biblio_import_batch_operations($session_id, $user, $userid, $terms, &$context) {
+function biblio_import_batch_operations($session_id, $userid, $terms, &$context) {
+  $limit = 10;
   if (empty($context['sandbox'])) {
     // Initiate multistep processing.
     $context['results']['session_id'] = $session_id;
-    $context['results']['userid']     = $userid;
-    $context['results']['user']       = $user;
-    $context['results']['terms']      = $terms;
-    $context['sandbox']['progress']   = 0;
+    $context['results']['userid'] = $userid;
+    $context['results']['terms'] = $terms;
+    $context['sandbox']['progress'] = 0;
     $context['sandbox']['current_id'] = 0;
-    $context['results']['nids']       = array();
-    $context['sandbox']['max']        = db_result(db_query("SELECT COUNT(DISTINCT(id)) FROM {biblio_import_cache} WHERE session_id = '%s'", $session_id));
+    $context['results']['nids'] = array();
+    $context['sandbox']['max'] = db_result(db_query("SELECT COUNT(DISTINCT(id)) FROM {biblio_import_cache} WHERE session_id = '%s'", $session_id));
+    $context['sandbox']['itters'] = $context['sandbox']['max'] / $limit;
+    $context['sandbox']['eta'] = 0;
   }
 
   // Process the next 20 nodes.
-  $limit = 5;
+
+
+  timer_start('biblio_import');
   $result = db_query_range("SELECT id, data FROM {biblio_import_cache} WHERE id > %d AND session_id = '%s' ORDER BY id ASC", $context['sandbox']['current_id'], $session_id, 0, $limit);
   while ($row = db_fetch_array($result)) {
-    $node = unserialize($row['data']);
-    node_save($node);
-    $context['results']['nids'][] = $node->nid;
+    if($node = unserialize(base64_decode($row['data']))) {
+      node_save($node);
+      $context['results']['nids'][] = $node->nid;
+    }
     $context['sandbox']['progress']++;
     $context['sandbox']['current_id'] = $row['id'];
   }
+  $looptime = timer_stop('biblio_import');
+  $context['sandbox']['eta'] += $looptime['time'];
+  $itters = $context['sandbox']['progress'] / $limit;
+  if ($itters) {
+    $average_time = $context['sandbox']['eta'] / $itters;
+    $eta = (($context['sandbox']['itters'] * $average_time) - ($average_time * $itters)) / 1000;
+    if ($eta >= 60) {
+      $min = (int) $eta / 60;
+    }
+    else {
+      $min = 0;
+    }
+    $sec = $eta % 60;
+    $eta = sprintf("%d:%02d", $min, $sec);
+    $progress = sprintf("%d / %d", $context['sandbox']['progress'],  $context['sandbox']['max'] );
+    $context['message'] = t('<br>Nodes saved: %progress <br> Time remaining: %eta min.<br>' , array('%progress' => $progress, '%eta' => $eta));
 
+  }
   // Multistep processing : report progress.
   if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
     $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
   }
 }
 function biblio_import_batch_finished($success, $results, $operations) {
-  //  if ($success && (count($results['nids']) || count($results['dups']))) {
-  //    $message = format_plural(count($results['nids']), 'One node saved.', '@count nodes saved.');
-  //    $type = 'status';
-  //    if (count($results['dups'])) {
-  //
-  //    }
-  //  }
-  //  else {
-  //    $message = t('Import finished with an error!  '). format_plural(count($results['nids']), 'One node saved.', '@count nodes saved.');
-  //    $type = 'error';
-  //  }
-  //  drupal_set_message($message, $type);
-  $nids = $results['nids'];
-  $user = $results['user'];
-  $userid = $results['userid'];
-
-  if (user_access('administer biblio') && count($nids) && $user->uid != $userid) {
-    db_query('UPDATE {node} SET uid = %d WHERE nid IN(%s)', $userid, implode(',', $nids));
-    db_query('UPDATE {node_revisions} SET uid = %d WHERE nid IN(%s)', $userid, implode(',', $nids));
+  if ($success && count($results['nids'])) {
+    $message = format_plural(count($results['nids']), 'One node saved.', '@count nodes saved.');
+    $type = 'status';
   }
-
+  else {
+    $message = t('Import finished with an error!  '). format_plural(count($results['nids']), 'One node saved.', '@count nodes saved.');
+    $type = 'error';
+  }
+  drupal_set_message($message, $type);
+  foreach ($results['nids'] as $node_id) {
+    if (count($results['terms'])) module_invoke('taxonomy', 'node_save', $node_id, $results['terms']);
+    db_query('UPDATE {node} SET uid = %d WHERE nid = %d', $results['userid'], $node_id);
+    db_query('UPDATE {node_revisions} SET uid = %d WHERE nid = %d', $results['userid'], $node_id);
+  }
   //clean up import cache...
   db_query("DELETE FROM {biblio_import_cache} WHERE session_id = '%s'",$results['session_id']);
 
@@ -300,7 +319,7 @@ function biblio_import_from_url($URL) {
   }
   else
   {
-    $errorMessage = t("Error occurred: Failed to open ") . $URL; // network error
+    $errorMessage = t("Error occurred: Failed to open ") . check_plain($URL); // network error
     drupal_set_message($errorMessage, 'error');
   }
 
@@ -308,6 +327,12 @@ function biblio_import_from_url($URL) {
 }
 
 function biblio_export_form() {
+  $form['biblio_filter_exports'] = array(
+    '#type' => 'checkbox',
+    '#default_value' => variable_get('biblio_filter_exports',0),
+    '#title' => 'Filter exported data',
+    '#description' => t('If selected, the data exported to file will be filtered according to the settings for the "Data Fields" section for each format found here ').l('admin/settings/biblio/fields/typemap', 'admin/settings/biblio/fields/typemap')
+  );
   $form['pot'] = array (
     '#type' => 'fieldset',
     '#collapsible' => TRUE,
@@ -319,12 +344,18 @@ function biblio_export_form() {
     '#type' => 'submit',
     '#value' => t('Export translation data')
   );
-
+  $form['save'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save')
+  );
   return $form;
 }
 function biblio_export_form_submit($form, & $form_state) {
   if ($form_state['values']['op'] == t('Export translation data')) {
     biblio_dump_db_data_for_pot();
+  }
+  if ($form_state['values']['op'] == t('Save')) {
+    variable_set('biblio_filter_exports', $form_state['values']['biblio_filter_exports']);
   }
 
 }
@@ -350,12 +381,35 @@ function biblio_import($import_file, $type, $userid = 1, $terms = NULL, $batch =
   $session_id = $id;
   $biblio_uid = $userid;
   $parsed = 0;
-  $nids = array();
+  $node_ids = array();
   $dups = array();
 
   if(isset($context['message']))  $context['message'] = t('Parsing file');
   switch ($type) {
-    case 'csv' : // comma separated variable file
+    case 'tagged' : // EndNote Tagged
+      module_load_include('inc', 'biblio', 'tagged_parser');
+      $node_ids = _endnote_tagged_import($import_file, $terms, $batch_proc, $session_id);
+      break;
+    case 'ris' : // RIS
+      module_load_include('inc', 'biblio', 'ris_parser');
+      $node_ids = _ris_tagged_import($import_file, $terms, $batch_proc, $session_id);
+      break;
+    case 'xml' : // EndNote 7 XML
+      $node_ids = biblio_endnote_XML_import($import_file, $terms, $batch_proc, $session_id, 7);
+      break;
+    case 'xml8' : // EndNote 8+ XML
+      $node_ids = biblio_endnote_XML_import($import_file, $terms, $batch_proc, $session_id, 8);
+      break;
+    case 'bib' : // BibTex
+      $node_ids = biblio_bibtex_import($import_file, $terms, $batch_proc, $session_id);
+      break;
+    case 'marc' : // MARC
+      $node_ids = biblio_marc_import($import_file, $terms, $batch_proc, $session_id);
+      break;
+    case 'pubmed' :
+      list($node_ids, $dups) = biblio_pm_biblio_import($import_file, $terms, $batch_proc, $session_id);
+      break;
+      case 'csv' : // comma separated variable file
       //        $file_content = @ file_get_contents($import_file->filepath);
       //        $parsed = biblio_csv_import($file_content, $node_template, $node_array);
       break;
@@ -363,27 +417,24 @@ function biblio_import($import_file, $type, $userid = 1, $terms = NULL, $batch =
       $file_content = @ file_get_contents($import_file->filepath);
       $parsed = biblio_restore($file_content, $node_template, $node_array);
       break;
-    default:
-      list($nids, $dups) = module_invoke($type, 'biblio_import', $import_file, $terms, $batch_proc, $session_id);
-      break;
   }
-  $total = count($nids) + count($dups);
-  drupal_set_message(t("<i><b>%count</b></i> of <i><b>%total</b></i> nodes were successfully imported.", array('%count' => count($nids), '%total' => $total)), (count($nids) != $total)?'warning':'status');
-  if (count($dups)) {
-    drupal_set_message(t("<i><b>%count</b></i> of <i><b>%total</b></i> nodes were skipped because they were duplicates of existing nodes.", array('%count' => count($dups), '%total' => $total)), 'warning');
+  if ((!empty($node_ids) || !empty($dups)) && !$batch ) {
+    if (count($node_ids)) {
+      db_query('UPDATE {node} SET uid = %d WHERE nid IN(%s)', $userid, implode(',', $node_ids));
+      db_query('UPDATE {node_revisions} SET uid = %d WHERE nid IN(%s)', $userid, implode(',', $node_ids));
+      drupal_set_message(t("<i><b>%count</b></i> nodes were successfully imported.", array('%count' => count($node_ids))), 'status');
+    }
+    if (count($dups)) {
+      drupal_set_message(t("<i><b>%count</b></i> nodes were skipped because they were duplicates.", array('%count' => count($dups))), 'status');
+    }
+
+    return $node_ids;
   }
-  if ($batch) {
-    $context['results']['nids'] = $nids;
-    $context['results']['dups'] = $dups;
+  elseif ($parsed && !$save) {
+    return $node;
   }
-  else {
-  // now reset the userid if privileged to do so and supplied $userid differs from the current user.
-  if (user_access('administer biblio') && count($nids) && $user->uid != $userid) {
-    db_query('UPDATE {node} SET uid = %d WHERE nid IN(%s)', $userid, implode(',', $nids));
-    db_query('UPDATE {node_revisions} SET uid = %d WHERE nid IN(%s)', $userid, implode(',', $nids));
-  }
-  }
-  return $nids;
+
+
 }
 /**
  * Export nodes in a given file format.
@@ -401,34 +452,389 @@ function biblio_import($import_file, $type, $userid = 1, $terms = NULL, $batch =
  *   none
  */
 function biblio_export($format = "tagged", $nid = null, $popup = false, $version = 8) {
-  $params = array ();
+  $params = array();
+  $nids   = array();
   if ($nid === null && isset ($_SESSION['last_biblio_query']) && !empty ($_SESSION['last_biblio_query'])) {
     $query = $_SESSION['last_biblio_query'];
     $params = $_SESSION['last_biblio_query_terms'];
+    $result = db_query($query, $params);
+    while ($node = db_fetch_object($result)) {
+      $nids[] = $node->nid;
+    }
   }
   elseif (!empty ($nid)) {
-    $query = db_rewrite_sql("SELECT DISTINCT(n.nid) FROM {node} n  WHERE n.nid=%d ");
-    $params[] = $nid;
-  } else {
+    $nids[] = $nid;
+  }
+  else {
     return;
   }
-  $result = db_query($query, $params);
+
+  return _biblio_export($nids, $format, $popup, $version);
+}
+function _biblio_export_filter(&$node, $format) {
+    module_load_include('inc', 'biblio', 'biblio.type.mapper');
+
+//  static $visibility = array();
+//  if (!isset($visibility[$node->biblio_type])) {
+//    $result = db_query("SELECT bf.name,  bft.common, bft.visible
+//                        FROM {biblio_fields} AS bf
+//                        INNER JOIN {biblio_field_type} AS bft ON bft.fid=bf.fid
+//                        INNER JOIN {biblio_types} AS bt ON bt.tid=bft.tid
+//                        WHERE bft.tid=$node->biblio_type");
+//    while ($row = db_fetch_array($result)) {
+//      $fields[$row['name']] = $row['visible'] ? TRUE : FALSE;
+//    }
+//    $visibility[$node->biblio_type] =  $fields;
+//  }
+  $export_map = biblio_get_export_map($format);
+  foreach ($export_map as $field_name => $visible) {
+    if (!$visible && isset($node->$field_name)) unset($node->$field_name);
+  }
+
+}
+
+function _biblio_export($nids, $format = "tagged", $popup = false, $version = 8) {
   $count = 0;
-  while ($node = db_fetch_object($result)) {
-    $node = node_load($node->nid, FALSE, TRUE);
+  if ($format == 'xml') $format = 'endnote8';
+  foreach($nids as $nid) {
+    $node = node_load($nid, FALSE, TRUE);
+    if (variable_get('biblio_hide_bibtex_braces', 0) && $format != "bibtex") {
+      $node->title = biblio_remove_brace($node->title);
+    }
+    if(variable_get('biblio_filter_exports', 0)) {
+      _biblio_export_filter($node, $format);
+    }
     $count++;
     set_time_limit(30);
     switch ($format) {
+      case "tagged" :
+        if (!$popup && $count == 1) {
+          drupal_set_header('Content-type:  application/x-endnote-refer');
+          drupal_set_header('Content-Disposition:  filename="Drupal-Biblio.enw"');
+        }
+        if (!$popup) {
+          print biblio_endnote_tagged_export($node);
+        }
+        else {
+          $popup_data .= biblio_endnote_tagged_export($node);
+        }
+        break;
+      case "xml" :
+      case "endnote8":
+        $format = 'xml';
+        module_load_include('inc', 'biblio', 'endnote8_export');
+        if ($count == 1) {
+          drupal_set_header('Content-type: application/xml; charset=utf-8');
+          drupal_set_header('Content-Disposition: attachment; filename="Biblio-EndNote'. $version .'.xml"');
+          print _endnote8_XML_export('', 'begin');
+        }
+        print _endnote8_XML_export($node);
+        break;
+      case "bibtex" :
+        if (!$popup && $count == 1) {
+          drupal_set_header('Content-type: 	application/text; charset=utf-8');
+          drupal_set_header('Content-Disposition:  filename="Biblio-Bibtex.bib"');
+        }
+        if (!$popup) {
+          print biblio_bibtex_export($node);
+        }
+        else{
+          $popup_data .=  biblio_bibtex_export($node);
+        }
+        break;
       case "csv" :
         drupal_set_header('Content-Type: application/text; charset=utf-8');
         drupal_set_header('Content-Disposition: attachment; filename=Biblio-export.csv');
         print biblio_csv_export($node);
         break;
+      case 'rtf':
+        if ($count == 1) {
+          $style_name = biblio_get_style();
+          module_load_include('inc','biblio',"biblio_style_$style_name");
+          module_load_include('php','biblio',"class_rtf");
+          $style_function = "biblio_style_$style_name";
+
+          $rtf = new rtf();
+          $rtf->setPaperSize(5);
+          $rtf->setPaperOrientation(1);
+          $rtf->setDefaultFontFace(1);
+          $rtf->setDefaultFontSize(24);
+          $rtf->setAuthor("Biblio");
+          $rtf->setOperator("");
+          $rtf->setTitle("Biblio RTF Export");
+          $rtf->addColour("#000000");
+        }
+        $rtf->addText(filter_xss($style_function ($node, $base, $inline).'<br><br>',array('i','b','br','u','p','strong','em','sub','sup','ul','li')));
+
+        break;
     }
   }
 
+  if ($format == 'xml' && $count > 0) print _endnote8_XML_export('', 'end');
+  if ($format == 'rtf' && $count > 0) $rtf->getDocument();
   if ($popup && !empty($popup_data)) return '<pre>' . $popup_data . '</pre>';
 
+}
+/**
+ * Import bibtex data.
+ *
+ * @param $data
+ *   the contents of a bibtex file passed as one big string
+ * @param $node
+ *   an array (populated in biblio_import() ), containing the boiler plate
+ *   information common to all nodes
+ * @return
+ *   an array of node ids
+ */
+function biblio_bibtex_import($file, $terms = array(), $batch = FALSE, $session_id = NULL, $save = TRUE, $string = FALSE) {
+  $nids = array();
+  module_load_include('php', 'biblio', 'bibtexParse/PARSEENTRIES');
+  $bibtex = new PARSEENTRIES();
+  if ($string) {
+    $bibtex->loadBibtexString($file);
+  }
+  else {
+    $bibtex->openBib($file->filepath);
+  }
+  $bibtex->extractEntries();
+  if ($bibtex->count) {
+    $nids = $bibtex->bib2node($terms, $batch, $session_id, $save);
+  }
+  return $nids;
+}
+function biblio_marc_import($file, $terms, $batch, $session_id) {
+  $nids = array();
+  module_load_include('php', 'biblio', 'marcParse/php-marc');
+  $marcfile = new File($file->filepath);
+  while ($record = $marcfile->next() ) {
+    $node = array();
+    $node['biblio_contributors'] = array();
+		$node['biblio_keywords'] = array();
+    $leader = $record->leader();
+    $pubtype = $leader[6];
+    $pubtype .= $leader[7];
+    $node['biblio_type'] = marc_type_map($pubtype);
+    foreach ($record->fields() as $fields) {
+      foreach ($fields as $field){
+        $tagnum = $field->tagno;
+        switch ($tagnum) {
+          case '008':
+            $data = $field->data();
+            $node['biblio_year'] = substr($data,7,4);
+            $node['biblio_lang'] = substr($data,35,3);
+            break;
+          case '020':
+            $node['biblio_isbn'] = $field->subfield('a');
+            break;
+          case '022':
+            $node['biblio_issn'] = $field->subfield('a');
+            break;
+          case '024':
+            $node['biblio_other_number'] = $field->subfield('a');
+            break;
+          case '050': //LIBRARY OF CONGRESS CALL NUMBER
+          case '055': //CLASSIFICATION NUMBERS ASSIGNED IN CANADA
+          case '060': //NATIONAL LIBRARY OF MEDICINE CALL NUMBER
+            $node['biblio_call_number'] = $field->subfield('a');
+            break;
+          case '130':
+            $node['title'] = str_replace(' /', '', $field->subfield('a'));
+            break;
+          case '210':
+            $node['biblio_short_title'] = str_replace(' /', '', $field->subfield('a'));
+            break;
+          case '245':
+            $node['title'] = str_replace(' /', '', $field->subfield('a')).' '.$field->subfield('b');
+            break;
+          case '250':
+            $node['biblio_edition'] = $field->subfield('a');
+            break;
+          case '260':
+            $node['biblio_place_published'] = str_replace(' :', '', $field->subfield('a'));
+            $node['biblio_publisher'] = $field->subfield('b');
+            $node['biblio_date'] = $field->subfield('c');
+            break;
+          case '300':
+            $node['biblio_pages'] = $field->subfield('a');
+            break;
+          case '490':
+            $node['biblio_volume'] = $field->subfield('v');
+            break;
+          case ($tagnum >= 500 && $tagnum <= 599):
+            $value = $field->subfield('a');
+            if (!empty($value)) {
+              $node['biblio_notes'] .= $value;
+            }
+            break;
+          case '650':
+            foreach ($field->subfields() as $subject) {
+              $node['biblio_keywords'][] = $subject;
+            }
+            break;
+          case '100':
+          case '700':
+            $value = $field->subfield('a');
+            if (!empty($value)) {
+              $node['biblio_contributors'][1][] = array(
+              'name' => $value,
+              'auth_type' => 1
+              );
+            }
+            break;
+          case '110':
+          case '710':
+            $node['biblio_contributors'][5][] = array(
+              'name' => $field->subfield('a'),
+              'auth_type' => 5
+            );
+            break;
+          case '856':
+            $value = $field->subfield('u');
+            if (!empty($value)) {
+              $node['biblio_url'] = $value;
+            }
+            break;
+
+        }
+      }
+    }
+    if (!empty($node)) {
+      if (!empty($terms)) {
+        if (!isset($node['taxonomy'])) $node['taxonomy'] = array();
+        $node['taxonomy'] = array_merge($terms,$node['taxonomy']);
+      }
+      $nids[] = biblio_save_node($node, $batch, $session_id);
+    }
+
+  }
+  return $nids;
+}
+function marc_type_map($type) {
+  static $map = array();
+  if (empty($map)) {
+    module_load_include('inc', 'biblio', 'biblio.type.mapper');
+    $map = biblio_get_type_map('marc');
+  }
+  return (isset($map[$type]))?$map[$type]:129; //return the biblio type or 129 (Misc) if type not found
+}
+
+/**
+ * Export data in bibtex format.
+ *
+ * @param $result
+ *   a database result set pointer
+ * @return
+ *   none
+ */
+function biblio_bibtex_export($node) {
+  $bibtex = '';
+  $type = "article";
+  $journal = $series = $booktitle = $school = $organization = $institution = null;
+  $type = _bibtex_type_map($node->biblio_type);
+  switch ($node->biblio_type) {
+    case 100 :
+      $series = $node->biblio_secondary_title;
+      $organization = $node->biblio_publisher;
+      break;
+    case 101 :
+    case 103 :
+      $booktitle = $node->biblio_secondary_title;
+      $organization = $node->biblio_publisher;
+      $series = $node->biblio_tertiary_title;
+      break;
+    case 108 :
+      $school = $node->biblio_publisher;
+      $node->biblio_publisher = null;
+      if (stripos($node->biblio_type_of_work, 'masters')) {
+        $type = "mastersthesis";
+      }
+      break;
+    case 109 :
+      $institution  = $node->biblio_publisher;
+      $node->biblio_publisher = null;
+      break;
+    case 102 :
+    default:
+      $journal = $node->biblio_secondary_title;
+      break;
+  }
+  $bibtex .= '@'. $type .' {';
+  $bibtex .= ($node->biblio_citekey) ? $node->biblio_citekey  : "";
+  $bibtex .= _bibtex_format_entry('title', $node->title);
+  $bibtex .= _bibtex_format_entry('journal', $journal);
+  $bibtex .= _bibtex_format_entry('booktitle', $booktitle);
+  $bibtex .= _bibtex_format_entry('series', $series);
+  $bibtex .= _bibtex_format_entry('volume', $node->biblio_volume);
+  $bibtex .= _bibtex_format_entry('number', $node->biblio_number);
+  $bibtex .= _bibtex_format_entry('year', $node->biblio_year);
+  $bibtex .= _bibtex_format_entry('note', $node->biblio_notes);
+  $bibtex .= _bibtex_format_entry('month', $node->biblio_date);
+  $bibtex .= _bibtex_format_entry('pages', $node->biblio_pages);
+  $bibtex .= _bibtex_format_entry('publisher', $node->biblio_publisher);
+  $bibtex .= _bibtex_format_entry('school', $school);
+  $bibtex .= _bibtex_format_entry('organization', $organization);
+  $bibtex .= _bibtex_format_entry('institution', $institution);
+  $bibtex .= _bibtex_format_entry('type', $node->biblio_type_of_work);
+  $bibtex .= _bibtex_format_entry('edition', $node->biblio_edition);
+  $bibtex .= _bibtex_format_entry('chapter', $node->biblio_section);
+  $bibtex .= _bibtex_format_entry('address', $node->biblio_place_published);
+  $bibtex .= _bibtex_format_entry('abstract', $node->biblio_abst_e);
+
+  $kw_array = array();
+  if (!empty($node->terms)){
+    foreach($node->terms as $term){
+      $kw_array[] = $term->name;
+    }
+  }
+  if (!empty($node->biblio_keywords)) {
+    foreach($node->biblio_keywords as $term){
+      $kw_array[] = $term;
+    }
+  }
+  if (!empty($kw_array)){
+    $kw_array = array_unique($kw_array);
+    $bibtex .= _bibtex_format_entry('keywords', implode(', ', $kw_array));
+  }
+  $bibtex .= _bibtex_format_entry('isbn', $node->biblio_isbn);
+  $bibtex .= _bibtex_format_entry('issn', $node->biblio_issn);
+  $bibtex .= _bibtex_format_entry('doi', $node->biblio_doi);
+  $bibtex .= _bibtex_format_entry('url', $node->biblio_url);
+  if (!empty ($node->files) && count($node->files) && user_access('view uploaded files')) {
+    foreach($node->files as $file) {
+      $attachments[] = file_create_url($file->filepath);
+    }
+    $bibtex .= _bibtex_format_entry('attachments', implode(' , ', $attachments));
+  }
+
+  $a = $e = array();
+  foreach ((array)$node->biblio_contributors[1] as $auth) $a[] = trim($auth['name']);
+  foreach ((array)$node->biblio_contributors[2] as $auth) $e[] = trim($auth['name']);
+  $a = implode(' and ', $a);
+  $e = implode(' and ', $e);
+  if (!empty ($a)) $bibtex .= _bibtex_format_entry('author', $a);
+  if (!empty ($e)) $bibtex .= _bibtex_format_entry('editor', $e);
+  $bibtex .= "\n}\n";
+
+
+  //now convert any special characters to the latex equivelents...
+  module_load_include('php', 'biblio', 'bibtexParse/PARSEENTRIES');
+  include(drupal_get_path('module', 'biblio') . '/bibtexParse/transtab_unicode_bibtex.inc.php');
+  $converter = new PARSEENTRIES();
+  $bibtex = $converter->searchReplaceText($transtab_unicode_bibtex, $bibtex, false);
+
+  return $bibtex;
+}
+function _bibtex_format_entry($key, $value) {
+  return !empty($value) ? ",\n\t$key = {".$value."}" : '';
+}
+
+function _bibtex_type_map($bibliotype) {
+  static $map = array();
+  if (empty($map)) {
+    module_load_include('inc', 'biblio', 'biblio.type.mapper');
+    $map = biblio_get_type_map('bibtex');
+  }
+  return ($type = array_search($bibliotype, $map)) ? $type : 'article';
 }
 
 /**
@@ -456,35 +862,257 @@ function biblio_save_imported_nodes(& $node_array) {
 function biblio_save_node($node, $batch = FALSE, $session_id = NULL, $save_node = TRUE) {
   $options = variable_get('node_options_biblio', array ('status'));
   if (module_exists('i18n') && variable_get('i18n_node_biblio', 0) && variable_get('language_content_type_biblio', 0) ){
-    $node->language = module_invoke('i18n', 'default_language');
+    $node['language'] = module_invoke('i18n', 'default_language');
   }
-  $node->type = 'biblio';
-  $node->comment = variable_get('comment_biblio', 0);
-  $node->promote = in_array('promote', $options);
-  $node->moderate = in_array('moderate', $options);
-  $node->sticky = in_array('sticky', $options);
-//  $node->format = 0;
-  $node->status = in_array('status', $options);
+  $node_template = array (
+      'type' => 'biblio',
+      'comment' => variable_get('comment_biblio', 0),
+      'promote' => in_array('promote', $options),
+      'moderate' => in_array('moderate', $options),
+      'sticky' => in_array('sticky', $options),
+      'format' => 0,
+      'status' => in_array('status', $options),
+  );
 
-
+  $node = (object) array_merge($node, $node_template);
   if(!isset($node->biblio_type)) $node->biblio_type = 129; // default to misc if not set.
   if ($batch && $session_id){ // we are batch processing some import data
-    $node = serialize($node);
+    $node = base64_encode(serialize($node)); // base64_encode to avoid problems unserializing strings with embeded quotes.
     db_query("INSERT INTO {biblio_import_cache} (session_id, data) VALUES ('%s', %b)", $session_id, $node);
     return;
   }
   elseif ($save_node) { // $save_node = TRUE, the normal save path
     node_save($node);
-    return; // (isset($node->nid)) ? $node->nid : 0;
+    return (isset($node->nid)) ? $node->nid : 0;
   }
   else { // $save_node = FALSE, primarily used to parse data and return it to the input form
     return (array)$node;
   }
 }
 
+function biblio_crossref_xml_import($doi, $terms = array(), $batch = FALSE, $session_id = NULL, $save = FALSE) {
+  global $user, $node, $save_node, $nids;
+  if (isset($user->biblio_crossref_pid)  &&
+      !empty($user->biblio_crossref_pid) &&
+      variable_get('biblio_show_crossref_profile_form', '1'))
+  {
+    $pid = $user->biblio_crossref_pid;
+  }
+  else {
+    $pid = variable_get('biblio_crossref_pid', '');
+  }
+  if (!empty($pid)) {
+    $save_node = $save;
+    $nids = array();
+    $url = 'http://www.crossref.org/openurl/?pid='. check_plain($pid) .'&noredirect=true&format=unixref&id=doi%3A'. $doi;
+    $response = drupal_http_request($url);
+    if (!empty($response->data) && $response->code == 200) {
+      $xml_parser = drupal_xml_parser_create($response->data);
+      // use case-folding so we are sure to find the tag in
+      xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false);
+      xml_parser_set_option($xml_parser, XML_OPTION_SKIP_WHITE, true);
+
+      module_load_include('inc', 'biblio', 'crossref_unixref_parser');
+      xml_set_element_handler($xml_parser, 'unixref_startElement', 'unixref_endElement');
+      xml_set_character_data_handler($xml_parser, 'unixref_characterData');
+
+      xml_parse($xml_parser, $response->data);
+      xml_parser_free($xml_parser);
+      return (!empty($nids)) ? $nids : array();
+  }
+  else {
+      drupal_set_message(t('Could not open crossref.org for XML input'),'error');
+      return;
+  }
+  }
+}
 
 
+/**
+ * Import EndNote XML data.
+ *
+ * @param $data
+ *   the contents of an EndNote XML file passed as one big string
+ * @param $node
+ *   boiler plate information common to all nodes
+ * @param $version
+ *   the EndNote version of the XML file.  EndNote uses one format up to version
+ *   7 then change to another format in version 8 and greater.
+ * @return
+ *   The node ids of the saved nodes
+ */
+function biblio_endnote_XML_import($xml_file, $taxo_terms = array(), $batch_proc = FALSE, $session_id = NULL, $ver = 8) {
+  global $user, $records, $rec_count, $node,  $terms, $batch_proc, $nids, $session_id;
+  $terms = $taxo_terms;
+  $nids = array();
+  if (!($fp = fopen($xml_file->filepath, "r"))) {
+    drupal_set_message("could not open XML input",'error');
+    return;
+  }
+  $data = fread($fp, 2048);
+  $xml_parser = drupal_xml_parser_create($data);
+  // use case-folding so we are sure to find the tag in
+  xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false);
+  xml_parser_set_option($xml_parser, XML_OPTION_SKIP_WHITE, true);
 
+  module_load_include('inc', 'biblio', 'endnote'.$ver.'_parser');
+  xml_set_element_handler($xml_parser, 'en'.$ver.'_startElement', 'en'.$ver.'_endElement');
+  xml_set_character_data_handler($xml_parser, 'en'.$ver.'_characterData');
+
+  xml_parse($xml_parser, $data, feof($fp));
+  while ($data = fread($fp, 2048)){
+   // $data = fread($fp, 2048);
+    set_time_limit(30);
+    if(!xml_parse($xml_parser, $data, feof($fp))){
+      drupal_set_message(sprintf("XML error: %s at line %d",
+      xml_error_string(xml_get_error_code($xml_parser)),
+      xml_get_current_line_number($xml_parser)),'error');
+
+    }
+  }
+  xml_parser_free($xml_parser);
+  fclose($fp);
+  return (!empty($nids)) ? $nids : array();
+}
+/**
+ * Export data in EndNote XML format.
+ *
+ * @param $result
+ *   a database pointer to a result set
+ * @param $version
+ *   the EndNote version of the XML file.  EndNote uses one format up to version
+ *   7 then change to another format in version 8 and greater.
+ * @return
+ *   none
+ */
+function biblio_endnote_XML_export($result, $version = 7) {
+  if ($version == 8) {
+    module_load_include('inc', 'biblio', 'endnote8_export');
+    $xml = _endnote8_XML_export($result);
+  }
+  elseif ($version == 7) {
+    module_load_include('inc', 'biblio', 'endnote7_export');
+    $xml = _endnote7_XML_export($result);
+  }
+  return $xml;
+}
+/**
+ * Export data in EndNote tagged format.
+ *
+ * @param $result
+ *   a database pointer to a result set
+ * @return
+ *   none
+ */
+function biblio_endnote_tagged_export($node) {
+
+  $tagged = "";
+  $tagged .= "%0 ". _endnote_tagged_type_map($node->biblio_type) ."\r\n";
+  switch ($node->biblio_type) {
+    case 100 :
+    case 101 :
+    case 103 :
+    case 104 :
+    case 105 :
+    case 108 :
+    case 119 :
+      if (!empty($node->biblio_secondary_title))
+      $tagged .= "%B ". trim($node->biblio_secondary_title) ."\r\n";
+      break;
+    case 102 :
+      if (!empty($node->biblio_secondary_title))
+      $tagged .= "%J ". trim($node->biblio_secondary_title) ."\r\n";
+      break; // journal
+  }
+  if (isset($node->biblio_year) && $node->biblio_year < 9998)
+  $tagged .= "%D ". trim($node->biblio_year) ."\r\n";
+  if (!empty($node->title))
+  $tagged .= "%T ". trim($node->title) ."\r\n";
+
+  foreach ((array)$node->biblio_contributors[1] as $auth) {
+    $tagged .= "%A " . trim($auth['name']) ."\r\n";
+  }
+  foreach ((array)$node->biblio_contributors[2] as $auth) {
+    $tagged .= "%E " . trim($auth['name']) ."\r\n";
+  }
+  foreach ((array)$node->biblio_contributors[3] as $auth) {
+    $tagged .= "%Y " . trim($auth['name']) ."\r\n";
+  }
+
+  if (!empty($node->biblio_place_published))
+  $tagged .= "%C ". trim($node->biblio_place_published) ."\r\n";
+  if (!empty($node->biblio_publisher)) { $tagged .= "%I ". trim($node->biblio_publisher) ."\r\n"; }
+
+  $kw_array = array();
+  if (!empty($node->terms)){
+    foreach($node->terms as $term){
+      $kw_array[] = $term->name;
+    }
+  }
+  if (!empty($node->biblio_keywords)) {
+    foreach($node->biblio_keywords as $term){
+      $kw_array[] = $term;
+    }
+  }
+  if (!empty($kw_array)){
+    $kw_array = array_unique($kw_array);
+    foreach($kw_array as $term){
+      $tagged .= "%K ". trim($term) ."\r\n";
+    }
+  }
+  if (!empty($node->biblio_call_number))
+  $tagged .= "%L ". trim($node->biblio_call_number) ."\r\n";
+  if (!empty($node->biblio_accession_number))
+  $tagged .= "%M ". trim($node->biblio_accession_number) ."\r\n";
+  if (!empty($node->biblio_issue))
+  $tagged .= "%N ". trim($node->biblio_issue) ."\r\n";
+  if (!empty($node->biblio_pages))
+  $tagged .= "%P ". trim($node->biblio_pages) ."\r\n";
+  if (!empty($node->biblio_doi))
+  $tagged .= "%R ". trim($node->biblio_doi) ."\r\n";
+  if (!empty($node->biblio_tertiary_title))
+  $tagged .= "%S ". trim($node->biblio_tertiary_title) ."\r\n";
+  if (!empty($node->biblio_url))
+  $tagged .= "%U ". trim($node->biblio_url) ."\r\n";
+  if (!empty($node->biblio_volume))
+  $tagged .= "%V ". trim($node->biblio_volume) ."\r\n";
+  $abst = "";
+  if (!empty($node->biblio_abst_e))
+  $abst .= trim($node->biblio_abst_e);
+  if (!empty($node->biblio_abst_f))
+  $abst .= trim($node->biblio_abst_f);
+  if ($abst) {
+    $search = array("/\r/", "/\n/");
+    $replace = " ";
+    $abst = preg_replace($search, $replace, $abst);
+    $tagged .= "%X ". $abst ."\r\n";
+  }
+  if (!empty($node->biblio_notes))
+  $tagged .= "%Z ". trim($node->biblio_notes) ."\r\n";
+  if (!empty($node->biblio_edition))
+  $tagged .= "%7 ". trim($node->biblio_edition) ."\r\n";
+  if (!empty($node->biblio_date))
+  $tagged .= "%8 ". trim($node->biblio_date) ."\r\n";
+  if (!empty($node->biblio_type_of_work))
+  $tagged .= "%9 ". trim($node->biblio_type_of_work) ."\r\n";
+  if (!empty($node->biblio_isbn))
+  $tagged .= "%@ ". trim($node->biblio_isbn) ."\r\n";
+  if (!empty ($node->files) && count($node->files)  && user_access('view uploaded files')) {
+    foreach($node->files as $file) {
+      $tagged .= "%> ". file_create_url($file->filepath) . "\r\n"; // insert file here.
+    }
+  }
+  $tagged .= "\r\n";
+  return $tagged;
+}
+function _endnote_tagged_type_map($bibliotype) {
+  static $map = array();
+  if (empty($map)) {
+    module_load_include('inc', 'biblio', 'biblio.type.mapper');
+    $map = biblio_get_type_map('tagged');
+  }
+  return ($type = array_search($bibliotype, $map)) ? $type : 'Generic'; //return the biblio type or 129 (Misc) if type not found
+}
 function biblio_csv_export_2($result, $bfields) {
   //  $query_biblio_fields = 'SELECT name, title FROM {biblio_fields}';
   //  $res_biblio_fields = db_query($query_biblio_fields);
@@ -553,7 +1181,7 @@ function biblio_csv_export_2($result, $bfields) {
   drupal_set_header('Content-Disposition: attachment; filename=biblio_export.csv');
   return $csv;
 }
-//function _biblio_cck_join($biblio_fields = array()) {    // works not with php4
+//function _biblio_cck_join($biblio_fields = array()) {		// works not with php4
 function _biblio_cck_join(& $biblio_fields) {
   $cck_join = '';
   $biblio_fields['nid'] = 'Node-ID'; // identify records for update operations
@@ -703,3 +1331,34 @@ function biblio_dump_db_data_for_pot() {
   print $output;
 }
 
+function biblio_pubmed_query () {
+  $query = ''; //your query term
+    $dnum = 100; // total number of documents here it's set to 100
+    $pids = ''; // PubMED record ID's from e-search initialize to NULL
+    $term = 360; // time interval of when documents were published - this one is one year=360days
+    //retreive PID's of all articles published withing past year that contain query term
+    $esearch = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=$query&reldate=$term&datetype=edat&retmax=100&usehistory=y";
+    $handle = fopen($esearch, "r");
+    $rettype = "abstract"; //retreives abstract of the record, rather than full record
+    $retmode = "xml";
+    $utils = "http://www.ncbi.nlm.nih.gov/entrez/eutils";
+    if (!$handle) {die();}
+    //collect returned pubmed PID's
+    while (!feof ($handle)) $pids .= fgets($handle, 4096);
+    fclose($handle);
+    //Get query string from eSearch
+    preg_match("/(\w+)<\/QueryKey>/i",$pids,$match);
+    $queryKey = $match[1];
+    //get webenv
+    preg_match("/(\S+)<\/WebEnv>/i",$pids,$match);
+    $webEnv = $match[1];
+    $retstart = 0;
+    //fetch xml docs from PUBMED for returned PID's
+    $efetch = "$utils/efetch.fcgi?rettype=$rettype&retmode=$retmode&retstart=$retstart&retmax=$dnum&db=pubmed&query_key=$queryKey&WebEnv=$webEnv&email=abc@xyz.com";
+    $pids = '';
+    $handle = fopen($efetch, "r");
+    if(!$handle) { die(); }
+    while (!feof ($handle)) $pids .= fgets($handle, 4096);
+    fclose($handle);
+
+}

@@ -1,6 +1,6 @@
 <?php
-// $Id: transtab_unicode_bibtex.inc.php,v 1.1.2.3 2009/02/06 03:09:40 rjerome Exp $
-// Copyright:  Matthias Steffens 
+// $Id: transtab_unicode_bibtex.inc.php,v 1.1.2.4 2009/12/04 20:32:39 rjerome Exp $
+// Copyright:  Matthias Steffens
 //             This code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY.
 //             Please see the GNU General Public License for more details.
 // File:       ./includes/transtab_unicode_bibtex.inc.php
@@ -16,7 +16,8 @@ $transtab_unicode_bibtex = array (
 
   "(?<!\\\\)#" => '$\\#$',
   "(?<!\\\\)%" => "\\%",
-  "(?<!\\\\)'" => "{\\textquoteright}",
+  "(?<!\\\\)&" => "\\&",
+"(?<!\\\\)'" => "{\\textquoteright}",
   "(?<!\\\\)`" => "{\\textquoteleft}",
   " " => "~",
   "¡" => "{\\textexclamdown}",

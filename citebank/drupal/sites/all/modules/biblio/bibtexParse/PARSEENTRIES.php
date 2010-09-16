@@ -564,10 +564,10 @@ class PARSEENTRIES
       $node['biblio_contributors'] = array();
       $node['biblio_type'] = $this->bibtex_type_map($entry['bibtexEntryType']);
       switch ($entry['bibtexEntryType']){
-        case mastersthesis:
+        case 'mastersthesis':
           $node['biblio_type_of_work'] = 'masters';
           break;
-        case phdthesis:
+        case 'phdthesis':
           $node['biblio_type_of_work'] = 'phd';
           break;
       }
