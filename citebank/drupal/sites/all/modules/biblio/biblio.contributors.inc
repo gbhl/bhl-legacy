@@ -175,6 +175,13 @@ function biblio_update_contributor(&$author) {
  * @return success of database operations
  */
 function _save_contributors(&$contributors, $nid, $vid, $update = FALSE) {
+	// DLH bugfix
+	// if contributors is not an array, fail out
+  if (!is_array($contributors) {
+		// what do we do when contributors is NOT an array?
+		return false;
+	}
+
   $md5 = _loadMD5();
   $rank = 0;
   db_query('DELETE FROM {biblio_contributor} WHERE nid = %d AND vid = %d', array($nid, $vid));
