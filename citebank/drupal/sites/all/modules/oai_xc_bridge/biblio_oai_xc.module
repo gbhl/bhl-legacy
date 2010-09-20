@@ -710,6 +710,7 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 //  	//$node['biblio_type'] = PUBLICATION_TYPE_BOOK;	// No matches in the feed, so default to "Book"
 //  	$node['biblio_type'] = $biblioTypes['book'];	// book
 //  }
+	}
   
 	// BIBLIO_FIELD_TOPIC: Journal Title
 	// articles
