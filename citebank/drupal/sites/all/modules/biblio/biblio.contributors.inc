@@ -177,7 +177,7 @@ function biblio_update_contributor(&$author) {
 function _save_contributors(&$contributors, $nid, $vid, $update = FALSE) {
 	// DLH bugfix
 	// if contributors is not an array, fail out
-  if (!is_array($contributors) {
+  if (!is_array($contributors)) {
 		// what do we do when contributors is NOT an array?
 		return false;
 	}
