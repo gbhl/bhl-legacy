@@ -178,7 +178,8 @@ function _biblio_oai_xc_insert($node)
 function biblio_oai_xc_oaiharvester_process_record($record) 
 {
 	logmsg('biblio_oai_xc_oaiharvester_process_record');
-
+	//log_info('record biblio oai xc', print_r($record, true));  // testing DLH fixme: remove
+	
   module_load_include('inc', 'biblio', 'biblio.import.export');
 
   $raw = $record['metadata']['childNode'];
@@ -216,6 +217,13 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
   $raw = $record['metadata']['childNode'];
 
 	logmsg('biblio_oai_xc_oaiharvester_process_record_oai_dc');
+
+	// Attribution
+	$id = $record['header']['identifier'];
+	$biblio_source    =  biblio_oai_xc_getAttributionSource($id);
+	$node['biblio_remote_db_provider'] = $biblio_source['org'];
+	$node['biblio_label']              = $biblio_source['prj'];
+	$node['biblio_remote_db_name']     = $biblio_source['url'];
   
   // Get the unique URL (identifier) for the item
   $identifiers = $raw->getElementsByTagName('identifier');
@@ -353,6 +361,15 @@ Edition
 	biblio_edition
 
 */
+/*
+ *	biblio_oai_xc_getAttributionSource - get sourcing info
+ */
+function biblio_oai_xc_getAttributionSource($hay)
+{
+	$source = matchIdentifier($hay);
+	
+	return $source;
+}
 
 /*
  *	biblio_oai_xc_oaiharvester_process_record_mods - Harvest records that use the mods metadata format
@@ -388,7 +405,9 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   $xpath->registerNamespace('x', 'http://www.loc.gov/mods/v3');
   
 //  // MODS DATA PARSER parse data
+//   //  $xml = $domElement->ownerDocument->saveXML($domElement);
 //  $strdoc = $doc->saveXML();
+	//log_info('record xml', htmlentities($strdoc));  // testing DLH fixme: remove
 //  logmsg('record: ' . $strdoc, 'STRDOC');
 //  $strxml = str_replace('mods:', '', $strdoc);
 //  $xml = simplexml_load_string($strxml);
@@ -403,6 +422,13 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 //  logmsg('subjects:' . $subjects, 'XMLSTR');
 //  
 //  // create a new function, hand it the xml string, parse the data, put into an array: biblio['title'] = $xml->titleInfo->title;  ...etc
+
+	// Attribution
+	$id = $record['header']['identifier'];
+	$biblio_source    =  biblio_oai_xc_getAttributionSource($id);
+	$node['biblio_remote_db_provider'] = $biblio_source['org'];
+	$node['biblio_label']              = $biblio_source['prj'];
+	$node['biblio_remote_db_name']     = $biblio_source['url'];
 
 	// BIBLIO_FIELD: url
 	// BIBLIO_FIELD: isbn
@@ -847,6 +873,139 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
   }
 
   return;
+}
+
+/*
+ * matchIdentifier - given a source identifier from external data record, find our data provider
+ */
+function matchIdentifier($hay)
+{
+	// read db once, load array
+	$src = sourceProvidersArray('keys');
+	$urlNeedles = sourceProvidersArray('needles');
+
+	$source = $src['empty'];
+	$source['flag'] = false;
+	
+	// hunt for the right one
+	foreach ($urlNeedles as $needle) {
+		$count = substr_count($hay, $needle);
+		if ($count) {
+			$source = $src[$needle];
+			$source['flag'] = true;
+			break;
+		}
+	}
+
+	return $source;
+}
+
+/*
+ * makeIdKey - make a word id key
+ */
+function makeIdKey($url)
+{
+	$urlpart = str_replace('http://', '', $url);
+	$urlpart = str_replace('www.', '', $urlpart);
+	
+	$parts = explode('.', $urlpart);
+
+	// peel this apart:  http://www.GetThisPart.xyz.com
+	// key = GetThisPart
+	$key = $parts[0];
+	
+	return $key;
+}
+
+/*
+ * sourceProvidersArray - create arrays of org, prj, url data source providers info
+ */
+function sourceProvidersArray($keys = false)
+{
+	static $source = array();
+	static $src = array();
+	static $urlNeedles = array();
+	
+	if (!$source) {
+		$data = readProvidersDataSource();
+		foreach ($data as $dat) {
+			$org = $dat['org'];
+			$prj = $dat['prj'];
+			$url = $dat['url'];
+			$key = makeIdKey($url);
+			$source[] = compact('org', 'prj', 'url');
+			$src[$key] = compact('org', 'prj', 'url');
+			$urlNeedles[] = $key;
+		}
+	
+		$org = 'user';
+		$prj = 'unknown';
+		$url = 'none';
+		$key = 'empty';
+		$source[] = compact('org', 'prj', 'url');
+		$src[$key] = compact('org', 'prj', 'url');
+		$urlNeedles[] = $key;
+	}
+	
+	$ret = '';
+	
+	// give back the type of list we ask for
+	switch ($keys)
+	{
+		case 'keys':
+			$ret = $src;
+			break;
+
+		case 'needles':
+			$ret = $urlNeedles;
+			break;
+
+		default:
+		case 'list':
+			$ret = $source;
+			break;
+	}
+	
+	return $ret;
+}
+
+/*
+ * readProvidersDataSource - read database table
+ */
+function readProvidersDataSource()
+{
+	$source = array();
+	
+	// ** db handling **
+	$sql = "SELECT * FROM {oaiharvester_providers}";
+	$result = db_query($sql);
+
+	while ($data = db_fetch_object($result)) {
+
+		$key = $data->provider_id;
+
+		// parse out name, org and prj
+		$name = $data->name;
+		$nameCount = (substr_count($name, ':'));
+		
+		if ($nameCount) {
+			$names = explode(':', $name);
+			$orgName = $names[1];
+			$prjName = $names[0];
+		} else {
+			$orgName = $data->name;
+			$part = explode(' ', $orgName);
+			$prjName = $part[0];
+		}
+		
+		$org = $orgName;
+		$prj = $prjName;
+		$url = $data->oai_provider_url;
+		$source[$key] = compact('org', 'prj', 'url');
+	}
+	// ** db handling **
+	
+	return $source;
 }
 
 function getCountNid($nid)
