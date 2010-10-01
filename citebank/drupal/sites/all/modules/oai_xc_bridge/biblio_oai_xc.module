@@ -181,25 +181,29 @@ function biblio_oai_xc_oaiharvester_process_record($record)
 	//log_info('record biblio oai xc', print_r($record, true));  // testing DLH fixme: remove
 	
   module_load_include('inc', 'biblio', 'biblio.import.export');
+log_info('basic record', '***[' . print_r($record, true) . ']***');   // FIXME: remove logging  
 
   $raw = $record['metadata']['childNode'];
   $format = $raw->localName;
-  
+log_info('format', 'format:[' . $format . ']');   // FIXME: remove logging  
   // error_log('format = ' . $format, 0);
   switch ($format)
   {
 		case 'dc':
-			biblio_oai_xc_oaiharvester_process_record_oai_dc($record);
+			//biblio_oai_xc_oaiharvester_process_record_oai_dc($record);
+			biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record);
 			break;
 
 		case 'mods':
-			biblio_oai_xc_oaiharvester_process_record_mods($record);
+			//biblio_oai_xc_oaiharvester_process_record_mods($record);
+			biblio_oai_xc_oaiharvester_process_record_mods_new($record);
 			break;
 
 		// MARC21
-//		case 'marc':
-//			biblio_oai_xc_oaiharvester_process_record_marc($record);
-//			break;
+		case 'marc':
+		case 'record':
+			biblio_oai_xc_oaiharvester_process_record_marc($record);
+			break;
   }
   
   return;
@@ -369,6 +373,137 @@ function biblio_oai_xc_getAttributionSource($hay)
 	$source = matchIdentifier($hay);
 	
 	return $source;
+}
+
+/*
+ *	biblio_oai_xc_oaiharvester_process_record_oai_dc_new - Harvest records that use the oai_dc metadata format
+ */
+function biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record)
+{
+  static $harvest = null;
+	$updateFlag = false;  // are we an insert or update?  if true then is an update
+	
+	logmsg('biblio_oai_xc_oaiharvester_process_record_oai_dc_new');
+
+  // make the object once, if we can
+  if (!$harvest) {
+		try {
+			require_once(dirname(__FILE__) . '/DataProcessorBiblio.php');
+	  	$harvest = new DataProcessorBiblio(DataProcessorBiblio::FORMAT_DUBLINCORE);
+	  } catch (Exception $e) {
+	  	;//
+  	}
+	}
+
+  $harvest->initDefaults();
+  $node = $harvest->processHarvestNode($record, $node);
+
+	$biblio_url = $node['biblio_url'];
+
+  // See if we already have an entry for this item
+	$biblio_md5 = md5($biblio_url);
+	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url);
+
+	if ($isRecordFlag) { // it is a duplicate
+		// Retrieve the existing node so that we can do an update instead of an insert
+		$updateFlag = true;
+	}
+
+  if (!empty($node)) {
+    if ($updateFlag == false) {  // do a regular insert via the other calls...
+	    biblio_save_node($node);
+    } else {
+    	// else it's an update, set the nid and maybe the revision.
+    	$fields = biblio_oai_xc_getNid($biblio_url);
+    	if ($fields) {
+    		$nid = $fields['nid'];
+    		$vid = $fields['vid'];
+    	}
+
+    	if ($nid) {
+    		$node['nid'] = $nid;
+    	}
+
+    	// if no vid, set it to the vid from the lookup: biblio_oai_xc_getNid
+    	if ($node['vid'] == 0) {
+    		$node['vid'] = $vid;
+    	}
+
+    	biblio_save_node($node);
+    }
+  }
+
+  return;
+
+}
+
+// NEW BIBLIO MODS PARSER
+/*
+ *	biblio_oai_xc_oaiharvester_process_record_mods - Harvest records that use the mods metadata format
+ */
+function biblio_oai_xc_oaiharvester_process_record_mods_new($record)
+{
+  static $harvest = null;
+	$updateFlag = false;  // are we an insert or update?  if true then is an update
+	
+	logmsg('biblio_oai_xc_oaiharvester_process_record_mods_new');
+
+  // make the object once, if we can
+  if (!$harvest) {
+		try {
+			//require_once(dirname(dirname(__FILE__)) . '/oai_xc_bridge/DataProcessorBiblio.php');
+			require_once(dirname(__FILE__) . '/DataProcessorBiblio.php');
+	  	$harvest = new DataProcessorBiblio(DataProcessorBiblio::FORMAT_MODSXPT);
+	  } catch (Exception $e) {
+	  	;//
+  	}
+	}
+
+  $harvest->initDefaults();
+  $node = $harvest->processHarvestNode($record, $node);
+
+	logmsg('Title:'.$node['biblio_title']);
+
+	$biblio_url = $node['biblio_url'];
+
+  // See if we already have an entry for this item
+	$biblio_md5 = md5($biblio_url);
+	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url);
+
+	if ($isRecordFlag) { // it is a duplicate
+		// Retrieve the existing node so that we can do an update instead of an insert
+		logmsg('url:[' . $biblio_url . '] md5:' . $biblio_md5, 'Record dup');
+
+		$updateFlag = true;
+	}
+
+  if (!empty($node)) {
+    
+    if ($updateFlag == false) {  // do a regular insert via the other calls...
+    	biblio_save_node($node);
+    } else {
+    	// else it's an update, set the nid.
+    	$fields = biblio_oai_xc_getNid($biblio_url);
+    	if ($fields) {
+    		$nid = $fields['nid'];
+    		$vid = $fields['vid'];
+    	}
+
+    	if ($nid) {
+    		$node['nid'] = $nid;
+    	}
+
+    	// if no vid, set it to the vid from the lookup: biblio_oai_xc_getNid
+    	if ($node['vid'] == 0) {
+    		$node['vid'] = $vid;
+    	}
+
+    	biblio_save_node($node);
+    }
+  }
+
+  return;
+	
 }
 
 /*
@@ -869,6 +1004,76 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
     	}
 
     	biblio_save_node($node);
+    }
+  }
+
+  return;
+}
+
+// NEW BIBLIO MARC XML PARSER
+/*
+ *	biblio_oai_xc_oaiharvester_process_record_marc - Harvest records that use the mods metadata format
+ */
+function biblio_oai_xc_oaiharvester_process_record_marc($record)
+{
+  static $harvest = null;
+	$updateFlag = false;  // are we an insert or update?  if true then is an update
+	
+	logmsg('biblio_oai_xc_oaiharvester_process_record_marc');
+//log_info('marcxml', print_r($record, true));   // FIXME: remove logging
+
+  // make the object once, if we can
+  if (!$harvest) {
+		try {
+			require_once(dirname(__FILE__) . '/DataProcessorBiblio.php');
+	  	$harvest = new DataProcessorBiblio(DataProcessorBiblio::FORMAT_MARCXML);
+	  } catch (Exception $e) {
+	  	;//
+  	}
+	}
+
+  $harvest->initDefaults();
+  $node = $harvest->processHarvestNode($record, $node);
+
+	//logmsg('Title:'.$node['biblio_title']);
+
+	$biblio_url = $node['biblio_url'];
+
+  // See if we already have an entry for this item
+	$biblio_md5 = md5($biblio_url);
+	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url);
+
+	if ($isRecordFlag) { // it is a duplicate
+		// Retrieve the existing node so that we can do an update instead of an insert
+		//logmsg('url:[' . $biblio_url . '] md5:' . $biblio_md5, 'Record dup');
+
+		$updateFlag = true;
+	}
+
+  if (!empty($node)) {
+    
+    if ($updateFlag == false) {  // do a regular insert via the other calls...
+    	biblio_save_node($node);
+//log_info('marcxml', 'INSERT: ' . print_r($node, true));   // FIXME: remove logging
+    } else {
+    	// else it's an update, set the nid.
+    	$fields = biblio_oai_xc_getNid($biblio_url);
+    	if ($fields) {
+    		$nid = $fields['nid'];
+    		$vid = $fields['vid'];
+    	}
+
+    	if ($nid) {
+    		$node['nid'] = $nid;
+    	}
+
+    	// if no vid, set it to the vid from the lookup: biblio_oai_xc_getNid
+    	if ($node['vid'] == 0) {
+    		$node['vid'] = $vid;
+    	}
+
+    	biblio_save_node($node);
+//log_info('marcxml', 'UPDATE: ' . print_r($node, true));   // FIXME: remove logging
     }
   }
 
