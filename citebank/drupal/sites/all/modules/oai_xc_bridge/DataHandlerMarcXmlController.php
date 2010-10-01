@@ -5,7 +5,7 @@
  *
  * Copyright (c) 2010 Missouri Botanical Garden 
  *
- * @author David L. Heskett (contractor: Adaptive Solutions Group)
+ * @author: David L. Heskett (contractor: Adaptive Solutions Group)
  * @date Created: 09/23/2010
  *
  */
@@ -41,7 +41,7 @@ class DataHandlerMarcXmlController extends DataHandlerModel
 */
 
 	/**
-	 * DataHandlerMarcXmlController - is this a constructor?
+	 * DataHandlerMarcXmlController - constructor
 	 */
 	function DataHandlerMarcXmlController()
 	{

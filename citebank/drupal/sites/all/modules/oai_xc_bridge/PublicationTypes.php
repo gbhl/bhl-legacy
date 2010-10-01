@@ -1,7 +1,7 @@
 <?php
 // $Id: PublicationTypes.php,v 1.0.0.0 2010/09/15 4:44:44 dlheskett $
 
-/* PublicationTypes.php
+/** PublicationTypes.php
  *
  * Copyright (c) 2010 Missouri Botanical Garden 
  *
