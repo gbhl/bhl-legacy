@@ -10,6 +10,10 @@
  *
  */
 
+$includePath = dirname(__FILE__) . '/';
+
+require_once($includePath . 'DataHandlerModel.php');
+
 /** 
  * class DataHandlerModsController - mods to biblio 
  * 
@@ -543,8 +547,6 @@ class DataHandlerModsController extends DataHandlerModel
 		// BIBLIO_FIELD: Edition:  originInfo   edition
 		$this->parseValue_Edition();
 
-		$this->makeInfo();
-		
 		return $this->info;
 	}
 

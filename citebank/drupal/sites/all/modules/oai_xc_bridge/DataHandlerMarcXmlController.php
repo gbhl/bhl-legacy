@@ -11,6 +11,8 @@
  */
 
 $includePath = dirname(__FILE__) . '/';
+
+require_once($includePath . 'DataHandlerModel.php');
 require_once($includePath . 'MarcBibliographicInterpreter.php');
 
 /** 
@@ -393,8 +395,6 @@ class DataHandlerMarcXmlController extends DataHandlerModel
 		// BIBLIO_FIELD: Edition:  originInfo   edition
 		$this->parseValue_Edition();
 
-		$this->makeInfo();
-		
 		return $this->info;
 	}
 

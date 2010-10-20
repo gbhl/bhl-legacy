@@ -14,12 +14,6 @@ $includePath = dirname(__FILE__) . '/';
 
 require_once($includePath . 'BiblioNodeData.php');
 
-require_once($includePath . 'DataHandlerModel.php');
-
-require_once($includePath . 'DataHandlerModsController.php');
-require_once($includePath . 'DataHandlerDublinCoreController.php');
-require_once($includePath . 'DataHandlerMarcXmlController.php');
-
 /** 
  * class DataProcessorBiblio - xFormat to biblio 
  * 
@@ -32,35 +26,12 @@ class DataProcessorBiblio
 
 	const CLASS_NAME    = 'DataProcessorBiblio';
 	
-	const FORMAT_STANDARD    = 1000;
-	const FORMAT_MODSXML     = 1001;
-	const FORMAT_MODSSTD     = 1002;
-	const FORMAT_MODSXPT     = 1003;
-	const FORMAT_DUBLINCORE  = 1004;
-	const FORMAT_MARCXML     = 1005;
-	
 	/**
 	 * _construct - constructor
 	 */
-	function __construct($format = self::FORMAT_MODSSTD)
+	function __construct($importData)
 	{
-		switch ($format)
-		{
-			case self::FORMAT_DUBLINCORE:
-				$this->importData = new DataHandlerDublinCoreController();
-				break;
-
-			case self::FORMAT_MARCXML:
-				$this->importData = new DataHandlerMarcXmlController();
-				break;
-
-			default:
-			case self::FORMAT_MODSSTD:
-			case self::FORMAT_MODSXPT:
-				$this->importData = new DataHandlerModsController();
-				break;
-		}
-
+		$this->importData = $importData;
 		$this->biblioData = new BiblioNodeData();
 
 		$this->initDefaults();
@@ -146,7 +117,7 @@ class DataProcessorBiblio
 	function processHarvestNode($data, $node)
 	{
 		// parse the data
-		$importDataProcessedData = $this->importData->processHarvest($data);
+		$this->importData->processHarvest($data);
 		
 		// assign the data (map Mods to Biblio)
 		$this->assignData();

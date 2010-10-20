@@ -242,69 +242,6 @@ abstract class DataHandlerModel
 	abstract protected function parseValue_Edition();
 	
 	/**
-	 * makeInfo - fill up an array with the data
-	 */
-	protected function makeInfo()
-	{
-		$this->info['abst_e']               = $this->data_abst_e;
-		$this->info['abst_f']               = $this->data_abst_f;
-		$this->info['access_date']          = $this->data_access_date;
-		$this->info['accession_number']     = $this->data_accession_number;
-		$this->info['alternate_title']      = $this->data_alternate_title;
-		$this->info['auth_address']         = $this->data_auth_address;
-		$this->info['call_number']          = $this->data_call_number;
-		$this->info['citekey']              = $this->data_citekey;
-		$this->info['coins']                = $this->data_coins;
-		$this->info['contributors']         = $this->data_contributors;
-		$this->info['custom1']              = $this->data_custom1;
-		$this->info['custom2']              = $this->data_custom2;
-		$this->info['custom3']              = $this->data_custom3;
-		$this->info['custom4']              = $this->data_custom4;
-		$this->info['custom5']              = $this->data_custom5;
-		$this->info['custom6']              = $this->data_custom6;
-		$this->info['custom7']              = $this->data_custom7;
-		$this->info['date']                 = $this->data_date;
-		$this->info['doi']                  = $this->data_doi;
-		$this->info['edition']              = $this->data_edition;
-		$this->info['full_text']            = $this->data_full_text;
-		$this->info['isbn']                 = $this->data_isbn;
-		$this->info['issn']                 = $this->data_issn;
-		$this->info['issue']                = $this->data_issue;
-		$this->info['keywords']             = $this->data_keywords;
-		//$this->info['label']                = $this->data_label;
-		$this->info['lang']                 = $this->data_lang;
-		$this->info['notes']                = $this->data_notes;
-		$this->info['number']               = $this->data_number;
-		$this->info['number_of_volumes']    = $this->data_number_of_volumes;
-		$this->info['original_publication'] = $this->data_original_publication;
-		$this->info['other_number']         = $this->data_other_number;
-		$this->info['pages']                = $this->data_pages;
-		$this->info['place_published']      = $this->data_place_published;
-		$this->info['publisher']            = $this->data_publisher;
-		$this->info['refereed']             = $this->data_refereed;
-		//$this->info['remote_db_name']       = $this->data_remote_db_name;
-		//$this->info['remote_db_provider']   = $this->data_remote_db_provider;
-		$this->info['reprint_edition']      = $this->data_reprint_edition;
-		$this->info['research_notes']       = $this->data_research_notes;
-		$this->info['secondary_title']      = $this->data_secondary_title;
-		$this->info['section']              = $this->data_section;
-		$this->info['short_title']          = $this->data_short_title;
-		$this->info['tertiary_title']       = $this->data_tertiary_title;
-		$this->info['title']                = $this->data_title;
-		$this->info['translated_title']     = $this->data_translated_title;
-		$this->info['type']                 = $this->data_type;
-		$this->info['type_of_work']         = $this->data_type_of_work;
-		$this->info['url']                  = $this->data_url;
-		$this->info['volume']               = $this->data_volume;
-		$this->info['year']                 = $this->data_year;
-
-
-		$this->info['source_org']      = $this->data_source_org;
-		$this->info['source_prj']      = $this->data_source_prj;
-		$this->info['source_url']      = $this->data_source_url;
-	}
-
-	/**
 	 *	getAttributionSource - get sourcing info
 	 */
 	function getAttributionSource($hay)

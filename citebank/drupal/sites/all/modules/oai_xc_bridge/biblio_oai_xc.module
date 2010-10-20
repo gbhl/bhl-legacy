@@ -388,8 +388,11 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record)
   // make the object once, if we can
   if (!$harvest) {
 		try {
-			require_once(dirname(__FILE__) . '/DataProcessorBiblio.php');
-	  	$harvest = new DataProcessorBiblio(DataProcessorBiblio::FORMAT_DUBLINCORE);
+			$includePath = dirname(__FILE__) . '/';
+			require_once($includePath . 'DataHandlerDublinCoreController.php');
+			require_once($includePath . 'DataProcessorBiblio.php');
+			$importData = new DataHandlerDublinCoreController();
+	  	$harvest = new DataProcessorBiblio($importData);
 	  } catch (Exception $e) {
 	  	;//
   	}
@@ -451,9 +454,11 @@ function biblio_oai_xc_oaiharvester_process_record_mods_new($record)
   // make the object once, if we can
   if (!$harvest) {
 		try {
-			//require_once(dirname(dirname(__FILE__)) . '/oai_xc_bridge/DataProcessorBiblio.php');
-			require_once(dirname(__FILE__) . '/DataProcessorBiblio.php');
-	  	$harvest = new DataProcessorBiblio(DataProcessorBiblio::FORMAT_MODSXPT);
+			$includePath = dirname(__FILE__) . '/';
+			require_once($includePath . 'DataHandlerModsController.php');
+			require_once($includePath . 'DataProcessorBiblio.php');
+			$importData = new DataHandlerModsController();
+	  	$harvest = new DataProcessorBiblio($importData);
 	  } catch (Exception $e) {
 	  	;//
   	}
@@ -1025,8 +1030,11 @@ function biblio_oai_xc_oaiharvester_process_record_marc($record)
   // make the object once, if we can
   if (!$harvest) {
 		try {
-			require_once(dirname(__FILE__) . '/DataProcessorBiblio.php');
-	  	$harvest = new DataProcessorBiblio(DataProcessorBiblio::FORMAT_MARCXML);
+			$includePath = dirname(__FILE__) . '/';
+			require_once($includePath . 'DataHandlerMarcXmlController.php');
+			require_once($includePath . 'DataProcessorBiblio.php');
+			$importData = new DataHandlerMarcXmlController();
+	  	$harvest = new DataProcessorBiblio($importData);
 	  } catch (Exception $e) {
 	  	;//
   	}
