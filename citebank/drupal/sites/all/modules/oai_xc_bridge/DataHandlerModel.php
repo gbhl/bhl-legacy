@@ -22,22 +22,54 @@ abstract class DataHandlerModel
 	public $xpath;
 	public $info;
 	// data
-	public $data_place_published;
+	public $data_abst_e;
+	public $data_abst_f;
+	public $data_access_date;
+	public $data_accession_number;
+	public $data_alternate_title;
+	public $data_auth_address;
 	public $data_call_number;
+	public $data_citekey;
+	public $data_coins;
 	public $data_contributors;
+	public $data_custom1;
+	public $data_custom2;
+	public $data_custom3;
+	public $data_custom4;
+	public $data_custom5;
+	public $data_custom6;
+	public $data_custom7;
 	public $data_date;
+	public $data_doi;
 	public $data_edition;
+	public $data_full_text;
 	public $data_isbn;
 	public $data_issn;
 	public $data_issue;
 	public $data_keywords;
+	//public $data_label;
 	public $data_lang;
+	public $data_notes;
+	public $data_number;
+	public $data_number_of_volumes;
+	public $data_original_publication;
+	public $data_other_number;
 	public $data_pages;
+	public $data_place_published;
 	public $data_publisher;
+	public $data_refereed;
+	//public $data_remote_db_name;
+	//public $data_remote_db_provider;
+	public $data_reprint_edition;
+	public $data_research_notes;
 	public $data_secondary_title;
 	public $data_section;
+	public $data_short_title;
+	public $data_tertiary_title;
 	public $data_title;
+	public $data_translated_title;
 	public $data_type;
+	public $data_type_of_work;
 	public $data_url;
 	public $data_volume;
 	public $data_year;
@@ -67,25 +99,57 @@ abstract class DataHandlerModel
 		$this->xpath = '';
 		$this->className = self::CLASS_NAME;
 
-		$this->data_call_number      = '';
-		$this->data_contributors     = array();
-		$this->data_date             = '';
-		$this->data_edition          = '';
-		$this->data_isbn             = '';
-		$this->data_issn             = '';
-		$this->data_issue            = '';
-		$this->data_lang             = '';
-		$this->data_keywords         = '';
-		$this->data_pages            = '';
-		$this->data_place_published  = '';
-		$this->data_publisher        = '';
-		$this->data_secondary_title  = '';
-		$this->data_section          = '';
-		$this->data_title            = '';
-		$this->data_type             = '';
-		$this->data_url              = '';
-		$this->data_volume           = '';
-		$this->data_year             = '';
+		$this->data_abst_e               = '';
+		$this->data_abst_f               = '';
+		$this->data_access_date          = '';
+		$this->data_accession_number     = '';
+		$this->data_alternate_title      = '';
+		$this->data_auth_address         = '';
+		$this->data_call_number          = '';
+		$this->data_citekey              = '';
+		$this->data_coins                = '';
+		$this->data_contributors         = array();
+		$this->data_custom1              = '';
+		$this->data_custom2              = '';
+		$this->data_custom3              = '';
+		$this->data_custom4              = '';
+		$this->data_custom5              = '';
+		$this->data_custom6              = '';
+		$this->data_custom7              = '';
+		$this->data_date                 = '';
+		$this->data_doi                  = '';
+		$this->data_edition              = '';
+		$this->data_full_text            = '';
+		$this->data_isbn                 = '';
+		$this->data_issn                 = '';
+		$this->data_issue                = '';
+		$this->data_keywords             = '';
+		//$this->data_label                = '';
+		$this->data_lang                 = '';
+		$this->data_notes                = '';
+		$this->data_number               = '';
+		$this->data_number_of_volumes    = '';
+		$this->data_original_publication = '';
+		$this->data_other_number         = '';
+		$this->data_pages                = '';
+		$this->data_place_published      = '';
+		$this->data_publisher            = '';
+		$this->data_refereed             = '';
+		//$this->data_remote_db_name       = '';
+		//$this->data_remote_db_provider   = '';
+		$this->data_reprint_edition      = '';
+		$this->data_research_notes       = '';
+		$this->data_secondary_title      = '';
+		$this->data_section              = '';
+		$this->data_short_title          = '';
+		$this->data_tertiary_title       = '';
+		$this->data_title                = '';
+		$this->data_translated_title     = '';
+		$this->data_type                 = '';
+		$this->data_type_of_work         = '';
+		$this->data_url                  = '';
+		$this->data_volume               = '';
+		$this->data_year                 = '';
 
 		$this->data_source_org       = '';
 		$this->data_source_prj       = '';
@@ -182,28 +246,58 @@ abstract class DataHandlerModel
 	 */
 	protected function makeInfo()
 	{
-		$this->info['place_published'] = $this->data_place_published;
-		$this->info['call_number']     = $this->data_call_number;
-		$this->info['contributors']    = $this->data_contributors;
-		$this->info['date']            = $this->data_date;
-		$this->info['edition']         = $this->data_edition;
+		$this->info['abst_e']               = $this->data_abst_e;
+		$this->info['abst_f']               = $this->data_abst_f;
+		$this->info['access_date']          = $this->data_access_date;
+		$this->info['accession_number']     = $this->data_accession_number;
+		$this->info['alternate_title']      = $this->data_alternate_title;
+		$this->info['auth_address']         = $this->data_auth_address;
+		$this->info['call_number']          = $this->data_call_number;
+		$this->info['citekey']              = $this->data_citekey;
+		$this->info['coins']                = $this->data_coins;
+		$this->info['contributors']         = $this->data_contributors;
+		$this->info['custom1']              = $this->data_custom1;
+		$this->info['custom2']              = $this->data_custom2;
+		$this->info['custom3']              = $this->data_custom3;
+		$this->info['custom4']              = $this->data_custom4;
+		$this->info['custom5']              = $this->data_custom5;
+		$this->info['custom6']              = $this->data_custom6;
+		$this->info['custom7']              = $this->data_custom7;
+		$this->info['date']                 = $this->data_date;
+		$this->info['doi']                  = $this->data_doi;
+		$this->info['edition']              = $this->data_edition;
+		$this->info['full_text']            = $this->data_full_text;
+		$this->info['isbn']                 = $this->data_isbn;
+		$this->info['issn']                 = $this->data_issn;
+		$this->info['issue']                = $this->data_issue;
+		$this->info['keywords']             = $this->data_keywords;
+		//$this->info['label']                = $this->data_label;
+		$this->info['lang']                 = $this->data_lang;
+		$this->info['notes']                = $this->data_notes;
+		$this->info['number']               = $this->data_number;
+		$this->info['number_of_volumes']    = $this->data_number_of_volumes;
+		$this->info['original_publication'] = $this->data_original_publication;
+		$this->info['other_number']         = $this->data_other_number;
+		$this->info['pages']                = $this->data_pages;
+		$this->info['place_published']      = $this->data_place_published;
+		$this->info['publisher']            = $this->data_publisher;
+		$this->info['refereed']             = $this->data_refereed;
+		//$this->info['remote_db_name']       = $this->data_remote_db_name;
+		//$this->info['remote_db_provider']   = $this->data_remote_db_provider;
+		$this->info['reprint_edition']      = $this->data_reprint_edition;
+		$this->info['research_notes']       = $this->data_research_notes;
+		$this->info['secondary_title']      = $this->data_secondary_title;
+		$this->info['section']              = $this->data_section;
+		$this->info['short_title']          = $this->data_short_title;
+		$this->info['tertiary_title']       = $this->data_tertiary_title;
+		$this->info['title']                = $this->data_title;
+		$this->info['translated_title']     = $this->data_translated_title;
+		$this->info['type']                 = $this->data_type;
+		$this->info['type_of_work']         = $this->data_type_of_work;
+		$this->info['url']                  = $this->data_url;
+		$this->info['volume']               = $this->data_volume;
+		$this->info['year']                 = $this->data_year;
 
-		$this->info['isbn']            = $this->data_isbn;
-		$this->info['issn']            = $this->data_issn;
-		$this->info['issue']           = $this->data_issue;
-		$this->info['keywords']        = $this->data_keywords;
-		$this->info['lang']            = $this->data_lang;
-
-		$this->info['pages']           = $this->data_pages;
-		$this->info['publisher']       = $this->data_publisher;
-		$this->info['secondary_title'] = $this->data_secondary_title;
-		$this->info['section']         = $this->data_section;
-		$this->info['title']           = $this->data_title;
-
-		$this->info['type']            = $this->data_type;
-		$this->info['url']             = $this->data_url;
-		$this->info['volume']          = $this->data_volume;
-		$this->info['year']            = $this->data_year;
 
 		$this->info['source_org']      = $this->data_source_org;
 		$this->info['source_prj']      = $this->data_source_prj;
@@ -250,31 +344,201 @@ abstract class DataHandlerModel
 		return $biblioTypes;
 	}
 
+	/*
+	http://www.loc.gov/marc/languages/language_code.html
+	http://www.i18nguy.com/unicode/language-identifiers.html
+	http://www.loc.gov/standards/iso639-2/php/code_list.php
+	?? Multiple
+	
+	ca Catalan
+	zh Chinese
+	hr Croation
+	cs Czech
+	da Danish
+	nl Dutch
+	en English
+	fi Finnish
+	fr French
+	de German
+	gu Gujarati
+	hu Hungarian
+	id Indonesian
+	it Italian
+	ja Japanese
+	la Latin
+	nl Dutch
+	no Norwegian
+	pl Polish
+	pt Portugese 
+	ro Romanian
+	ru Russian
+	es Spanish
+	sv Swedish
+
+	cat  Catalan
+	chi  Chinese
+	hrv  Croation
+	cze  Czech
+	dan  Danish
+	dut  Dutch
+	nid  Dutch
+	eng  English
+	fin  Finnish
+	fre  French
+	fra  French
+	ger  German
+	guj  Gujarati
+	hun  Hungarian
+	ind  Indonesian
+	ita  Italian
+	jpn  Japanese
+	lat  Latin
+	nor  Norwegian
+	pol  Polish
+	por  Portugese 
+	rum  Romanian
+	ron  Romanian
+	rup  Romanian
+	rus  Russian
+	spa  Spanish
+	swe  Swedish
+	*/			
+
 	/**
 	 * filterLang - standardize the language value
 	 */
 	protected function filterLang($lang)
 	{
-		$lang = trim($lang);
+		$lang = strtolower(trim($lang));
 		$language = $lang;
 
-		// TODO: expand the list to be comprehensive
 		// filter languages
 		switch ($lang)
 		{
+			case 'ca':
+			case 'cat':
+				$language = 'Catalan';
+				break;
+
+			case 'zh':
+			case 'chi':
+			case 'zho':
+				$language = 'Chinese';
+				break;
+
+			case 'hr':
+			case 'hrv':
+				$language = 'Croation';
+				break;
+
+			case 'cs':
+			case 'cze':
+				$language = 'Czech';
+				break;
+
+			case 'da':
+			case 'dan':
+				$language = 'Danish';
+				break;
+
+			case 'nl':
+			case 'dut':
+			case 'nid':
+				$language = 'Dutch';
+				break;
+
 			case 'en_US':
 			case 'eng':
 			case 'en':
 				$language = 'English';
 				break;
 
+			case 'fi':
+			case 'fin':
+				$language = 'Finnish';
+				break;
+
+			case 'fr':
+			case 'fre':
+			case 'fra':
+				$language = 'French';
+				break;
+
+			case 'de':
+			case 'ger':
+				$language = 'German';
+				break;
+
+			case 'gu':
+			case 'guj':
+				$language = 'Gujarati';
+				break;
+
+			case 'hu':
+			case 'hun':
+				$language = 'Hungarian';
+				break;
+
+			case 'id':
+			case 'ind':
+				$language = 'Indonesian';
+				break;
+
+			case 'it':
+			case 'ita':
+				$language = 'Italian';
+				break;
+
+			case 'ja':
+			case 'jpn':
+				$language = 'Japanese';
+				break;
+
+			case 'la':
+			case 'lat':
+				$language = 'Latin';
+				break;
+
+			case 'no':
+			case 'nor':
+				$language = 'Norwegian';
+				break;
+
+			case 'pl':
+			case 'pol':
+				$language = 'Polish';
+				break;
+
+			case 'pt':
+			case 'por':
+				$language = 'Portuese';
+				break;
+
+			case 'ro':
+			case 'rum':
+			case 'ron':
+			case 'rup':
+				$language = 'Romanian';
+				break;
+
+			case 'ru':
+			case 'rus':
+				$language = 'Russian';
+				break;
+
 			case 'es':
+			case 'spa':
 				$language = 'Spanish';
+				break;
+
+			case 'sv':
+			case 'swe':
+				$language = 'Swedish';
 				break;
 
 			// en;es
 			// en, es
-			
+
 			default:
 				break;
 		}

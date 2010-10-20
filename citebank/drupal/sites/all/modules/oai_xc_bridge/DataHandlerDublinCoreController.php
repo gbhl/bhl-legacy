@@ -121,17 +121,17 @@ class DataHandlerDublinCoreController extends DataHandlerModel
 	  $contributors = $this->record->getElementsByTagName('contributor');
 	  
 	  $creators = ($creators ? $creators : $contributors);
+		$authorName = '';
 	
 	  if (count($creators)) {
 		  foreach ($creators as $creator) {
 		  	$authorName = ($creator->nodeValue ? $creator->nodeValue : '');
-
+				
 		  	if ($authorName) {
 		  		if (substr_count($authorName, ';')) {
 		  			$authorNames = explode(';', $authorName);
 		  			$authorName = $authorNames[0];
 		  		}
-
 
 		    	$name = $authorName;
 		    	//$this->data_contributors[1][] = array('name' => $authorName, 'auth_type' => $auth_type);
