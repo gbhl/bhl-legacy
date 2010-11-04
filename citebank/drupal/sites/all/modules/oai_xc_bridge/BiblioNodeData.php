@@ -238,6 +238,7 @@ class BiblioNodeData
 		$node['biblio_short_title']          = $this->data_short_title;
 		$node['biblio_tertiary_title']       = $this->data_tertiary_title;
 		$node['biblio_title']                = $this->data_title;
+		$node['title']                       = $this->data_title;  // because biblio insists on putting the title in the drupal node instead.
 		$node['biblio_translated_title']     = $this->data_translated_title;
 		$node['biblio_type']                 = $this->data_type;
 		$node['biblio_type_of_work']         = $this->data_type_of_work;
