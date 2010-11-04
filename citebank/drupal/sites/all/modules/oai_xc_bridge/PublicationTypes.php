@@ -46,7 +46,7 @@ class PublicationTypes
 				}
 				
 				// add a couple items that are not in the given set
-				$biblioTypes['series']               = $biblioTypes['book'];
+				$biblioTypes['series']               = $biblioTypes['journal'];
 				$biblioTypes['article']              = $biblioTypes['journal article'];
 
 			} else {
@@ -56,7 +56,7 @@ class PublicationTypes
 				$biblioTypes['book']                 = 100;
 				$biblioTypes['journal article']      = 102;
 	
-				$biblioTypes['series']               = $biblioTypes['book'];
+				$biblioTypes['series']               = $biblioTypes['journal'];
 				$biblioTypes['article']              = $biblioTypes['journal article'];
 	
 				$biblioTypes['journal']              = 131;
