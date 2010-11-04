@@ -286,7 +286,17 @@ class DataHandlerMarcXmlController extends DataHandlerModel
 					// keywords
 					if ($datafield['code'] == 'a') {
 						$words = trim($datafield['val']);
-						$this->data_keywords[] = explode(";", $words);
+						$keywordData = explode(";", $words);
+						$keyword = $keywordData[1];
+						$this->data_keywords[] = $keyword;
+					}
+					break;
+
+				case 856:
+					// url
+					if ($datafield['code'] == 'u') {
+						$url = trim($datafield['val']);
+						$this->data_url = $url;
 					}
 					break;
 
@@ -320,7 +330,7 @@ class DataHandlerMarcXmlController extends DataHandlerModel
 			$in1  = $this->record->getElementsByTagName('datafield')->item($x)->getAttribute('ind1');
 			$in2  = $this->record->getElementsByTagName('datafield')->item($x)->getAttribute('ind2');
 			$code = $this->record->getElementsByTagName('subfield')->item($x)->getAttribute('code');
-
+//log_info('datafields', 'tag[' . $tag . '] code[' . $code . '] nodeValue: [' . $val . ']');   // FIXME: remove logging
 			$this->datafields[] = compact('val', 'tag', 'ind1', 'ind2', 'code');
 		}
 		
