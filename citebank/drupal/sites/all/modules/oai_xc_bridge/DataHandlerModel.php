@@ -78,6 +78,8 @@ abstract class DataHandlerModel
 	public $data_source_prj;
 	public $data_source_url;
 
+	const PUBLICATION_TYPE_BOOK    = 100;
+	const DEFAULT_YEAR    = 9999;
 
 	const CLASS_NAME    = 'DataHandlerModel';
 
@@ -145,11 +147,11 @@ abstract class DataHandlerModel
 		$this->data_tertiary_title       = '';
 		$this->data_title                = '';
 		$this->data_translated_title     = '';
-		$this->data_type                 = '';
+		$this->data_type                 = self::PUBLICATION_TYPE_BOOK;
 		$this->data_type_of_work         = '';
 		$this->data_url                  = '';
 		$this->data_volume               = '';
-		$this->data_year                 = '';
+		$this->data_year                 = self::DEFAULT_YEAR;
 
 		$this->data_source_org       = '';
 		$this->data_source_prj       = '';
