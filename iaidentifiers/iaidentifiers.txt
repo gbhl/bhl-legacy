@@ -9519,6 +9519,9 @@ bidragtillknne912fins
 bidragtillspitsb00tore
 bidragtillspitsb01tore
 bien1917nialreportof1918montrich
+biennialre19221923mont
+biennialre19251926mont
+biennialre19271928mont
 biennialreport00neva
 biennialreport19691970fiel
 biennialreport19791980fiel
@@ -9780,6 +9783,7 @@ biologiacentrali17godmrich
 biologiacentrali19godmrich
 biologiacentrali20godmrich
 biologiacentrali21godmrich
+biologiacentrali22godmrich
 biologiacentrali23godmrich
 biologiacentrali24godmrich
 biologiacentrali25godmrich
@@ -11253,7 +11257,9 @@ bollettinodellas4849191617soci
 bollettinodellas56187374soci
 bollettinodellas57980soci
 bollettinodellas61881soci
+bollettinodellas61897soci
 bollettinodellas71882soci
+bollettinodellas71898soci
 bollettinodellas78187576soci
 bollettinodellas88384soci
 bollettinodellas9121896soci
@@ -11983,7 +11989,10 @@ brehmsthierleben05brehuoft
 brehmsthierleben06brehuoft
 brehmsthierleben08brehuoft
 brehmsthierleben09brehuoft
+brehmstierlebena002breh
+brehmstierlebena007breh
 brehmstierlebena00breh
+brehmstierlebena010breh
 brehmstierlebena01breh
 brehmstierlebena02breh
 brehmstierlebena04breh
@@ -24150,13 +24159,11 @@ dictionnaireclas02drap
 dictionnaireclas03bory
 dictionnaireclas03drap
 dictionnaireclas04bory
-dictionnaireclas04drap
 dictionnaireclas05bory
 dictionnaireclas05drap
 dictionnaireclas06bory
 dictionnaireclas06drap
 dictionnaireclas07bory
-dictionnaireclas07drap
 dictionnaireclas08bory
 dictionnaireclas08drap
 dictionnaireclas09bory
@@ -26560,6 +26567,7 @@ effectsofboundar00gall
 effectsofcarbond00camp
 effectsofcoldtem00rein
 effectsofcourtro00shor
+effectsofcreepfe00pric
 effectsofcrossse00darwiala
 effectsofcrossse00darwuoft
 effectsofcryptog00lesirich
@@ -27340,6 +27348,7 @@ ensilageitsinflu00wood
 ensilageofgreenc00goff
 ensinoepesquizas00unit
 enterprisestoryo00vand
+entomographienab00gers
 entomographienun00eric
 entomologaypar00gu
 entomologiaparis01four
@@ -33728,6 +33737,7 @@ gardeningprofit00hendiala
 gardeningundergl00rock
 gardeningwithbra00finciala
 gardeningwithbra00fincuoft
+gardeninvenice00eden
 gardeninwilderne00verb
 gardenitsaccesso00unde
 gardenitsaccesso00underich
@@ -34286,6 +34296,7 @@ geographicalcomp00bonauoft
 geographicalconc00hyderich
 geographicalconc00nunn
 geographicaldis00bell
+geographicaldis01wall
 geographicaldis02wall
 geographicaldist002wall
 geographicaldist00belluoft
@@ -39530,6 +39541,7 @@ illustratedessay00grot
 illustratedflo1896brit
 illustratedflor01brit
 illustratedflor02brit
+illustratedflor03brit
 illustratedflora00brit
 illustratedflora00brituoft
 illustratedflora01abra
@@ -42287,11 +42299,14 @@ journalfrornit101862deut
 journalfrornit121864deut
 journalfrornit151867deut
 journalfrornit171869deut
+journalfrornit201872deut
 journalfrornit211873deut
 journalfrornit221874deut
 journalfrornit231875deut
 journalfrornit241876deut
 journalfrornit251877deut
+journalfrornit261878deut
+journalfrornit271879deut
 journalfrornit281880deut
 journalfrornit291881deut
 journalfrornit301882deut
@@ -44910,6 +44925,12 @@ leonsdephysiol00bernard
 leonsdephysiol00dubo
 leonsdephysiol01bern
 leonsdephysiol02bern
+leonssurlaphys01miln
+leonssurlaphys02miln
+leonssurlaphys03miln
+leonssurlaphys04miln
+leonssurlaphys06miln
+leonssurlaphys08miln
 leonssurlesbac00bary
 leonssurleseff00bern
 leonssurlesp01bern
@@ -45086,6 +45107,7 @@ lergneanima02cuvi
 lergneanimal01cuvi
 lergneanimal02cuvi
 lergneanimaldi002cuvi
+lergneanimaldi003cuvi
 lergneanimaldi01cuvi
 lergneanimaldi01cuviuoft
 lergneanimaldi02cuvi
@@ -48512,6 +48534,7 @@ memoirsofdepartm10indi
 memoirsofdepartm11indi
 memoirsofdisting00walkrich
 memoirsofdisting00walkuoft
+memoirsofgeologi91872geol
 memoirsofhorticu01hort
 memoirsofhorticu12hort
 memoirsoflifeofd00sewarich
@@ -50980,6 +51003,7 @@ monographiedesch00st
 monographiedesci00gruv
 monographiedesci00thom
 monographiedescl00putz
+monographiedesco01laco
 monographiedesen00mars
 monographiedesgu00saus
 monographiedesme00beauuoft
@@ -55182,7 +55206,6 @@ nouveaudictionna20metc
 nouveaudictionna21metc
 nouveaudictionna22metc
 nouveaudictionna23metc
-nouveaudictionna24metc
 nouveaudictionna25metc
 nouveaudictionna26metc
 nouveaudictionna27metc
@@ -57297,6 +57320,7 @@ opportunitiesins00cory
 opticalactivityl00gauz
 opticprojection00wrigrich
 opticprojectionp00gageuoft
+optimalityconstr00luca
 optimizationofco00nava
 optimizationofen00shah
 opusculaentomolo14thoms
@@ -66706,6 +66730,7 @@ revisedreference00conn
 revisedsynonymic00nevi
 revisedwaverunup00stoa
 revisedworkingpl00centrich
+Revisiondelgene00Burm
 revisiondereurop00suff
 revisionderfauna00wilc
 revisiondergattu00beck
@@ -69554,6 +69579,7 @@ sitzungsberichte113kais
 sitzungsberichte114kais
 sitzungsberichte1160105kais
 sitzungsberichte117kais
+sitzungsberichte11848kais
 sitzungsberichte118kais
 sitzungsberichte11kais
 sitzungsberichte120kais
@@ -71746,6 +71772,7 @@ spirochaetesrevi00bosaiala
 spitsbergenwater00nansuoft
 spixiana1216198790zool
 spixiana14197880zool
+spixiana141991zool
 spixiana1979zool
 spixiana1980zool
 spixiana1981zool
@@ -72620,6 +72647,7 @@ structurefunctio00fiskrich
 structurehabit00emer
 structurehabitso00emer
 structurehabitso00emeruoft
+structurelifehi00mial
 structurelifehis00conarich
 structurelifehis00mial
 structurelifehis00miall
@@ -74708,6 +74736,7 @@ thenewhorticult00stririch
 thenovumorganono00bacouoft
 theoakpopular00wardiala
 theologicalphilo00hermrich
+theologiedesinse01less
 theologiedesinse02less
 theopenair00jeffrich
 theopenairjeff00jeffrich
@@ -77515,6 +77544,8 @@ twotachigaliamem00osbo
 twotreatisesinon00digbuoft
 twoyearoldsintra00knip
 twoyearsinjungle00hornuoft
+twoyearsinjungle01horn
+twoyearsinjungle02horn
 twoyearswithbird00forbiala
 txtbkphysio00hammrich
 txtbkphyslgy00fostrich
@@ -80793,6 +80824,7 @@ zeitschriftfrd24natu
 zeitschriftfrd25natu
 zeitschriftfrd27natu
 zeitschriftfrd28natu
+zeitschriftfrd301867natu
 zeitschriftfrd31natu
 zeitschriftfrd34natu
 zeitschriftfrd36natu
@@ -81336,6 +81368,8 @@ zoologiepratique00jamm
 zoologieuniverse00rayp
 zoologievontimor00hani
 zoologischanatom00esch
+zoologische33191213jena
+zoologische35191415jena
 zoologischebeitr00kefe
 zoologischebeitr01berl
 zoologischebeitr02berl
