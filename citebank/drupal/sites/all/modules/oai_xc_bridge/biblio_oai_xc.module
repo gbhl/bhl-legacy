@@ -110,8 +110,25 @@ function biblio_oai_xc_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
  */
 function _biblio_oai_xc_delete($node) 
 {
-	logmsg('_biblio_oai_xc_delete');
-  db_query('DELETE FROM {biblio_oai_xc} WHERE nid = %d', $node['nid']);
+	//logmsg('_biblio_oai_xc_delete');
+	
+	$nid = 0;
+
+	// we could have an array or an object for our nid,
+	// figure out which and make things work
+	// are we an object, then get nid, if nid empty then -1 error out
+	$nid = (is_object($node) ? (isset($node->nid) ? $node->nid : -1) : 0);
+
+	// if nid 0 then it is not an object, check the array
+	// if nothing, then 0
+	if ($nid == 0) {
+		$nid = (isset($node['nid']) ? $node['nid'] : 0);
+	}
+	
+  // if we have a good nid, use it, delete the record
+  if ($nid > 0) {
+  	db_query('DELETE FROM {biblio_oai_xc} WHERE nid = %d', $nid);
+  }
 }
 
 /*
