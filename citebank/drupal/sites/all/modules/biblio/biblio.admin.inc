@@ -1372,14 +1372,14 @@ function _biblio_get_user_profile_form(& $form, $profile_user = FALSE) {
     $form['biblio_profile']['biblio_my_pubs_menu']['#default_value'] = variable_get('biblio_my_pubs_menu', '0');
   }
   if ($profile_user) {
-    $db_result = db_query("SELECT cd.lastname, cd.firstname, cd.initials, cd.cid FROM {biblio_contributor_data} cd
-            ORDER by cd.lastname ASC ");
+  	// this select builds a huge drop down box that hangs the user edit page, so, for now, we do not do this.  DLH 12/07/2010
+    //$db_result = db_query("SELECT cd.lastname, cd.firstname, cd.initials, cd.cid FROM {biblio_contributor_data} cd ORDER by cd.lastname ASC ");
     $options = array();
     $options[0] = t('(None)');
 
-    while ($row = db_fetch_object($db_result)) {
-        $options[$row->cid] =  "$row->lastname, $row->firstname $row->initials ";
-    }
+    //while ($row = db_fetch_object($db_result)) {
+    //    $options[$row->cid] =  "$row->lastname, $row->firstname $row->initials ";
+    //}
     $form['biblio_profile']['biblio_contributor_id'] = array(
     '#type' => 'select',
     '#title' => t('Link My Profile with this Author from the Biblio database'),
