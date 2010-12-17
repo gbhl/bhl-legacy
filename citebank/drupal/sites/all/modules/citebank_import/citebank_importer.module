@@ -64,98 +64,6 @@ function citebank_importer_node_info()
 // ************************************************************
 //  process import methods
 // ************************************************************
-/**
- *  previewCiteBankImport - 
- */
-function previewCiteBankImport()
-{
-	$importer = new ExcelTextImporter();
-	$biblios  = importProcess($importer);
-	
-	$x = new CiteBankBiblio();
-	
-	//$uid      = 242;
-	$uid      = 0;
-	
-	$dirPath  = IMPORT_DIR_PATH_FILES;
-	$linkPath = getLinkPath() . IMPORT_DIR_PATH_FILES;
-	
-	// if no data, report error and get out
-	if (count($biblios) == 0) {
-		watchmen('Citebank importer preview no data');
-		return;
-	}
-	
-	foreach ($biblios as $key => $biblio) {
-		if (count($biblio) > 2) {
-			
-			// fill data
-			$x->biblioNode->setDataByNodeXData($biblio);
-			$biblioPlus = $x->biblioNode->processNode(null);
-			
-			// assign more data
-			$x->biblioNode->data_source_org = 'East Africa Library';
-			$x->biblioNode->data_source_prj = 'testing';
-			$x->biblioNode->data_source_url = 'Internal Import';
-
-			$x->biblioNode->data_url = $biblioPlus['biblio_url'];
-
-			$x->biblioNode->filename = $biblioPlus['biblio_url'];
-			$x->biblioNode->dirPath  = $dirPath;
-			$x->biblioNode->linkPath = $linkPath;
-
-			// create the link path url  basically the filename combined with the host path
-			// updates the biblio url
-			// our source csv file, does not know a link path url, it only knows the actual filename, 
-			//   which is buried in the csv under the "data_url" or 'biblio_url' associated field name
-			// so, we hook our link path to the name of the data file
-			// for an IA Internet Archive site, we will need to change the page link logic.
-			$x->biblioNode->data_url = $x->biblioNode->linkPath . $x->biblioNode->data_url;
-			
-			// make node array
-			$biblioPlus = $x->biblioNode->processNode(null);
-			$x->biblioNode->node = $biblioPlus;
-			
-			
-			// view data
-			$title = $biblioPlus['biblio_title'];
-			//$filename = $biblioPlus['biblio_url'];
-			$filename = $x->biblioNode->filename;
-//echo '<br>' . "\n"; print_r($x->biblioNode->node); echo '<br>' . "\n";
-			// fix the node.  we need to do this... why. 
-			$x->biblioNode->node['biblio_url'] = $x->biblioNode->data_url;
-
-			echo '<br>' . "\n";
-			echo 'Title:[' . $title . ']' . '<br>' . "\n";
-			echo 'File:[' . $filename . '] ' . '<br>' . "\n";
-			echo '<br>' . "\n";
-			
-			// *******
-			echo 'url:[' . $x->biblioNode->node['biblio_url'] . '] ' . '<br>' . "\n";
-			echo 'url:[' . $x->biblioNode->data_url . '] ' . '<br>' . "\n";
-			echo '<br>' . "\n";
-	
-			//echo 'type:[' . $x->biblioNode->data_type . '] ' . '<br>' . "\n";
-			echo 'type:[' . $x->biblioNode->node['biblio_type'] . '] ' . '<br>' . "\n";
-			echo '<br>' . "\n";
-	
-			// ***** Write the record *****
-			// check for a duplicate record
-			$duplicate = $x->checkDuplicate($x->biblioNode->data_url);
-			if (!$duplicate) {
-				// write data
-				//$x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
-				echo '****[' . 'Show the record here' . ']****' . '<br>' . "\n";
-			} else {
-				echo '****[' . 'Skip the duplicate record here' . ']****' . '<br>' . "\n";
-			}
-	
-			echo '****************************************';
-			echo '<br>' . "\n";
-	
-		}
-	}
-}
 
 /**
  *  processCiteBankImport - 
@@ -187,9 +95,15 @@ function processCiteBankImport()
 			$biblioPlus = $x->biblioNode->processNode(null);
 			
 			// assign more data
-			$x->biblioNode->data_source_org = 'East Africa Library';
-			$x->biblioNode->data_source_prj = 'testing';
-			$x->biblioNode->data_source_url = 'Internal Import';
+			if (@strlen($biblioPlus['biblio_remote_db_provider']) == 0) {
+				$x->biblioNode->data_source_org = 'CiteBank';
+				$x->biblioNode->data_source_prj = 'Import';
+				$x->biblioNode->data_source_url = 'Internal Import';
+			} else {
+				$x->biblioNode->data_source_org = $biblioPlus['biblio_remote_db_provider'];
+				$x->biblioNode->data_source_prj = $biblioPlus['biblio_label'];
+				$x->biblioNode->data_source_url = $biblioPlus['biblio_remote_db_name'];
+			}
 
 			$x->biblioNode->data_url = $biblioPlus['biblio_url'];
 
@@ -218,19 +132,19 @@ function processCiteBankImport()
 			// fix the node.  we need to do this... why. 
 			$x->biblioNode->node['biblio_url'] = $x->biblioNode->data_url;
 
-			echo '<br>' . "\n";
-			echo 'Title:[' . $title . ']' . '<br>' . "\n";
-			echo 'File:[' . $filename . '] ' . '<br>' . "\n";
-			echo '<br>' . "\n";
-			
-			// *******
-			echo 'url:[' . $x->biblioNode->node['biblio_url'] . '] ' . '<br>' . "\n";
-			echo 'url:[' . $x->biblioNode->data_url . '] ' . '<br>' . "\n";
-			echo '<br>' . "\n";
-	
-			//echo 'type:[' . $x->biblioNode->data_type . '] ' . '<br>' . "\n";
-			echo 'type:[' . $x->biblioNode->node['biblio_type'] . '] ' . '<br>' . "\n";
-			echo '<br>' . "\n";
+//			echo '<br>' . "\n";
+//			echo 'Title:[' . $title . ']' . '<br>' . "\n";
+//			echo 'File:[' . $filename . '] ' . '<br>' . "\n";
+//			echo '<br>' . "\n";
+//			
+//			// *******
+//			echo 'url:[' . $x->biblioNode->node['biblio_url'] . '] ' . '<br>' . "\n";
+//			echo 'url:[' . $x->biblioNode->data_url . '] ' . '<br>' . "\n";
+//			echo '<br>' . "\n";
+//	
+//			//echo 'type:[' . $x->biblioNode->data_type . '] ' . '<br>' . "\n";
+//			echo 'type:[' . $x->biblioNode->node['biblio_type'] . '] ' . '<br>' . "\n";
+//			echo '<br>' . "\n";
 	
 			// ***** Write the record *****
 			// check for a duplicate record
@@ -240,13 +154,13 @@ function processCiteBankImport()
 				//$node_save($x->biblioNode->node);
 				$x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
 				cache_clear_all();
-				echo '****[' . 'Write the record here' . ']****' . '<br>' . "\n";
+				//echo '****[' . 'Write the record here' . ']****' . '<br>' . "\n";
 			} else {
-				echo '****[' . 'Skip the duplicate record here' . ']****' . '<br>' . "\n";
+				//echo '****[' . 'Skip the duplicate record here' . ']****' . '<br>' . "\n";
 			}
 	
-			echo '****************************************';
-			echo '<br>' . "\n";
+			//echo '****************************************';
+			//echo '<br>' . "\n";
 	
 		}
 	}
@@ -300,14 +214,13 @@ function importProcess($n)
 				watchmen($msg);
 
 				//  email it
-				//$mailFlag = $reviewContent->sendIt($fileName, $msg, $reviewContent->reviewerEmail);
 				$reviewName = $reviewContent->shortFileName($fileName);
 				$mailFlag = $reviewContent->sendProof($reviewName, $msg);
 
 				if (!$mailFlag) {
 					watchmen('did not send email out');
 				}
-				watchmen('we process a preview, email it out for: **[' . $file . ']**' . '**[' . $fileName . ']**');
+				watchmen('preview processed, email it out for: **[' . $file . ']**' . '**[' . $fileName . ']**');
 			}
 			
 			return;

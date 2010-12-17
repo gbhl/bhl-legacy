@@ -16,6 +16,8 @@ $includePath = dirname(__FILE__) . '/';
 require_once($includePath . 'DrupalNode.php');
 require_once($includePath . 'BiblioNode.php');
 
+//$useDB = 'live';
+//$useDB = 'staging';
 $useDB = 'dev4web';
 if (DOS_MODE) {
 $useDB = 'localhost';
@@ -367,7 +369,7 @@ class CiteBankBiblio
 	}
 
 	/**
-	 * addCiteBankRecord - add an attachment record, also adds a drupal node
+	 * addRecord - add an attachment record, also adds a drupal node
 	 */
 	function addCiteBankRecord($title, $filename, $biblio, $uid = 0, $filesize = 0)
 	{
@@ -459,3 +461,5 @@ class CiteBankBiblio
 // ****************************************
 // ****************************************
 // ****************************************
+
+?>

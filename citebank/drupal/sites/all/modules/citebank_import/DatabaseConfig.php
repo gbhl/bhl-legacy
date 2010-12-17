@@ -32,6 +32,7 @@
 			define('DEF_DATABASE', 'test3');
 			break;
 
+		default:
 		case 'dev4web':
 			// DEV 4
 			define('DB_HOST', '172.16.17.197'); 
@@ -42,7 +43,22 @@
 			define('DEF_DATABASE', 'test3');
 			break;
 
-		default:
+		case 'live':
+			// live production
+			define('DB_HOST', '172.16.17.197'); 
+			define('DB_USER', 'importer');
+			define('DB_PASS', '@dd0n1y!');
+			define('DEF_DATABASE', 'citebank');
+			break;
+
+		case 'staging':
+			// staging QA
+			define('DB_HOST', '172.16.17.197'); 
+			define('DB_USER', 'importer');
+			define('DB_PASS', '@dd0n1y!');
+			define('DEF_DATABASE', 'staging');
+			break;
+
 		case 'dev4a':
 			// DEV 5 really
 			define('DB_HOST', '172.16.17.194'); 

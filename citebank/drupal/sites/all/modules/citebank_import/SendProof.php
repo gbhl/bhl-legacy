@@ -60,7 +60,7 @@ class SendProof
 		// FROM:
 		// Automated Proof
 		$fromAutoName = 'Automated Proof';
-		$fromAutoAddr = 'david.heskett@mobot.org';
+		$fromAutoAddr = 'feedback@citebank.org';
 		
 		// FILE NAME
 		$filename = 'Proof-' . date('Y-m-d-H-i') . '.csv';  // attachment filename

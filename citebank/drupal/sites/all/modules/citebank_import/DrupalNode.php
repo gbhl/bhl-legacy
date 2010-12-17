@@ -46,7 +46,7 @@ class DrupalNode
 		
 		promote = 1   to promote to front page, 0 to not
 		
-		sticky = 0    1 if do not wnat content sticky
+		sticky = 0    1 if do not want content sticky
 	*/
 
 	/**
@@ -637,3 +637,5 @@ class DrupalNode
 // ****************************************
 // ****************************************
 // ****************************************
+
+?>
