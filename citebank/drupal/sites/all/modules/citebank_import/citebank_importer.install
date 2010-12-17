@@ -1,0 +1,48 @@
+<?php
+// $Id: citebank_importer.install,v 1.0.0.0 2010/09/15 4:44:44 dlheskett $
+
+/** citebank_importer.install
+ *
+ * Copyright (c) 2010 Missouri Botanical Garden 
+ *
+ * @author: David L. Heskett (contractor: Adaptive Solutions Group)
+ * @date Created: 10/01/2010
+ *
+ */
+
+/**
+ * citebank_importer_install - 
+ */
+function citebank_importer_install()
+{
+//	drupal_install_schema('citebank_importer');
+}
+
+/**
+ * citebank_importer_uninstall - 
+ */
+function citebank_importer_uninstall()
+{
+//	drupal_uninstall_schema('citebank_importer');
+}
+
+/**
+ * citebank_importer_schema - 
+ */
+function citebank_importer_schema()
+{
+//	$schema[''] = array(
+//		'fields'     => array(
+//		),
+//	  'indexes'    => array(
+//	  	'nid'      => array('nid'),
+//	  ),
+//	  'primary key' => array('')
+//	);
+	
+	$schema = array();
+	return $schema;
+}
+
+// ************************************************************
+// ************************************************************

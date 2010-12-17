@@ -1,0 +1,441 @@
+<?php
+// $Id: citebank_importer.module,v 1.0.0.0 2010/09/15 4:44:44 dlheskett $
+
+/** citebank_importer.module
+ *
+ * Copyright (c) 2010 Missouri Botanical Garden 
+ *
+ * @author: David L. Heskett (contractor: Adaptive Solutions Group)
+ * @date Created: 10/01/2010
+ *
+ */
+
+//define('DOS_MODE', true);
+define('DOS_MODE', false);
+
+define('IMPORT_DIR_PATH_FILES', '/sites/default/files/');
+
+
+$includePath = dirname(__FILE__) . '/';
+
+require_once($includePath . 'CiteBankBiblio.php');
+require_once($includePath . 'ExcelTextImporter.php');
+require_once($includePath . 'CSVHandler.php');
+require_once($includePath . 'ReviewContent.php');
+
+/**
+ * citebank_importer_view - 
+ */
+function citebank_importer_view(&$node, $teaser = FALSE, $page = FALSE)
+{
+	//echo 'here i am';
+}
+
+/**
+ * citebank_importer_cron - 
+ */
+function citebank_importer_cron(&$node = null, $teaser = FALSE, $page = FALSE)
+{
+	// we need an off switch if processed that file.
+	watchmen('Citebank importer cron');
+	processCiteBankImport();
+}
+
+/**
+ * citebank_importer_node_info - 
+ */
+function citebank_importer_node_info()
+{
+	return array(
+		'citebank_importer' => array(
+			'name'         => t('citebank_importer'),
+			'module'       => 'citebank_importer',
+			'description'  => t('Citebank Importer: Data import module for bringing in external data from various sources. Imports to Biblio records using a CSV file and the data files put in as attachments.'),
+			'has_title'    => TRUE,
+			'title_label'  => t('CiteBank Importer'),
+			'has_body'     => FALSE
+//			'' => '',
+		)
+	);
+}
+
+
+
+// ************************************************************
+//  process import methods
+// ************************************************************
+/**
+ *  previewCiteBankImport - 
+ */
+function previewCiteBankImport()
+{
+	$importer = new ExcelTextImporter();
+	$biblios  = importProcess($importer);
+	
+	$x = new CiteBankBiblio();
+	
+	//$uid      = 242;
+	$uid      = 0;
+	
+	$dirPath  = IMPORT_DIR_PATH_FILES;
+	$linkPath = getLinkPath() . IMPORT_DIR_PATH_FILES;
+	
+	// if no data, report error and get out
+	if (count($biblios) == 0) {
+		watchmen('Citebank importer preview no data');
+		return;
+	}
+	
+	foreach ($biblios as $key => $biblio) {
+		if (count($biblio) > 2) {
+			
+			// fill data
+			$x->biblioNode->setDataByNodeXData($biblio);
+			$biblioPlus = $x->biblioNode->processNode(null);
+			
+			// assign more data
+			$x->biblioNode->data_source_org = 'East Africa Library';
+			$x->biblioNode->data_source_prj = 'testing';
+			$x->biblioNode->data_source_url = 'Internal Import';
+
+			$x->biblioNode->data_url = $biblioPlus['biblio_url'];
+
+			$x->biblioNode->filename = $biblioPlus['biblio_url'];
+			$x->biblioNode->dirPath  = $dirPath;
+			$x->biblioNode->linkPath = $linkPath;
+
+			// create the link path url  basically the filename combined with the host path
+			// updates the biblio url
+			// our source csv file, does not know a link path url, it only knows the actual filename, 
+			//   which is buried in the csv under the "data_url" or 'biblio_url' associated field name
+			// so, we hook our link path to the name of the data file
+			// for an IA Internet Archive site, we will need to change the page link logic.
+			$x->biblioNode->data_url = $x->biblioNode->linkPath . $x->biblioNode->data_url;
+			
+			// make node array
+			$biblioPlus = $x->biblioNode->processNode(null);
+			$x->biblioNode->node = $biblioPlus;
+			
+			
+			// view data
+			$title = $biblioPlus['biblio_title'];
+			//$filename = $biblioPlus['biblio_url'];
+			$filename = $x->biblioNode->filename;
+//echo '<br>' . "\n"; print_r($x->biblioNode->node); echo '<br>' . "\n";
+			// fix the node.  we need to do this... why. 
+			$x->biblioNode->node['biblio_url'] = $x->biblioNode->data_url;
+
+			echo '<br>' . "\n";
+			echo 'Title:[' . $title . ']' . '<br>' . "\n";
+			echo 'File:[' . $filename . '] ' . '<br>' . "\n";
+			echo '<br>' . "\n";
+			
+			// *******
+			echo 'url:[' . $x->biblioNode->node['biblio_url'] . '] ' . '<br>' . "\n";
+			echo 'url:[' . $x->biblioNode->data_url . '] ' . '<br>' . "\n";
+			echo '<br>' . "\n";
+	
+			//echo 'type:[' . $x->biblioNode->data_type . '] ' . '<br>' . "\n";
+			echo 'type:[' . $x->biblioNode->node['biblio_type'] . '] ' . '<br>' . "\n";
+			echo '<br>' . "\n";
+	
+			// ***** Write the record *****
+			// check for a duplicate record
+			$duplicate = $x->checkDuplicate($x->biblioNode->data_url);
+			if (!$duplicate) {
+				// write data
+				//$x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
+				echo '****[' . 'Show the record here' . ']****' . '<br>' . "\n";
+			} else {
+				echo '****[' . 'Skip the duplicate record here' . ']****' . '<br>' . "\n";
+			}
+	
+			echo '****************************************';
+			echo '<br>' . "\n";
+	
+		}
+	}
+}
+
+/**
+ *  processCiteBankImport - 
+ */
+function processCiteBankImport()
+{
+	$importer = new ExcelTextImporter();
+	$biblios  = importProcess($importer);
+	
+	// if no data, report error and get out
+	if (count($biblios) == 0) {
+		//watchmen('Citebank importer preview no data');
+		return;
+	}
+
+	$x = new CiteBankBiblio();
+	
+	//$uid      = 242;
+	$uid      = 0;
+	
+	$dirPath  = IMPORT_DIR_PATH_FILES;
+	$linkPath = getLinkPath() . IMPORT_DIR_PATH_FILES;
+	
+	foreach ($biblios as $key => $biblio) {
+		if (count($biblio) > 2) {
+			
+			// fill data
+			$x->biblioNode->setDataByNodeXData($biblio);
+			$biblioPlus = $x->biblioNode->processNode(null);
+			
+			// assign more data
+			$x->biblioNode->data_source_org = 'East Africa Library';
+			$x->biblioNode->data_source_prj = 'testing';
+			$x->biblioNode->data_source_url = 'Internal Import';
+
+			$x->biblioNode->data_url = $biblioPlus['biblio_url'];
+
+			$x->biblioNode->filename = $biblioPlus['biblio_url'];
+			$x->biblioNode->dirPath  = $dirPath;
+			$x->biblioNode->linkPath = $linkPath;
+
+			// create the link path url  basically the filename combined with the host path
+			// updates the biblio url
+			// our source csv file, does not know a link path url, it only knows the actual filename, 
+			//   which is buried in the csv under the "data_url" or 'biblio_url' associated field name
+			// so, we hook our link path to the name of the data file
+			// for an IA Internet Archive site, we will need to change the page link logic.
+			$x->biblioNode->data_url = $x->biblioNode->linkPath . $x->biblioNode->data_url;
+			
+			// make node array
+			$biblioPlus = $x->biblioNode->processNode(null);
+			$x->biblioNode->node = $biblioPlus;
+			
+			
+			// view data
+			$title = $biblioPlus['biblio_title'];
+			//$filename = $biblioPlus['biblio_url'];
+			$filename = $x->biblioNode->filename;
+//echo '<br>' . "\n"; print_r($x->biblioNode->node); echo '<br>' . "\n";
+			// fix the node.  we need to do this... why. 
+			$x->biblioNode->node['biblio_url'] = $x->biblioNode->data_url;
+
+			echo '<br>' . "\n";
+			echo 'Title:[' . $title . ']' . '<br>' . "\n";
+			echo 'File:[' . $filename . '] ' . '<br>' . "\n";
+			echo '<br>' . "\n";
+			
+			// *******
+			echo 'url:[' . $x->biblioNode->node['biblio_url'] . '] ' . '<br>' . "\n";
+			echo 'url:[' . $x->biblioNode->data_url . '] ' . '<br>' . "\n";
+			echo '<br>' . "\n";
+	
+			//echo 'type:[' . $x->biblioNode->data_type . '] ' . '<br>' . "\n";
+			echo 'type:[' . $x->biblioNode->node['biblio_type'] . '] ' . '<br>' . "\n";
+			echo '<br>' . "\n";
+	
+			// ***** Write the record *****
+			// check for a duplicate record
+			$duplicate = $x->checkDuplicate($x->biblioNode->data_url);
+			if (!$duplicate) {
+				// write data
+				//$node_save($x->biblioNode->node);
+				$x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
+				cache_clear_all();
+				echo '****[' . 'Write the record here' . ']****' . '<br>' . "\n";
+			} else {
+				echo '****[' . 'Skip the duplicate record here' . ']****' . '<br>' . "\n";
+			}
+	
+			echo '****************************************';
+			echo '<br>' . "\n";
+	
+		}
+	}
+}
+
+/**
+ *  importProcess - 
+ */
+function importProcess($n)
+{
+	//$includePath = dirname(__FILE__) . '/';
+	//
+	//$fileName  = @($_REQUEST['file']    ? filter($_REQUEST['file'])    : $includePath . 'testJAMCADatabaseSG_small.csv');
+	$fileName = '';
+	$flagCleanup = false;
+	
+	// make a list of csv files, go through one, mark done, go through next later since running cron
+	$x = new CSVHandler();
+	$includePath = $x->includePath;
+	$filenames = $x->findListImportFiles();
+	
+	if (count($filenames) > 0) {
+		$file = $filenames[0];
+		$fileName = $includePath . $file;
+
+		// check if this is approved
+		if ($x->isApproved($fileName)) {
+			$flagCleanup = true;
+		} else {
+			// is preview?
+			// yes
+			if ($x->isPreviewed($fileName)) {
+				//  done, exit
+				watchmen('waiting for approval for: **[' . $file . ']**');
+			// no
+			} else {
+				//  make preview tag file
+				$x->makePreviewed($fileName);
+				//  process and gen preview
+
+				$contentFormat = BiblioNode::STRING_TO_CSV;
+				//$contentFormat = BiblioNode::STRING_TO_STR;
+				//$contentFormat = BiblioNode::STRING_TO_STRHTM;
+				//$contentFormat = BiblioNode::STRING_TO_HTML;
+				
+				$reviewContent = new ReviewContent();
+				$reviewContent->sourceFile = $fileName;
+				$reviewContent->reviewerEmail = 'david.heskett@mobot.org';
+				$msg = $reviewContent->createReviewContent($contentFormat);
+				
+				watchmen($msg);
+
+				//  email it
+				//$mailFlag = $reviewContent->sendIt($fileName, $msg, $reviewContent->reviewerEmail);
+				$reviewName = $reviewContent->shortFileName($fileName);
+				$mailFlag = $reviewContent->sendProof($reviewName, $msg);
+
+				if (!$mailFlag) {
+					watchmen('did not send email out');
+				}
+				watchmen('we process a preview, email it out for: **[' . $file . ']**' . '**[' . $fileName . ']**');
+			}
+			
+			return;
+		}
+	} else {
+		// no files
+		return;
+	}
+
+	watchmen('import file to use: **[' . $fileName . ']**');
+	
+	$dataFile = '';
+	if ($fileName) {
+		
+		$flagMSvsUx = DOS_MODE;
+
+		$fileSep = ($flagMSvsUx ? '\\' : '/' );
+		
+		//$dataFile = '..' . $fileSep . $fileName;
+		$dataFile = $fileName;
+		
+		if (file_exists($dataFile)) {
+			//echo 'FileName:' . $dataFile . '<br>' . "\n";
+			//echo '****************************************';
+			//echo '<br>' . "\n";
+		} else {
+			//echo 'Error - filename not found: ' . $dataFile . '';
+			return;
+		}
+	}
+
+	$biblios = $n->processFileIntoBiblioData($dataFile);
+
+	// perform clean up 
+	if ($flagCleanup) {
+		$x->pushOffList($fileName);
+		watchmen('import file expire: **[' . $fileName . ']**');
+		
+		// clean out real old ones while we are at it
+		$purgefilenames = $x->findFilesToPurge();
+		$x->purgeList($purgefilenames);
+	}
+	
+	return $biblios;
+}
+
+/**
+ *  filter - 
+ */
+function filter($data)
+{
+	$filtered = stripslashes($data);
+	
+	return $filtered;
+}
+
+/**
+ *  getLinkPath - 
+ */
+function getLinkPath()
+{
+	$linkPath = '';
+	
+	$hostSiteUrl = getServerName(); //$_SERVER['SERVER_NAME'];
+	
+	$linkPath = 'http://' . $hostSiteUrl;
+	
+	return $linkPath;
+}
+
+/**
+ * getServerName - build a correct file path to the data store for the given file name.
+ */
+function getServerName()
+{
+	$servername = @$_SERVER['SERVER_NAME'];
+
+	if (!$servername) {
+		$rootplus = docRootPath();
+		
+		// problem, $_SERVER['DOCUMENT_ROOT'];  is not available via command line call, we get an empty string.
+		// remedy, below.
+		// cleverness here:
+		// all the code sitting under drupal resides in 'sites/all', so it's a good key to split on cleanly
+		// so, we have something like:
+		//  /var/www/test3.citebank.org/sites/all/more/dirs/here...
+		// we want:
+		//  /var/www/test3.citebank.org/
+		// so drop everything after including 'sites/all....'
+		//
+		$parts = explode('sites/all', $rootplus);
+		$root = $parts[0];
+
+		$servername = str_replace('/var/www/', '', $root);
+	}
+	
+	$servername = rtrim($servername, '/');
+
+	return $servername;
+}
+
+/**
+ * docRootPath - get us a path, we have some odd issue with our server not being set correctly, so attempt a remedy
+ */
+function docRootPath()
+{
+	$path1 = $_SERVER['DOCUMENT_ROOT'];
+	$path2 = $_SERVER['PWD'];
+	
+	$path = ($path1 ? $path1 : $path2);
+	
+	return $path;
+}
+
+//watchdog($type, $message, $variables = array(), $severity = WATCHDOG_NOTICE, $link = NULL);
+/**
+ * watchmen - handy drupal watch logger, give it a msg and go
+ */
+function watchmen($msg, $watchFlag = true, $type = 'CiteBankImp', $addDate = true)
+{
+	if ($watchFlag) {
+		if ($addDate) {
+			$msg .= ' ' . date('YmdHis');
+		}
+		
+		watchdog($type, $msg);  // drupal system call
+	}
+}
+
+// ************************************************************
+// ************************************************************

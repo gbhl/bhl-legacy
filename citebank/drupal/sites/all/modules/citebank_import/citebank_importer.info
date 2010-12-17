@@ -1,0 +1,11 @@
+; $Id: citebank_importer.module,v 1.0.0.0 2010/09/15 4:44:44 dlheskett $
+
+name = Citebank Importer
+description = Citebank Importer: Data import module for bringing in external data from various sources. Imports to Biblio records using a CSV file and the data files put in as attachments.
+core = 6.x
+php = 5.2
+version = "6.x-1.x-dev"
+
+// ************************************************************
+// ************************************************************
+
