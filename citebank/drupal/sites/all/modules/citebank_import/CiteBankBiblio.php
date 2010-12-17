@@ -245,7 +245,7 @@ class CiteBankBiblio
 //   extension should determine mime type?
 
 	/**
-	 * addRecord - process the node, store it or something
+	 * display - 
 	 */
 	function display($str)
 	{
@@ -369,7 +369,7 @@ class CiteBankBiblio
 	}
 
 	/**
-	 * addRecord - add an attachment record, also adds a drupal node
+	 * addCiteBankRecord - add an attachment record, also adds a drupal node
 	 */
 	function addCiteBankRecord($title, $filename, $biblio, $uid = 0, $filesize = 0)
 	{
