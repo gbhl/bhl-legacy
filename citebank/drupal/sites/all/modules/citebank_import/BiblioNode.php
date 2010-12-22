@@ -369,17 +369,17 @@ class BiblioNode extends BiblioNodeData
 	
 				foreach ($this->fld as $key => $label) {	
 					if (is_array($this->$key)) {
+						$info .= '"';
 						// handle array fields
 						foreach ($this->$key as $itemKey => $item) {
-							$info .= '"';
-							$info .= $item;
-							$info .= '"';
+							$info .= trim(rtrim($item, "\n"), '"');
 							$info .= ';';
 						}
-						$info .= ',';
+						$info .= '"';
+
 					} else {
 						$info .= '"';
-						$info .= $this->$key;
+						$info .= trim(rtrim($this->$key, "\n"), '"');
 						$info .= '"';
 					}
 					$info .= ',';
