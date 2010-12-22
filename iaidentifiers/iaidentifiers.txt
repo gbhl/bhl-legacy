@@ -887,6 +887,7 @@ actesdelacademie51acad
 actesdelacademie53acad
 actesdelacademie57acad
 actesdelacademie58acad
+actesdelaso70191718soci
 actesdelasocilin3783soci
 actesdelasocilin3884soci
 actesdelasocilin3985soci
@@ -1732,6 +1733,7 @@ allgemeinedeutsc06prak
 allgemeinedeutsc07prak
 allgemeinedeutsc08prak
 allgemeinedeutsc09prak
+allgemeinedeutsc21847sach
 allgemeineencykl03domb
 allgemeineencykl04domb
 allgemeineencykl05domb
@@ -3305,6 +3307,7 @@ anatomyofhumanbo00cruv
 anatomyofhumanbo00grayrich
 anatomyofhumaneb00dion
 anatomyofhumansk00frazuoft
+anatomyofindiane00mial
 anatomyofinverte00sie
 anatomyofinverte00sieb
 anatomyofinverte01siebuoft
@@ -4203,9 +4206,26 @@ annalesdesscienc29natr
 annalesdesscienc30natr
 annalesdesscienc32pari
 annalesdesscienc47pari
+annalesdesscienc511miln
+annalesdesscienc514miln
+annalesdesscienc515miln
+annalesdesscienc516miln
+annalesdesscienc517miln
+annalesdesscienc518miln
+annalesdesscienc519miln
+annalesdesscienc520miln
 annalesdesscienc56pari
+annalesdesscienc61miln
+annalesdesscienc63miln
+annalesdesscienc64miln
+annalesdesscienc66miln
 annalesdesscienc66pari
+annalesdesscienc67miln
+annalesdesscienc68miln
 annalesdesscienc71218261827audo
+annalesdesscienc71miln
+annalesdesscienc73miln
+annalesdesscienc75miln
 annalesdesscienc78pari
 annalesdesscienc910miln
 annalesdesscienc911miln
@@ -4929,6 +4949,7 @@ annualreport19newj
 annualreport1st100mass
 annualreport1st106geol
 annualreport1st1111877geol
+annualreport1st1122geol
 annualreport1st113186769geol
 annualreport1st131869geol
 annualreport1st141870geol
@@ -6988,6 +7009,7 @@ archivfrmikros842berl
 archivfrmikros851berl
 archivfrmikros852berl
 archivfrmikros861berl
+archivfrmikros8621915berl
 archivfrmikros871berl
 archivfrmikros872berl
 archivfrmikros8812berl
@@ -7181,6 +7203,11 @@ archivfrnaturg97berl
 archivfrnaturg98berl
 archivfrnaturges21berl
 archivfrnaturges32berl
+archivfrphysio1910physiol
+archivfrphysio1911phys
+archivfrphysio1912phys
+archivfrphysio1915phys
+archivfrphysio1917phys
 archivfrzellfors13gold
 archivfrzellfors16gold
 archivfrzoolog01wied
@@ -7325,6 +7352,7 @@ ardea10nede
 ardeadf11nede
 ardeadf12nede
 ardenmohramonghi00abborich
+areasofcriticals819mary
 areasofdesolatio00roth
 areasofdesolatio01roth
 areeffectsofused00ballrich
@@ -7346,6 +7374,7 @@ aristocracyevolu00malluoft
 aristocratsofgar00wils
 aristocratsofgar00wilsrich
 aristotleonparts00arisrich
+aristotleshistor00aris
 aristotleshistor00arisrich
 aristotlesresear00lone
 aristotlesresear00loneuoft
@@ -7610,6 +7639,7 @@ atlasdelafloraal06corr
 atlasdelaflore01corr
 atlasdelaflorede00coss
 atlasdelafloretext00corr
+atlasdembryologi00duva
 atlasdemicrobiol00doye
 atlasdephotomicr00brae
 atlasdepochedesc00dau
@@ -8599,6 +8629,7 @@ beitrgezurhist01hama
 beitrgezurhist02hama
 beitrgezurhist03hama
 beitrgezurhist04hama
+beitrgezurinse00knoc
 beitrgezurk00etti
 beitrgezurke00mort
 beitrgezurkenn00arno
@@ -8769,6 +8800,7 @@ bemerkungenber00coll
 bemerkungenber00durcuoft
 bemerkungenber00impe
 bemerkungenber00reut
+bemerkungenber00schu
 bemerkungenzuden00stre
 beneathtropicsea00beeb
 beneficialinsect00grearich
@@ -9111,6 +9143,7 @@ berlinerentomolo71863berl
 berlinerentomolo81864berl
 berlinerentomolo91865berl
 bermudainjune00gray
+bermudaislandsac00verr
 bermudaislandsco00heilrich
 bermudancephalop3940voss
 bernicepbishopmu16192223bern
@@ -9708,9 +9741,11 @@ bijdragetotdeken00oude
 bijdragetotdeken00ritz
 bijdragetotdeken00zeij
 bilderatlaszurwi00fitz
+bilderatlaszurwi00fitzi
 bilderausdemthie00vogt
 bilderurvxtver00frie
 bildungsabweichu00cram
+bildungsgeschich00ml
 billederafnorden01lind
 billederafnorden01ment
 billederafnorden02ment
@@ -10479,6 +10514,7 @@ birdsbeastsfishe00emer
 birdsbeastsfishe00emerrich
 birdsbeesessays00burr
 birdsbeesessays01burr
+birdsbeneficialt00froh
 birdsberriesinmy00bird
 birdsbylandseare00borarich
 birdscalendar00aflaiala
@@ -12941,6 +12977,7 @@ bulletin225newh
 bulletin226newh
 bulletin227newh
 bulletin228newh
+bulletin228smit
 bulletin229newh
 bulletin22chic
 bulletin22newh
@@ -16271,6 +16308,7 @@ cantaloupecultur00blinrich
 capacitytopayfar00nort
 capecodaquiferma00cape
 capecodcranberri00webbrich
+capehorseitsorig00schr
 capercaillieinsc00harv
 capercaillieinsc00harvieb
 capercaillieinsc00harvrich
@@ -16732,6 +16770,7 @@ catalogoftypespe171nite
 catalogoiconogra00hida
 catalogometodico00bona
 catalogometodico00stal
+catalogomtodico00bona
 catalogosdafauna01muse
 catalogosinonimi00bert
 catalogosistem00salv
@@ -17001,6 +17040,7 @@ catalogueofcolle00sedg
 catalogueofcolle00thayiala
 catalogueofcolle00tris
 catalogueofcolle00unit
+catalogueofcolle00univ
 catalogueofcolle01brit
 catalogueofcolle01britrich
 catalogueofcolle02brit
@@ -17207,8 +17247,10 @@ catalogueoflepid12brit
 catalogueoflepid131913brit
 catalogueoflepid13brit
 catalogueoflepid13brituoft
+catalogueoflepid21900brit
 catalogueoflepid2brituoft
 catalogueoflepid410brit
+catalogueoflepid41903brit
 catalogueoflepid48brit
 catalogueoflepid81909brit
 catalogueoflibra00amerrich
@@ -17569,6 +17611,7 @@ cataloguesystema07rijk
 cataloguesystema08rijk
 cataloguesystema09rijk
 cataloguesystm00fava
+cataloguesystm00fleu
 cataloguesystm00rijk
 cataloguewithful00mayh
 catalogusadratio00klec
@@ -17815,6 +17858,7 @@ centfleursdemonh00mass
 centralafricanga00stig
 centralasiaticex01cent
 centralasiaticex02cent
+centralatlasfr15reic
 centralblattfr62jena
 centralblattfr63jena
 centralconnectic00barrrich
@@ -18020,6 +18064,7 @@ checklistofhemip00vand
 checklistofhemip00vands
 checklistofindia00elle
 checklistofinsec00brit
+checklistofinsec00britrich
 checklistofinsec00brituoft
 checklistoflepid00barn
 checklistoflepid00barnuoft
@@ -19716,6 +19761,7 @@ cihm_39958
 cihm_39959
 cihm_39960
 cihm_39981
+cihm_40077
 cihm01316
 cihm01317
 cillybugsalvaget00montrich
@@ -20226,6 +20272,7 @@ coleoptera00reit
 coleopteraatlant00wolluoft
 coleopteraceramb01gahaiala
 coleopterachryso00jacoiala
+coleopterahesper00woll
 coleopteraillust01notm
 coleopterakansas00lecorich
 coleopteralamell01arro
@@ -20246,7 +20293,9 @@ coleopteraofbrit21888fowl
 coleopteraofbrit31889fowl
 coleopteraofbrit51891fowl
 coleopteraofkans00lecorich
+coleopteraofstat00emmo
 coleopterarhynch00mars
+coleopterasanct00woll
 coleopteratenebr00gebi
 coleopteravolilo01gaha
 coleopteristsman01hope
@@ -22543,6 +22592,7 @@ cultivationofora00paraiala
 cultivationofosi00ellmuoft
 cultivationofpea00blac
 cultivationofpea01blac
+cultivationofsug00stubrich
 cultivationoftob00brewrich
 cultivationoftob00dorsrich
 cultivationoftur00anth
@@ -22978,6 +23028,7 @@ dasbotanischepra00stra
 dasbuchvonderbie00witz
 dasbuchvonderbie00witzg
 daschitinskelett00prel
+daselbthalgebirg02gein
 daselektrischeor00ball
 dasentwickelungs00reic
 daseuropischeo00grieuoft
@@ -22985,6 +23036,7 @@ dasflzgebirgew00quen
 dasforstlichever01ganguoft
 dasforstlichever02ganguoft
 dasforstlichewei00boseuoft
+dasgebissderschn02tros
 dasgebissderschn11tros
 dasgehirnvonhatt00gisi
 dasgrosseillustr00muel
@@ -24003,6 +24055,7 @@ deutschebinnenfi00milauoft
 deutscheblumenwe00kumm
 deutschebotanisc15bota
 deutschebotanisc19bota
+deutscheentomolo0006deut
 deutscheentomolo101897gese
 deutscheentomolo11121910scha
 deutscheentomolo121899gese
@@ -24012,8 +24065,23 @@ deutscheentomolo151902ento
 deutscheentomolo161903ento
 deutscheentomolo171904ento
 deutscheentomolo181905ento
+deutscheentomolo1895deut
+deutscheentomolo1901deut
 deutscheentomolo1902deut
+deutscheentomolo1903deut
+deutscheentomolo1904deut
+deutscheentomolo1905deut
+deutscheentomolo1909deut
+deutscheentomolo1911deut
+deutscheentomolo1912deut
+deutscheentomolo1913deut
+deutscheentomolo1914deut
+deutscheentomolo1916deut
+deutscheentomolo1918deut
 deutscheentomolo191906ento
+deutscheentomolo1920deut
+deutscheentomolo1921deut
+deutscheentomolo1922deut
 deutscheentomolo201907ento
 deutscheentomolo211908ento
 deutscheentomolo21889gese
@@ -24723,6 +24791,7 @@ diefischedesneck00gn
 diefischedesvier00nufe
 diefischeindensc00ekst
 diefischzucht00born
+diefledermused00mats
 diefloraderboden00hf
 diefloradesberns00casp
 diefloradesberns00gpuoft
@@ -24987,6 +25056,7 @@ dielandwirtschaf00averuoft
 dielaubmossefenn00brotuoft
 dielebendenschne00lehm
 dielebendenschne00stei
+dielebensweisede00renn
 dielectriccharac00spea
 dielehrevomwaldb00neycuoft
 dielehrevondenha01eble
@@ -25374,6 +25444,7 @@ dievgelgrieche00lind
 dievgelhandbuc01reic
 dievgelhandbuc02reic
 dievogelfaunades00susc
+dievogelfaunavon01borg
 dievogelostafrik00fins
 dievogelsprachee00schm
 dievogelwartehel00gehe
@@ -25516,6 +25587,7 @@ dipterologiaeita07rond
 dipterologiaeita12rond
 dipterologiaeita34rond
 dipterologiaeita56rond
+dipterologischeb00loew
 dipterologisches00becker
 dipterologisches15beckfo
 diptres00bigo
@@ -26676,6 +26748,7 @@ effectofpressure00horn
 effectofsewagesl00beau
 effectofsootinsm00cleviala
 effectofstrictly00slon
+effectofstrictly1912slon
 effectofstrongly00gile
 effectofstructur00birk
 effectofsuperpho00waterich
@@ -26687,6 +26760,7 @@ effectofwateronr00cushrich
 effectofwinterra00shee
 effectsofaciddep00chmiuoft
 effectsofalkalio00kelliala
+effectsofamounto00pitt
 effectsofatomicr00nati
 effectsofbeachno00naqv
 effectsofbeachno00nest
@@ -27478,6 +27552,7 @@ ensinoepesquizas00unit
 enterprisestoryo00vand
 entomographienab00gers
 entomographienun00eric
+entomolog3840192123stut
 entomologaypar00gu
 entomologiaparis01four
 entomologiaparis02four
@@ -27629,6 +27704,8 @@ entomologieanaly01dum
 entomologieanaly02dum
 entomologiefran00amyo
 entomologiefrg00tasc
+entomologisch30191617inte
+entomologisch31191718inte
 entomologischebe00nede
 entomologischebe02goez
 entomologischebe11777goez
@@ -28068,6 +28145,7 @@ entomologywiths00fols
 entomologywithsp00fols
 entomologywithsp00folsrich
 entomologywithsp01fols
+entomologyzoolog00hind
 entomostracaseui00ml
 entozoaintroduct00cobb
 entozoorumsiveve11808rudo
@@ -28971,6 +29049,7 @@ expditionantar1909afran
 expditionantar1924char
 expditionantarfm1908fran
 expditionantarsc1908fran
+expditiondansl7323cast
 expditionsscie01miln
 expedicionbotani00mend
 expeditionsorgan191013191516smit
@@ -29386,6 +29465,7 @@ famousmenofscien00boltiala
 famousmenofscien00boltuoft
 famousracingmenw00thor
 famoustwentymule00unit
+fanciersjour12647481874ph
 fanciersjournall41877hart
 fanciersjournalp1131113251874phil
 fanciersjournalp21875phil
@@ -30207,6 +30287,7 @@ fewfactsaboutzoo00phoe
 fewofmymostfavor00kent
 fewsuggestionson00sarg
 ffgbotanyintro00grayrich
+fhrerdurchdenz00zool
 fhrerfrpilzf00mich
 fhrerfrpilzfreun00mich
 fhrerfrpilzfreun01mich
@@ -32941,6 +33022,7 @@ froglaboratorygu00shum
 frogsofgenuscolo00duel
 frogsofgenuseleu00duel
 frogsofgenuseleu00lync
+frogsofhylaarmat00duel
 frogsofvietnamre92inge
 frogstoadsofchic11schm
 fromblomidontosm00boll
@@ -33959,6 +34041,7 @@ gasexchangemetab00ultsrich
 gasteromycetesof00coke
 gasteropodacepha00whit
 gastreatmentfors00soutrich
+Gastropodenlaic00Simr
 gastropodesproso00lamy
 gattungeneinzell00ng
 gayana__5721993univ
@@ -34054,6 +34137,7 @@ gegenbaursmorpho49leip
 gegenbaursmorpho50leip
 gegenbaursmorpho51leip
 gegenbaursmorpho52leip
+gemeinntzigena02lenz
 gemeinntzigena11bech
 gemeinntzigena12bech
 gemeinntzigena21bech
@@ -35463,6 +35547,7 @@ guernseybreed00hill
 guernseybreed00hillrich
 guiadelesinstal00junt
 guidaperlacquari00staz
+guideauxcollecti00mus
 guidebirdlifetos00chaprich
 guidebookforiden00fore
 guidebookofweste707partegeolrich
@@ -36044,6 +36129,7 @@ handbooktogamebiog02ogil
 handbooktomarine00gossuoft
 handbooktomarsup00lyde
 handbooktomarsup00lydekk
+handbooktomining00geol
 handbooktonatura00marruoft
 handbooktoorderl01kirb
 handbooktoorderl01kirbrich
@@ -36802,6 +36888,7 @@ highschoolagricu00mayniala
 highschoolbotani00spotuoft
 highschoolexperi00eddyrich
 highwayconstruct00byrnuoft
+highwaysbywaysor003grat
 highwayshorses00maud
 hilfsbuchfrdassa00lind
 hilfsbuchfrden00hausuoft
@@ -37159,6 +37246,7 @@ histoirenaturell00miln
 histoirenaturell00misc
 histoirenaturell00moqu
 histoirenaturell00moquuoft
+histoirenaturell00pict
 histoirenaturell00rang
 histoirenaturell00riss
 histoirenaturell00rous
@@ -37296,6 +37384,7 @@ histoirenaturell03walc
 histoirenaturell04audo
 histoirenaturell04bloc
 histoirenaturell04buff
+histoirenaturell04cast
 histoirenaturell04cuvi
 histoirenaturell04goda
 histoirenaturell04godart
@@ -37363,6 +37452,7 @@ histoirenaturell07laco
 histoirenaturell07lam
 histoirenaturell07lama
 histoirenaturell07latr
+histoirenaturell07less
 histoirenaturell07plin
 histoirenaturell07sonn
 histoirenaturell07spa
@@ -37386,6 +37476,7 @@ histoirenaturell09bois
 histoirenaturell09cuvi
 histoirenaturell09goda
 histoirenaturell09laco
+histoirenaturell09less
 histoirenaturell09muls
 histoirenaturell09plin
 histoirenaturell09spa
@@ -37550,6 +37641,7 @@ histologicalgona00gold
 histologicalphys00davi
 histologicalstud00camp
 histologicaltech00kingrich
+histologiedusyst01ram
 histologischebei00strauoft
 histologischebei01stra
 histologischebei02stra
@@ -38261,6 +38353,7 @@ hoplomyzonsexpap61taph
 hopstheircultiva00simmrich
 horacedobelllect00martrich
 horaeentomologic00char
+horaeentomologic112macl
 horaeichthyologi0102ml
 horaeichthyologi03ml
 horaezoologicaez00leyd
@@ -39477,6 +39570,7 @@ iconographiedur1182944gur
 iconographiedur2182944gu
 iconographiedur3182944gu
 iconographieetde02mill
+iconographieetde03mill
 iconographieethi01dupo
 iconographieethi02dupo
 iconographiegn00jang
@@ -42446,9 +42540,11 @@ journalfrdiega78stut
 journalfro115185367deut
 journalfrornit101862deut
 journalfrornit121864deut
+journalfrornit141866deut
 journalfrornit151867deut
 journalfrornit161868deut
 journalfrornit171869deut
+journalfrornit181870deut
 journalfrornit201872deut
 journalfrornit211873deut
 journalfrornit221874deut
@@ -43600,6 +43696,7 @@ katalogderreptil21898senc
 katalogdervgel00schn
 katalogdervogels00senc
 katalogeskchfo00baye
+katalogoverdyrsa00berg
 katalogu01uraluoft
 katzenvolkeinefa00fleuuoft
 kbiologiiimorfol00mord
@@ -43647,6 +43744,7 @@ keytosuccessgene00pran
 keytosuccessgene00pranrich
 keytosystemofvic00mueluoft
 keytowaterbirdso00cory
+kferbchleino00reba
 kijikhistorictan59vans
 killingofplantti00chanuoft
 killkekillkerela15baue
@@ -43742,6 +43840,7 @@ knowledgev140nov35londuoft
 knowledgev140nov36londuoft
 knowledgev140nov37londuoft
 knowyourcitytree00newa
+knstlichebefru00grie
 kodeksymezhdunar00osha
 koensoksensogkal00galt
 koleopterologisc31914zool
@@ -43842,6 +43941,7 @@ kungligasvenskav03kung
 kungligasvenskav14kung
 kungligasvenskav89kung
 kunopaediapracti00dobsrich
+kupfertafelnzurn00kitt
 kupffersvesiclei00sumnrich
 kurzeabhandlungv00franuoft
 kurzerabrisseine00finkrich
@@ -44120,6 +44220,8 @@ laflorevallaisan00angr
 lafortdelact00meni
 lafriqueoccident00duch
 lafriquesauvagen00duch
+lagaleriedesoise01viei
+lagaleriedesoise02viei
 lagopusstat00lesirich
 lagrandepchede00bell
 lagrandepchele00sauv
@@ -44530,6 +44632,7 @@ lavieetlalumir00dubo
 lavieetlesmursde00figu
 lavieetlhabitude00butluoft
 lavieetloeuvrede00borduoft
+lavilladialogo00taeg
 lavitadeglianima03breh
 lavitadeglianima04breh
 lavouraboletimda10soci
@@ -44707,6 +44810,7 @@ leconssurlaphys09miln
 leconssurlaphysi01bern
 leconssurlaphysi02bern
 lecontedelafemme00walluoft
+lectionespublica00retz
 lectureonconstit00brewrich
 lectureonmendel00drin
 lecturesandessay00smituoft
@@ -45016,6 +45120,7 @@ lemursofmadagasc90harc
 lenaturaliste09pari
 lenaturaliste11pari
 lenaturaliste12pari
+lenaturaliste223311909dey
 lenaturalistecan101878soci
 lenaturalistecan111879soci
 lenaturalistecan118681869soci
@@ -45166,6 +45271,8 @@ lepidoptera00leecrich
 lepidoptera00moor
 lepidoptera00snel
 lepidopteraexoti00butl
+lepidopteraindic002moor
+lepidopteraindic003moor
 lepidopteraindic02moor
 lepidopteraindic03moor
 lepidopterainsam00auri
@@ -45469,6 +45576,7 @@ lesorganismesviv00miqu
 lesoxydationsdel00enri
 lespalmiershisto01kerc
 lespapiersdesass00bouruoft
+lespapillonsdans01robe
 lespapillonsleur00ball
 lesparcsetlesjar00lefuoft
 lesparnassiensde00aust
@@ -46213,6 +46321,7 @@ listofspecimenso07brituoft
 listofspecimenso08brit
 listofspecimenso09brit
 listofspecimenso12brit
+listofspecimenso13brit
 listofspecimenso14britrich
 listofspecimenso15brit
 listofspecimenso16briti
@@ -46571,6 +46680,7 @@ louisagassizhisl01agasrich
 louisagassizhisl01agasuoft
 louisagassizhisl02agas
 louisagassizhisl02agasuoft
+louisagassizword00jame
 louisiana00unitrich
 louisianabeefcat00stub
 louisianaherpeto00beye
@@ -46895,6 +47005,7 @@ magazinfrdiena01hp
 magazinfrdiena02hp
 magazinfrdiena03hp
 magazinfrdiena04hp
+magazinfrinsek06illi
 magicplantsbeing00heuc
 magnersabcguidet00magn
 magneticalobserv00kanerich
@@ -47116,6 +47227,7 @@ mammaliannervous00gotcrich
 mammalianphysiol00sheruoft
 mammaliarecentex00scotiala
 mammaliarecentex00scotrich
+mammaliatheirvar00figu
 mammals_332sanb
 mammals1860187900bene
 mammalsandlifezo00bailrich
@@ -48712,6 +48824,7 @@ memoirsofdisting00walkrich
 memoirsofdisting00walkuoft
 memoirsofgeo131877geol
 memoirsofgeo141878geol
+memoirsofgeologi11859geol
 memoirsofgeologi41865geol
 memoirsofgeologi61869geol
 memoirsofgeologi71871geol
@@ -49628,6 +49741,7 @@ midscalephysical00hugh
 mightydeepwhatwe00gibe
 mightydeepwhatwe00giberich
 migrationconserv00amer
+migrationofbirds00barr
 migrationofbirds00cowa
 migrationofbirds00cowarich
 migrationofbirds00cowauoft
@@ -51119,6 +51233,7 @@ monographiapneum00pfei
 monographiapneum01pfei
 monographiapneum02pfei
 monographiapneum03pfei
+monographiapsela00denn
 monographiarosar03gand
 monographiarosar04gand
 monographiarosar12gand
@@ -51174,6 +51289,7 @@ monographiedes01cand
 monographiedes02cand
 monographiedes03cand
 monographiedes04cand
+monographiedesan00lafe
 monographiedesbr00jull
 monographiedesbu01kerr
 monographiedesbu02kerr
@@ -52380,6 +52496,7 @@ narrativeofsecon12ross
 narrativeofsprin00smit
 narrativeoftrave00wall
 narrativeoftrave00walluoft
+narrativeoftript00alle
 narrativeoftript00allerich
 narrativeofunite00wilkrich
 narrativeofunite01wilkuoft
@@ -52831,11 +52948,13 @@ naturalhistoryof139smit
 naturalhistoryof13dono
 naturalhistoryof13newyuoft
 naturalhistoryof13stairich
+naturalhistoryof14dono
 naturalhistoryof14newyuoft
 naturalhistoryof15dono
 naturalhistoryof15mcco
 naturalhistoryof15newyuoft
 naturalhistoryof1620mcco
+naturalhistoryof16dono
 naturalhistoryof17newyuoft
 naturalhistoryof1833smit
 naturalhistoryof1841smit
@@ -52996,6 +53115,7 @@ naturalistsguide00mayn
 naturalistsguide00mayna
 naturalistsguide00mayniala
 naturalistsguide00maynrich
+naturalistsguide00swai
 naturalistsguide01mayn
 naturalistsguide02mayn
 naturalistsguide03mayn
@@ -53451,6 +53571,7 @@ naturgeschichted00leyd
 naturgeschichted00sch
 naturgeschichted00zink
 naturgeschichted01dubo
+naturgeschichted01kern
 naturgeschichted02eric
 naturgeschichted04eric
 naturgeschichted31eric
@@ -55429,6 +55550,7 @@ nouveauxlmen01beau
 nouveauxlmen02beau
 nouveauxlmens00rich
 nouveauxlmensdeb00rich
+nouveauxmmoire04mosk
 nouveauxmmoire121860mosk
 nouveauxmmoire14mosk
 nouveauxmmoire15mosk
@@ -55695,6 +55817,7 @@ numericalmodelfo00lem
 numericalmodelto00perl
 numericalsimulat00leen
 numericaltablesc00luptrich
+numrationdes00silb
 nunivakislandesk12vanst
 nuovafloraanalit1923fior
 nuovafloraanalit1929fior
@@ -55979,6 +56102,7 @@ observationsonsa00sheirich
 observationsonso00daly
 observationsonso00dalyiala
 observationsonso00dubluoft
+observationsonst01case
 observationsonst01curwuoft
 observationsonst02curwuoft
 observationsonsu00rona
@@ -56662,6 +56786,7 @@ oceanuswood3901wood
 oceanuswood4001wood
 oceanuswood4002wood
 oceanworldbeing00figurich
+oceanworldbeingd00figu
 oceanworldbeingd00figurich
 oceanworldbeingd00figuuoft
 ocelluslucanuson00taylrich
@@ -57057,6 +57182,8 @@ olivesscrapbook00npolrich
 olivetreeitsprod00blearich
 olivrinhodasaves00iher
 olofkrareresquim00krar
+ologist02rock
+ologist03rock
 ologistfors1011189394latt
 ologistfors1214189597latt
 ologistfors1516189899latt
@@ -57071,6 +57198,7 @@ ologistforstud291912latt
 ologistforstud301913latt
 ologistforstud311914latt
 ologistforstud321915latt
+ologistforstud38albi
 ologistforstud401923latt
 omanordningarnaf00axel
 ombarrtradskultu00lind
@@ -57481,6 +57609,8 @@ operaeperiodicis05vrie
 operaeperiodicis06vrie
 operaeperiodicis07vrie
 operafrancisciba00baco
+operaornithologi01bona
+operaornithologi02bona
 operaphilosophic01stenuoft
 operapostumamath01euleuoft
 operapostumamath02euleuoft
@@ -57504,6 +57634,12 @@ ophthalmicmallei00mohl
 ophthalmictestfo00unit
 ophthalmologyfor00shar
 opinionsofscient00brad
+opisthobranch10141978long
+opisthobranch108101978lon
+opisthobranch117121979lon
+opisthobranch1311981long
+opisthobranch18196976long
+opisthobranch911977lon
 opisthobranchiat00berg
 opisthobranchiat00macfiala
 opisthobranchiat00macfuoft
@@ -57693,6 +57829,7 @@ originedesdcou02dute
 originevolutiono00osbo
 originformationo00legr
 originhistoryofa01ameriala
+originhistoryofh00osbo
 originhistoryofo00hensrich
 origininfluenc00ridg
 origininfluenceo00ridg
@@ -58538,6 +58675,12 @@ paintedhickorybo00dushrich
 paintedturtlesof184bish
 painttechnologyt00garduoft
 palaeoniscusobtu00meye
+palaeontographi161910cana
+palaeontographi181912cana
+palaeontographi221916cana
+palaeontographi241918cana
+palaeontographi261920cana
+palaeontographi281922cana
 palaeontographic01cass
 palaeontographic02cass
 palaeontographic04cass
@@ -58553,11 +58696,15 @@ palaeontographic14cass
 palaeontographic15cass
 palaeontographic16cass
 palaeontographic17cass
+palaeontographic19cass
 palaeontographic2633pale
 palaeontographic3437pale
+palaeontographic35053cass
 palaeontographic4751pale
+palaeontographic5053cass
 palaeontographic541984pale
 palaeontographic5556198688pale
+palaeontographic5558cass
 palaeontographic5759199196pale
 palaeontographic60pale
 palaeontographic612pale
@@ -62410,6 +62557,8 @@ proceedingsofam43amer
 proceedingsofam49ameruoft
 proceedingsofam52amer
 proceedingsofam56amer
+proceedingsofame004amer
+proceedingsofame005amer
 proceedingsofame00ameruoft
 proceedingsofame011amer
 proceedingsofame014amer
@@ -67042,8 +67191,19 @@ revistachil1415198687soci
 revistachilen13195153soci
 revistachilen67196873soci
 revistachilen89197475soci
+revistachilenade16soci
+revistachilenade17soci
+revistachilenade18soci
+revistachilenade19soci
+revistachilenade21soci
+revistachilenade22soci
+revistachilenade23soci
 revistachilenade25muse
+revistachilenade25soci
+revistachilenade26soci
 revistachilenade2728muse
+revistachilenade27soci
+revistachilenade28soci
 revistachilenade41900muse
 revistachilenade41955soci
 revistachilenade51901muse
@@ -67153,6 +67313,10 @@ revuebretonnedeb34dani
 revuebretonnedeb56dani
 revuebretonnedeb78dani
 revuecomplment00pari
+revuecritiq2223191819coss
+revuecritiquede131909coss
+revuecritiquede191915coss
+revuecritiquede201916coss
 revuecritiquedel00bona
 revuecritiquedep101906coss
 revuecritiquedep111907coss
@@ -67282,6 +67446,7 @@ revueentomologiq02stra
 revueentomologiq03metc
 revueentomologiq04metc
 revueentomologiq05metc
+revueetmagasin331875rile
 revueetmagasinde00pari
 revueetmagasinde01soci
 revueetmagasinde02soci
@@ -67538,6 +67703,7 @@ riversidenatural00kingrich
 riversidenatural03king
 riversmountainss00philuoft
 rivieranaturenot00caseiala
+rivistacoleot79190911came
 rivistacoleotter101912came
 rivistacoleotter111913came
 rivistacoleotter121914came
@@ -68311,6 +68477,7 @@ saggiodialgologi01mazz
 saggiodialgologi02mazz
 saggiodialgologi03mazz
 saggiodiditterol00bell
+saggiodiunadistr00bona
 saggiodunaguidap01guid
 saggiointornoagl00bayl
 saggionelqualesi00bert
@@ -69273,6 +69440,7 @@ sensitiveplantsu00vandrich
 sensitivityoftwo00syke
 sensorybiologyof00unit
 senundpflanzen00burcuoft
+septimanaphiloso00maie
 septorialeafspot00rooa
 sequenceofplumag00dwig
 sequenceofplumag00dwigrich
@@ -70573,6 +70741,9 @@ sociallifeininse00fabr
 sociallifeininse12fabr
 sociallifeofanim00alle
 socialprogressda00nasmrich
+societasent2627191112rh
+societasent2829191314rh
+societasentom25191011rh
 societasentomolo121418971900inte
 societasentomolo13inte
 societasentomolo1518190004inte
@@ -73285,16 +73456,27 @@ stuttgarterbeitr1551989staa
 stuttgarterbeitr1561989staa
 stuttgarterbeitr157167198990staa
 stuttgarterbeitr168182199192staa
+stuttgarterbeitr16staa
+stuttgarterbeitr17staa
 stuttgarterbeitr1831901992staa
+stuttgarterbeitr18staa
 stuttgarterbeitr191200199394staa
+stuttgarterbeitr19staa
 stuttgarterbeitr2012191994staa
+stuttgarterbeitr20staa
+stuttgarterbeitr21staa
 stuttgarterbeitr220244199596staa
+stuttgarterbeitr22staa
+stuttgarterbeitr23staa
 stuttgarterbeitr2452581997staa
+stuttgarterbeitr24staa
 stuttgarterbeitr2592701998staa
+stuttgarterbeitr26staa
 stuttgarterbeitr2711999staa
 stuttgarterbeitr2722801999staa
 stuttgarterbeitr2747197779staa
 stuttgarterbeitr48661980staa
+stuttgarterbeitr67staa
 stuttgarterbeitr6889198182staa
 stuttgarterbeitr90109198384staa
 stylasterinaofsi00hick
@@ -73501,6 +73683,7 @@ supplementtocode00amer
 supplementtofham00thurrich
 supplementtofish00dayf
 supplementtogame00lyde
+supplementtogene00lath
 supplementtogord00gord
 supplementtoharv00mogg
 supplementtohist00yarr
@@ -73571,6 +73754,7 @@ surgicalobstetri01will
 surgicalobstetri02will
 surgicalobstetri03will
 surgicaloperatin00doll
+surinaamschevlin13sepp
 surinamcoralsnak344schm
 surladeterminati00lama
 surlafloredelase00dusn
@@ -74111,6 +74295,7 @@ systematicszooge52inge
 systematikundfau19plategies
 systematikundfau19textgies
 systematisch00scud
+systematischalph00hb
 systematischeabh00alte
 systematischeabh00alten
 systematischeb00jc
@@ -74387,6 +74572,8 @@ taxidermyzoologi00horn
 taxonomicdemogra00roelrich
 taxonomicguideto04unit
 taxonomickeystop00hopp
+taxonomicliterat21979staf
+taxonomicliterat71988staf
 taxonomicphytoge41enge
 taxonomicreviewo00jack
 taxonomicrevisio00burcrich
@@ -77821,6 +78008,7 @@ typicalfliesphot00peariala
 typicalmethodsof00kellrich
 typificationofsc17barr
 uberdenabbauvonc00fisc
+uberdenphysikali00meye
 uberdieeinheinis00leyd
 ubereinigeausgez00mn
 ubereinigeschw00mikl
@@ -79027,6 +79215,7 @@ vertebrateembryo00marsuoft
 vertebrateeyeits00wall
 vertebratefaunao00boul
 vertebratefaunao00buckrich
+vertebratefaunao01cowa
 vertebratefaunao31zang
 vertebratefaunao32zang
 vertebratefaunao33zang
@@ -79067,6 +79256,7 @@ verzeichnisderpa01osha
 verzeichnisderpa02osha
 verzeichnisderpa03osha
 verzeichnismeine11stur
+verzeichnissbeka00hb
 verzeichnissdera00wied
 verzeichnissderc00anto
 verzeichnissderc00grun
@@ -79818,6 +80008,8 @@ weeklyfloristsre10chic
 weeklyfloristsre11chic
 weeklyfloristsre12chic
 weeklyfloristsre13chic
+weeklyoologist111891leba
+weeklyoologistph211892leb
 weevilresistinga00cook
 wefarmforhobbyma00tetlrich
 wegnetzeintheilu00mart
@@ -80973,6 +81165,7 @@ youngladysequest00lond
 youngmarketgarde00grei
 youngofcrayfishe00andrrich
 youngoist02gain
+youngologist01gain
 youngornithologi111218851886bost
 youngracehorse00gilb
 youngracehorsess00gilb
@@ -81061,6 +81254,7 @@ zeitschriftfrd10natu
 zeitschriftfrd111884mada
 zeitschriftfrd11natu
 zeitschriftfrd12natu
+zeitschriftfrd1314natu
 zeitschriftfrd13natu
 zeitschriftfrd14natu
 zeitschriftfrd15natu
@@ -81545,6 +81739,7 @@ zoologica27stut
 zoologicalarticl00lank
 zoologicalarticl00lankrich
 zoologicalclassi00pasc
+zoologicalgarden00peel
 zoologicalillust01swai
 zoologicalillust01swain
 zoologicalillust02swai
@@ -82051,6 +82246,7 @@ zurrotatorienfau00berg
 zursystematikund00sch
 zurvergleichende00fr
 zurvergleichende00gado
+zurzoogeographie00stol
 zusamuelthomasvo00tied
 zutrgezursamml00hb
 zutrgezursamml01hb
