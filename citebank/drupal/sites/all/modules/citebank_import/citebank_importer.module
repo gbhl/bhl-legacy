@@ -215,7 +215,8 @@ function importProcess($n)
 
 				//  email it
 				$reviewName = $reviewContent->shortFileName($fileName);
-				$mailFlag = $reviewContent->sendProof($reviewName, $msg);
+				$writeProofFile = $reviewContent->writeProof($fileName, $msg);
+				$mailFlag = $reviewContent->sendProof($reviewName, $msg, $writeProofFile);
 
 				if (!$mailFlag) {
 					watchmen('did not send email out');

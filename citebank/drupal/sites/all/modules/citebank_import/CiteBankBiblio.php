@@ -15,18 +15,7 @@ $includePath = dirname(__FILE__) . '/';
 
 require_once($includePath . 'DrupalNode.php');
 require_once($includePath . 'BiblioNode.php');
-
-//$useDB = 'live';
-//$useDB = 'staging';
-$useDB = 'dev4web';
-if (DOS_MODE) {
-$useDB = 'localhost';
-}
-//$useDB = 'dev4';
-//$useDB = 'dev4a';
-//$useDB = 'dev5';
-//$useDB = 'dev4web';
-
+require_once($includePath . 'BiblioAuthorHandler.php');
 require_once($includePath . 'DBInterfaceController.php');
 
 
@@ -165,6 +154,58 @@ class CiteBankBiblio
 		echo $sql;  echo '<br>'."\n";  // FIXME: remove
 	}
 
+//	function testBAR($author, $nid)
+//	{
+//		$this->nid = $nid;
+//		$this->makeBiblioAuthorRecord($author);
+//	}
+
+	/**
+	 * makeBiblioAuthorRecord - 
+	 */
+	function makeBiblioAuthorRecord($author)
+	{
+		$nid = $this->nid;
+
+		// if multiple authors, then do a loop, else the one
+		$authorHandle = new BiblioAuthorHandler();
+		$flagMultiple = $authorHandle->hasMultipleAuthors($author);
+
+		if ($flagMultiple) {
+			$authors = $authorHandle->makeAuthorList($author);
+			foreach ($authors as $key => $author) {
+				$authorName = $authorHandle->preParseName($author);
+
+				$sql = $this->drupalNode->makeBiblioContributorData($authorName);
+				$this->dbi->insert($sql);
+			
+				$sql = $this->drupalNode->getContributorDataCid();
+
+				$result = $this->dbi->fetch($sql);
+				$cid = $result[0]['cid'];
+		
+				$sql = $this->drupalNode->makeBiblioContributor($nid, $cid);
+
+				$this->dbi->insert($sql);
+			}
+		} else {
+			$authorName = $authorHandle->preParseName($author);
+
+			$sql = $this->drupalNode->makeBiblioContributorData($authorName);
+
+			$this->dbi->insert($sql);
+			
+			$sql = $this->drupalNode->getContributorDataCid();
+
+			$result = $this->dbi->fetch($sql);
+			$cid = $result[0]['cid'];
+	
+			$sql = $this->drupalNode->makeBiblioContributor($nid, $cid);
+
+			$this->dbi->insert($sql);
+		}
+	}
+
 	// ***** ***** get the node id  nid
 	/**
 	 * getNid - 
@@ -189,7 +230,6 @@ class CiteBankBiblio
 	{
 		$sql = $this->drupalNode->makeSqlForDBFiles($filename, $filesize, $uid);
 		$this->dbi->insert($sql);
-		echo $sql;  echo '<br>'."\n";  // FIXME: remove
 
 		$fid = $this->getFid($filename);
 		$this->fid = $fid;
@@ -223,7 +263,6 @@ class CiteBankBiblio
 	{
 		$sql = $this->drupalNode->makeSqlForNodeAccess($nid);
 		$this->dbi->insert($sql);
-		echo $sql;  echo '<br>'."\n";  // FIXME: remove
 	}
 
 	// ***** ***** make an uploads record (to complete the attachement)
@@ -234,7 +273,6 @@ class CiteBankBiblio
 	{
 		$sql = $this->drupalNode->makeSqlForDBUpload($fid, $nid, $filename);
 		$this->dbi->insert($sql);
-		echo $sql;  echo '<br>'."\n";  // FIXME: remove
 	}
 
 // add a biblio record
@@ -334,39 +372,39 @@ class CiteBankBiblio
 		return $filesize;
 	}
 	
-	/**
-	 * addRecordTest - test the process
-	 */
-	function addRecordTest($title, $filename, $uid = 0, $filesize = 0)
-	{
-		// bulletproofing ****
-		if (strlen($filename) == 0) {
-			echo 'error: no filename';
-			return;
-		}
-
-		if (strlen($title) == 0) {
-			echo 'error: no title';
-			return;
-		}
-
-		if ($uid == 0) {
-			;//
-		}
-
-		if ($filesize == 0) {
-			// get the files size
-			$filesize = $this->getFileSize($filename);
-		}
-		// bulletproofing ****
-
-		// make a node
-		// get the node id  nid
-		// make a files record
-		// get the files id  fid
-		// make an uploads record (to complete the attachement)
-		$this->createNodeAndAttachment($title, $uid, $filename, $filesize);
-	}
+//	/**
+//	 * addRecordTest - test the process
+//	 */
+//	function addRecordTest($title, $filename, $uid = 0, $filesize = 0)
+//	{
+//		// bulletproofing ****
+//		if (strlen($filename) == 0) {
+//			echo 'error: no filename';
+//			return;
+//		}
+//
+//		if (strlen($title) == 0) {
+//			echo 'error: no title';
+//			return;
+//		}
+//
+//		if ($uid == 0) {
+//			;//
+//		}
+//
+//		if ($filesize == 0) {
+//			// get the files size
+//			$filesize = $this->getFileSize($filename);
+//		}
+//		// bulletproofing ****
+//
+//		// make a node
+//		// get the node id  nid
+//		// make a files record
+//		// get the files id  fid
+//		// make an uploads record (to complete the attachement)
+//		$this->createNodeAndAttachment($title, $uid, $filename, $filesize);
+//	}
 
 	/**
 	 * addCiteBankRecord - add an attachment record, also adds a drupal node
@@ -375,12 +413,14 @@ class CiteBankBiblio
 	{
 		// bulletproofing ****
 		if (strlen($filename) == 0) {
-			echo 'error: no filename';
+			$errmsg = 'error: no filename';
+			watchdog('CiteBankBiblio', $errmsg);  // drupal system call
 			return;
 		}
 
 		if (strlen($title) == 0) {
-			echo 'error: no title';
+			$errmsg = 'error: no title';
+			watchdog('CiteBankBiblio', $errmsg);  // drupal system call
 			return;
 		}
 
@@ -403,41 +443,45 @@ class CiteBankBiblio
 		
 		// add the attachment
 		$this->createAttachment($title, $uid, $filename, $filesize, $this->nid);
+		
+		// add the author(s)
+		$this->makeBiblioAuthorRecord($biblio['biblio_contributors']);
+		
 	}
 
-	/**
-	 * addRecord - add an attachment record, also adds a drupal node
-	 */
-	function addRecord($title, $filename, $uid = 0, $filesize = 0)
-	{
-		// bulletproofing ****
-		if (strlen($filename) == 0) {
-			echo 'error: no filename';
-			return;
-		}
-
-		if (strlen($title) == 0) {
-			echo 'error: no title';
-			return;
-		}
-
-		if ($uid == 0) {
-			;//
-		}
-
-		if ($filesize == 0) {
-			// get the files size
-			$filesize = $this->getFileSize($filename);
-		}
-		// bulletproofing ****
-
-		// make a node
-		// get the node id  nid
-		// make a files record
-		// get the files id  fid
-		// make an uploads record (to complete the attachement)
-		$this->createNodeAndAttachment($title, $uid, $filename, $filesize);
-	}
+//	/**
+//	 * addRecord - add an attachment record, also adds a drupal node
+//	 */
+//	function addRecord($title, $filename, $uid = 0, $filesize = 0)
+//	{
+//		// bulletproofing ****
+//		if (strlen($filename) == 0) {
+//			echo 'error: no filename';
+//			return;
+//		}
+//
+//		if (strlen($title) == 0) {
+//			echo 'error: no title';
+//			return;
+//		}
+//
+//		if ($uid == 0) {
+//			;//
+//		}
+//
+//		if ($filesize == 0) {
+//			// get the files size
+//			$filesize = $this->getFileSize($filename);
+//		}
+//		// bulletproofing ****
+//
+//		// make a node
+//		// get the node id  nid
+//		// make a files record
+//		// get the files id  fid
+//		// make an uploads record (to complete the attachement)
+//		$this->createNodeAndAttachment($title, $uid, $filename, $filesize);
+//	}
 
 	/**
 	 * checkDuplicate - 

@@ -517,6 +517,62 @@ class DrupalNode
 		return $sql;
 	}
 
+	// INSERT INTO upload AS u SET u.fid = ' . $fid . ', u.nid = ' . $nid . ', u.description = ' . $filename . ', u.list = 1, u.weight = 0
+	/**
+	 * makeBiblioContributorData - create the sql to add an author
+	 */
+	function makeBiblioContributorData($author, $resolverFlag = false)
+	{
+		$sql = '';
+
+		$openBrace = ($resolverFlag ? '{' : '');
+		$clseBrace = ($resolverFlag ? '}' : '');
+
+		// { table }  braces for drupals database name resolver
+		//$sql = 'INSERT INTO '. $openBrace . 'upload' . $clseBrace . ' SET fid = ' . $fid . ', nid = ' . $nid . ', description = ' . "'" . $filename . "'" . ', list = 1, weight = 0';
+		// FIXME: does vid need to be independantly set?  [vid = ' . $nid]
+		// 
+		//echo '' . $name['firstname'] . ' | ' .  $name['initials'] . ' | ' .  $name['lastname'] . ' | ' .  $name['prefix'] . ' | ' .  $name['suffix'] . '  md5:' .  $name['md5'] . ' ';
+		$sql = 'INSERT INTO '. $openBrace . 'biblio_contributor_data' . $clseBrace . ' SET name = ' . "'" . $author['name'] . "'" . ', lastname = ' . "'" .  $author['lastname'] . "'"
+		 . ', firstname = ' . "'" .  $author['firstname'] . "'" . ', initials = ' . "'" .  $author['initials'] . "'" . ', prefix = ' . "'" .  $author['prefix'] . "'" . ', suffix = ' . "'" .  $author['suffix'] . "'" . ', md5 = ' . "'" .  $author['md5'] . "'";
+
+		return $sql;
+	}
+
+	/**
+	 * getContributorDataCid - create the sql to get the cid
+	 */
+	function getContributorDataCid($resolverFlag = false)
+	{
+		$sql = '';
+
+		$openBrace = ($resolverFlag ? '{' : '');
+		$clseBrace = ($resolverFlag ? '}' : '');
+
+		// { table }  braces for drupals database name resolver
+		// SELECT cid FROM biblio_contributor_data WHERE cid > 1 ORDER BY cid DESC LIMIT 1
+		$sql = 'SELECT cid FROM '. $openBrace . 'biblio_contributor_data' . $clseBrace . ' WHERE cid > 1 order by cid desc limit 1';
+
+		return $sql;
+	}
+
+	/**
+	 * makeBiblioContributor - create the sql to add an author, tie to contributor_data and the node
+	 */
+	function makeBiblioContributor($nid, $cid, $rank = 0, $resolverFlag = false)
+	{
+		$sql = '';
+
+		$openBrace = ($resolverFlag ? '{' : '');
+		$clseBrace = ($resolverFlag ? '}' : '');
+
+		// { table }  braces for drupals database name resolver
+		// 
+		$sql = 'INSERT INTO '. $openBrace . 'biblio_contributor' . $clseBrace . ' SET nid = ' . $nid . ', vid = ' . $nid . ', cid = ' . $cid . ', auth_type = ' . '1' . ', auth_category = ' . '1' . ', rank = ' . $rank . '';
+
+		return $sql;
+	}
+
 	/**
 	 * makeSql - create the sql to add node to table
 	 */
