@@ -12,7 +12,7 @@
 
 $includePath = dirname(__FILE__) . '/';
 
-require_once($includePath . 'DatabaseConfig.php');
+//require_once($includePath . 'DatabaseConfig.php');
 
 // ****************************************
 // ****************************************
@@ -30,11 +30,19 @@ class DBInterfaceController
 	
 	public $error;
 	
+	public $base;
+	public $host;
+	public $pass;
+	public $user;
+	
 	/**
 	 *  constructor - initializes some hard fixed values
 	 */
-	function __construct($db = DEF_DATABASE)
+	function __construct($db = '')//DEF_DATABASE)
 	{
+		$this->init();
+		
+		$db = $this->base;
 		$this->db = $this->connect($db);
 	}
 
@@ -43,17 +51,26 @@ class DBInterfaceController
 	 */
 	function init()
 	{
+		// read $db_url from settings: sites/default/settings.php
+		//$dburl = 'mysql://root:w2ffl3s1@localhost/test3';
+		$dburl = $this->findTheDatabaseConfig();
 		
+		$this->getDatabaseConfig($dburl);
 	}
 
 	/**
 	 *  connect - initializes connection
 	 */
-	function connect($database = DEF_DATABASE)
+	function connect($database = '')//DEF_DATABASE)
 	{
 		$new_link = false;
+		$database = $this->base;
+		$host = $this->host;
+		$user = $this->user;
+		$pass = $this->pass;
 
-		if ( !$db_mysql = mysql_connect(DB_HOST, DB_USER, DB_PASS, $new_link) ) {
+		if ( !$db_mysql = mysql_connect($host, $user, $pass, $new_link) ) {
+		//if ( !$db_mysql = mysql_connect(DB_HOST, DB_USER, DB_PASS, $new_link) ) {
 			//die("Can't connect to mysql db!");
 			echo(mysql_error()."\n");
 			exit(12);
@@ -130,6 +147,73 @@ class DBInterfaceController
 		}
 
 		return $data;
+	}
+
+
+	/**
+	 *  findHostPath - get the host path info
+	 */
+	function findHostPath()
+	{
+		$includePath = dirname(__FILE__) . '/';
+		// /var/www/test3.citebank.org/sites/all/modules/citebank_importer
+		// ex:  host = test3.citebank.org
+		
+		$s = explode('/', $includePath);
+		$host = $s[3];
+	
+		return $host;
+	}
+	
+	/**
+	 *  findTheDatabaseConfig - find the database config info from the drupal settings file.  yes, this is a tad cheesy, live with it.  if only drupal had a proper config file!
+	 */
+	function findTheDatabaseConfig()
+	{
+		// read drupals config file, and parse out the database setting config
+		$hostpath = $this->findHostPath();
+		$settingsFile = '/var/www/'.$hostpath.'/sites/default/'.'settings.php';
+		$x = file_get_contents($settingsFile);
+		
+		// the cheesy part is parsing out and relying on the fact that there is four db_url tags including ones in comments
+		// and since including the setting.php file whereever we want the config data will blow up pretty badly,
+		// we have to muddle through and dig out the vital piece we need.  yay, drupal.
+		// sure, we could use drupals system for all this, except sometimes all that baggage really is in the way of getting things done.
+		// drupal, like a mystery puzzle, travel light years to get something simple accomplished, sheesh
+		$star = explode('$db_url =', $x);  // find the db url info, keep in mind the comments have the tag too, brilliant.
+		$gate = $star[4];                  // get the (hopefully) correct one
+		$sg = explode("'", $gate);
+		$sg = $sg[1];                      // and get the actual config data
+		
+		return $sg;
+	}
+
+	/**
+	 *  getDatabaseConfig - parse out the config data 
+	 */
+	function getDatabaseConfig($dburl)
+	{
+		$a = explode('//', $dburl);
+		$b = explode(':', $a[1]);
+		$c = explode('@', $b[1]);
+		$d = explode('/', $c[1]);
+		
+		$user = $b[0];
+		$pass = $c[0];
+		$host = $d[0];
+		$base = $d[1];
+		
+		$database['base'] = $base;
+		$database['host'] = $host;
+		$database['pass'] = $pass;
+		$database['user'] = $user;
+	
+		$this->base = $base;
+		$this->host = $host;
+		$this->pass = $pass;
+		$this->user = $user;
+
+		return $database;
 	}
 	
 }  // end class
