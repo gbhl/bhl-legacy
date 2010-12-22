@@ -42,20 +42,15 @@ class SendProof
 	/**
 	 * sendProof - email out with an attachment the proof data
 	 */
-	function sendProof($attachment, $reviewName)
+	function sendProof($attachment, $reviewName, $proofFile)
 	{
 		// TO:
 		// Reviewer Test
-		//$reviewerAddr = 'david.dev@heskett.com';
+		// Reviewer
 		$reviewerAddr = 'david.heskett@mobot.org';
 		$reviewerName = 'David Heskett';
-		
-		// Reviewer
-		//
-		// // $reviewerAddr = 'trish.rose-sandler@mobot.org';
-		// // $reviewerName = 'Trish Rose-Sandler';
-		//
-		//
+		//$reviewerAddr = 'trish.rose-sandler@mobot.org';
+		//$reviewerName = 'Trish Rose-Sandler';
 		
 		// FROM:
 		// Automated Proof
@@ -88,8 +83,9 @@ class SendProof
 		  $mail->Subject = $subject;
 		  $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
 		
+		  $linkToProofFile = str_replace('/var/www', 'http:/', $proofFile);
 		  // MESSAGE:
-		  $msg = 'Here is a <strong>Proof</strong> of <strong>' . $reviewName . '</strong>';
+		  $msg = 'Here is a <strong>Proof</strong> of <strong>' . $reviewName . '</strong>.  <br>See : ' . $linkToProofFile . ' <br><a href="' . $linkToProofFile . '">Proof File Link</a>';
 		  $mail->MsgHTML($msg);
 		
 		  // ATTACHMENT:

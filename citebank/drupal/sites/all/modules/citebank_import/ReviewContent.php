@@ -123,6 +123,25 @@ class ReviewContent
 	}
 
 	/**
+	 * writeProof - write the data to review, in this case, to a file
+	 */
+	function writeProof($fileName, $content)
+	{
+		$ret = null;
+		$proofFile = rtrim($fileName, '.csv') . '.proof.csv';
+		
+		$proofFile = str_replace('default/files', 'default/files/proofs', $proofFile);
+		
+		$flag = file_put_contents($proofFile, $content);
+		
+		if ($flag) {
+			$ret = $proofFile;
+		}
+		
+		return $ret;
+	}
+
+	/**
 	 *  shortFileName - 
 	 */
 	function shortFileName($filename)
