@@ -148,6 +148,8 @@ class BiblioNode extends BiblioNodeData
 		
 		$sql .= 'INSERT INTO ' . $openBrace . $tbl . $clseBrace . ' SET';
 		foreach ($node as $key => $val) {
+			
+			$val = trim($val, '"');  // pull off quote fluff
 
 			switch ($key)
 			{

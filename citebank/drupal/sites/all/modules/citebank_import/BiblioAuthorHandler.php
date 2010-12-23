@@ -132,7 +132,7 @@ Friederich PA.
 	 */
 	function preParseName($author)
 	{
-		$authorName['name'] = $author;
+		$authorName['name'] = trim($author, '"');
 
 		$data = $this->biblio_parse_author($authorName);
 
