@@ -387,6 +387,7 @@ class DrupalNode
 		$n = count($filebits) - 1;
 		$ext = $filebits[$n]; // get the extension
 		$ext = strtolower($ext);
+		$ext = trim($ext, '"');  // take off possible fluff
 		
 		// no ext, let's go for text then, not ideal, but we don't really know what it is then either
 		if ($n == 0) {
@@ -445,6 +446,8 @@ class DrupalNode
 	{
 		$sql = '';
 		
+		$filename = trim($filename, '"');
+		
 		$filepath = $path . $filename;
 		
 		if ($filemime == null) {
@@ -469,6 +472,8 @@ class DrupalNode
 
 		$openBrace = ($resolverFlag ? '{' : '');
 		$clseBrace = ($resolverFlag ? '}' : '');
+		
+		$filename = trim($filename, '"');
 
 		if ($uid > 0) {
 			// { table }  braces for drupals database name resolver
@@ -491,6 +496,8 @@ class DrupalNode
 
 		$openBrace = ($resolverFlag ? '{' : '');
 		$clseBrace = ($resolverFlag ? '}' : '');
+		
+		$filename = trim($filename, '"');
 
 		// { table }  braces for drupals database name resolver
 		//$sql = 'INSERT INTO '. $openBrace . 'upload' . $clseBrace . ' SET fid = ' . $fid . ', nid = ' . $nid . ', description = ' . "'" . $filename . "'" . ', list = 1, weight = 0';
@@ -517,6 +524,9 @@ class DrupalNode
 		return $sql;
 	}
 
+	//UPDATE {biblio_contributor_data} SET aka = cid WHERE aka = 0 OR aka IS NULL
+	// FIXME: add the aka fixer upper
+	
 	// INSERT INTO upload AS u SET u.fid = ' . $fid . ', u.nid = ' . $nid . ', u.description = ' . $filename . ', u.list = 1, u.weight = 0
 	/**
 	 * makeBiblioContributorData - create the sql to add an author
@@ -589,6 +599,8 @@ class DrupalNode
 
 		foreach ($node as $key => $val) {
 
+			$val = trim($val, '"');  // take off possible fluff
+			
 			switch ($key)
 			{
 				case 'type':
