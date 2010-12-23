@@ -132,7 +132,7 @@ class CiteBankBiblio
 		
 		$sql = $this->drupalNode->makeSql($node, false);
 		$this->dbi->insert($sql);
-		echo $sql;  echo '<br>'."\n";  // FIXME: remove
+		//echo $sql;  echo '<br>'."\n";  // FIXME: remove
 		
 		return $nid;
 	}
@@ -151,7 +151,7 @@ class CiteBankBiblio
 		
 		$sql = $this->biblioNode->makeSql($biblio);
 		$this->dbi->insert($sql);
-		echo $sql;  echo '<br>'."\n";  // FIXME: remove
+		//echo $sql;  echo '<br>'."\n";  // FIXME: remove
 	}
 
 //	function testBAR($author, $nid)
@@ -204,6 +204,12 @@ class CiteBankBiblio
 
 			$this->dbi->insert($sql);
 		}
+
+		//UPDATE {biblio_contributor_data} SET aka = cid WHERE aka = 0 OR aka IS NULL
+		// FIXME: add the aka fixer upper
+		$sql = 'UPDATE biblio_contributor_data SET aka = cid WHERE aka = 0 OR aka IS NULL';
+		$this->dbi->update($sql);
+
 	}
 
 	// ***** ***** get the node id  nid
@@ -447,6 +453,7 @@ class CiteBankBiblio
 		// add the author(s)
 		$this->makeBiblioAuthorRecord($biblio['biblio_contributors']);
 		
+		return $this->nid;
 	}
 
 //	/**
