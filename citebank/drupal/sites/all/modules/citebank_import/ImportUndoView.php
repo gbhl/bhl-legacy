@@ -1,6 +1,16 @@
 <?php
-// TestImportUndoHandler.php
-// test ImportUndoHandler.php
+// $Id: ImportUndoHandlerView.php,v 1.0.0.0 2010/12/23 4:44:44 dlheskett $
+
+/** ImportUndoHandlerView class
+ *
+ * Copyright (c) 2010 Missouri Botanical Garden 
+ *
+ * @author David L. Heskett (contractor: Adaptive Solutions Group)
+ * @date Created: 12/23/2010
+ *
+ */
+
+// display the undo features
 
 $includePath = dirname(__FILE__) . '/';
 require_once($includePath . 'ImportUndoHandler.php');
@@ -45,7 +55,7 @@ if (!$workToDo) {
 		echo '<tr>';
 		
 		echo '<td>';
-		//echo 'Filename' . '   ' . 'Batch Id' . '  ' . 'Created' . ' ';
+		//Filename       Batch Id     Created
 			echo 'Filename';
 		echo '</td>';
 		echo '<td>';
@@ -75,7 +85,6 @@ if (!$workToDo) {
 				echo '<input type="radio" name="batch" value="'.$val['undo_batch_id'].'">';
 			}
 	
-			//echo $val['import_file'] . ' ' . $val['undo_batch_id'] . ' ' . $val['created'] . ' ';
 				echo $val['import_file'];
 			echo '</td>';
 		
@@ -87,7 +96,6 @@ if (!$workToDo) {
 				echo $val['created'];
 			echo '</td>';
 	
-			//echo '<br>';
 			echo '</tr>';
 	
 		}
@@ -128,8 +136,6 @@ if (!$workToDo) {
 		echo '<tr>';
 		echo '</tr>';
 	
-		//echo '<br>';
-		//echo '<br>';
 		echo '<td>';
 			echo '<input name="Submit" type="submit" value="Perform Undo">';
 		echo '</td>';
@@ -139,8 +145,6 @@ if (!$workToDo) {
 		echo '<td>';
 			echo ' ';
 		echo '</td>';
-		//echo '<br>';
-		//echo '<br>';
 	
 		echo '</form>';
 	
@@ -160,10 +164,5 @@ if (!$workToDo) {
 
 	$importUndo->performUndo($batchId);
 }
-
-//$batchId = -1;
-//$workToDo = false;
-//$_POST['batch'] = -1;
-//$batch = -1;
 
 ?>
