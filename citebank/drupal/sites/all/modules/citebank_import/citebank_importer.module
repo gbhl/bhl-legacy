@@ -22,6 +22,7 @@ require_once($includePath . 'CiteBankBiblio.php');
 require_once($includePath . 'ExcelTextImporter.php');
 require_once($includePath . 'CSVHandler.php');
 require_once($includePath . 'ReviewContent.php');
+require_once($includePath . 'ImportUndoHandler.php');
 
 /**
  * citebank_importer_view - 
@@ -80,6 +81,7 @@ function processCiteBankImport()
 	}
 
 	$x = new CiteBankBiblio();
+	$importUndo = new ImportUndoHandler();
 	
 	//$uid      = 242;
 	$uid      = 0;
@@ -152,7 +154,8 @@ function processCiteBankImport()
 			if (!$duplicate) {
 				// write data
 				//$node_save($x->biblioNode->node);
-				$x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
+				$nid = $x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
+				$importUndo->makeUndoNid($nid, $filename);
 				cache_clear_all();
 				//echo '****[' . 'Write the record here' . ']****' . '<br>' . "\n";
 			} else {
