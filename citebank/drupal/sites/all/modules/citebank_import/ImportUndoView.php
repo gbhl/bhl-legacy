@@ -23,7 +23,9 @@ $selectedFlag = true;
 
 $undo_batch_id = $importUndo->undo_batch_id;
 
-echo 'LAST BATCH ID: ' . ($undo_batch_id - 1);
+$lastBatchId = $undo_batch_id - 1;
+
+echo 'LAST BATCH ID: ' . $lastBatchId;
 echo '<br>';
 echo '<br>';
 
@@ -39,12 +41,12 @@ if ($_POST['batch'] > 0) {
 	$workToDo = true;
 }
 
-
+cache_clear_all();
 if (!$workToDo) {
 
 	$showTable = true;
 
-	if (($undo_batch_id - 1) == 0) {
+	if ($lastBatchId == 0) {
 		$showTable = false;
 	}
 	
@@ -150,12 +152,12 @@ if (!$workToDo) {
 	
 		echo '</table>';
 		echo '<br>';
+
 	} else {
 		echo 'Nothing to Undo';
 	}
 	
 } else {
-
 
 	echo 'Performing Undo';
 	echo '<br>';
@@ -164,5 +166,5 @@ if (!$workToDo) {
 
 	$importUndo->performUndo($batchId);
 }
-
+cache_clear_all();
 ?>
