@@ -16,6 +16,7 @@
 function citebank_importer_install()
 {
 //	drupal_install_schema('citebank_importer');
+	drupal_install_schema('import_undo');
 }
 
 /**
@@ -24,6 +25,7 @@ function citebank_importer_install()
 function citebank_importer_uninstall()
 {
 //	drupal_uninstall_schema('citebank_importer');
+	drupal_uninstall_schema('import_undo');
 }
 
 /**
@@ -40,7 +42,65 @@ function citebank_importer_schema()
 //	  'primary key' => array('')
 //	);
 	
-	$schema = array();
+	//$schema = array();
+
+/*	
+create table `import_undo` (
+	`undo_id` double ,
+	`undo_batch_id` double ,
+	`nid` double ,
+	`created` datetime ,
+	`import_file` varchar (765),
+	`undid` double 
+); 
+*/	
+
+	$schema['import_undo'] = array(
+		'fields'     => array(
+
+      'undo_id' => array (
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' =>''
+			),
+
+      'undo_batch_id' => array (
+        'type' => 'int',
+        'default' => 0,
+        'description' =>''
+			),
+
+      'nid' => array (
+        'type' => 'int',
+        'default' => 0,
+        'description' =>''
+			),
+
+      'created' => array (
+        'type' => 'datetime',
+        'default' => 0,
+        'description' =>''
+			),
+
+      'import_file' => array (
+        'type' => 'varchar',
+        'length' => '255',
+        'description' =>''
+			),
+
+      'undid' => array (
+        'type' => 'int',
+        'default' => 0,
+        'description' =>''
+			)
+		),
+	  'indexes'    => array(
+	  	'nid'      => array('nid'),
+	  ),
+	  'primary key' => array('undo_id')
+	);
+	
 	return $schema;
 }
 
