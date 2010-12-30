@@ -130,10 +130,11 @@ class ImportUndoHandler
 	function makeUndoNid($nid, $importFile)
 	{
 		//insert into `import_undo` (`undo_id`, `undo_batch_id`, `nid`, `created`, `import_file`, `undid`) values('1','1','72717','2010-12-21 04:04:04','testfile','1');
+		$importFile = trim($importFile, '"');
 		
 		// either a db or a file
 		$sql = 'INSERT INTO ' . self::UNDO_TABLE . ' SET nid = ' . $nid . ', undo_batch_id = ' . $this->undo_batch_id . ', created = ' . $this->created . ', import_file = ' . "'" . $importFile . "'" . ' ';
-		
+		//watchdog('ImportUndoHandler', $sql);  
 		$this->dbi->select($sql);
 	}
 
