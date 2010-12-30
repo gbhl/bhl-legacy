@@ -71,8 +71,9 @@ function citebank_importer_node_info()
  */
 function processCiteBankImport()
 {
+	$importFileName = '';
 	$importer = new ExcelTextImporter();
-	$biblios  = importProcess($importer);
+	$biblios  = importProcess($importer, $importFileName);
 	
 	// if no data, report error and get out
 	if (count($biblios) == 0) {
@@ -107,9 +108,9 @@ function processCiteBankImport()
 				$x->biblioNode->data_source_url = $biblioPlus['biblio_remote_db_name'];
 			}
 
-			$x->biblioNode->data_url = $biblioPlus['biblio_url'];
+			$x->biblioNode->data_url = trim($biblioPlus['biblio_url'], '"');
 
-			$x->biblioNode->filename = $biblioPlus['biblio_url'];
+			$x->biblioNode->filename = trim($biblioPlus['biblio_url'], '"');
 			$x->biblioNode->dirPath  = $dirPath;
 			$x->biblioNode->linkPath = $linkPath;
 
@@ -129,7 +130,7 @@ function processCiteBankImport()
 			// view data
 			$title = $biblioPlus['biblio_title'];
 			//$filename = $biblioPlus['biblio_url'];
-			$filename = $x->biblioNode->filename;
+			$filename = trim($x->biblioNode->filename, '"');
 //echo '<br>' . "\n"; print_r($x->biblioNode->node); echo '<br>' . "\n";
 			// fix the node.  we need to do this... why. 
 			$x->biblioNode->node['biblio_url'] = $x->biblioNode->data_url;
@@ -154,8 +155,9 @@ function processCiteBankImport()
 			if (!$duplicate) {
 				// write data
 				//$node_save($x->biblioNode->node);
+				
 				$nid = $x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
-				$importUndo->makeUndoNid($nid, $filename);
+				$importUndo->makeUndoNid($nid, $importFileName);
 				cache_clear_all();
 				//echo '****[' . 'Write the record here' . ']****' . '<br>' . "\n";
 			} else {
@@ -172,7 +174,7 @@ function processCiteBankImport()
 /**
  *  importProcess - 
  */
-function importProcess($n)
+function importProcess($n, &$importFileName)
 {
 	//$includePath = dirname(__FILE__) . '/';
 	//
@@ -235,6 +237,7 @@ function importProcess($n)
 	}
 
 	watchmen('import file to use: **[' . $fileName . ']**');
+	$importFileName = shortFileName($fileName);
 	
 	$dataFile = '';
 	if ($fileName) {
@@ -269,6 +272,20 @@ function importProcess($n)
 	}
 	
 	return $biblios;
+}
+
+/**
+ *  shortFileName - 
+ */
+function shortFileName($filename)
+{
+	$x = explode('/', $filename);
+	
+	$count = count($x);
+	
+	$file = $x[$count - 1];
+	
+	return $file;
 }
 
 /**
