@@ -138,6 +138,17 @@ class CiteBankBiblio
 	}
 
 	/**
+	 * makeNodeRevisionsRecord - 
+	 */
+	function makeNodeRevisionsRecord($nid, $title, $uid)
+	{
+		$sql = $this->drupalNode->makeSqlForNodeRevisions($nid, $title, $uid);
+		$this->dbi->insert($sql);
+		
+		return $nid;
+	}
+
+	/**
 	 * makeBiblioRecord - 
 	 */
 	function makeBiblioRecord($biblio)
@@ -443,6 +454,7 @@ class CiteBankBiblio
 		// make a node
 		$this->makeNodeRecord($title, $uid);
 		$this->makeNodeAccessRecord($this->nid);
+		$this->makeNodeRevisionsRecord($this->nid, trim($title, '"'), $uid);
 		
 		// make a biblio record
 		$this->makeBiblioRecord($biblio);

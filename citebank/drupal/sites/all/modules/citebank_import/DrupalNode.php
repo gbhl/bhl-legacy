@@ -524,6 +524,22 @@ class DrupalNode
 		return $sql;
 	}
 
+	/**
+	 * makeSqlForNodeRevisions - create the sql to add node revisions
+	 */
+	function makeSqlForNodeRevisions($nid, $title, $uid, $resolverFlag = false)
+	{
+		$sql = '';
+
+		$openBrace = ($resolverFlag ? '{' : '');
+		$clseBrace = ($resolverFlag ? '}' : '');
+		// { table }  braces for drupals database name resolver
+
+		$sql = 'INSERT INTO '. $openBrace . 'node_revisions' . $clseBrace . ' SET nid = ' . $nid . ', vid = ' . $nid . ', title = ' .  "'"  . $title . "'" . ', uid = ' . $uid . ', body =  '."'".'  '."'".', teaser = '."'".'  '."'".', log = '."'".'  '."'".',  timestamp = ' . time() . '';
+
+		return $sql;
+	}
+
 	//UPDATE {biblio_contributor_data} SET aka = cid WHERE aka = 0 OR aka IS NULL
 	// FIXME: add the aka fixer upper
 	

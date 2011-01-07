@@ -158,7 +158,6 @@ function processCiteBankImport()
 				
 				$nid = $x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
 				$importUndo->makeUndoNid($nid, $importFileName);
-				cache_clear_all();
 				//echo '****[' . 'Write the record here' . ']****' . '<br>' . "\n";
 			} else {
 				//echo '****[' . 'Skip the duplicate record here' . ']****' . '<br>' . "\n";

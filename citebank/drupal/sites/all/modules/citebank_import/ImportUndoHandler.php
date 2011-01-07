@@ -288,6 +288,7 @@ class ImportUndoHandler
 			$this->deleteX('biblio_contributor', $nid);
 			// delete from node_access where node_access.nid = nid
 			$this->deleteX('node_access', $nid);
+			$this->deleteX('node_revisions', $nid);
 			// delete from upload where upload.nid = nid
 			$this->deleteX('upload', $nid);
 			
