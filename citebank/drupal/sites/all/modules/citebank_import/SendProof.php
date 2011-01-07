@@ -47,10 +47,10 @@ class SendProof
 		// TO:
 		// Reviewer Test
 		// Reviewer
-		$reviewerAddr = 'david.heskett@mobot.org';
-		$reviewerName = 'David Heskett';
-		//$reviewerAddr = 'trish.rose-sandler@mobot.org';
-		//$reviewerName = 'Trish Rose-Sandler';
+		//$reviewerAddr = 'david.heskett@mobot.org';
+		//$reviewerName = 'David Heskett';
+		$reviewerAddr = 'trish.rose-sandler@mobot.org';
+		$reviewerName = 'Trish Rose-Sandler';
 		
 		// FROM:
 		// Automated Proof
