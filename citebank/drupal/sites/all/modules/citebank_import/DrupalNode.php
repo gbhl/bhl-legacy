@@ -583,6 +583,22 @@ class DrupalNode
 	}
 
 	/**
+	 * getFixContributorDataAka - make aka equal the cid
+	 */
+	function getFixContributorDataAka($resolverFlag = false)
+	{
+		$sql = '';
+
+		$openBrace = ($resolverFlag ? '{' : '');
+		$clseBrace = ($resolverFlag ? '}' : '');
+
+		// { table }  braces for drupals database name resolver
+		$sql = 'UPDATE '. $openBrace . 'biblio_contributor_data' . $clseBrace . ' SET aka = cid WHERE aka = 0 OR aka IS NULL';
+
+		return $sql;
+	}
+
+	/**
 	 * makeBiblioContributor - create the sql to add an author, tie to contributor_data and the node
 	 */
 	function makeBiblioContributor($nid, $cid, $rank = 0, $resolverFlag = false)

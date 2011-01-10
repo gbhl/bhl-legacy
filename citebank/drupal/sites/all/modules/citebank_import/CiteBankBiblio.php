@@ -216,9 +216,7 @@ class CiteBankBiblio
 			$this->dbi->insert($sql);
 		}
 
-		//UPDATE {biblio_contributor_data} SET aka = cid WHERE aka = 0 OR aka IS NULL
-		// FIXME: add the aka fixer upper
-		$sql = 'UPDATE biblio_contributor_data SET aka = cid WHERE aka = 0 OR aka IS NULL';
+		$sql = $this->drupalNode->getFixContributorDataAka();
 		$this->dbi->update($sql);
 
 	}
