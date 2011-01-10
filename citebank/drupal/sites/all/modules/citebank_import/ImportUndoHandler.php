@@ -278,7 +278,7 @@ class ImportUndoHandler
 //			echo ' ';
 			
 
-			echo '<br>';
+			//echo '<br>';
 
 			// delete from node where node.nid = nid
 			$this->deleteX('node', $nid);
