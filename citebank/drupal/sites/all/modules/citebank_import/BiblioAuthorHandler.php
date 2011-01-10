@@ -122,7 +122,7 @@ Friederich PA.
 		$howManyAuthors = substr_count($authorsStr, ';');
 		
 		// 
-		$multipleFlag = ($howManyAuthors > 1 ? true : false );
+		$multipleFlag = ($howManyAuthors > 0 ? true : false );
 		
 		return $multipleFlag;
 	}
