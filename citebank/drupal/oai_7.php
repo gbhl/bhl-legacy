@@ -88,7 +88,7 @@ function manualOaiHarvesterCron($harvestId)
  */
 function myHarvestProcess($harvestList, $num)
 {
-	$schedule_id     = $harvestList[$num]['harvest_schedule_id'];
+	$schedule_id     = $harvestList[$num]['schedule_id'];
 	$schedule_name   = $harvestList[$num]['schedule_name'];
 	$provider_id     = $harvestList[$num]['provider_id'];
 	$provider_url    = $harvestList[$num]['provider_url'];
@@ -131,7 +131,7 @@ function myOaiLogMsg($msg, $flag = 1)
  */
 function myOai_harvest($schedule_id, $schedule_name, $provider_id, $url, $set, $metadataPrefix) 
 {
-	myOaiLogMsg('let the harvest begin');
+	//myOaiLogMsg('let the harvest begin');
 
   set_time_limit(0);
   $is_first = TRUE;
