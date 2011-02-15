@@ -193,15 +193,12 @@ class DBInterfaceController
 	 */
 	function getDatabaseConfig($dburl)
 	{
-		$a = explode('//', $dburl);
-		$b = explode(':', $a[1]);
-		$c = explode('@', $b[1]);
-		$d = explode('/', $c[1]);
-		
-		$user = $b[0];
-		$pass = $c[0];
-		$host = $d[0];
-		$base = $d[1];
+		$x = parse_url($dburl);
+
+		$user = $x['user'];
+		$pass = $x['pass'];
+		$host = $x['host'];
+		$base = str_replace('/', '', $x['path']);
 		
 		$database['base'] = $base;
 		$database['host'] = $host;
