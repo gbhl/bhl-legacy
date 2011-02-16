@@ -397,7 +397,6 @@ class SimpleStorageServiceModel
 	*/
 	public function putObject($input, $bucket, $uri, $acl = self::ACL_PUBLIC_READ, $metaHeaders = array(), $requestHeaders = array())
 	{
-//		echo 'input: ' . print_r($input, 1) . '<br>' . "\n"; // FIXME: DEBUG remove
 		if ($input === false) {
 			return false;
 		}
@@ -479,7 +478,7 @@ class SimpleStorageServiceModel
 				$h = str_replace('_', '--', $h);
 				$rest->setAmzHeader('x-archive-meta-'.$h, $v);
 			}
-//			echo '<br>***<br>'; echo print_r($rest, 1); echo '<br>****<br>'; 
+
 			$rest->getResponse();
 		} else {
 			$rest->response->error = array('code' => 0, 'message' => 'Missing input parameters');
