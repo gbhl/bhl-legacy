@@ -1,0 +1,73 @@
+<?php
+// $Id: citebank_internet_archive.module,v 1.0.0.0 2011/01/28 4:44:44 dlheskett $
+
+/** citebank_internet_archive module
+ *
+ * Copyright (c) 2010-2011 Missouri Botanical Garden 
+ *
+ * @author: David L. Heskett (contractor: Adaptive Solutions Group)
+ * @date Created: 01/28/2011
+ *
+ */
+
+
+$includePath = dirname(__FILE__) . '/';
+
+require_once($includePath . 'CitebankInternetArchive.php');
+
+/**
+ * citebank_internet_archive_view - 
+ */
+function citebank_internet_archive_view(&$node, $teaser = FALSE, $page = FALSE)
+{
+	//echo 'here i am';
+}
+
+/**
+ * citebank_internet_archive_cron - 
+ */
+function citebank_internet_archive_cron(&$node = null, $teaser = FALSE, $page = FALSE)
+{
+	// we need an off switch if processed that file.
+	//watchmen('Internet Archive cron');
+	//processInternetArchive();
+}
+
+/**
+ * citebank_internet_archive_node_info - 
+ */
+function citebank_internet_archive_node_info()
+{
+	return array(
+		'citebank_internet_archive' => array(
+			'name'         => t('citebank_internet_archive'),
+			'module'       => 'citebank_internet_archive',
+			'description'  => t('Citebank Internet Archive: Handles adding content to Internet Archive for Citebank.'),
+			'has_title'    => TRUE,
+			'title_label'  => t('CiteBank Internet Archive'),
+			'has_body'     => FALSE
+//			'' => '',
+		)
+	);
+}
+
+
+//watchdog($type, $message, $variables = array(), $severity = WATCHDOG_NOTICE, $link = NULL);
+/**
+ * watchmen - handy drupal watch logger, give it a msg and go
+ */
+function watchmen($msg, $watchFlag = true, $type = 'InternetArchive', $addDate = true)
+{
+	if ($watchFlag) {
+		if ($addDate) {
+			$msg .= ' ' . date('YmdHis');
+		}
+		
+		watchdog($type, $msg);  // drupal system call
+	}
+}
+
+// ************************************************************
+// ************************************************************
+
+?>
