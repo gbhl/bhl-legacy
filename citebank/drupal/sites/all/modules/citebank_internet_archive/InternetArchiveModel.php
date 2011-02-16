@@ -109,6 +109,9 @@ class InternetArchiveModel
 	const DBCMD_UPDATE         = 5;				// 
 	const DBCMD_FETCH_OBJ      = 6;				// 
 	const DBCMD_FETCH_OBJ_LIST = 7;				// assoc array
+	
+	const PATH_MODULE          = 'all/modules/citebank_internet_archive';
+	const PATH_FIX             = 'default/files';
 
 	/**
 	 * _construct - constructor
@@ -394,38 +397,13 @@ class InternetArchiveModel
 			$item = dirname(__FILE__).'/'.$filename; // dynamically grab file 
 			// if file local
 			// fix the pathing to where we store the uploaded content
-			$cutStr = 'all/modules/citebank_internet_archive';
-			$item = str_replace($cutStr, 'default/files', $item);
+			$cutStr = self::PATH_MODULE;
+			$item = str_replace($cutStr, self::PATH_FIX, $item);
 		}
 
 		return $item;
 	}
 	
-	/**
-	 * getItem - get items file
-	 */
-	function getItemOLD($nid)
-	{
-		$item = '';
-		
-		$filename = $this->getFilesFilename($nid);
-		$item = dirname(__FILE__).'/'.$filename; // dynamically grab file 
-	
-		$remote = substr_count($item, 'http:');
-
-		if (!$remote) {
-			// if file local
-			// fix the pathing to where we store the uploaded content
-			$cutStr = 'all/modules/citebank_internet_archive';
-			$item = str_replace($cutStr, 'default/files', $item);
-		} else {
-			// if file remote
-			$item = null;
-		}
-
-		return $item;
-	}
-
 	/**
 	 * getFilesFilename - get items filename, table Files has filename of the upload link
 	 */
