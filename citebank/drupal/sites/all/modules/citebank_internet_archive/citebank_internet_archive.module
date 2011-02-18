@@ -43,53 +43,6 @@ function processCiteBankInternetArchive()
 	$x->process();
 }
 
-///**
-// *  processInternetArchive - 
-// */
-//function processInternetArchive()
-//{
-//	$x = new InternetArchiveModel();
-//	$records = array();
-//	$limitFlag = false;
-//	$threshold = 2500;
-//	$limitSize = 100;
-//	
-//	$total = $x->getCountRecordsToDeliver();
-//	
-//	if ($total > 0) {
-//		if ($total > $threshold) {
-//			$limitFlag = true;
-//		}
-//		
-//		$records = $x->getRecordsToDeliver($limitFlag, $limitSize);
-//		
-//		foreach ($records as $record) {
-//			//$record;
-//			// put the record to IA
-//			$filename = $record['filename'];
-//			$filepath = $record['filepath'];
-//			$title    = $record['title'];
-//			
-//			$sitepath = getServerName();
-//			
-//			//$uploadFile = dirname(__FILE__).'/'.$item; // File to upload
-//			$uploadFile = $sitepath . '/' . $filepath; // File to upload
-//
-//			$bucket = uniqid('citebanktest_'.date('YmdHis').'_'); // bucket
-//			
-//			//TODO: uncomment: $errorPut = $x->putItem($uploadFile, $bucket);
-//
-//			if ($errorPut) {
-//				watchmen('Error IA ' . $filename . ' ' . $title);
-//			}
-//		}
-//		
-//	} else {
-//		// nothing to do
-//	}
-//	
-//}
-
 /**
  * citebank_internet_archive_node_info - 
  */
