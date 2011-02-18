@@ -1,0 +1,77 @@
+<?php
+// $Id: citebank_internet_archive.install,v 1.0.0.0 2011/02/18 4:44:44 dlheskett $
+
+/** citebank_internet_archive.install
+ *
+ * Copyright (c) 2010-2011 Missouri Botanical Garden 
+ *
+ * @author: David L. Heskett (contractor: Adaptive Solutions Group)
+ * @date Created: 02/18/2011
+ *
+ */
+
+/**
+ * citebank_internet_archive_install - 
+ */
+function citebank_internet_archive_install()
+{
+	drupal_install_schema('citebank_internet_archive_records');
+}
+
+/**
+ * citebank_internet_archive_uninstall - 
+ */
+function citebank_internet_archive_uninstall()
+{
+	drupal_uninstall_schema('citebank_internet_archive_records');
+}
+
+/**
+ * citebank_internet_archive_schema - 
+ */
+function citebank_internet_archive_schema()
+{
+	$schema['citebank_internet_archive'] = array(
+	  'description' => t('Tracks CiteBank records sent to Internet Archive'),
+		'fields'      => array(
+      'id'             => array ('type' => 'int', 'not null' => TRUE, 'default' => 0,  'description' =>''),
+      'nid'            => array ('type' => 'int', 'not null' => TRUE, 'default' => 0,  'description' =>''),
+      'archive_status' => array ('type' => 'int', 'not null' => TRUE, 'default' => -1, 'description' =>''),
+      'created'        => array ('type' => 'datetime', 'description' =>''),
+      'ia_title'       => array ('type' => 'varchar', 'length' => '255', 'description' =>''),
+      'biblio_url'     => array ('type' => 'varchar', 'length' => '255', 'description' =>'')
+		),
+	  'indexes'     => array('nid' => array('nid')),
+	  'primary key' => array('id'),
+    'indexes'     => array ('id' => array ('id'))
+	);
+	
+/*	
+*/	
+
+	return $schema;
+}
+
+/**
+ * citebank_internet_archive_requirements - 
+ */
+function citebank_internet_archive_requirements($phase)
+{
+  $requirements = array();
+  $t = get_t();
+
+  if ($phase == 'install') {
+    if (!module_exists('biblio')) {
+      $requirements['citebank_internet_archive'] = array(
+        'title' => $t('Biblio'),
+        'description' => $t('The Biblio module must be installed first'),
+        'severity' => REQUIREMENT_ERROR
+      );
+    }
+  }
+
+  return $requirements;
+}
+
+// ************************************************************
+// ************************************************************
