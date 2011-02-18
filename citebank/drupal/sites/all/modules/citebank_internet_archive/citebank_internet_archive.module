@@ -13,7 +13,8 @@
 
 $includePath = dirname(__FILE__) . '/';
 
-require_once($includePath . 'CitebankInternetArchive.php');
+//require_once($includePath . 'CitebankInternetArchive.php');
+require_once($includePath . 'InternetArchiveModel.php');
 
 /**
  * citebank_internet_archive_view - 
@@ -30,7 +31,16 @@ function citebank_internet_archive_cron(&$node = null, $teaser = FALSE, $page = 
 {
 	// we need an off switch if processed that file.
 	//watchmen('Internet Archive cron');
-	//processInternetArchive();
+	//processCiteBankInternetArchive();
+}
+
+/**
+ * processCiteBankInternetArchive - 
+ */
+function processCiteBankInternetArchive()
+{
+	$x = new InternetArchiveModel();
+	$x->process();
 }
 
 /**
