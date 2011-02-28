@@ -111,11 +111,11 @@ class ReviewContent
 	/**
 	 * sendProof - send the data to reviewer, in this case, email it
 	 */
-	function sendProof($reviewName, $content)
+	function sendProof($reviewName, $content, $proofFile)
 	{
 		$proof = new SendProof();
 
-		$proof->sendProof($content, $reviewName);
+		$proof->sendProof($content, $reviewName, $proofFile);
 
 		$mailFlag = $proof->proofMailed;
 		
