@@ -490,7 +490,7 @@ class DrupalNode
 	/**
 	 * makeSqlDBUpload - create the sql to add node to table
 	 */
-	function makeSqlForDBUpload($fid, $nid, $filename, $resolverFlag = false)
+	function makeSqlForDBUpload($fid, $nid, $vid, $filename, $resolverFlag = false)
 	{
 		$sql = '';
 
@@ -502,7 +502,7 @@ class DrupalNode
 		// { table }  braces for drupals database name resolver
 		//$sql = 'INSERT INTO '. $openBrace . 'upload' . $clseBrace . ' SET fid = ' . $fid . ', nid = ' . $nid . ', description = ' . "'" . $filename . "'" . ', list = 1, weight = 0';
 		// FIXME: does vid need to be independantly set?  [vid = ' . $nid]
-		$sql = 'INSERT INTO '. $openBrace . 'upload' . $clseBrace . ' SET fid = ' . $fid . ', nid = ' . $nid . ', vid = ' . $nid . ', description = ' . "'" . $filename . "'" . ', list = 1, weight = 0';
+		$sql = 'INSERT INTO '. $openBrace . 'upload' . $clseBrace . ' SET fid = ' . $fid . ', nid = ' . $nid . ', vid = ' . $vid . ', description = ' . "'" . $filename . "'" . ', list = 1, weight = 0';
 
 		return $sql;
 	}
@@ -527,7 +527,7 @@ class DrupalNode
 	/**
 	 * makeSqlForNodeRevisions - create the sql to add node revisions
 	 */
-	function makeSqlForNodeRevisions($nid, $title, $uid, $resolverFlag = false)
+	function makeSqlForNodeRevisions($nid, $vid, $title, $uid, $resolverFlag = false)
 	{
 		$sql = '';
 
@@ -535,7 +535,7 @@ class DrupalNode
 		$clseBrace = ($resolverFlag ? '}' : '');
 		// { table }  braces for drupals database name resolver
 
-		$sql = 'INSERT INTO '. $openBrace . 'node_revisions' . $clseBrace . ' SET nid = ' . $nid . ', vid = ' . $nid . ', title = ' .  "'"  . $title . "'" . ', uid = ' . $uid . ', body =  '."'".'  '."'".', teaser = '."'".'  '."'".', log = '."'".'  '."'".',  timestamp = ' . time() . '';
+		$sql = 'INSERT INTO '. $openBrace . 'node_revisions' . $clseBrace . ' SET nid = ' . $nid . ', vid = ' . $vid . ', title = ' .  "'"  . $title . "'" . ', uid = ' . $uid . ', body =  '."'".'  '."'".', teaser = '."'".'  '."'".', log = '."'".'  '."'".',  timestamp = ' . time() . '';
 
 		return $sql;
 	}
@@ -601,7 +601,7 @@ class DrupalNode
 	/**
 	 * makeBiblioContributor - create the sql to add an author, tie to contributor_data and the node
 	 */
-	function makeBiblioContributor($nid, $cid, $rank = 0, $resolverFlag = false)
+	function makeBiblioContributor($nid, $vid, $cid, $rank = 0, $resolverFlag = false)
 	{
 		$sql = '';
 
@@ -610,7 +610,7 @@ class DrupalNode
 
 		// { table }  braces for drupals database name resolver
 		// 
-		$sql = 'INSERT INTO '. $openBrace . 'biblio_contributor' . $clseBrace . ' SET nid = ' . $nid . ', vid = ' . $nid . ', cid = ' . $cid . ', auth_type = ' . '1' . ', auth_category = ' . '1' . ', rank = ' . $rank . '';
+		$sql = 'INSERT INTO '. $openBrace . 'biblio_contributor' . $clseBrace . ' SET nid = ' . $nid . ', vid = ' . $vid . ', cid = ' . $cid . ', auth_type = ' . '1' . ', auth_category = ' . '1' . ', rank = ' . $rank . '';
 
 		return $sql;
 	}
@@ -729,6 +729,23 @@ class DrupalNode
 		$clseBrace = ($resolverFlag ? '}' : '');
 		
 		$sql .= 'SELECT nid FROM ' . $openBrace . $tbl . $clseBrace . ' WHERE 1 ORDER BY nid DESC LIMIT 1';
+
+		return $sql;
+	}
+
+	/**
+	 * findLastVidSql - get the last vid in the database.
+	 */
+	function findLastVidSql($nid, $resolverFlag = false)
+	{
+		$vid = 0;
+		$sql = '';
+		
+		$tbl =  self::DRUPAL_NODE_TABLE;
+		$openBrace = ($resolverFlag ? '{' : '');
+		$clseBrace = ($resolverFlag ? '}' : '');
+		
+		$sql .= 'SELECT vid FROM ' . $openBrace . $tbl . $clseBrace . ' WHERE nid = ' . $nid . ' ORDER BY vid DESC LIMIT 1';
 
 		return $sql;
 	}

@@ -29,6 +29,7 @@ class CiteBankBiblio
 	public $drupalNode = 0;
 	public $biblioNode = 0;
 	public $nid = 0;
+	public $vid = 0;
 	public $fid = 0;
 	public $node = null;
 	
@@ -83,10 +84,12 @@ class CiteBankBiblio
 		
 		$this->nid = $nid;
 		$this->fid = $fid;
+		
+		$vid = $this->vid;
 
 		//makeSqlForDBUpload
 		// ***** ***** make an uploads record (to complete the attachement)
-		$this->makeUploadsRecord($fid, $nid, $filename);
+		$this->makeUploadsRecord($fid, $nid, $vid, $filename);
 	}
 
 	/**
@@ -102,10 +105,12 @@ class CiteBankBiblio
 		
 		$this->nid = $nid;
 		$this->fid = $fid;
+		
+		$vid = $this->vid;
 
 		//makeSqlForDBUpload
 		// ***** ***** make an uploads record (to complete the attachement)
-		$this->makeUploadsRecord($fid, $nid, $filename);
+		$this->makeUploadsRecord($fid, $nid, $vid, $filename);
 	}
 
 	/**
@@ -123,9 +128,11 @@ class CiteBankBiblio
 	function makeNodeRecord($title, $uid)
 	{
 		$nid = $this->getNid() + 1;
+		$vid = $this->getVid($nid - 1) + 1;
 		$this->nid = $nid;
+		$this->vid = $vid;
 		$this->drupalNode->nid = $nid;
-		$this->drupalNode->vid = $nid;  // FIXME: do we need a vid?  it is set to nid (node id)
+		$this->drupalNode->vid = $vid;  // FIXME: do we need a vid?  it is set to nid (node id)
 		
 		$node = $this->drupalNode->makeNode($title, $uid);
 		$this->node = $node;
@@ -140,9 +147,9 @@ class CiteBankBiblio
 	/**
 	 * makeNodeRevisionsRecord - 
 	 */
-	function makeNodeRevisionsRecord($nid, $title, $uid)
+	function makeNodeRevisionsRecord($nid, $vid, $title, $uid)
 	{
-		$sql = $this->drupalNode->makeSqlForNodeRevisions($nid, $title, $uid);
+		$sql = $this->drupalNode->makeSqlForNodeRevisions($nid, $vid, $title, $uid);
 		$this->dbi->insert($sql);
 		
 		return $nid;
@@ -154,8 +161,9 @@ class CiteBankBiblio
 	function makeBiblioRecord($biblio)
 	{
 		$nid = $this->nid;
+		$vid = $this->vid;
 		$this->biblioNode->nid = $nid;
-		$this->biblioNode->vid = $nid;
+		$this->biblioNode->vid = $vid;
 
 		$this->biblioNode->setDataByNodeX($biblio);
 		$biblio = $this->biblioNode->processNode(null);
@@ -177,6 +185,7 @@ class CiteBankBiblio
 	function makeBiblioAuthorRecord($author)
 	{
 		$nid = $this->nid;
+		$vid = $this->vid;
 
 		// if multiple authors, then do a loop, else the one
 		$authorHandle = new BiblioAuthorHandler();
@@ -195,7 +204,7 @@ class CiteBankBiblio
 				$result = $this->dbi->fetch($sql);
 				$cid = $result[0]['cid'];
 		
-				$sql = $this->drupalNode->makeBiblioContributor($nid, $cid);
+				$sql = $this->drupalNode->makeBiblioContributor($nid, $vid, $cid);
 
 				$this->dbi->insert($sql);
 			}
@@ -211,7 +220,7 @@ class CiteBankBiblio
 			$result = $this->dbi->fetch($sql);
 			$cid = $result[0]['cid'];
 	
-			$sql = $this->drupalNode->makeBiblioContributor($nid, $cid);
+			$sql = $this->drupalNode->makeBiblioContributor($nid, $vid, $cid);
 
 			$this->dbi->insert($sql);
 		}
@@ -235,6 +244,22 @@ class CiteBankBiblio
 		$nid = $result[0]['nid'];
 		
 		return $nid;
+	}
+
+	// ***** ***** get the voc id  vid
+	/**
+	 * getVid - 
+	 */
+	function getVid($nid)
+	{
+		$vid = 0;
+
+		$sql = $this->drupalNode->findLastVidSql($nid);
+		
+		$result = $this->dbi->fetch($sql);
+		$vid = $result[0]['vid'];
+		
+		return $vid;
 	}
 
 	// ***** ***** make a files record
@@ -284,9 +309,9 @@ class CiteBankBiblio
 	/**
 	 * makeUploadsRecord - 
 	 */
-	function makeUploadsRecord($fid, $nid, $filename)
+	function makeUploadsRecord($fid, $nid, $vid, $filename)
 	{
-		$sql = $this->drupalNode->makeSqlForDBUpload($fid, $nid, $filename);
+		$sql = $this->drupalNode->makeSqlForDBUpload($fid, $nid, $vid, $filename);
 		$this->dbi->insert($sql);
 	}
 
@@ -452,7 +477,7 @@ class CiteBankBiblio
 		// make a node
 		$this->makeNodeRecord($title, $uid);
 		$this->makeNodeAccessRecord($this->nid);
-		$this->makeNodeRevisionsRecord($this->nid, trim($title, '"'), $uid);
+		$this->makeNodeRevisionsRecord($this->nid, $this->vid, trim($title, '"'), $uid);
 		
 		// make a biblio record
 		$this->makeBiblioRecord($biblio);
