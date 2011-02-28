@@ -174,18 +174,34 @@ class DBInterfaceController
 		$hostpath = $this->findHostPath();
 		$settingsFile = '/var/www/'.$hostpath.'/sites/default/'.'settings.php';
 		$x = file_get_contents($settingsFile);
+
+		$lines = explode("\n", $x);  // break apart on newlines
 		
-		// the cheesy part is parsing out and relying on the fact that there is four db_url tags including ones in comments
-		// and since including the setting.php file whereever we want the config data will blow up pretty badly,
-		// we have to muddle through and dig out the vital piece we need.  yay, drupal.
-		// sure, we could use drupals system for all this, except sometimes all that baggage really is in the way of getting things done.
-		// drupal, like a mystery puzzle, travel light years to get something simple accomplished, sheesh
-		$star = explode('$db_url =', $x);  // find the db url info, keep in mind the comments have the tag too, brilliant.
-		$gate = $star[4];                  // get the (hopefully) correct one
-		$sg = explode("'", $gate);
-		$sg = $sg[1];                      // and get the actual config data
+		$dbStr = '';
 		
-		return $sg;
+		// hunt for the active line with the config variable
+		foreach ($lines as $line) {
+			
+			if ($line[0] == '$') {
+				$hit = substr_count($line, '$db_url =');
+				
+				if ($hit) {
+					$dbStr = $line; // and get the actual config data
+
+					// clear out the junk
+					$dbStr = str_replace('$db_url =', '', $dbStr);
+					$dbStr = str_replace("'", '', $dbStr);
+					$dbStr = str_replace(';', '', $dbStr);					
+					$dbStr = str_replace(' ', '', $dbStr);					
+					$dbStr = str_replace("\n", '', $dbStr);
+					$dbStr = trim($dbStr);
+
+					break;
+				}
+			}
+		}
+
+		return $dbStr;
 	}
 
 	/**
