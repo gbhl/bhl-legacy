@@ -149,6 +149,32 @@ class DBInterfaceController
 		return $data;
 	}
 
+	/**
+	 *  fetchobj - sql select with object array data
+	 */
+	function fetchobj($sql) 
+	{
+		$res = mysql_query($sql, $this->db);
+
+		$data = @mysql_fetch_object($res);
+
+		return $data;
+	}
+
+	/**
+	 *  fetch - sql select with associated array data
+	 */
+	function fetchobjlist($sql) 
+	{
+		$res = mysql_query($sql, $this->db);
+		$rows = array();
+
+		while ( ($row = mysql_fetch_object($res)) ) {
+			$rows[] = $row;
+		}
+
+		return $rows;
+	}
 
 	/**
 	 *  findHostPath - get the host path info
