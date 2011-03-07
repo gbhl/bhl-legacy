@@ -1606,6 +1606,41 @@ function biblio_oai_xc_isRecord($field)
 		return true;
 	}
 	
+	// extra check, when we move a record to Internet Archive, we need to check the preserved original url
+	if(isRecordInternetArchived($field)) {
+		return true;
+	}
+	
+	return false;
+}
+
+/*
+ *  isRecordInternetArchived - is there a record (that we sent to Internet Archive?), true = yes, false = no
+ */
+function isRecordInternetArchived($field) 
+{
+	// check first if table exists, if so, see if record exists
+	
+	// SHOW TABLES LIKE 'citebank_internet_archive_records'
+	$tableIA = 'citebank_internet_archive_records';
+	$sql = 'SHOW TABLES LIKE ' . "'".$tableIA."'";
+
+	$result = db_query($sql);
+	$row = db_fetch_object($result);
+	
+	if (count($row) > 0) {
+		$sql = "SELECT count(*) AS total FROM {citebank_internet_archive_records} WHERE biblio_url = '".$field."'";
+		
+		$result = db_query($sql);
+		$row = db_fetch_object($result);
+		
+		if ($row) {
+			$count = $row->total;
+			
+			return true;
+		}
+	}
+	
 	return false;
 }
 
