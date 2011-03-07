@@ -15,7 +15,7 @@
  */
 function citebank_internet_archive_install()
 {
-	drupal_install_schema('citebank_internet_archive_records');
+	drupal_install_schema('citebank_internet_archive');
 }
 
 /**
@@ -23,7 +23,7 @@ function citebank_internet_archive_install()
  */
 function citebank_internet_archive_uninstall()
 {
-	drupal_uninstall_schema('citebank_internet_archive_records');
+	drupal_uninstall_schema('citebank_internet_archive');
 }
 
 /**
@@ -31,7 +31,7 @@ function citebank_internet_archive_uninstall()
  */
 function citebank_internet_archive_schema()
 {
-	$schema['citebank_internet_archive'] = array(
+	$schema['citebank_internet_archive_records'] = array(
 	  'description' => t('Tracks CiteBank records sent to Internet Archive'),
 		'fields'      => array(
       'id'             => array ('type' => 'int', 'not null' => TRUE, 'default' => 0,  'description' =>''),
