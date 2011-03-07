@@ -1,0 +1,184 @@
+<?php
+// $Id: citebank_fedora_commons.module,v 1.0.0.0 2011/03/02 4:44:44 dlheskett $
+
+/** citebank_fedora_commons.module
+ *
+ * Copyright (c) 2011 Missouri Botanical Garden 
+ *
+ * @author: David L. Heskett (contractor: Adaptive Solutions Group)
+ * @date Created: 03/02/2011
+ *
+ */
+
+//define('DOS_MODE', true);
+define('DOS_MODE', false);
+
+define('IMPORT_DIR_PATH_FILES', '/sites/default/files/');
+
+
+$includePath = dirname(__FILE__) . '/';
+
+require_once($includePath . 'FedoraController.php');
+
+/**
+ * citebank_fedora_commons_view - 
+ */
+function citebank_fedora_commons_view(&$node, $teaser = FALSE, $page = FALSE)
+{
+	//echo 'here i am';
+}
+
+/**
+ * citebank_fedora_commons_cron - 
+ */
+function citebank_fedora_commons_cron(&$node = null, $teaser = FALSE, $page = FALSE)
+{
+	// we need an off switch if processed that file.
+	watchmen('Citebank Fedora cron');
+	processCiteBankFedoraCommons();
+}
+
+/**
+ * citebank_fedora_commons_node_info - 
+ */
+function citebank_fedora_commons_node_info()
+{
+	return array(
+		'citebank_fedora_commons' => array(
+			'name'         => t('citebank_fedora_commons'),
+			'module'       => 'citebank_fedora_commons',
+			'description'  => t('Citebank Fedora Commons: Pass citations and uploaded files from Biblio into Fedora via FOXML.'),
+			'has_title'    => TRUE,
+			'title_label'  => t('CiteBank Fedora'),
+			'has_body'     => FALSE
+//			'' => '',
+		)
+	);
+}
+
+// ************************************************************
+//  process import methods
+// ************************************************************
+
+/**
+ *  processCiteBankFedoraCommons - 
+ */
+function processCiteBankFedoraCommons()
+{
+	$fedoraController = new FedoraController();
+	
+	// let us limit the number of records we handle per run
+	$fedoraController->throttleFlag = true;
+	$fedoraController->throttle = 10;
+	
+	watchmen('collecting citations, adding new ones, ready for fedora');
+	// add nodes to list and line them up for transfer
+	$countItems = $fedoraController->processCitationsCollection();
+	
+	$throttleMsg = ($fedoraController->throttleFlag ? ' (throttled ' . $fedoraController->throttle . ')' . '');
+	watchmen('process and send ' . $countItems . ' citations to fedora' . $$throttleMsg . '');
+	// take biblio citations that are ready and send them to our fedora repository
+	$fedoraController->processCitations();
+}
+
+
+
+/**
+ *  shortFileName - 
+ */
+function shortFileName($filename)
+{
+	$x = explode('/', $filename);
+	
+	$count = count($x);
+	
+	$file = $x[$count - 1];
+	
+	return $file;
+}
+
+/**
+ *  filter - 
+ */
+function filter($data)
+{
+	$filtered = stripslashes($data);
+	
+	return $filtered;
+}
+
+/**
+ *  getLinkPath - 
+ */
+function getLinkPath()
+{
+	$linkPath = '';
+	
+	$hostSiteUrl = getServerName(); //$_SERVER['SERVER_NAME'];
+	
+	$linkPath = 'http://' . $hostSiteUrl;
+	
+	return $linkPath;
+}
+
+/**
+ * getServerName - build a correct file path to the data store for the given file name.
+ */
+function getServerName()
+{
+	$servername = @$_SERVER['SERVER_NAME'];
+
+	if (!$servername) {
+		$rootplus = docRootPath();
+		
+		// problem, $_SERVER['DOCUMENT_ROOT'];  is not available via command line call, we get an empty string.
+		// remedy, below.
+		// cleverness here:
+		// all the code sitting under drupal resides in 'sites/all', so it's a good key to split on cleanly
+		// so, we have something like:
+		//  /var/www/test3.citebank.org/sites/all/more/dirs/here...
+		// we want:
+		//  /var/www/test3.citebank.org/
+		// so drop everything after including 'sites/all....'
+		//
+		$parts = explode('sites/all', $rootplus);
+		$root = $parts[0];
+
+		$servername = str_replace('/var/www/', '', $root);
+	}
+	
+	$servername = rtrim($servername, '/');
+
+	return $servername;
+}
+
+/**
+ * docRootPath - get us a path, we have some odd issue with our server not being set correctly, so attempt a remedy
+ */
+function docRootPath()
+{
+	$path1 = $_SERVER['DOCUMENT_ROOT'];
+	$path2 = $_SERVER['PWD'];
+	
+	$path = ($path1 ? $path1 : $path2);
+	
+	return $path;
+}
+
+//watchdog($type, $message, $variables = array(), $severity = WATCHDOG_NOTICE, $link = NULL);
+/**
+ * watchmen - handy drupal watch logger, give it a msg and go
+ */
+function watchmen($msg, $watchFlag = true, $type = 'FedoraImp', $addDate = true)
+{
+	if ($watchFlag) {
+		if ($addDate) {
+			$msg .= ' ' . date('YmdHis');
+		}
+		
+		watchdog($type, $msg);  // drupal system call
+	}
+}
+
+// ************************************************************
+// ************************************************************

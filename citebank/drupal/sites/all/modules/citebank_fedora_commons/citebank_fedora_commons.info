@@ -1,0 +1,11 @@
+; $Id: citebank_fedora_commons.module,v 1.0.0.0 2011/03/04 4:44:44 dlheskett $
+
+name = Citebank FEDORA
+description = Citebank FEDORA: Data Repository FEDORA handling.
+core = 6.x
+php = 5.2
+version = "6.x-1.x-dev"
+
+// ************************************************************
+// ************************************************************
+

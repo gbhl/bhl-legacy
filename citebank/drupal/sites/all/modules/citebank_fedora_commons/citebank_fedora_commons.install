@@ -1,0 +1,89 @@
+<?php
+// $Id: citebank_fedora_commons.install,v 1.0.0.0 2010/09/15 4:44:44 dlheskett $
+
+/** citebank_fedora_commons.install
+ *
+ * Copyright (c) 2010-2011 Missouri Botanical Garden 
+ *
+ * @author: David L. Heskett (contractor: Adaptive Solutions Group)
+ * @date Created: 03/04/2011
+ *
+ */
+
+/**
+ * citebank_fedora_commons_install - 
+ */
+function citebank_fedora_commons_install()
+{
+	drupal_install_schema('citebank_fedora_commons_records');
+}
+
+/**
+ * citebank_fedora_commons_uninstall - 
+ */
+function citebank_fedora_commons_uninstall()
+{
+	drupal_uninstall_schema('citebank_fedora_commons_records');
+}
+
+/**
+ * citebank_fedora_commons_schema - 
+ */
+function citebank_fedora_commons_schema()
+{
+/*	
+CREATE TABLE `citebank_fedora_commons_records` (
+  `citebank_fedora_commons_id` int(11) NOT NULL auto_increment,
+  `nid` int(11) default NULL,
+  `fedora_status` int(1) default NULL,
+  `created` datetime default NULL,
+  `update` int(1) default '0',
+  PRIMARY KEY  (`citebank_fedora_commons_id`)
+);
+
+*/	
+
+	$schema['citebank_fedora_commons_records'] = array(
+		'fields'     => array(
+
+      'citebank_fedora_commons_id' => array (
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' =>'table index id'
+			),
+
+      'nid' => array (
+        'type' => 'int',
+        'default' => 0,
+        'description' =>'Node Id'
+			),
+
+      'fedora_status' => array (
+        'type' => 'int',
+        'default' => -1,
+        'description' =>'State status: -1 ignore, 0 ready, 1 sent'
+			),
+
+      'created' => array (
+        'type' => 'datetime',
+        'default' => 0,
+        'description' =>''
+			),
+
+      'update' => array (
+        'type' => 'int',
+        'default' => 0,
+        'description' =>'Update record: 0 no, 1 yes'
+			)
+		),
+	  'indexes'    => array(
+	  	'nid'      => array('nid'),
+	  ),
+	  'primary key' => array('citebank_fedora_commons_id')
+	);
+	
+	return $schema;
+}
+// ************************************************************
+// ************************************************************
