@@ -12,7 +12,7 @@
 
 $includePath = dirname(__FILE__) . '/';
 
-require_once($includePath . 'DBInterfaceController.php');
+//require_once($includePath . 'DBInterfaceController.php');
 
 // FEDORA -  Flexible Extensible Digitial Object and Repository Architecture
 
@@ -252,7 +252,18 @@ class FedoraModel
 		// done
 	}
 
+	/**
+	 * listStats - 
+	 */
+	function listStats()
+	{
+		$tbl = self::FEDORA_TABLE;
+		$sql = 'SELECT fedora_status, COUNT(*) AS total FROM ' . $tbl . ' GROUP BY fedora_status ORDER BY fedora_status';
 
+		$rows = $this->dbi->fetch($sql);
+
+		return $rows;
+	}
 
 	/**
 	 * _toString - stringify
@@ -264,7 +275,6 @@ class FedoraModel
 
 		return $info;
 	}
-	
 	
 }  // end class
 // ****************************************
