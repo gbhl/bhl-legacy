@@ -372,7 +372,7 @@ class CiteBankBiblio
 			$root = $rootplus;
 		}
 		
-		$filepath = $root . self::PATH_FILES_STORED . $filename;
+		$filepath = $root . '/' . self::PATH_FILES_STORED . $filename;
 	
 		return $filepath;
 	}
