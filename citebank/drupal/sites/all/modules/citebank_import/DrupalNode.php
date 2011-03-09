@@ -535,7 +535,7 @@ class DrupalNode
 		$clseBrace = ($resolverFlag ? '}' : '');
 		// { table }  braces for drupals database name resolver
 
-		$sql = 'INSERT INTO '. $openBrace . 'node_revisions' . $clseBrace . ' SET nid = ' . $nid . ', vid = ' . $vid . ', title = ' .  "'"  . $title . "'" . ', uid = ' . $uid . ', body =  '."'".'  '."'".', teaser = '."'".'  '."'".', log = '."'".'  '."'".',  timestamp = ' . time() . '';
+		$sql = 'INSERT INTO '. $openBrace . 'node_revisions' . $clseBrace . ' SET nid = ' . $nid . ', vid = ' . $vid . ', title = ' .  "'"  . mysql_real_escape_string($title) . "'" . ', uid = ' . $uid . ', body =  '."'".'  '."'".', teaser = '."'".'  '."'".', log = '."'".'  '."'".',  timestamp = ' . time() . '';
 
 		return $sql;
 	}
@@ -559,8 +559,8 @@ class DrupalNode
 		// FIXME: does vid need to be independantly set?  [vid = ' . $nid]
 		// 
 		//echo '' . $name['firstname'] . ' | ' .  $name['initials'] . ' | ' .  $name['lastname'] . ' | ' .  $name['prefix'] . ' | ' .  $name['suffix'] . '  md5:' .  $name['md5'] . ' ';
-		$sql = 'INSERT INTO '. $openBrace . 'biblio_contributor_data' . $clseBrace . ' SET name = ' . "'" . $author['name'] . "'" . ', lastname = ' . "'" .  $author['lastname'] . "'"
-		 . ', firstname = ' . "'" .  $author['firstname'] . "'" . ', initials = ' . "'" .  $author['initials'] . "'" . ', prefix = ' . "'" .  $author['prefix'] . "'" . ', suffix = ' . "'" .  $author['suffix'] . "'" . ', md5 = ' . "'" .  $author['md5'] . "'";
+		$sql = 'INSERT INTO '. $openBrace . 'biblio_contributor_data' . $clseBrace . ' SET name = ' . "'" . mysql_real_escape_string($author['name']) . "'" . ', lastname = ' . "'" .  mysql_real_escape_string($author['lastname']) . "'"
+		 . ', firstname = ' . "'" .  mysql_real_escape_string($author['firstname']) . "'" . ', initials = ' . "'" .  mysql_real_escape_string($author['initials']) . "'" . ', prefix = ' . "'" .  mysql_real_escape_string($author['prefix']) . "'" . ', suffix = ' . "'" .  mysql_real_escape_string($author['suffix']) . "'" . ', md5 = ' . "'" .  $author['md5'] . "'";
 
 		return $sql;
 	}
@@ -640,11 +640,11 @@ class DrupalNode
 				case 'language':
 				case 'xc_type':
 				case 'xc_id':
-					$sql .= ' ' . $key . ' = ' . "'" . $val . "'";  // strings are quoted
+					$sql .= ' ' . $key . ' = ' . "'" . mysql_real_escape_string($val) . "'";  // strings are quoted
 					break;
 					
 				default:
-					$sql .= ' ' . $key . ' = ' . $val;              // numbers are not quoted
+					$sql .= ' ' . $key . ' = ' . mysql_real_escape_string($val);              // numbers are not quoted
 					break;
 			}
 
