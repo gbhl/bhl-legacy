@@ -23,6 +23,7 @@ require_once($includePath . 'ExcelTextImporter.php');
 require_once($includePath . 'CSVHandler.php');
 require_once($includePath . 'ReviewContent.php');
 require_once($includePath . 'ImportUndoHandler.php');
+require_once($includePath . 'SolrHandler.php');
 
 /**
  * citebank_importer_view - 
@@ -74,6 +75,15 @@ function processCiteBankImport()
 	$importFileName = '';
 	$importer = new ExcelTextImporter();
 	$biblios  = importProcess($importer, $importFileName);
+	
+	$solrHandler = new SolrHandler();
+	
+	// this probably is not the most ideal thing to do, 
+	// we add any nodes that haven't been put into Solr but that ought to be there, just so happens they are not.
+	// if Solr doesn't exist, which it will, safely handles either situation.
+	// this will pick up nodes that for some reason may not get handled by their respective modules, such as OAI importing.
+	// if we do not want this extra behavoir, comment out this line.  leave the touchSolr after the addCiteBankRecord though.
+	$solrHandler->addNewNodesToSolr();
 	
 	// if no data, report error and get out
 	if (count($biblios) == 0) {
@@ -157,6 +167,7 @@ function processCiteBankImport()
 				//$node_save($x->biblioNode->node);
 				
 				$nid = $x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
+				$solrHandler->touchSolr($nid);
 				$importUndo->makeUndoNid($nid, $importFileName);
 				//echo '****[' . 'Write the record here' . ']****' . '<br>' . "\n";
 			} else {
