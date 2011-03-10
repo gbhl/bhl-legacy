@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:si="http://www.springframework.org/schema/integration"
+	xmlns:stream="http://www.springframework.org/schema/integration/stream"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://activemq.apache.org/schema/core 
+		http://activemq.apache.org/schema/core/activemq-core.xsd
+		http://www.springframework.org/schema/integration/stream 
+        http://www.springframework.org/schema/integration/stream/spring-integration-stream-2.0.xsd
+        http://www.springframework.org/schema/integration 
+        http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/integration/jms
+        http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd">
+
+	<!-- Necessary to use Annotations such as @Publisher, @ServiceActivator -->
+	<si:annotation-config default-publisher-channel="default" />
+	<si:channel id="default" />
+
+	<!-- GateWayProxy to kick-off processing of DigitalObjects -->
+	<si:gateway id="prepDigObjGateway" service-interface="at.co.ait.domain.IPrepDigObjGateway"
+		default-request-channel="extractTechnicalMetadata" />
+		
+	<si:gateway id="prepInfPkgGateway" service-interface="at.co.ait.domain.IPrepInfPkgGateway"
+		default-request-channel="metsService" />
+
+	<!-- Define a stdout channel for debugging purposes -->
+	<si:channel id="out" />
+	<stream:stdout-channel-adapter id="stdout"
+		channel="out" append-newline="true" />
+
+	<!-- Extract technical metadata from DigitalObject -->
+	<si:service-activator input-channel="extractTechnicalMetadata"
+		output-channel="extractDigitalObjectType" method="enrichDigitalObject"
+		ref="technicalMetadataExtractor" />
+	<bean id="technicalMetadataExtractor" class="at.co.ait.domain.TechMetadataExtractionService" />
+
+	<!-- Extract DigitalObjectType from DigitalObject -->
+	<si:service-activator input-channel="extractDigitalObjectType"
+		output-channel="routeDigitalObjectTypes" method="enrichDigitalObject"
+		ref="digitalObjectTypeExtractor" />
+	<bean id="digitalObjectTypeExtractor" class="at.co.ait.domain.DigitalObjectTypeExtractor" />
+
+	<si:router input-channel="routeDigitalObjectTypes"
+		expression="payload.getObjecttypeIdx() == 3 ? 'extractDescrMetadata' : 'addDigitalObject'" />
+
+	<!-- Extract DigitalObjectType from DigitalObject -->
+	<si:service-activator input-channel="extractDescrMetadata"
+		output-channel="addDigitalObject" method="enrichDigitalObject"
+		ref="descrMetadataExtractor" />
+	<bean id="descrMetadataExtractor" class="at.co.ait.domain.DescrMetadataMapService" />
+
+	<si:service-activator input-channel="addDigitalObject"
+		method="addDigObjToInfPkg" ref="PackageDeliveryService" />
+		
+	<si:service-activator input-channel="metsService" output-channel="createAIPService"
+		method="enrichInformationPackageObject" ref="metsMarshallerService" />
+	<bean id="metsMarshallerService" class="at.co.ait.domain.MetsMarshallerService" />
+	
+	<si:service-activator input-channel="createAIPService"
+		method="createAIP" ref="PackageDeliveryService" />
+
+</beans>
+
+
+
