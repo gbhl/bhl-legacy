@@ -33,7 +33,7 @@ public class ConvertImageService {
 	}
 
 	public void setDigitalobject(DigitalObject digitalobject) {
-		this.inputimage = digitalobject.getPayload().getFile();
+		this.inputimage = digitalobject.getSubmittedFile();
 		this.digitalobject = digitalobject;
 	}
 	
