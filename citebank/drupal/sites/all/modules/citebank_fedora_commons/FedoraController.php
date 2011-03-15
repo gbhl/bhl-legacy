@@ -136,12 +136,31 @@ class FedoraController
 	/**
 	 * makeAuthors - 
 	 */
-	function makeAuthors($contributors)
+	function makeAuthors($nodeId)
 	{
 		$authors = '';
 		
-		$authors = implode(';', $contributors);
+		//$authors = implode(';', $contributors);
+		/* name
+		   lastname
+		   firstname
+		   prefix
+		   suffix
+		   initials
+		*/
 		
+		$list = $this->fedoraModel->getCitationContributors($nodeId);
+
+		if (count($list)) {
+			foreach ($list as $author) {
+				$authors .= trim($author['name']);
+				$authors .= '; ';
+			}
+
+			$authors = trim(' ');
+			$authors = rtrim(';');
+		}
+
 		return ($authors);
 	}
 	
@@ -295,7 +314,7 @@ class FedoraController
 		$this->fedoraFoxXml->subjectName = $pidName;
 		$this->fedoraFoxXml->state       = 'A';  // active
 		$this->fedoraFoxXml->controlGrp  = 'X';  // xml
-		$this->fedoraFoxXml->baseUrl     = $node['biblio_url']; //self::BASE_URL;
+		$this->fedoraFoxXml->baseUrl     = $node['biblio_url'];
 	
 		// package up the data
 		$this->fedoraFoxXml->title       = $this->filterAccents($this->xmlifyDataFilter($node['title']));
@@ -304,8 +323,7 @@ class FedoraController
 		$this->fedoraFoxXml->description = $this->xmlifyDataFilter($node['biblio_abst_e']);
 		$this->fedoraFoxXml->publisher   = $this->xmlifyDataFilter($node['biblio_publisher']);
 		$this->fedoraFoxXml->identifier  = $this->xmlifyDataFilter($nodeId);
-		$this->fedoraFoxXml->contributor = '';//$this->makeAuthors($node['biblio_contributors']);  // list out authors
-//		echo 'contributors [' . print_r($node['biblio_contributors'], 1) . ']';
+		$this->fedoraFoxXml->contributor = $this->makeAuthors($nodeId);  // list out authors
 		$this->fedoraFoxXml->date        = $this->xmlifyDataFilter($node['biblio_year']);
 		$this->fedoraFoxXml->type        = $this->xmlifyDataFilter($node['biblio_type']);  // TODO: do we want to translate to words instead of code number?
 		$this->fedoraFoxXml->format      = 'blank';
