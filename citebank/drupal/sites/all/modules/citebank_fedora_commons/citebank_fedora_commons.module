@@ -69,14 +69,14 @@ function processCiteBankFedoraCommons()
 	
 	// let us limit the number of records we handle per run
 	$fedoraController->throttleFlag = true;
-	$fedoraController->throttle = 10;
+	$fedoraController->throttle = 100;
 	
 	fedora_watchmen('collecting citations, adding new ones, ready for fedora');
 	// add nodes to list and line them up for transfer
 	$countItems = $fedoraController->processCitationsCollection();
 	
 	$throttleMsg = ($fedoraController->throttleFlag ? ' (throttled ' . $fedoraController->throttle . ')' : '');
-	fedora_watchmen('process and send ' . $countItems . ' citations to fedora' . $$throttleMsg . '');
+	fedora_watchmen('process and send ' . $countItems . ' citations to fedora' . $throttleMsg . '');
 	// take biblio citations that are ready and send them to our fedora repository
 	$fedoraController->processCitations();
 }
