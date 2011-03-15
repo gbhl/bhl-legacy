@@ -209,17 +209,24 @@ log_info('format', 'format:[' . $format . ']');   // FIXME: remove logging
 		case 'dc':
 			//biblio_oai_xc_oaiharvester_process_record_oai_dc($record);
 			biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record);
+			log_info('oai process tag', 'dc');   // FIXME: remove logging  
 			break;
 
 		case 'mods':
 			//biblio_oai_xc_oaiharvester_process_record_mods($record);
 			biblio_oai_xc_oaiharvester_process_record_mods_new($record);
+			log_info('oai process tag', 'mods');   // FIXME: remove logging  
 			break;
 
 		// MARC21
 		case 'marc':
 		case 'record':
 			biblio_oai_xc_oaiharvester_process_record_marc($record);
+			log_info('oai process tag', 'marc');   // FIXME: remove logging  
+			break;
+		
+		default:
+			log_info('oai unknown format', 'format:[' . $format . ']');   // FIXME: remove logging  
 			break;
   }
   
@@ -397,6 +404,7 @@ function biblio_oai_xc_getAttributionSource($hay)
  */
 function biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record)
 {
+	log_info('oai process tag start', 'dc');   // FIXME: remove logging  
   static $harvest = null;
 	$updateFlag = false;  // are we an insert or update?  if true then is an update
 	
@@ -431,6 +439,7 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record)
 
   if (!empty($node)) {
     if ($updateFlag == false) {  // do a regular insert via the other calls...
+   		log_info('oai process biblio save', 'node id [' . $node['nid'] . '] vid [' . $node['vid'] . ']');   // FIXME: remove logging  
 	    biblio_save_node($node);
     } else {
     	// else it's an update, set the nid and maybe the revision.
@@ -449,6 +458,7 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record)
     		$node['vid'] = $vid;
     	}
 
+   		log_info('oai process biblio save', 'node id [' . $node['nid'] . '] vid [' . $node['vid'] . ']');   // FIXME: remove logging  
     	biblio_save_node($node);
     }
   }
@@ -463,6 +473,7 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record)
  */
 function biblio_oai_xc_oaiharvester_process_record_mods_new($record)
 {
+	log_info('oai process tag start', 'mods');   // FIXME: remove logging  
   static $harvest = null;
 	$updateFlag = false;  // are we an insert or update?  if true then is an update
 	
@@ -502,6 +513,7 @@ function biblio_oai_xc_oaiharvester_process_record_mods_new($record)
   if (!empty($node)) {
     
     if ($updateFlag == false) {  // do a regular insert via the other calls...
+   		log_info('oai process biblio save', 'node id [' . $node['nid'] . '] vid [' . $node['vid'] . ']');   // FIXME: remove logging  
     	biblio_save_node($node);
     } else {
     	// else it's an update, set the nid.
@@ -520,6 +532,7 @@ function biblio_oai_xc_oaiharvester_process_record_mods_new($record)
     		$node['vid'] = $vid;
     	}
 
+   		log_info('oai process biblio save', 'node id [' . $node['nid'] . '] vid [' . $node['vid'] . ']');   // FIXME: remove logging  
     	biblio_save_node($node);
     }
   }
@@ -1038,6 +1051,8 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
  */
 function biblio_oai_xc_oaiharvester_process_record_marc($record)
 {
+	log_info('oai process tag start', 'marc');   // FIXME: remove logging  
+	
   static $harvest = null;
 	$updateFlag = false;  // are we an insert or update?  if true then is an update
 	
@@ -1078,6 +1093,7 @@ function biblio_oai_xc_oaiharvester_process_record_marc($record)
   if (!empty($node)) {
     
     if ($updateFlag == false) {  // do a regular insert via the other calls...
+   		log_info('oai process biblio save', 'node id [' . $node['nid'] . '] vid [' . $node['vid'] . ']');   // FIXME: remove logging  
     	biblio_save_node($node);
 //log_info('marcxml', 'INSERT: ' . print_r($node, true));   // FIXME: remove logging
     } else {
@@ -1097,6 +1113,7 @@ function biblio_oai_xc_oaiharvester_process_record_marc($record)
     		$node['vid'] = $vid;
     	}
 
+   		log_info('oai process biblio save', 'node id [' . $node['nid'] . '] vid [' . $node['vid'] . ']');   // FIXME: remove logging  
     	biblio_save_node($node);
 //log_info('marcxml', 'UPDATE: ' . print_r($node, true));   // FIXME: remove logging
     }
