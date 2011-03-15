@@ -12,7 +12,7 @@
 
 $includePath = dirname(__FILE__) . '/';
 
-//require_once($includePath . 'DBInterfaceController.php');
+require_once($includePath . 'DBInterfaceController.php');
 
 // FEDORA -  Flexible Extensible Digitial Object and Repository Architecture
 
@@ -55,7 +55,8 @@ class FedoraModel
 	function initDefaults()
 	{
 		$this->className = self::CLASS_NAME;
-		$this->dbi = new DBInterfaceController();
+		//$this->dbi = new DBInterfaceController();
+		$this->dbi = new Fedora_DBInterfaceController();
 	}
 
 
@@ -228,6 +229,19 @@ class FedoraModel
 		$data = $this->dbi->fetch($sql);
 
 		return $data[0];
+	}
+
+// SELECT bcd.name, bcd.lastname, bcd.firstname, bcd.prefix, bcd.suffix, bcd.initials FROM biblio_contributor_data AS bcd JOIN biblio_contributor AS bc ON (bcd.cid = bc.cid) WHERE bc.nid = 72749
+	/**
+	 * getCitationData - get biblio data
+	 */
+	function getCitationContributors($nodeId)
+	{
+		$sql = 'SELECT bcd.name, bcd.lastname, bcd.firstname, bcd.prefix, bcd.suffix, bcd.initials FROM biblio_contributor_data AS bcd JOIN biblio_contributor AS bc ON (bcd.cid = bc.cid) WHERE bc.nid = ' . $nodeId . '';
+
+		$data = $this->dbi->fetch($sql);
+
+		return $data;
 	}
 
 	/**
