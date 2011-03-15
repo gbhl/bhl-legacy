@@ -16,7 +16,7 @@ require_once($includePath . 'SimpleStorageServiceRequest.php');
 require_once($includePath . 'SimpleStorageServiceModel.php');
 
 // local testing stub
-require_once($includePath . 'DBInterfaceController.php');
+//require_once($includePath . 'DBInterfaceController.php');
 
 function db_query($sql)
 {
