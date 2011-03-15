@@ -26,6 +26,7 @@ class FedoraClient
 	public $pid;
 	public $pidNum;
 	public $pidName;
+	public $hostServer;
 	
 	public $args = '';
 	
@@ -46,6 +47,7 @@ class FedoraClient
 	 */
 	function initDefaults()
 	{
+		$this->hostServer = self::FEDORA_HOST;
 	}
 
 
@@ -67,7 +69,7 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 		$pid = $pidName . ':' . $pidNum;
 		$dsID = 'citebank';
 		
-		$curlCmd = 'curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "http://172.16.17.197:8080/fedora/objects/'.$pidName.':'.$pidNum.'" --data-binary @fedoraFoxXmlFile.xml -k';
+		$curlCmd = 'curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "' . $this->hostServer . '/objects/'.$pidName.':'.$pidNum.'" --data-binary @fedoraFoxXmlFile.xml -k';
 		
 		$resp = exec($curlCmd);
 		
@@ -141,7 +143,8 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 	{
 		$ch = curl_init();
 		
-		$url = self::FEDORA_HOST; // 'http://172.16.17.197:8080/fedora/'
+		//$url = self::FEDORA_HOST; // 'http://172.16.17.197:8080/fedora/'
+		$url = $this->hostServer; // 'http://172.16.17.197:8080/fedora/'
 	
 		$arg = $url . $query;
 		
