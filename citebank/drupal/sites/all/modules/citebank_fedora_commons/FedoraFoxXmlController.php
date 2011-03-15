@@ -202,21 +202,6 @@ class FedoraFoxXmlController
 	}
 
 	/**
-	 * getXmlDjvu - .djvu
-	 */
-	function getXmlDjvu()
-	{
-		$str = 
-'		<foxml:datastream CONTROL_GROUP="'.$this->controlGrp.'" ID="'.$this->subjectName.'djvu" STATE="'.$this->state.'"> 
-			<foxml:datastreamVersion ID="DJVU.0" MIMETYPE="image/vnd.djvu" LABEL="DjVu">
-				<foxml:contentLocation REF="'.$this->baseUrl.'/'.$this->subjectName.'/'.$this->subjectName.'.djvu" TYPE="URL"/> 
-			</foxml:datastreamVersion>
-		</foxml:datastream>';
-
-		return $str;
-	}
-
-	/**
 	 * foxXmlSetDefault - 
 	 */
 	function foxXmlSetDefault()
@@ -269,12 +254,6 @@ class FedoraFoxXmlController
 		switch ($x) 
 		{
 			case 'djvu':
-//				$str = '<foxml:datastream CONTROL_GROUP="'.$this->controlGrp.'" ID="'.$this->subjectName.'djvu" STATE="'.$this->state.'"> 
-//					<foxml:datastreamVersion ID="DJVU.0" MIMETYPE="image/vnd.djvu" 
-//						LABEL="DjVu">
-//						<foxml:contentLocation REF="'.$this->baseUrl.'/'.$this->subjectName.'/'.$this->subjectName.'.djvu" TYPE="URL"/> 
-//					</foxml:datastreamVersion>
-//				</foxml:datastream>';
 				$ext      = 'djvu';
 				$version  = 'DJVU.0';
 				$mimeType = 'image/vnd.djvu';
@@ -437,12 +416,13 @@ class FedoraFoxXmlController
 		$this->ext = $ext;
 
 //'		<foxml:datastream CONTROL_GROUP="'.$this->controlGrp.'" ID="'.$this->subjectName.''.$ext.'" STATE="'.$this->state.'"> 
+//					<foxml:contentLocation REF="'.$this->baseUrl.'/'.$this->subjectName.'/'.$this->subjectName.'.'.$ext.'" TYPE="URL"/> 
 
 		$str = 
 '		<foxml:datastream CONTROL_GROUP="'.$this->controlGrp.'" ID="'.$this->subjectName.''.''.'" STATE="'.$this->state.'"> 
 			<foxml:datastreamVersion ID="'.$version.'" MIMETYPE="'.$mimeType.'" LABEL="'.$label.'">
 				<foxml:xmlContent>
-					<foxml:contentLocation REF="'.$this->baseUrl.'/'.$this->subjectName.'/'.$this->subjectName.'.'.$ext.'" TYPE="URL"/> 
+					<foxml:contentLocation REF="'.$this->baseUrl.'" TYPE="URL"/> 
 				</foxml:xmlContent>
 			</foxml:datastreamVersion>
 		</foxml:datastream>'
