@@ -14,7 +14,7 @@
  * class BiblioNodeData - biblio class object to hold data
  * 
  */
-class BiblioNodeData
+class DataProcessor_BiblioNodeData
 {
 	/** stores the class name */
 	public $className;
@@ -78,7 +78,7 @@ class BiblioNodeData
 	const PUBLICATION_TYPE_BOOK    = 100;
 	const DEFAULT_YEAR    = 9999;
 
-	const CLASS_NAME    = 'BiblioNodeData';
+	const CLASS_NAME    = 'DataProcessor_BiblioNodeData';
 
 	/**
 	 * _construct - constructor

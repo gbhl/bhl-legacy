@@ -32,7 +32,7 @@ class DataProcessorBiblio
 	function __construct($importData)
 	{
 		$this->importData = $importData;
-		$this->biblioData = new BiblioNodeData();
+		$this->biblioData = new DataProcessor_BiblioNodeData();
 
 		$this->initDefaults();
 	}
