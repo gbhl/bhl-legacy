@@ -10,9 +10,8 @@
  *
  */
 
-$includePath = dirname(__FILE__) . '/';
+//$includePath = dirname(__FILE__) . '/';
 
-require_once($includePath . 'FedoraCommonsModel.php');
 
 // FEDORA -  Flexible Extensible Digitial Object and Repository Architecture
 
@@ -28,9 +27,10 @@ class FedoraClient
 	public $pidName;
 	public $hostServer;
 	
+	public $httpcode;
+	
 	public $args = '';
 	
-	const FEDORA_HOST = 'http://172.16.17.197:8080/fedora/';
 	const FEDORA_FOX_XML_DATA = 'fedoraFoxXmlFile.xml';
 	const FEDORA_TEMP_DATA = 'testdata.txt';
 		
@@ -47,7 +47,6 @@ class FedoraClient
 	 */
 	function initDefaults()
 	{
-		$this->hostServer = self::FEDORA_HOST;
 	}
 
 
@@ -69,8 +68,10 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 		$pid = $pidName . ':' . $pidNum;
 		$dsID = 'citebank';
 		
-		$curlCmd = 'curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "' . $this->hostServer . '/objects/'.$pidName.':'.$pidNum.'" --data-binary @fedoraFoxXmlFile.xml -k';
-		
+		$curlCmd = 'curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "' . $this->hostServer . 'objects/'.$pidName.':'.$pidNum.'" --data-binary @fedoraFoxXmlFile.xml -k';
+
+		//fedora_watchmen('curlCmd: ' . $curlCmd);
+
 		$resp = exec($curlCmd);
 		
 		return $resp;	
@@ -118,6 +119,28 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 	}
 	
 	/**
+	 * isExists - check if a pid exists, flag true or false
+	 */
+	function isExists($pid)
+	{
+		$exists = false;
+		
+		$stream = 'objects/'.$pid.'/datastreams';
+		
+		$resp = $this->callFedora($stream);
+		//fedora_watchmen('isExists [' . $resp . ']');
+		
+		// would be nice if Fedora had a proper is exist method, so as workaround, we do it this way.
+		if (200 == $this->httpcode) {
+			$exists = true;
+		}
+
+		//fedora_watchmen('isExists FLAG [' . $this->httpcode . ' ' . ($exists ? 'exists' : 'not found'). ']');
+		
+		return $exists;	
+	}
+	
+	/**
 	 * getNextPid - 
 	 */
 	function getNextPid($namespace)
@@ -143,7 +166,6 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 	{
 		$ch = curl_init();
 		
-		//$url = self::FEDORA_HOST; // 'http://172.16.17.197:8080/fedora/'
 		$url = $this->hostServer; // 'http://172.16.17.197:8080/fedora/'
 	
 		$arg = $url . $query;
@@ -179,6 +201,8 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 		$resp = curl_exec($ch);
 		
 		$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE); 
+		
+		$this->httpcode = $httpcode;
 		
 		curl_close($ch);
 		
