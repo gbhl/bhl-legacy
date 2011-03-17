@@ -14,7 +14,6 @@ $includePath = dirname(__FILE__) . '/';
 
 require_once($includePath . 'FedoraModel.php');
 require_once($includePath . 'FedoraClient.php');
-require_once($includePath . 'FedoraCommonsModel.php');
 require_once($includePath . 'FedoraFoxXmlController.php');
 
 // FEDORA -  Flexible Extensible Digitial Object and Repository Architecture
@@ -31,11 +30,14 @@ class FedoraController
 	
 	public $throttleFlag = false;
 	public $throttle     = 100;
+	public $hostServer   = '';
+	public $namespace    = '';
+	public $loggingFlag  = false;
 
 	const CLASS_NAME    = 'FedoraController';
 
 	const NAME_SPACE    = 'citebank';
-	const BASE_URL      = 'http://172.16.17.197:8080/fedora/';
+//	const BASE_URL      = 'http://172.16.17.197:8080/fedora/';  // FIXME: make configurable
 
 	const FEDORA_TABLE  = 'citebank_fedora_commons_records';
 
@@ -69,6 +71,25 @@ class FedoraController
 		$this->fedoraFoxXml = new FedoraFoxXmlController();
 
 		$this->fedoraModel = new FedoraModel();
+
+		$this->getConfigs();
+	}
+
+	/**
+	 * getConfigs - get config settings
+	 */
+	function getConfigs()
+	{
+		$configs = $this->fedoraModel->getConfigs();
+		
+		$this->throttle     = $configs['throttle'];
+		$this->throttleFlag = $configs['throttleFlag'];
+		
+		$this->hostServer   = $configs['hostServer']; //'http://172.16.17.197:8080/fedora/';
+		$this->namespace    = $configs['namespace']; //self::NAME_SPACE;
+		$this->loggingFlag  = $configs['loggingFlag'];
+		
+		$this->fedoraClient->hostServer = $this->hostServer;
 	}
 
 /*
@@ -156,12 +177,14 @@ class FedoraController
 				$authors .= trim($author['name']);
 				$authors .= '; ';
 			}
-
-			$authors = trim(' ');
-			$authors = rtrim(';');
+//fedora_watchmen('authors ' . print_r($author, true));
+//fedora_watchmen('authors name ' . $author['name']);
+			$authors = trim($authors, ' ');
+			$authors = rtrim($authors, ';');
 		}
+//fedora_watchmen('authors [' . $authors . ']');
 
-		return ($authors);
+		return $authors;
 	}
 	
 	/**
@@ -169,7 +192,7 @@ class FedoraController
 	 */
 	function updateFedora($nodeId, $node)
 	{
-		// done
+		// TODO: finish this
 	}
 
 	/**
@@ -179,6 +202,10 @@ class FedoraController
 	{
 		$nodeId = $citation->nid;
 		$biblio = $this->fedoraModel->getCitationData($nodeId);
+		
+		if ($this->loggingFlag) {
+			fedora_watchmen('storeFedoraCitation ' . $nodeId);
+		}
 		
 		$wroteToFedora = $this->writeFedora($nodeId, $biblio);
 		
@@ -221,13 +248,19 @@ class FedoraController
 		
 		// check if we need to collect citations and create table listing
 		$newCitations = $this->fedoraModel->collectNewCitations();
+
+		if ($this->loggingFlag) {
+			fedora_watchmen('process citations collection ' . count($newCitations));
+		}
 		
 		if (count($newCitations) > 0) {
 			foreach ($newCitations as $key => $nid) {
 				$this->fedoraModel->addCitationItem($nid, FedoraModel::FDC_TRANSFER);
 				
 				$x++;
-				
+				if ($this->loggingFlag) {
+					fedora_watchmen('add citation ' . $x . ' nid:' . $nid . '');
+				}
 				// if we desire a throttle on how many we process at a time, then max out on the count
 				if ($this->throttleFlag) {
 					if ($x >= $this->throttle) {
@@ -248,15 +281,28 @@ class FedoraController
 	{
 		// get list of citations that we need to transfer to Fedora Commons Repository		
 		$citations = $this->fedoraModel->getCitationList(FedoraModel::FDC_TRANSFER);
-//		echo count($citations);
+		if ($this->loggingFlag) {
+			fedora_watchmen('process citations ' . count($citations));
+		}
+
+		$citationsCount = count($citations);
+
 		// process the list
-		if (count($citations) > 0) {
+		if ($citationsCount > 0) {
 			foreach ($citations as $citation) {
-				$this->storeFedoraCitation($citation);
+				$nodeId = $citation->nid;
+				
+				// if fedora entry exists, mark we have it stored, else add it
+				if ($this->fedoraClient->isExists($this->namespace.':'.$nodeId)) {
+					$this->fedoraModel->setFedoraState(FedoraModel::FDC_SENT, $nodeId);
+				} else {
+					$this->storeFedoraCitation($citation);
+				}
 			}
 		}
 		
 		// done
+		return $citationsCount;
 	}
 
 	/**
@@ -303,7 +349,7 @@ class FedoraController
 	function writeFedora($nodeId, $node)
 	{
 		$flag = false;
-		$namespace   = self::NAME_SPACE;
+		$namespace   = $this->namespace;
 		$nextPid     = $nodeId;
 	
 		$pidName     = $namespace;
@@ -323,7 +369,8 @@ class FedoraController
 		$this->fedoraFoxXml->description = $this->xmlifyDataFilter($node['biblio_abst_e']);
 		$this->fedoraFoxXml->publisher   = $this->xmlifyDataFilter($node['biblio_publisher']);
 		$this->fedoraFoxXml->identifier  = $this->xmlifyDataFilter($nodeId);
-		$this->fedoraFoxXml->contributor = $this->makeAuthors($nodeId);  // list out authors
+		$contributors = $this->makeAuthors($nodeId);  // list out authors
+		$this->fedoraFoxXml->contributor = $this->xmlifyDataFilter($contributors);//
 		$this->fedoraFoxXml->date        = $this->xmlifyDataFilter($node['biblio_year']);
 		$this->fedoraFoxXml->type        = $this->xmlifyDataFilter($node['biblio_type']);  // TODO: do we want to translate to words instead of code number?
 		$this->fedoraFoxXml->format      = 'blank';
@@ -341,15 +388,25 @@ class FedoraController
 		$this->fedoraClient->pid     = $pidName . ':' . $pidNum;
 		$this->fedoraClient->pidName = $pidName;
 		$this->fedoraClient->pidNum  = $pidNum;
+
+		if ($this->loggingFlag) {
+			fedora_watchmen('fox xml author name ' . $this->fedoraFoxXml->contributor);
+		}
 		
 		// create the fox xml file
 		$this->fedoraClient->saveFoxFiles($xml);
 		
 		// feed fedora the data
 		$resp = $this->fedoraClient->sendData($xml, $pidName, $pidNum);
-
+//fedora_watchmen('sendData resp ' . $resp);
 		// an error has something like "Fedora: 401"
 		// success has basically like  "citebank:12345"
+		if ($this->loggingFlag) {
+			if ($this->fedoraClient->httpcode != 200) {
+				fedora_watchmen('sendData resp ' . $this->fedoraClient->httpcode);
+			}
+		}
+		
 		if (strstr($resp, $pidName . ':' . $pidNum)) {
 			$flag = true;
 		}
