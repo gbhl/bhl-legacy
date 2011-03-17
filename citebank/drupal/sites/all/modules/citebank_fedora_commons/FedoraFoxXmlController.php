@@ -10,9 +10,8 @@
  *
  */
 
-$includePath = dirname(__FILE__) . '/';
+//$includePath = dirname(__FILE__) . '/';
 
-require_once($includePath . 'FedoraCommonsModel.php');
 
 // FEDORA -  Flexible Extensible Digitial Object and Repository Architecture
 /*
@@ -71,6 +70,8 @@ class FedoraFoxXmlController
 	public $baseUrl;
 	public $ext;
 
+	public $data;
+
 	public $title;
 	public $creator;
 	public $subject;
@@ -87,8 +88,6 @@ class FedoraFoxXmlController
 	public $coverage;
 	public $rights;
 	
-	public $fedoraServerConn;
-
 	const CLASS_NAME    = 'FedoraFoxXmlController';
 
 	/**
@@ -132,8 +131,6 @@ class FedoraFoxXmlController
 		$this->relation    = '';
 		$this->coverage    = '';
 		$this->rights      = '';
-		
-		$this->fedoraServerConn = null;
 		
 		$this->data = '';
 	}
@@ -418,16 +415,38 @@ class FedoraFoxXmlController
 //'		<foxml:datastream CONTROL_GROUP="'.$this->controlGrp.'" ID="'.$this->subjectName.''.$ext.'" STATE="'.$this->state.'"> 
 //					<foxml:contentLocation REF="'.$this->baseUrl.'/'.$this->subjectName.'/'.$this->subjectName.'.'.$ext.'" TYPE="URL"/> 
 
+		if (substr_count($this->baseUrl, '.pdf', strlen($this->baseUrl) - 5 )) {
+			$str = $this->addDataFile($version, $mimeType, $label);
+		} else {
+			$str = 
+				'		<foxml:datastream CONTROL_GROUP="'.$this->controlGrp.'" ID="'.$this->subjectName.''.''.'" STATE="'.$this->state.'"> 
+				<foxml:datastreamVersion ID="'.$version.'" MIMETYPE="'.$mimeType.'" LABEL="'.$label.'">
+					<foxml:xmlContent>
+						<foxml:contentLocation REF="'.$this->baseUrl.'" TYPE="URL"/> 
+					</foxml:xmlContent>
+				</foxml:datastreamVersion>
+			</foxml:datastream>'
+			.	"\n"
+			;
+		}
+
+		return $str;
+	}
+
+	/**
+	 * addDataFile - 
+	 */
+	function addDataFile($version, $mimeType, $label)
+	{
 		$str = 
-'		<foxml:datastream CONTROL_GROUP="'.$this->controlGrp.'" ID="'.$this->subjectName.''.''.'" STATE="'.$this->state.'"> 
+		'		<foxml:datastream CONTROL_GROUP="'.'M'.'" ID="'.$this->subjectName.''.''.'" STATE="'.$this->state.'"> 
 			<foxml:datastreamVersion ID="'.$version.'" MIMETYPE="'.$mimeType.'" LABEL="'.$label.'">
 				<foxml:xmlContent>
 					<foxml:contentLocation REF="'.$this->baseUrl.'" TYPE="URL"/> 
 				</foxml:xmlContent>
 			</foxml:datastreamVersion>
 		</foxml:datastream>'
-		.	"\n"
-		;
+		.	"\n";
 
 		return $str;
 	}
@@ -652,30 +671,6 @@ class FedoraFoxXmlController
 		return $str;
 	}
 
-
-	/**
-	 * connectToFedoraServer - 
-	 */
-	function connectToFedoraServer($site)
-	{
-		$this->fedoraServerConn = null;
-	}
-
-// http://172.16.18.241:8080/fedora/oai?verb=Identify
-
-	/**
-	 * connectToFedoraServer - 
-	 */
-	function sendDataToFedoraServer($data)
-	{
-		if ($fedoraServerConn) {
-			// send our data to it
-			
-			// go
-		}
-	}
-
-
 	/**
 	 * _toString - stringify
 	 */
@@ -683,9 +678,6 @@ class FedoraFoxXmlController
 	{
 		$info = '';
 		$info .= $this->className;
-		//$info .= '<br>';
-		//$info .= "\n";
-		//$info .= var_export($this, true);
 
 		return $info;
 	}
