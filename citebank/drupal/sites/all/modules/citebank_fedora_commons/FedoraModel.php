@@ -24,6 +24,8 @@ class FedoraModel
 {
 	public $className;
 	public $dbi        = 0;
+	public $throttleFlag = false;
+	public $throttle     = 100;
 
 	const CLASS_NAME    = 'FedoraController';
 
@@ -57,8 +59,36 @@ class FedoraModel
 		$this->className = self::CLASS_NAME;
 		//$this->dbi = new DBInterfaceController();
 		$this->dbi = new Fedora_DBInterfaceController();
+		
+		$this->getConfigs();
 	}
 
+	/**
+	 * getConfigs - set defaults
+	 */
+	function getConfigs()
+	{
+		$configs = array();
+		
+//		$configs['throttle']     = 1000;
+//		$configs['throttleFlag'] = true;
+//		
+//		$configs['hostServer']   = 'http://172.16.17.197:8080/fedora/';
+//		$configs['namespace']    = 'citebank';
+
+		$configs['throttle']     = variable_get('citebank_fedora_commons_throttle', 1000);
+		$configs['throttleFlag'] = (variable_get('citebank_fedora_commons_throttleflag', true) ? true : false);  // 1 or 0 in database
+		
+		$configs['hostServer']   = variable_get('citebank_fedora_commons_hostserver', 'http://172.16.17.197:8080/fedora/');  // FIXME: get the production setting
+		$configs['namespace']    = variable_get('citebank_fedora_commons_namespace', 'citebank');
+
+		$configs['loggingFlag']  = (variable_get('citebank_fedora_commons_loggingflag', true) ? true : false);  // 1 or 0 in database
+
+		$this->throttleFlag = $configs['throttleFlag'];
+		$this->throttle     = $configs['throttle'];
+		
+		return $configs;
+	}
 
 // SELECT COUNT(*) FROM node AS n WHERE n.type = 'biblio'
 
@@ -106,7 +136,12 @@ class FedoraModel
 	{
 		$tbl = self::FEDORA_TABLE;
 		
-		$sql = 'SELECT * FROM ' . $tbl . ' WHERE fedora_status = ' . $status;
+		$limits = '';
+		if ($this->throttleFlag) {
+			$limits = ' LIMIT ' . $this->throttle;
+			
+		}
+		$sql = 'SELECT * FROM ' . $tbl . ' WHERE fedora_status = ' . $status . $limits;
 		
 		$data = $this->dbi->fetchobjlist($sql);
 
@@ -233,13 +268,14 @@ class FedoraModel
 
 // SELECT bcd.name, bcd.lastname, bcd.firstname, bcd.prefix, bcd.suffix, bcd.initials FROM biblio_contributor_data AS bcd JOIN biblio_contributor AS bc ON (bcd.cid = bc.cid) WHERE bc.nid = 72749
 	/**
-	 * getCitationData - get biblio data
+	 * getCitationContributors - get biblio data
 	 */
 	function getCitationContributors($nodeId)
 	{
 		$sql = 'SELECT bcd.name, bcd.lastname, bcd.firstname, bcd.prefix, bcd.suffix, bcd.initials FROM biblio_contributor_data AS bcd JOIN biblio_contributor AS bc ON (bcd.cid = bc.cid) WHERE bc.nid = ' . $nodeId . '';
 
 		$data = $this->dbi->fetch($sql);
+//fedora_watchmen('getCitationContributors ' . print_r($data, true));
 
 		return $data;
 	}
