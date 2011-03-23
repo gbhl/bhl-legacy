@@ -10,15 +10,17 @@
  *
  */
 
-//define('DOS_MODE', true);
-define('DOS_MODE', false);
-
-define('IMPORT_DIR_PATH_FILES', '/sites/default/files/');
-
-
 $includePath = dirname(__FILE__) . '/';
 
 require_once($includePath . 'FedoraController.php');
+
+/**
+ * citebank_fedora_commons_init - 
+ */
+function citebank_fedora_commons_init()
+{
+	//menu_rebuild();  // cut this out for production, this is helpful for development only
+}
 
 /**
  * citebank_fedora_commons_view - 
@@ -33,7 +35,7 @@ function citebank_fedora_commons_view(&$node, $teaser = FALSE, $page = FALSE)
  */
 function citebank_fedora_commons_cron(&$node = null, $teaser = FALSE, $page = FALSE)
 {
-	// we need an off switch if processed that file.
+	// handle processing Fedora for Citebank.
 	fedora_watchmen('Citebank Fedora cron');
 	processCiteBankFedoraCommons();
 }
@@ -55,6 +57,141 @@ function citebank_fedora_commons_node_info()
 		)
 	);
 }
+
+/**
+ * citebank_fedora_commons_menu - 
+ */
+function citebank_fedora_commons_menu()
+{
+	$items = array();
+	
+	$items['citebank_fedora_commons/form'] = array(
+		'title' => t('Citebank Fedora Commons Configuration Settings'),
+    'page callback' => 'citebank_fedora_commons_form',
+    'access arguments' => array('access content'),
+    'description' => t('Citebank Fedora Commons Configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => 'user_access',                     // Check that the current user
+    'access arguments' => array('Administer Your Module'),  // ... has this permission.    
+		'access' => TRUE
+	);
+	
+	return $items;
+}
+
+/**
+ * citebank_fedora_commons_form - 
+ */
+function citebank_fedora_commons_form() 
+{
+	return drupal_get_form('citebank_fedora_commons_configuration_form');
+}
+
+/**
+ * citebank_fedora_commons_form_submit - 
+ */
+function citebank_fedora_commons_form_submit($form, &$form_state) 
+{
+	$now = date('m/d/Y H:i:s');
+	drupal_set_message(t('The configuration has been updated. ' . $now));
+	
+	// make them be integers and not strings, force to either 1 or 0
+	$throttleFlag = 0 + (0 + $form_state['values']['throttleFlag'] == 1 ? 1 : 0);
+	$loggingFlag  = 0 + (0 + $form_state['values']['loggingFlag']  == 1 ? 1 : 0);
+	
+	$throttle = 1000;
+	if (is_numeric($form_state['values']['throttle']) ) {
+		$throttle = $form_state['values']['throttle'];
+	}
+
+	variable_set('citebank_fedora_commons_throttle',     $throttle);
+	variable_set('citebank_fedora_commons_throttleflag', $throttleFlag);
+	variable_set('citebank_fedora_commons_hostserver',   $form_state['values']['hostServer']);
+	variable_set('citebank_fedora_commons_namespace',    $form_state['values']['namespace']);
+	variable_set('citebank_fedora_commons_loggingflag',  $loggingFlag);
+}
+
+/**
+ * citebank_fedora_commons_admin - 
+ */
+function citebank_fedora_commons_admin() 
+{
+  $form = array();
+
+  $form['citebank_fedora_commons_maxdisp'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Maximum number of links'),
+    '#default_value' => variable_get('citebank_fedora_commons_maxdisp', 3),
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#description' => t("The maximum number of links to display in the block."),
+    '#required' => TRUE
+  );
+
+  return system_settings_form($form);
+}
+
+//drupal_set_message(t('Logging flag. ' . $configs['loggingFlag'] ));
+
+/**
+ * citebank_fedora_commons_configuration_form - 
+ */
+function citebank_fedora_commons_configuration_form($form_state) 
+{
+	$form = array();
+
+	$configs['throttle']     = variable_get('citebank_fedora_commons_throttle', 1000);
+	$configs['throttleFlag']  = (0 + variable_get('citebank_fedora_commons_throttleflag', 1) == 1 ? 1 : 0);  // 1 or 0 in database
+	
+	$configs['hostServer']   = variable_get('citebank_fedora_commons_hostserver', 'http://172.16.17.197:8080/fedora/');  // FIXME: get the production setting
+	$configs['namespace']    = variable_get('citebank_fedora_commons_namespace', 'citebank');
+
+	$configs['loggingFlag']  = (0 + variable_get('citebank_fedora_commons_loggingflag', 1) == 1 ? 1 : 0);  // 1 or 0 in database
+
+	$form['namespace'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Name Space'),
+	  '#default_value' => $configs['namespace'], // 'citebank',
+    '#description' => t("The name used as part of the Fedora item identification. Set it to 'citebank' and leave it alone!")
+	);
+
+	$form['hostServer'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Host Server'),
+	  '#default_value' => $configs['hostServer'], // 'http://172.16.17.197:8080/fedora/',
+    '#description' => t("The Fedora host server address. REQUIRES an ending slash.  ex: http://123.123.123.123:8080/fedora/"),
+	);
+
+	$form['throttle'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Throttle Amount'),
+	  '#default_value' => (is_numeric($configs['throttle']) ? $configs['throttle'] : '1000'), // '1000',
+    '#description' => t("How many records to process each cron run. Suggested 100 or 1000.")
+	);
+
+	$form['throttleFlag'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Throttle Flag'),
+	  '#default_value' => $configs['throttleFlag'], // '1',
+    '#description' => t("Turns on/off throttling. Recommended that this be ON. Settings: 1 = ON, 0 = OFF")
+	);
+
+	$form['loggingFlag'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Logging Flag'),
+	  '#default_value' => $configs['loggingFlag'], // '0',
+    '#description' => t("Extra logging of processing steps (to diagnose problems). Recommended that this be OFF. Settings: 1 = ON, 0 = OFF")
+	);
+
+	$form['submit'] = array(
+	  '#type' => 'submit',
+	  '#value' => 'SAVE CONFIGURATION',
+	);
+	$form['#submit'][] = 'citebank_fedora_commons_form_submit';
+	
+	return $form;
+}
+
 
 // ************************************************************
 //  process import methods
