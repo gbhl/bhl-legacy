@@ -15,7 +15,13 @@
  */
 function citebank_fedora_commons_install()
 {
-	drupal_install_schema('citebank_fedora_commons_records');
+	$now = date('m/d/Y H:i:s');
+	$msg = 'Setting up database table for Citebank Fedora Commons Repository. ' . $now;
+	drupal_set_message(t($msg));
+	watchdog('database', $msg);
+
+	drupal_install_schema('citebank_fedora_commons');
+	db_query("DELETE FROM {cache}");
 }
 
 /**
@@ -23,7 +29,15 @@ function citebank_fedora_commons_install()
  */
 function citebank_fedora_commons_uninstall()
 {
-	drupal_uninstall_schema('citebank_fedora_commons_records');
+	$now = date('m/d/Y H:i:s');
+	$msg = 'Removing database table for Citebank Fedora Commons Repository. ' . $now;
+	drupal_set_message(t($msg));
+	watchdog('database', $msg);
+
+	drupal_uninstall_schema('citebank_fedora_commons');
+	
+	// DELETE FROM variable WHERE NAME LIKE 'citebank_fedora_commons_%'
+	db_query("DELETE FROM {variable} WHERE NAME LIKE 'citebank_fedora_commons_%'");
 }
 
 /**
@@ -43,13 +57,15 @@ CREATE TABLE `citebank_fedora_commons_records` (
 
 */	
 
+	$schema = array();
+
 	$schema['citebank_fedora_commons_records'] = array(
+		'description' => t('Tracks records sent to Fedora server.'),
 		'fields'     => array(
 
       'citebank_fedora_commons_id' => array (
-        'type' => 'int',
+        'type' => 'serial',
         'not null' => TRUE,
-        'default' => 0,
         'description' =>'table index id'
 			),
 
@@ -82,7 +98,7 @@ CREATE TABLE `citebank_fedora_commons_records` (
 	  ),
 	  'primary key' => array('citebank_fedora_commons_id')
 	);
-	
+
 	return $schema;
 }
 // ************************************************************
