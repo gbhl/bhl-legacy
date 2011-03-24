@@ -26,6 +26,7 @@ class FedoraClient
 	public $pidNum;
 	public $pidName;
 	public $hostServer;
+	public $loggingFlag  = false;
 	
 	public $httpcode;
 	
@@ -70,7 +71,9 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 		
 		$curlCmd = 'curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "' . $this->hostServer . 'objects/'.$pidName.':'.$pidNum.'" --data-binary @fedoraFoxXmlFile.xml -k';
 
-		//fedora_watchmen('curlCmd: ' . $curlCmd);
+		if ($this->loggingFlag) {
+			fedora_watchmen('curlCmd: ' . $curlCmd);
+		}
 
 		$resp = exec($curlCmd);
 		

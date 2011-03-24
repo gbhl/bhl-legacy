@@ -33,6 +33,7 @@ class FedoraController
 	public $hostServer   = '';
 	public $namespace    = '';
 	public $loggingFlag  = false;
+	public $processFlag  = 0;
 
 	const CLASS_NAME    = 'FedoraController';
 
@@ -88,8 +89,11 @@ class FedoraController
 		$this->hostServer   = $configs['hostServer']; //'http://172.16.17.197:8080/fedora/';
 		$this->namespace    = $configs['namespace']; //self::NAME_SPACE;
 		$this->loggingFlag  = $configs['loggingFlag'];
+
+		$this->processFlag  = $configs['processFlag'];
 		
 		$this->fedoraClient->hostServer = $this->hostServer;
+		$this->fedoraClient->loggingFlag = $this->loggingFlag;
 	}
 
 /*
@@ -327,6 +331,10 @@ class FedoraController
 		$purifiedStr = str_replace("”", '', $purifiedStr);
 		$purifiedStr = str_replace("’", '', $purifiedStr);
 
+		// cut out xml breaking characters
+		$allowed = "/[^a-zA-Z0-9\\040\\.\\-\\_\\\\]/i";
+		$purifiedStr = preg_replace($allowed, "", $purifiedStr);
+  
 		return $purifiedStr;
 	}
 
@@ -370,7 +378,7 @@ class FedoraController
 		$this->fedoraFoxXml->publisher   = $this->xmlifyDataFilter($node['biblio_publisher']);
 		$this->fedoraFoxXml->identifier  = $this->xmlifyDataFilter($nodeId);
 		$contributors = $this->makeAuthors($nodeId);  // list out authors
-		$this->fedoraFoxXml->contributor = $this->xmlifyDataFilter($contributors);//
+		$this->fedoraFoxXml->contributor = $this->filterAccents($this->xmlifyDataFilter($contributors));//
 		$this->fedoraFoxXml->date        = $this->xmlifyDataFilter($node['biblio_year']);
 		$this->fedoraFoxXml->type        = $this->xmlifyDataFilter($node['biblio_type']);  // TODO: do we want to translate to words instead of code number?
 		$this->fedoraFoxXml->format      = 'blank';

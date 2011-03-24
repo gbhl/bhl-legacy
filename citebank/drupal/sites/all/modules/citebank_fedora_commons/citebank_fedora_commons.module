@@ -98,17 +98,24 @@ function citebank_fedora_commons_form_submit($form, &$form_state)
 	// make them be integers and not strings, force to either 1 or 0
 	$throttleFlag = 0 + (0 + $form_state['values']['throttleFlag'] == 1 ? 1 : 0);
 	$loggingFlag  = 0 + (0 + $form_state['values']['loggingFlag']  == 1 ? 1 : 0);
+	$processFlag  = 0 + (0 + $form_state['values']['processFlag']  == 1 ? 1 : 0);
 	
 	$throttle = 1000;
 	if (is_numeric($form_state['values']['throttle']) ) {
 		$throttle = $form_state['values']['throttle'];
 	}
 
+	if (!$processFlag) {
+		fedora_watchmen('Turning OFF Citebank Fedora cron PROCESSING.');
+		drupal_set_message(t('Turning OFF Citebank Fedora cron PROCESSING. ' . $now));
+	}
+	
 	variable_set('citebank_fedora_commons_throttle',     $throttle);
 	variable_set('citebank_fedora_commons_throttleflag', $throttleFlag);
 	variable_set('citebank_fedora_commons_hostserver',   $form_state['values']['hostServer']);
 	variable_set('citebank_fedora_commons_namespace',    $form_state['values']['namespace']);
 	variable_set('citebank_fedora_commons_loggingflag',  $loggingFlag);
+	variable_set('citebank_fedora_commons_processflag',  $processFlag);
 }
 
 /**
@@ -148,6 +155,8 @@ function citebank_fedora_commons_configuration_form($form_state)
 
 	$configs['loggingFlag']  = (0 + variable_get('citebank_fedora_commons_loggingflag', 1) == 1 ? 1 : 0);  // 1 or 0 in database
 
+	$configs['processFlag']  = (0 + variable_get('citebank_fedora_commons_processflag', 1) == 1 ? 1 : 0);  // 1 or 0 in database
+
 	$form['namespace'] = array(
 	  '#type' => 'textfield',
 	  '#title' => t('Name Space'),
@@ -183,6 +192,14 @@ function citebank_fedora_commons_configuration_form($form_state)
     '#description' => t("Extra logging of processing steps (to diagnose problems). Recommended that this be OFF. Settings: 1 = ON, 0 = OFF")
 	);
 
+	//processFlag
+	$form['processFlag'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Process Flag'),
+	  '#default_value' => $configs['processFlag'], // '0',
+    '#description' => t("Processing on and off switch, when ON will process records to send to the Fedora Repository. Recommended that this be ON. Settings: 1 = ON, 0 = OFF")
+	);
+
 	$form['submit'] = array(
 	  '#type' => 'submit',
 	  '#value' => 'SAVE CONFIGURATION',
@@ -204,23 +221,29 @@ function processCiteBankFedoraCommons()
 {
 	$fedoraController = new FedoraController();
 	
-	if ($fedoraController->loggingFlag) {
-		fedora_watchmen('collecting citations, adding new ones, ready for fedora');
-	}
-	// add nodes to list and line them up for transfer
-	$countItems = $fedoraController->processCitationsCollection();
+	if ($fedoraController->processFlag) {
+
+		if ($fedoraController->loggingFlag) {
+			fedora_watchmen('collecting citations, adding new ones, ready for fedora');
+		}
+		// add nodes to list and line them up for transfer
+		$countItems = $fedoraController->processCitationsCollection();
+		
+		$throttleMsg = ($fedoraController->throttleFlag ? ' (throttled ' . $fedoraController->throttle . ')' : '');
 	
-	$throttleMsg = ($fedoraController->throttleFlag ? ' (throttled ' . $fedoraController->throttle . ')' : '');
+		if ($fedoraController->loggingFlag) {
+			fedora_watchmen('process citation collection ' . $countItems . ' citations to fedora' . $throttleMsg . '');
+		}
+	
+		// take biblio citations that are ready and send them to our fedora repository
+		$countItems = $fedoraController->processCitations();
+	
+		if ($fedoraController->loggingFlag) {
+			fedora_watchmen('process citations ' . $countItems . ' citations to fedora' . $throttleMsg . '');
+		}
 
-	if ($fedoraController->loggingFlag) {
-		fedora_watchmen('process citation collection ' . $countItems . ' citations to fedora' . $throttleMsg . '');
-	}
-
-	// take biblio citations that are ready and send them to our fedora repository
-	$countItems = $fedoraController->processCitations();
-
-	if ($fedoraController->loggingFlag) {
-		fedora_watchmen('process citations ' . $countItems . ' citations to fedora' . $throttleMsg . '');
+	} else {
+		fedora_watchmen('Citebank Fedora cron PROCESSING IS OFF');
 	}
 }
 

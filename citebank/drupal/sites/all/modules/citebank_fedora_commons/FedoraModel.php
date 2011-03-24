@@ -83,6 +83,8 @@ class FedoraModel
 		$configs['namespace']    = variable_get('citebank_fedora_commons_namespace', 'citebank');
 
 		$configs['loggingFlag']  = (variable_get('citebank_fedora_commons_loggingflag', true) ? true : false);  // 1 or 0 in database
+		
+		$configs['processFlag']  = (variable_get('citebank_fedora_commons_processflag', 0) ? 1 : 0);  // 1 or 0 in database
 
 		$this->throttleFlag = $configs['throttleFlag'];
 		$this->throttle     = $configs['throttle'];
