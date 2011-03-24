@@ -274,7 +274,7 @@ class FedoraModel
 	 */
 	function getCitationContributors($nodeId)
 	{
-		$sql = 'SELECT bcd.name, bcd.lastname, bcd.firstname, bcd.prefix, bcd.suffix, bcd.initials FROM biblio_contributor_data AS bcd JOIN biblio_contributor AS bc ON (bcd.cid = bc.cid) WHERE bc.nid = ' . $nodeId . '';
+		$sql = 'SELECT bcd.name, bcd.lastname, bcd.firstname, bcd.prefix, bcd.suffix, bcd.initials FROM biblio_contributor_data AS bcd JOIN biblio_contributor AS bc ON (bcd.cid = bc.cid) WHERE bc.nid = ' . $nodeId . ' ORDER BY bcd.cid';
 
 		$data = $this->dbi->fetch($sql);
 //fedora_watchmen('getCitationContributors ' . print_r($data, true));
