@@ -343,10 +343,15 @@ class FedoraController
 	 */
 	function filterAccents($str)
 	{
-		$search  = explode(",", "ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u,ã");
-		$replace = explode(",", "c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,e,i,o,u,a");
+		//$search  = explode(",", "ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u,ã");
+		//$replace = explode(",", "c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,e,i,o,u,a");
+
+		$search  = explode(",", "ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,ã");
+		$replace = explode(",", "c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,o,a");
 
 		$purifiedStr = str_replace($search, $replace, $str);
+
+		// array('À'=>'&Agrave;', 'à'=>'&agrave;', 'Á'=>'&Aacute;', 'á'=>'&aacute;', 'Â'=>'&Acirc;', 'â'=>'&acirc;', 'Ã'=>'&Atilde;', 'ã'=>'&atilde;', 'Ä'=>'&Auml;', 'ä'=>'&auml;', 'Å'=>'&Aring;', 'å'=>'&aring;', 'Æ'=>'&AElig;', 'æ'=>'&aelig;', 'Ç'=>'&Ccedil;', 'ç'=>'&ccedil;', 'Ð'=>'&ETH;', 'ð'=>'&eth;', 'È'=>'&Egrave;', 'è'=>'&egrave;', 'É'=>'&Eacute;', 'é'=>'&eacute;', 'Ê'=>'&Ecirc;', 'ê'=>'&ecirc;', 'Ë'=>'&Euml;', 'ë'=>'&euml;', 'Ì'=>'&Igrave;', 'ì'=>'&igrave;', 'Í'=>'&Iacute;', 'í'=>'&iacute;', 'Î'=>'&Icirc;', 'î'=>'&icirc;', 'Ï'=>'&Iuml;', 'ï'=>'&iuml;', 'Ñ'=>'&Ntilde;', 'ñ'=>'&ntilde;', 'Ò'=>'&Ograve;', 'ò'=>'&ograve;', 'Ó'=>'&Oacute;', 'ó'=>'&oacute;', 'Ô'=>'&Ocirc;', 'ô'=>'&ocirc;', 'Õ'=>'&Otilde;', 'õ'=>'&otilde;', 'Ö'=>'&Ouml;', 'ö'=>'&ouml;', 'Ø'=>'&Oslash;', 'ø'=>'&oslash;', 'Œ'=>'&OElig;', 'œ'=>'&oelig;', 'ß'=>'&szlig;', 'Þ'=>'&THORN;', 'þ'=>'&thorn;', 'Ù'=>'&Ugrave;', 'ù'=>'&ugrave;', 'Ú'=>'&Uacute;', 'ú'=>'&uacute;', 'Û'=>'&Ucirc;', 'û'=>'&ucirc;', 'Ü'=>'&Uuml;', 'ü'=>'&uuml;', 'Ý'=>'&Yacute;', 'ý'=>'&yacute;', 'Ÿ'=>'&Yuml;', 'ÿ'=>'&yuml;');
 
 		return $purifiedStr;
 	}
@@ -368,7 +373,7 @@ class FedoraController
 		$this->fedoraFoxXml->subjectName = $pidName;
 		$this->fedoraFoxXml->state       = 'A';  // active
 		$this->fedoraFoxXml->controlGrp  = 'X';  // xml
-		$this->fedoraFoxXml->baseUrl     = $node['biblio_url'];
+		$this->fedoraFoxXml->baseUrl     = htmlentities($node['biblio_url'], ENT_QUOTES, 'UTF-8');  // make friendly to the xml parser in Fedora
 	
 		// package up the data
 		$this->fedoraFoxXml->title       = $this->filterAccents($this->xmlifyDataFilter($node['title']));
@@ -378,7 +383,8 @@ class FedoraController
 		$this->fedoraFoxXml->publisher   = $this->xmlifyDataFilter($node['biblio_publisher']);
 		$this->fedoraFoxXml->identifier  = $this->xmlifyDataFilter($nodeId);
 		$contributors = $this->makeAuthors($nodeId);  // list out authors
-		$this->fedoraFoxXml->contributor = $this->filterAccents($this->xmlifyDataFilter($contributors));//
+		//$this->fedoraFoxXml->contributor = $this->filterAccents($this->xmlifyDataFilter($contributors));//
+		$this->fedoraFoxXml->contributor = $this->filterAccents($contributors);//
 		$this->fedoraFoxXml->date        = $this->xmlifyDataFilter($node['biblio_year']);
 		$this->fedoraFoxXml->type        = $this->xmlifyDataFilter($node['biblio_type']);  // TODO: do we want to translate to words instead of code number?
 		$this->fedoraFoxXml->format      = 'blank';
@@ -405,8 +411,9 @@ class FedoraController
 		$this->fedoraClient->saveFoxFiles($xml);
 		
 		// feed fedora the data
+		$this->fedoraClient->httpcode = 200; // clear it to good so we don't have confusion with setting elsewhere in isExists.
 		$resp = $this->fedoraClient->sendData($xml, $pidName, $pidNum);
-//fedora_watchmen('sendData resp ' . $resp);
+
 		// an error has something like "Fedora: 401"
 		// success has basically like  "citebank:12345"
 		if ($this->loggingFlag) {
