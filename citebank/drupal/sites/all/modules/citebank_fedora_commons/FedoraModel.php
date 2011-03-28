@@ -86,6 +86,9 @@ class FedoraModel
 		
 		$configs['processFlag']  = (variable_get('citebank_fedora_commons_processflag', 0) ? 1 : 0);  // 1 or 0 in database
 
+		$configs['fedoraUser']    = variable_get('citebank_fedora_commons_fedorauser', 'fedoraAdmin');
+		$configs['fedoraPass']    = variable_get('citebank_fedora_commons_fedorapass', 'fedoraAdmin');
+
 		$this->throttleFlag = $configs['throttleFlag'];
 		$this->throttle     = $configs['throttle'];
 		

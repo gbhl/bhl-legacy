@@ -19,7 +19,7 @@ require_once($includePath . 'FedoraController.php');
  */
 function citebank_fedora_commons_init()
 {
-	//menu_rebuild();  // cut this out for production, this is helpful for development only
+	menu_rebuild();  // cut this out for production, this is helpful for development only
 }
 
 /**
@@ -99,6 +99,9 @@ function citebank_fedora_commons_form_submit($form, &$form_state)
 	$throttleFlag = 0 + (0 + $form_state['values']['throttleFlag'] == 1 ? 1 : 0);
 	$loggingFlag  = 0 + (0 + $form_state['values']['loggingFlag']  == 1 ? 1 : 0);
 	$processFlag  = 0 + (0 + $form_state['values']['processFlag']  == 1 ? 1 : 0);
+
+	$fedoraUser  = $form_state['values']['fedoraUser'];
+	$fedoraPass  = $form_state['values']['fedoraPass'];
 	
 	$throttle = 1000;
 	if (is_numeric($form_state['values']['throttle']) ) {
@@ -116,6 +119,9 @@ function citebank_fedora_commons_form_submit($form, &$form_state)
 	variable_set('citebank_fedora_commons_namespace',    $form_state['values']['namespace']);
 	variable_set('citebank_fedora_commons_loggingflag',  $loggingFlag);
 	variable_set('citebank_fedora_commons_processflag',  $processFlag);
+
+	variable_set('citebank_fedora_commons_fedorauser',  $fedoraUser);
+	variable_set('citebank_fedora_commons_fedorapass',  $fedoraPass);
 }
 
 /**
@@ -156,6 +162,9 @@ function citebank_fedora_commons_configuration_form($form_state)
 	$configs['loggingFlag']  = (0 + variable_get('citebank_fedora_commons_loggingflag', 1) == 1 ? 1 : 0);  // 1 or 0 in database
 
 	$configs['processFlag']  = (0 + variable_get('citebank_fedora_commons_processflag', 1) == 1 ? 1 : 0);  // 1 or 0 in database
+
+	$configs['fedoraUser']    = variable_get('citebank_fedora_commons_fedorauser', 'fedoraAdmin');
+	$configs['fedoraPass']    = variable_get('citebank_fedora_commons_fedorapass', 'fedoraAdmin');
 
 	$form['namespace'] = array(
 	  '#type' => 'textfield',
@@ -198,6 +207,20 @@ function citebank_fedora_commons_configuration_form($form_state)
 	  '#title' => t('Process Flag'),
 	  '#default_value' => $configs['processFlag'], // '0',
     '#description' => t("Processing on and off switch, when ON will process records to send to the Fedora Repository. Recommended that this be ON. Settings: 1 = ON, 0 = OFF")
+	);
+
+	$form['fedoraUser'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Fedora user name'),
+	  '#default_value' => $configs['fedoraUser'], // 'citebank',
+    '#description' => t("Fedora user name.")
+	);
+
+	$form['fedoraPass'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Fedora pass word'),
+	  '#default_value' => $configs['fedoraPass'], // 'citebank',
+    '#description' => t("Fedora pass word.")
 	);
 
 	$form['submit'] = array(

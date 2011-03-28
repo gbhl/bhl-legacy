@@ -27,6 +27,8 @@ class FedoraClient
 	public $pidName;
 	public $hostServer;
 	public $loggingFlag  = false;
+	public $fedoraUser   = 'fedoraAdmin';
+	public $fedoraPass   = 'fedoraAdmin';
 	
 	public $httpcode;
 	
@@ -69,7 +71,8 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 		$pid = $pidName . ':' . $pidNum;
 		$dsID = 'citebank';
 		
-		$curlCmd = 'curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "' . $this->hostServer . 'objects/'.$pidName.':'.$pidNum.'" --data-binary @fedoraFoxXmlFile.xml -k';
+		//$curlCmd = 'curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "' . $this->hostServer . 'objects/'.$pidName.':'.$pidNum.'" --data-binary @fedoraFoxXmlFile.xml -k';
+		$curlCmd = 'curl --user ' . $this->fedoraUser . ':' . $this->fedoraPass . ' -i -s -H "Content-type: text/xml" -XPOST "' . $this->hostServer . 'objects/'.$pidName.':'.$pidNum.'" --data-binary @fedoraFoxXmlFile.xml -k';
 
 		if ($this->loggingFlag) {
 			fedora_watchmen('curlCmd: ' . $curlCmd);
@@ -199,7 +202,8 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 		}
 		
 		curl_setopt($ch, CURLINFO_HEADER_OUT,    true);
-		curl_setopt($ch, CURLOPT_USERPWD,    'fedoraAdmin' . ':' . 'fedoraAdmin');
+		//curl_setopt($ch, CURLOPT_USERPWD,    'fedoraAdmin' . ':' . 'fedoraAdmin');
+		curl_setopt($ch, CURLOPT_USERPWD,    $this->fedoraUser . ':' . $this->fedoraPass);
 	
 		$resp = curl_exec($ch);
 		

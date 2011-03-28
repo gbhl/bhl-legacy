@@ -35,6 +35,9 @@ class FedoraController
 	public $loggingFlag  = false;
 	public $processFlag  = 0;
 
+	public $fedoraUser   = 'fedoraAdmin';
+	public $fedoraPass   = 'fedoraAdmin';
+
 	const CLASS_NAME    = 'FedoraController';
 
 	const NAME_SPACE    = 'citebank';
@@ -91,9 +94,16 @@ class FedoraController
 		$this->loggingFlag  = $configs['loggingFlag'];
 
 		$this->processFlag  = $configs['processFlag'];
+
+		$this->fedoraUser  = $configs['fedoraUser'];
+		$this->fedoraPass  = $configs['fedoraPass'];
 		
 		$this->fedoraClient->hostServer = $this->hostServer;
 		$this->fedoraClient->loggingFlag = $this->loggingFlag;
+
+		$this->fedoraClient->fedoraUser = $this->fedoraUser;
+		$this->fedoraClient->fedoraPass = $this->fedoraPass;
+
 	}
 
 /*
