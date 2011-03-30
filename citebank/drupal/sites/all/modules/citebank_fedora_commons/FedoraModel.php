@@ -321,6 +321,44 @@ class FedoraModel
 	}
 
 	/**
+	 * getKeywordsList - get list of keywords for a biblio node
+	 */
+	function getKeywordsList($nodeId)
+	{
+		// done
+		// SELECT d.word FROM biblio AS b JOIN node AS n ON (b.nid = n.nid) JOIN biblio_keyword AS k ON (b.nid = k.nid) JOIN biblio_keyword_data AS d ON (k.kid = d.kid) WHERE b.nid = 30518 ORDER BY d.word 
+		
+		$sql = 'SELECT d.word FROM biblio AS b JOIN node AS n ON (b.nid = n.nid) JOIN biblio_keyword AS k ON (b.nid = k.nid) JOIN biblio_keyword_data AS d ON (k.kid = d.kid) WHERE b.nid = ' . $nodeId . ' ORDER BY d.word';
+		
+		$rows = $this->dbi->fetch($sql);
+		
+		return $rows;
+	}
+
+	/**
+	 *  getPublicationTypesData - get number values for word values of publication types
+	 */
+	function getPublicationTypesData(&$publicationNames, &$publicationKeys, &$listFlag)
+	{
+		$sql = 'SELECT * FROM {biblio_types}';
+		$res = db_query($sql);
+
+		if ($res) {
+			while ($data = db_fetch_object($res)) {
+				$key  = $data->tid;
+				$name = $data->name;
+
+				$publicationNames[strtolower($name)] = $key;
+				$publicationKeys[$key] = $name;
+			}
+
+			if (count($publicationNames) > 0) {
+				$listFlag = true;
+			}
+		}
+	}
+
+	/**
 	 * _toString - stringify
 	 */
 	function __toString()

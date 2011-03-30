@@ -531,23 +531,64 @@ class FedoraFoxXmlController
 	 */
 	function foxXmlRegular()
 	{
+		
+		$creatorXml = '';
+		$publisherXml = '';
+		$subjectXml = '';
+		
+		if (count($this->creator) > 0) {
+			foreach ($this->creator as $creator) {
+				$creatorXml .= '							';
+				$creatorXml .= '<dc:creator>'.$creator.'</dc:creator>';
+				$creatorXml .= "\n";
+			}
+		} else {
+				$creatorXml .= '							';
+				$creatorXml .= '<dc:creator>'.$this->creator.'</dc:creator>';
+				$creatorXml .= "\n";
+		}
+		
+		if (count($this->publisher) > 0) {
+			foreach ($this->publisher as $publisher) {
+				$publisherXml .= '							';
+				$publisherXml .= '<dc:publisher>'.$publisher.'</dc:publisher>';
+				$publisherXml .= "\n";
+			}
+		} else {
+				$publisherXml .= '							';
+				$publisherXml .= '<dc:publisher>'.$this->publisher.'</dc:publisher>';
+				$publisherXml .= "\n";
+		}
+
+		if (count($this->subject) > 0) {
+			foreach ($this->subject as $subject) {
+				$subjectXml .= '							';
+				$subjectXml .= '<dc:subject>'.$subject.'</dc:subject>';
+				$subjectXml .= "\n";
+			}
+		} else {
+				$subjectXml .= '							';
+				$subjectXml .= '<dc:subject>'.$this->subject.'</dc:subject>';
+				$subjectXml .= "\n";
+		}
+		
 		$str = 
 			"\n" .
 			'							' .
 			'<dc:title>'.$this->title.'</dc:title>' .
 			"\n" . 
-			'							' .
-			'<dc:creator>'.$this->creator.'</dc:creator>' .
-			"\n" . 
-			'							' .
-			'<dc:subject>'.$this->subject.'</dc:subject>' . 
-			"\n" . 
+//			'							' .
+			$creatorXml .
+//			"\n" . 
+//			'							' .
+			$subjectXml .
+//			"\n" . 
 			'							' .
 			'<dc:description>'.$this->description.'</dc:description>' . 
 			"\n" . 
-			'							' .
-			'<dc:publisher>'.$this->publisher.'</dc:publisher>' . 
-			"\n" . 
+//			'							' .
+			$publisherXml . 
+//			"\n" . 
 			'							' .
 			'<dc:identifier>'.$this->identifier.'</dc:identifier>' . 
 			"\n" . 

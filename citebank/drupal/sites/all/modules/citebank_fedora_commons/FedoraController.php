@@ -38,10 +38,13 @@ class FedoraController
 	public $fedoraUser   = 'fedoraAdmin';
 	public $fedoraPass   = 'fedoraAdmin';
 
+	public $publicationNames;
+	public $publicationKeys;
+	public $listFlag;
+
 	const CLASS_NAME    = 'FedoraController';
 
 	const NAME_SPACE    = 'citebank';
-//	const BASE_URL      = 'http://172.16.17.197:8080/fedora/';  // FIXME: make configurable
 
 	const FEDORA_TABLE  = 'citebank_fedora_commons_records';
 
@@ -77,6 +80,12 @@ class FedoraController
 		$this->fedoraModel = new FedoraModel();
 
 		$this->getConfigs();
+
+		$this->publicationNames = array();
+		$this->publicationKeys = array();
+		$this->listFlag = false;
+		
+		$this->getPublicationTypesData();
 	}
 
 	/**
@@ -89,8 +98,8 @@ class FedoraController
 		$this->throttle     = $configs['throttle'];
 		$this->throttleFlag = $configs['throttleFlag'];
 		
-		$this->hostServer   = $configs['hostServer']; //'http://172.16.17.197:8080/fedora/';
-		$this->namespace    = $configs['namespace']; //self::NAME_SPACE;
+		$this->hostServer   = $configs['hostServer'];
+		$this->namespace    = $configs['namespace'];
 		$this->loggingFlag  = $configs['loggingFlag'];
 
 		$this->processFlag  = $configs['processFlag'];
@@ -169,34 +178,19 @@ class FedoraController
 */
 
 	/**
-	 * makeAuthors - 
+	 * makeAuthorsArray - make list of authors as an array
 	 */
-	function makeAuthors($nodeId)
+	function makeAuthorsArray($nodeId)
 	{
-		$authors = '';
-		
-		//$authors = implode(';', $contributors);
-		/* name
-		   lastname
-		   firstname
-		   prefix
-		   suffix
-		   initials
-		*/
+		$authors = array();
 		
 		$list = $this->fedoraModel->getCitationContributors($nodeId);
 
 		if (count($list)) {
 			foreach ($list as $author) {
-				$authors .= trim($author['name']);
-				$authors .= '; ';
+				$authors[] = trim($author['name']);
 			}
-//fedora_watchmen('authors ' . print_r($author, true));
-//fedora_watchmen('authors name ' . $author['name']);
-			$authors = trim($authors, ' ');
-			$authors = rtrim($authors, ';');
 		}
-//fedora_watchmen('authors [' . $authors . ']');
 
 		return $authors;
 	}
@@ -322,48 +316,171 @@ class FedoraController
 	/**
 	 * xmlifyDataFilter - 
 	 */
-	function xmlifyDataFilter($str)
+	function xmlifyDataFilter($str, $option = 6)
 	{
-		$purifiedStr = str_replace('–', '', $str);
-		//$purifiedStr = str_replace('’', '', $purifiedStr);
-		//$purifiedStr = str_replace('“', '', $purifiedStr);
-		//$purifiedStr = str_replace('”', '', $purifiedStr);
-		//$purifiedStr = str_replace(',', '', $purifiedStr);
+		$purifiedStr = $str;
+		
+		switch ($option)
+		{
+			case 1:
+				$purifiedStr = str_replace('–', '', $str);
 
-		// remove xml illegals:  & < > " ' 
-		$purifiedStr = str_replace('&', '', $purifiedStr);
-		$purifiedStr = str_replace('<', '', $purifiedStr);
-		$purifiedStr = str_replace('>', '', $purifiedStr);
-		$purifiedStr = str_replace('"', '', $purifiedStr);
-		$purifiedStr = str_replace("'", '', $purifiedStr);
+				// remove xml illegals:  & < > " ' 
+				$purifiedStr = str_replace('&', '', $purifiedStr);
+				$purifiedStr = str_replace('<', '', $purifiedStr);
+				$purifiedStr = str_replace('>', '', $purifiedStr);
+				$purifiedStr = str_replace('"', '', $purifiedStr);
+				$purifiedStr = str_replace("'", '', $purifiedStr);
+		
+				//$purifiedStr = str_replace("“", '', $purifiedStr);
+				//$purifiedStr = str_replace("”", '', $purifiedStr);
+				//$purifiedStr = str_replace("’", '', $purifiedStr);
 
-		$purifiedStr = str_replace("“", '', $purifiedStr);
-		$purifiedStr = str_replace("”", '', $purifiedStr);
-		$purifiedStr = str_replace("’", '', $purifiedStr);
+				$purifiedStr = str_replace("“", '"', $purifiedStr);
+				$purifiedStr = str_replace("”", '"', $purifiedStr);
+				$purifiedStr = str_replace("’", "'", $purifiedStr);
 
-		// cut out xml breaking characters
-		$allowed = "/[^a-zA-Z0-9\\040\\.\\-\\_\\\\]/i";
-		$purifiedStr = preg_replace($allowed, "", $purifiedStr);
+				$purifiedStr = $this->filterAccents($purifiedStr, 1);
+				break;
+				
+			case 2:
+				$purifiedStr = str_replace('–', '', $str);
+		
+				// remove xml illegals:  & < > " ' 
+				$purifiedStr = str_replace('&', '', $purifiedStr);
+				$purifiedStr = str_replace('<', '', $purifiedStr);
+				$purifiedStr = str_replace('>', '', $purifiedStr);
+				$purifiedStr = str_replace('"', '', $purifiedStr);
+				$purifiedStr = str_replace("'", '', $purifiedStr);
+		
+				$purifiedStr = str_replace("“", '', $purifiedStr);
+				$purifiedStr = str_replace("”", '', $purifiedStr);
+				$purifiedStr = str_replace("’", '', $purifiedStr);
+				
+				// cut out xml breaking characters
+				$allowed = "/[^a-zA-Z0-9 _?=\/\\040\\.\\-\\_\\\\]/i";
+				$purifiedStr = preg_replace($allowed, "", $purifiedStr);
+				break;
+				
+			case 3:
+				$purifiedStr = str_replace("“", '', $purifiedStr);
+				$purifiedStr = str_replace("”", '', $purifiedStr);
+				$purifiedStr = str_replace("’", '', $purifiedStr);
+				break;
+				
+			case 4:
+				$purifiedStr = $this->xmlEntities($purifiedStr);
+		
+				// cut out xml breaking characters
+				$allowed = "/[^a-zA-Z0-9 _?:=&;\ \/\\040\\.\\-\\_\\\\]/i";
+				$purifiedStr = preg_replace($allowed, "", $purifiedStr);
+				break;
+
+			case 5:
+				//$purifiedStr = $this->xmlEntities($purifiedStr);
+		
+				// cut out xml breaking characters
+				$trans = get_html_translation_table(HTML_ENTITIES);
+				//$encoded = "&lt;p&gt;Angoul&ecirc;me&lt;/p&gt;";
+				$purifiedStr = strtr($purifiedStr, $trans);
+				break;
+
+			case 6:
+				$purifiedStr = $this->xmlEntities($purifiedStr);
+		
+				// cut out xml breaking characters
+				$purifiedStr = utf8_encode($purifiedStr);
+				break;
+
+			case 0:
+			default:
+				$purifiedStr = '<![CDATA['.$purifiedStr.']]>';
+				break;
+		}				
   
 		return $purifiedStr;
 	}
 
 	/**
+	 * xmlEntities - 
+	 */
+	function xmlEntities($string)
+	{
+	    return str_replace( array ( '&', '"', "'", '<', '>', "’", "“", "”" ), array ( '&amp;', '&quot;', '&apos;', '&lt;', '&gt;', '&apos;', '&quot;', '&quot;'), $string );
+	}
+
+	/**
 	 * filterAccents - 
 	 */
-	function filterAccents($str)
+	function filterAccents($str, $option = 0)
 	{
-		//$search  = explode(",", "ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u,ã");
-		//$replace = explode(",", "c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,e,i,o,u,a");
+		$purifiedStr = $str;
 
-		$search  = explode(",", "ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,ã");
-		$replace = explode(",", "c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,o,a");
+		switch ($option)
+		{
+			case 1:
+				$search  = explode(",", "ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,ã");
+				$replace = explode(",", "c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,o,a");
+		
+				$purifiedStr = str_replace($search, $replace, $str);
+				break;
+				
+			case 2:
+				$purifiedStr = '<![CDATA['.$purifiedStr.']]>';
+				break;
 
-		$purifiedStr = str_replace($search, $replace, $str);
-
-		// array('À'=>'&Agrave;', 'à'=>'&agrave;', 'Á'=>'&Aacute;', 'á'=>'&aacute;', 'Â'=>'&Acirc;', 'â'=>'&acirc;', 'Ã'=>'&Atilde;', 'ã'=>'&atilde;', 'Ä'=>'&Auml;', 'ä'=>'&auml;', 'Å'=>'&Aring;', 'å'=>'&aring;', 'Æ'=>'&AElig;', 'æ'=>'&aelig;', 'Ç'=>'&Ccedil;', 'ç'=>'&ccedil;', 'Ð'=>'&ETH;', 'ð'=>'&eth;', 'È'=>'&Egrave;', 'è'=>'&egrave;', 'É'=>'&Eacute;', 'é'=>'&eacute;', 'Ê'=>'&Ecirc;', 'ê'=>'&ecirc;', 'Ë'=>'&Euml;', 'ë'=>'&euml;', 'Ì'=>'&Igrave;', 'ì'=>'&igrave;', 'Í'=>'&Iacute;', 'í'=>'&iacute;', 'Î'=>'&Icirc;', 'î'=>'&icirc;', 'Ï'=>'&Iuml;', 'ï'=>'&iuml;', 'Ñ'=>'&Ntilde;', 'ñ'=>'&ntilde;', 'Ò'=>'&Ograve;', 'ò'=>'&ograve;', 'Ó'=>'&Oacute;', 'ó'=>'&oacute;', 'Ô'=>'&Ocirc;', 'ô'=>'&ocirc;', 'Õ'=>'&Otilde;', 'õ'=>'&otilde;', 'Ö'=>'&Ouml;', 'ö'=>'&ouml;', 'Ø'=>'&Oslash;', 'ø'=>'&oslash;', 'Œ'=>'&OElig;', 'œ'=>'&oelig;', 'ß'=>'&szlig;', 'Þ'=>'&THORN;', 'þ'=>'&thorn;', 'Ù'=>'&Ugrave;', 'ù'=>'&ugrave;', 'Ú'=>'&Uacute;', 'ú'=>'&uacute;', 'Û'=>'&Ucirc;', 'û'=>'&ucirc;', 'Ü'=>'&Uuml;', 'ü'=>'&uuml;', 'Ý'=>'&Yacute;', 'ý'=>'&yacute;', 'Ÿ'=>'&Yuml;', 'ÿ'=>'&yuml;');
+			case 0:
+			default:
+				$purifiedStr = '<![CDATA['.$purifiedStr.']]>';
+				break;
+		}				
 
 		return $purifiedStr;
+	}
+
+	/**
+	 * getKeywordsList - 
+	 */
+	function getKeywordsList($nodeId, $filter = true)
+	{
+		$subjects = array();
+		
+		$words = $this->fedoraModel->getKeywordsList($nodeId);
+		
+		if (count($words) > 0) {
+			foreach ($words as $key => $word) {
+				if ($filter) {
+					$subjects[] = $this->xmlifyDataFilter(trim($word['word']));
+				} else {
+					$subjects[] = trim($word['word']);
+				}
+			}
+		} else {
+			$subjects = null;
+		}
+
+		return $subjects;
+	}
+
+	/**
+	 *  getPublicationTypesData - get number values for word values of publication types
+	 */
+	function getPublicationTypesData()
+	{
+		$this->fedoraModel->getPublicationTypesData($this->publicationNames, $this->publicationKeys, $this->listFlag);
+	}
+
+	/**
+	 *  getPublicationType - get publication type from number key
+	 */
+	function getPublicationType($key)
+	{
+		$type = '';
+		if ($this->listFlag) {
+			$type = $this->publicationKeys[$key];
+		}
+		
+		return $type;
 	}
 
 	/**
@@ -378,6 +495,29 @@ class FedoraController
 		$pidName     = $namespace;
 		$pidNum      = $nextPid;
 		$ext         = 'pdf';
+
+		$authors = array();
+		$contributorsList = $this->makeAuthorsArray($nodeId);  // list out authors
+		if (count($contributorsList)) {
+			foreach ($contributorsList as $contributor) {
+				$authors[] = $this->xmlifyDataFilter($contributor);
+			}
+		} else {
+			$authors = null;
+		}
+		
+		// build list of keywords for subject
+		$keywordsList = $this->getKeywordsList($nodeId);
+	
+		$publishers[] = $node['biblio_publisher'];
+		$publishers[] = $node['biblio_remote_db_provider'];
+		
+		$type = $this->getPublicationType($node['biblio_type']);  // translate number into human word
+
+		$host = $_SERVER['SERVER_NAME'];
+		
+		// if year is 9999 make it blank, we don't want to store the biblio centric "no year" marker
+		$year = ($node['biblio_year'] == 9999 ? '' : $node['biblio_year']);
 	
 		$this->fedoraFoxXml->clearData();
 		$this->fedoraFoxXml->subjectName = $pidName;
@@ -386,29 +526,27 @@ class FedoraController
 		$this->fedoraFoxXml->baseUrl     = htmlentities($node['biblio_url'], ENT_QUOTES, 'UTF-8');  // make friendly to the xml parser in Fedora
 	
 		// package up the data
-		$this->fedoraFoxXml->title       = $this->filterAccents($this->xmlifyDataFilter($node['title']));
-		$this->fedoraFoxXml->creator     = 'CiteBank';
-		$this->fedoraFoxXml->subject     = $this->filterAccents($this->xmlifyDataFilter($node['title']));  // TODO: something else?
+		$this->fedoraFoxXml->title       = $this->xmlifyDataFilter($node['title']);
+		$this->fedoraFoxXml->creator     = $authors;
+		$this->fedoraFoxXml->subject     = $keywordsList; // grab any keywords and put in the subject field
 		$this->fedoraFoxXml->description = $this->xmlifyDataFilter($node['biblio_abst_e']);
-		$this->fedoraFoxXml->publisher   = $this->xmlifyDataFilter($node['biblio_publisher']);
-		$this->fedoraFoxXml->identifier  = $this->xmlifyDataFilter($nodeId);
-		$contributors = $this->makeAuthors($nodeId);  // list out authors
-		//$this->fedoraFoxXml->contributor = $this->filterAccents($this->xmlifyDataFilter($contributors));//
-		$this->fedoraFoxXml->contributor = $this->filterAccents($contributors);//
-		$this->fedoraFoxXml->date        = $this->xmlifyDataFilter($node['biblio_year']);
-		$this->fedoraFoxXml->type        = $this->xmlifyDataFilter($node['biblio_type']);  // TODO: do we want to translate to words instead of code number?
-		$this->fedoraFoxXml->format      = 'blank';
-		$this->fedoraFoxXml->source      = $this->xmlifyDataFilter($node['biblio_remote_db_provider']);
-		$this->fedoraFoxXml->language    = $this->xmlifyDataFilter($node['biblio_lang']);
-		$this->fedoraFoxXml->relation    = 'none';
-		$this->fedoraFoxXml->coverage    = 'NA';
-		$this->fedoraFoxXml->rights      = 'public domain';  // TODO: is this something else? 
+		$this->fedoraFoxXml->publisher   = $publishers;
+		$this->fedoraFoxXml->identifier  = 'http://' . $host . '/node/' . $nodeId;
+		$this->fedoraFoxXml->contributor = ''; // empty
+		$this->fedoraFoxXml->date        = $year;
+		$this->fedoraFoxXml->type        = $type;  // translated to words from code number
+		$this->fedoraFoxXml->format      = '';
+		$this->fedoraFoxXml->source      = htmlentities($node['biblio_url'], ENT_QUOTES, 'UTF-8');
+		$this->fedoraFoxXml->language    = $node['biblio_lang'];
+		$this->fedoraFoxXml->relation    = '';
+		$this->fedoraFoxXml->coverage    = '';
+		$this->fedoraFoxXml->rights      = ''; //'public domain';  // TODO: is this something else? 
 	
 		$this->fedoraFoxXml->pidName     = $pidName;
 		$this->fedoraFoxXml->pid         = $pidNum;
-//		echo htmlentities($xml); echo '<br>';
+
 		$xml = $this->fedoraFoxXml->buildFoxXml($ext);
-//		echo '<pre>' . htmlentities($xml) . '</pre>' . '<br>' . "\n";
+
 		$this->fedoraClient->pid     = $pidName . ':' . $pidNum;
 		$this->fedoraClient->pidName = $pidName;
 		$this->fedoraClient->pidNum  = $pidNum;
