@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import at.co.ait.domain.DirectoryListing;
-import at.co.ait.domain.MetsMarshallerService;
+import at.co.ait.domain.services.MetsMarshallerService;
 
 public class TestMetsMarshallerService {
 	
@@ -27,14 +27,14 @@ public class TestMetsMarshallerService {
 
 	@Test
 	public void testPreparePackage() {
-		packager.preparePackage("C:/ProjectData/BHL-E-FTP/bhle-csic/v002/full/data");
+//		packager.preparePackage("C:/ProjectData/BHL-E-FTP/bhle-csic/v002/full/data");
 		fail("Not yet implemented");
 	}
 	
 	@Test
 	public void testCreatePackage() {
-		packager.preparePackage("C:/ProjectData/BHL-E-FTP/bhle-csic/v002/full/data");
-		packager.createPackage("C:/ProjectData/BHL-Tests/archive");
+//		packager.preparePackage("C:/ProjectData/BHL-E-FTP/bhle-csic/v002/full/data");
+//		packager.createPackage("C:/ProjectData/BHL-Tests/archive");
 		fail("Not yet implemented");
 	}
 

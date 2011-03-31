@@ -7,5 +7,9 @@
 	
 	<!-- Imports specific spring security settings -->
 	<import resource="security.xml" />
+	
+	<!-- Spring Integration -->
+	<import resource="integration.xml" />
+	<import resource="int-http-outbound-config.xml" />
     
 </beans>

@@ -1,4 +1,4 @@
-package at.co.ait.domain;
+package at.co.ait.domain.services;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +19,10 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import at.co.ait.domain.integration.IPrepDigObjGateway;
+import at.co.ait.domain.integration.IPrepInfPkgGateway;
+import at.co.ait.domain.integration.IReqNoidGateway;
+import at.co.ait.domain.integration.IReqVirusscanGateway;
 import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.domain.oais.InformationPackageObject;
 
@@ -43,9 +47,11 @@ public class PackageDeliveryService {
 	public Set<InformationPackageObject> getPackageInfo() {
 		return packages;
 	}
-	
-	private @Inject IPrepInfPkgGateway prepInfPkgGateway;
-	private @Inject IPrepDigObjGateway prepDigObjGateway;
+
+	private @Inject
+	IPrepInfPkgGateway prepInfPkgGateway;
+	private @Inject
+	IPrepDigObjGateway prepDigObjGateway;
 	private IReqVirusscanGateway virusscanGateway;
 	private IReqNoidGateway noidGateway;
 
@@ -132,18 +138,22 @@ public class PackageDeliveryService {
 	public void addDigObjToInfPkg(DigitalObject obj) {
 		// add digital object to information package and deliver the package
 		InformationPackageObject pkg = null;
-		// iterate all information packages to find the one which holds the digital object UUID
-		for (Iterator<InformationPackageObject> it=packages.iterator(); it.hasNext(); ) {
+		// iterate all information packages to find the one which holds the
+		// digital object UUID
+		for (Iterator<InformationPackageObject> it = packages.iterator(); it
+				.hasNext();) {
 			InformationPackageObject value = it.next();
 			if (value.getId() == obj.getInformationPackageUUID()) {
-				logger.info("info package found for " + value.getExternalIdentifier());
-				pkg = value;	
+				logger.info("info package found for "
+						+ value.getExternalIdentifier());
+				pkg = value;
 			}
 		}
 		pkg.addDigitalObject(obj);
-		pkg.removeDigitalObjectUUID(obj.getId());	
+		pkg.removeDigitalObjectUUID(obj.getId());
 		// invoke message to further process the information package
-		if (pkg.isReadyForDelivering()) prepInfPkgGateway.prepareInformationPackage(pkg);
+		if (pkg.isReadyForDelivering())
+			prepInfPkgGateway.prepareInformationPackage(pkg);
 	}
 
 	public void createAIP(InformationPackageObject obj) {
@@ -163,5 +173,5 @@ public class PackageDeliveryService {
 			}
 		}
 	}
-	
+
 }

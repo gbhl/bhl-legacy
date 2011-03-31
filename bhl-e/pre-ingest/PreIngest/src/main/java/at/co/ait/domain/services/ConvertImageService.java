@@ -1,4 +1,4 @@
-package at.co.ait.domain;
+package at.co.ait.domain.services;
 
 import java.io.File;
 
@@ -26,6 +26,10 @@ public class ConvertImageService {
 				new Object[]{
 				inputimage.getAbsolutePath(),
 				outputimage.getAbsolutePath()});
+	}
+	
+	public DigitalObject enrichDigitalObject(DigitalObject digObj) {
+		return digObj;
 	}
 	
 	public DigitalObject getDigitalobject() {

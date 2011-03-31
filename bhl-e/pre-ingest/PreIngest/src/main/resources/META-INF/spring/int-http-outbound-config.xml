@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http-2.0.xsd">
+
+	<int:gateway id="noidRequestGateway" service-interface="at.co.ait.domain.integration.IReqNoidGateway"
+		default-request-channel="noidRequestChannel" />
+
+	<int:channel id="noidRequestChannel" />
+
+	<int-http:outbound-gateway request-channel="noidRequestChannel"
+		url="http://localhost:3000/mint" http-method="GET"
+		expected-response-type="java.lang.String" />
+
+	<int:gateway id="virusscanRequestGateway"
+		service-interface="at.co.ait.domain.integration.IReqVirusscanGateway"
+		default-request-channel="virusscanRequestChannel" />
+
+	<int:channel id="virusscanRequestChannel" />
+
+	<int-http:outbound-gateway request-channel="virusscanRequestChannel"
+		url="http://127.0.0.1:9999/scan/{path}" http-method="GET"
+		expected-response-type="java.lang.String">
+		<int-http:uri-variable name="path" expression="payload"/>
+	</int-http:outbound-gateway>
+	
+	<int:gateway id="descrMappingGateway"
+	service-interface="at.co.ait.domain.integration.IReqDescrMappingGateway"
+	default-request-channel="descrMappingRequestChannel" />
+
+	<int:channel id="descrMappingRequestChannel" />
+
+	<int-http:outbound-gateway request-channel="descrMappingRequestChannel"
+		url="http://127.0.0.1:9989/execute/{params}" http-method="GET"
+		expected-response-type="java.lang.String">
+		<int-http:uri-variable name="params" expression="payload"/>				
+	</int-http:outbound-gateway>
+		
+</beans>

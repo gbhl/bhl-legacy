@@ -1,4 +1,4 @@
-package at.co.ait.domain;
+package at.co.ait.domain.services;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -10,6 +10,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import at.co.ait.domain.integration.IReqDescrMappingGateway;
 import at.co.ait.domain.oais.DigitalObject;
 
 public class DescrMetadataMapService {

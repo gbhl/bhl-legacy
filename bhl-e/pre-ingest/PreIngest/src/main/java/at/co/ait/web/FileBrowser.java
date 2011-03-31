@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import at.co.ait.domain.DirectoryListing;
-import at.co.ait.domain.PackageDeliveryService;
 import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.domain.oais.InformationPackageObject;
+import at.co.ait.domain.services.PackageDeliveryService;
 
 /**
  * Handles requests for the application home page.

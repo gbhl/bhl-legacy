@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import at.co.ait.domain.PackageDeliveryService;
+import at.co.ait.domain.services.PackageDeliveryService;
 
 public class TestPackageDeliveryService {
 	

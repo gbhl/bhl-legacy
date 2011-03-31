@@ -1,4 +1,4 @@
-package at.co.ait.domain;
+package at.co.ait.domain.services;
 
 import java.io.File;
 import java.io.FilenameFilter;

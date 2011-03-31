@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import at.co.ait.domain.DirectoryListing;
-import at.co.ait.domain.ConvertImageService;
+import at.co.ait.domain.services.ConvertImageService;
 
 /**
  * Handles requests for the application home page.

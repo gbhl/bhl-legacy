@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 public class DirectoryListing {
 	private Collection<File> files = null;
 	private String basedir = null; 
-	//FIXXME: allFilesAndFolders needs to be split up, get rid of String[]
 	private Map<Integer,String> allFilesAndFolders = new HashMap<Integer,String>();
 	private static final Logger logger = LoggerFactory.getLogger(DirectoryListing.class);
 	
