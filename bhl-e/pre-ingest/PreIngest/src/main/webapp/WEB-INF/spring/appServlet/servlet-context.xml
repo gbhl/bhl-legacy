@@ -30,9 +30,10 @@
 	   </beans:property>
 	</beans:bean>
 	
-	<!-- Setup Spring Integration -->
-	<beans:import resource="message-server.xml" />
-	<beans:import resource="http-outbound-config.xml" />
+	<beans:bean id="SIPFiles2" class="at.co.ait.domain.DirectoryListing">
+		<beans:qualifier value="main"/>
+		<beans:property name="basedir" value="C:\ProjectData\BHL-E-FTP"/>
+	</beans:bean>
 	
 	<!-- Use multiple view resolver: Internal, Tiles2 -->
 	<beans:import resource="view-resolver.xml" />
@@ -42,8 +43,5 @@
 
 	<!-- Imports user-defined @Controller beans that process client requests -->
 	<beans:import resource="controllers.xml" />
-	
-	<!-- Imports user-defined beans that are application domain specific -->
-	<beans:import resource="domain-specific.xml" />
 	
 </beans:beans>
