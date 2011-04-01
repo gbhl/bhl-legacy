@@ -69,7 +69,6 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 	function sendData($data, $pidName, $pidNum)
 	{
 		$pid = $pidName . ':' . $pidNum;
-		$dsID = 'citebank';
 		
 		//$curlCmd = 'curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "' . $this->hostServer . 'objects/'.$pidName.':'.$pidNum.'" --data-binary @fedoraFoxXmlFile.xml -k';
 		$curlCmd = 'curl --user ' . $this->fedoraUser . ':' . $this->fedoraPass . ' -i -s -H "Content-type: text/xml" -XPOST "' . $this->hostServer . 'objects/'.$pidName.':'.$pidNum.'" --data-binary @fedoraFoxXmlFile.xml -k';
@@ -93,7 +92,6 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 		$ch = curl_init();
 		
 		$pid = $pidName . ':' . $pidNum;
-		$dsID = 'citebank';
 		
 		$query = 'objects/'.$pid. '?' . 'controlGroup=X' .  '&dsState=A';
 
@@ -101,7 +99,6 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 		
 		return $resp;	
 	}
-
 
 	/**
 	 * getData - 
@@ -202,7 +199,6 @@ curl --user fedoraAdmin:fedoraAdmin -i -s -H "Content-type: text/xml" -XPOST "ht
 		}
 		
 		curl_setopt($ch, CURLINFO_HEADER_OUT,    true);
-		//curl_setopt($ch, CURLOPT_USERPWD,    'fedoraAdmin' . ':' . 'fedoraAdmin');
 		curl_setopt($ch, CURLOPT_USERPWD,    $this->fedoraUser . ':' . $this->fedoraPass);
 	
 		$resp = curl_exec($ch);
