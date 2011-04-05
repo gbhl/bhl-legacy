@@ -598,6 +598,12 @@ class FedoraFoxXmlController
 			'							' .
 			'<dc:date>'.$this->date.'</dc:date>' . 
 			"\n" . 
+			// yes, adding 'text' as type too.  per requested modification, to be accurate to standard dublin core types
+			// decision was to add both this as a fixed value, since our citebank data will be all text type,
+			// and the biblio named type as well.
+			'							' .
+			'<dc:type>'.'Text'.'</dc:type>' . 
+			"\n" . 
 			'							' .
 			'<dc:type>'.$this->type.'</dc:type>' . 
 			"\n" . 
