@@ -65,7 +65,7 @@ function citebank_fedora_commons_menu()
 {
 	$items = array();
 	
-	$items['citebank_fedora_commons/form'] = array(
+	$items['admin/settings/citebank_fedora_commons/form'] = array(
 		'title' => t('Citebank Fedora Commons Configuration Settings'),
     'page callback' => 'citebank_fedora_commons_form',
     'access arguments' => array('access content'),
