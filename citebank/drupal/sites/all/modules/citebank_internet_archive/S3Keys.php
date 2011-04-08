@@ -15,9 +15,9 @@ To get api keys for the archive's S3-Like API go to:
   http://www.archive.org/account/s3.php
 */
 
-define('S3_ACCESS_KEY', 'B39PPpEEHKHrasNg');  // S3 Access key
-define('S3_SECRET_KEY', 'bSZ6FFaI3P1Xpr0X');  // S3 Secret key
-
+// testing
+define('S3_ACCESS_KEY', '');  // S3 Access key
+define('S3_SECRET_KEY', '');  // S3 Secret key
 
 // ****************************************
 // ****************************************
