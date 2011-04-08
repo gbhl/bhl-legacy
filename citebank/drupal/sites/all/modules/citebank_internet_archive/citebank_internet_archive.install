@@ -15,15 +15,46 @@
  */
 function citebank_internet_archive_install()
 {
+	$now = date('m/d/Y H:i:s');
+	$msg = 'Setting up database table for Citebank Internet Archive. ' . $now;
+	drupal_set_message(t($msg));
+	watchdog('database', $msg);
+
 	drupal_install_schema('citebank_internet_archive');
+
+	cache_clear_all('*', 'cache', TRUE);
+  cache_clear_all('*', 'cache_filter', TRUE);
+  cache_clear_all('*', 'cache_menu', TRUE);
+  cache_clear_all('*', 'cache_page', TRUE);
 }
 
+// sites/all/modules/citebank_internet_archive/citebank_internet_archive.module
+//       citebank_internet_archive
 /**
  * citebank_internet_archive_uninstall - 
  */
 function citebank_internet_archive_uninstall()
 {
+	$now = date('m/d/Y H:i:s');
+	$msg = 'Uninstalling Citebank Internet Archive. ' . $now;
+	drupal_set_message(t($msg));
+
 	drupal_uninstall_schema('citebank_internet_archive');
+	
+	// DELETE FROM variable WHERE NAME LIKE 'citebank_internet_archive_%'
+	variable_del('citebank_internet_archive_throttle');
+	variable_del('citebank_internet_archive_throttleflag');
+	variable_del('citebank_internet_archive_loggingflag');
+	variable_del('citebank_internet_archive_processflag');
+	variable_del('citebank_internet_archive_iauser');
+	variable_del('citebank_internet_archive_iapass');
+	variable_del('citebank_internet_archive_citebankPrefix');
+	variable_del('citebank_internet_archive_s3accesskey');
+	variable_del('citebank_internet_archive_s3secretkey');
+
+	$msg = 'Removing database table for Citebank Internet Archive. ' . $now;
+	drupal_set_message(t($msg));
+	watchdog('database', $msg);
 }
 
 /**
@@ -31,47 +62,79 @@ function citebank_internet_archive_uninstall()
  */
 function citebank_internet_archive_schema()
 {
+	$schema = array();
+
 	$schema['citebank_internet_archive_records'] = array(
 	  'description' => t('Tracks CiteBank records sent to Internet Archive'),
 		'fields'      => array(
-      'id'             => array ('type' => 'int', 'not null' => TRUE, 'default' => 0,  'description' =>''),
-      'nid'            => array ('type' => 'int', 'not null' => TRUE, 'default' => 0,  'description' =>''),
-      'archive_status' => array ('type' => 'int', 'not null' => TRUE, 'default' => -1, 'description' =>''),
-      'created'        => array ('type' => 'datetime', 'description' =>''),
-      'ia_title'       => array ('type' => 'varchar', 'length' => '255', 'description' =>''),
-      'biblio_url'     => array ('type' => 'varchar', 'length' => '255', 'description' =>'')
+
+      'citebank_internet_archive_id' => array (
+      	'type' => 'serial', 
+      	'not null' => TRUE,  
+      	'description' =>'table index id'
+      ),
+
+      'nid' => array (
+      	'type' => 'int', 
+      	'not null' => TRUE, 
+      	'default' => 0,  
+      	'description' =>'Node Id'
+      ),
+
+      'archive_status' => array (
+      	'type' => 'int', 
+      	'not null' => TRUE, 
+      	'default' => -1, 
+      	'description' =>'State status: -1 ignore, 0 ready, 1 sent'
+      ),
+
+      'created' => array (
+      	'type' => 'datetime', 
+      	'description' =>'when created'
+      ),
+
+      'ia_title' => array (
+      	'type' => 'varchar', 
+      	'length' => '255', 
+      	'description' =>''
+      ),
+
+      'biblio_url' => array (
+      	'type' => 'varchar', 
+      	'length' => '255', 
+      	'description' =>''
+      )
 		),
-	  'indexes'     => array('nid' => array('nid')),
-	  'primary key' => array('id'),
-    'indexes'     => array ('id' => array ('id'))
+	  'indexes'    => array(
+	  	'nid'      => array('nid'),
+	  ),
+	  'primary key' => array('citebank_internet_archive_id')
 	);
 	
-/*	
-*/	
-
 	return $schema;
 }
 
 /**
  * citebank_internet_archive_requirements - 
  */
-function citebank_internet_archive_requirements($phase)
-{
-  $requirements = array();
-  $t = get_t();
-
-  if ($phase == 'install') {
-    if (!module_exists('biblio')) {
-      $requirements['citebank_internet_archive'] = array(
-        'title' => $t('Biblio'),
-        'description' => $t('The Biblio module must be installed first'),
-        'severity' => REQUIREMENT_ERROR
-      );
-    }
-  }
-
-  return $requirements;
-}
+//function citebank_internet_archive_requirements($phase)
+//{
+//  $requirements = array();
+//  $t = get_t();
+//
+//  if ($phase == 'install') {
+//    if (!module_exists('biblio')) {
+//      $requirements['citebank_internet_archive'] = array(
+//        'title' => $t('Biblio'),
+//        'description' => $t('The Biblio module must be installed first'),
+//        'severity' => REQUIREMENT_ERROR
+//      );
+//    }
+//  }
+//
+//  return $requirements;
+//}
 
 // ************************************************************
 // ************************************************************
+?>
