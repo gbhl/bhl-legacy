@@ -13,8 +13,15 @@
 
 $includePath = dirname(__FILE__) . '/';
 
-//require_once($includePath . 'CitebankInternetArchive.php');
 require_once($includePath . 'InternetArchiveModel.php');
+
+/**
+ * citebank_internet_archive_init - 
+ */
+function citebank_internet_archive_init()
+{
+	menu_rebuild();  // cut this out for production, this is helpful for development only
+}
 
 /**
  * citebank_internet_archive_view - 
@@ -25,13 +32,213 @@ function citebank_internet_archive_view(&$node, $teaser = FALSE, $page = FALSE)
 }
 
 /**
+ * citebank_internet_archive_menu - 
+ */
+function citebank_internet_archive_menu()
+{
+	$items = array();
+	
+	$items['admin/settings/citebank_internet_archive/form'] = array(
+		'title' => t('Citebank Internet Archive Configuration Settings'),
+    'page callback' => 'citebank_internet_archive_form',
+    'access arguments' => array('access content'),
+    'description' => t('Citebank Internet Archive Configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => 'user_access',                     // Check that the current user
+    'access arguments' => array('Administer Your Module'),  // ... has this permission.    
+		'access' => TRUE
+	);
+	
+	return $items;
+}
+
+/**
+ * citebank_internet_archive_form - 
+ */
+function citebank_internet_archive_form() 
+{
+	return drupal_get_form('citebank_internet_archive_configuration_form');
+}
+
+/**
+ * citebank_internet_archive_form_submit - 
+ */
+function citebank_internet_archive_form_submit($form, &$form_state) 
+{
+	$now = date('m/d/Y H:i:s');
+	drupal_set_message(t('The configuration has been updated. ' . $now));
+	
+	// make them be integers and not strings, force to either 1 or 0
+	$throttleFlag = 0 + (0 + $form_state['values']['throttleFlag'] == 1 ? 1 : 0);
+	$loggingFlag  = 0 + (0 + $form_state['values']['loggingFlag']  == 1 ? 1 : 0);
+	$processFlag  = 0 + (0 + $form_state['values']['processFlag']  == 1 ? 1 : 0);
+
+	$citebankPrefix  = $form_state['values']['citebankPrefix'];
+
+	$iaUser  = $form_state['values']['iaUser'];
+	$iaPass  = $form_state['values']['iaPass'];
+
+	$s3accesskey = $form_state['values']['s3accesskey'];
+	$s3secretkey = $form_state['values']['s3secretkey'];
+	
+	$throttle = 1000;
+	if (is_numeric($form_state['values']['throttle']) ) {
+		$throttle = $form_state['values']['throttle'];
+	}
+
+	if (!$processFlag) {
+		ia_watchmen('Turning OFF Citebank Internet Archive cron PROCESSING.');
+		drupal_set_message(t('Turning OFF Citebank Internet Archive cron PROCESSING. ' . $now));
+	}
+	
+	variable_set('citebank_internet_archive_throttle',     $throttle);
+	variable_set('citebank_internet_archive_throttleflag', $throttleFlag);
+	variable_set('citebank_internet_archive_loggingflag',  $loggingFlag);
+	variable_set('citebank_internet_archive_processflag',  $processFlag);
+
+	variable_set('citebank_internet_archive_iauser',  $iaUser);
+	variable_set('citebank_internet_archive_iapass',  $iaPass);
+
+	variable_set('citebank_internet_archive_citebankPrefix',  $citebankPrefix);
+
+	variable_set('citebank_internet_archive_s3accesskey', $s3accesskey);
+	variable_set('citebank_internet_archive_s3secretkey', $s3secretkey);
+
+}
+
+/**
+ * citebank_internet_archive_admin - 
+ */
+function citebank_internet_archive_admin() 
+{
+  $form = array();
+
+  $form['citebank_internet_archive_maxdisp'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Maximum number of links'),
+    '#default_value' => variable_get('citebank_internet_archive_maxdisp', 3),
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#description' => t("The maximum number of links to display in the block."),
+    '#required' => TRUE
+  );
+
+  return system_settings_form($form);
+}
+
+/**
+ * citebank_internet_archive_configuration_getConfig - 
+ */
+function citebank_internet_archive_configuration_getConfig() 
+{
+	$configs['throttle']     = variable_get('citebank_internet_archive_throttle', 1000);
+	$configs['throttleFlag']  = (0 + variable_get('citebank_internet_archive_throttleflag', 1) == 1 ? 1 : 0);  // 1 or 0 in database
+
+	$configs['loggingFlag']  = (0 + variable_get('citebank_internet_archive_loggingflag', 1) == 1 ? 1 : 0);  // 1 or 0 in database
+
+	$configs['processFlag']  = (0 + variable_get('citebank_internet_archive_processflag', 1) == 1 ? 1 : 0);  // 1 or 0 in database
+
+	$configs['iaUser']    = variable_get('citebank_internet_archive_iauser', 'citebank.upload@gmail.com');
+	$configs['iaPass']    = variable_get('citebank_internet_archive_iapass', '4651CBEC');
+
+	$configs['citebankPrefix']    = variable_get('citebank_internet_archive_citebankPrefix', 'cbarchive');
+
+	$configs['s3accesskey']    = variable_get('citebank_internet_archive_s3accesskey', '');
+	$configs['s3secretkey']    = variable_get('citebank_internet_archive_s3secretkey', '');
+
+	return $configs;
+}
+
+/**
+ * citebank_internet_archive_configuration_form - 
+ */
+function citebank_internet_archive_configuration_form($form_state) 
+{
+	$form = array();
+
+	$configs = citebank_internet_archive_configuration_getConfig();
+
+	$form['throttle'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Throttle Amount'),
+	  '#default_value' => (is_numeric($configs['throttle']) ? $configs['throttle'] : '1000'), // '1000',
+    '#description' => t("How many records to process each cron run. Suggested 100 or 1000.")
+	);
+
+	$form['throttleFlag'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Throttle Flag'),
+	  '#default_value' => $configs['throttleFlag'], // '1',
+    '#description' => t("Turns on/off throttling. Recommended that this be ON. Settings: 1 = ON, 0 = OFF")
+	);
+
+	$form['loggingFlag'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Logging Flag'),
+	  '#default_value' => $configs['loggingFlag'], // '0',
+    '#description' => t("Extra logging of processing steps (to diagnose problems). Recommended that this be OFF. Settings: 1 = ON, 0 = OFF")
+	);
+
+	//processFlag
+	$form['processFlag'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Process Flag'),
+	  '#default_value' => $configs['processFlag'], // '0',
+    '#description' => t("Processing on and off switch, when ON will process records to send to the Internet Archive. Recommended that this be ON. Settings: 1 = ON, 0 = OFF")
+	);
+
+	$form['citebankPrefix'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Citebank Prefix Name'),
+	  '#default_value' => $configs['citebankPrefix'], // 'citebank',
+    '#description' => t("Prefix for citebank entries on Internet Archive.")
+	);
+
+	$form['iaUser'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Internet Archive user name'),
+	  '#default_value' => $configs['iaUser'], // 'citebank',
+    '#description' => t("Internet Archive user name.")
+	);
+
+	$form['iaPass'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Internet Archive pass word'),
+	  '#default_value' => $configs['iaPass'], // 'citebank',
+    '#description' => t("Internet Archive pass word.")
+	);
+
+	$form['s3accesskey'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Internet Archive Access Key'),
+	  '#default_value' => $configs['s3accesskey'],
+    '#description' => t("Internet Archive access key to link to system.")
+	);
+
+	$form['s3secretkey'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Internet Archive Secret Key'),
+	  '#default_value' => $configs['s3secretkey'],
+    '#description' => t("Internet Archive secret key to link to system.")
+	);
+
+	$form['submit'] = array(
+	  '#type' => 'submit',
+	  '#value' => 'SAVE CONFIGURATION',
+	);
+	$form['#submit'][] = 'citebank_internet_archive_form_submit';
+	
+	return $form;
+}
+
+/**
  * citebank_internet_archive_cron - 
  */
 function citebank_internet_archive_cron(&$node = null, $teaser = FALSE, $page = FALSE)
 {
 	// we need an off switch if processed that file.
-	//watchmen('Internet Archive cron');
-	//processCiteBankInternetArchive();
+	ia_watchmen('Internet Archive cron');
+	processCiteBankInternetArchive();
 }
 
 /**
@@ -39,8 +246,21 @@ function citebank_internet_archive_cron(&$node = null, $teaser = FALSE, $page = 
  */
 function processCiteBankInternetArchive()
 {
-	$x = new InternetArchiveModel();
-	$x->process();
+	// must be explicitly set
+	$processFlag = (0 + variable_get('citebank_internet_archive_processflag', 0) == 1 ? true : false);
+
+	// if 
+	if ($processFlag) {
+		$x = new InternetArchiveModel();
+		
+		$accessKey = variable_get('citebank_internet_archive_s3accesskey', '');
+		$secretKey = variable_get('citebank_internet_archive_s3secretkey', '');
+		$x->setAuth($accessKey, $secretKey);
+		
+		$x->process();
+	} else {
+		ia_watchmen('Citebank Internet Archive cron PROCESSING IS OFF');
+	}
 }
 
 /**
@@ -61,12 +281,11 @@ function citebank_internet_archive_node_info()
 	);
 }
 
-
 //watchdog($type, $message, $variables = array(), $severity = WATCHDOG_NOTICE, $link = NULL);
 /**
  * watchmen - handy drupal watch logger, give it a msg and go
  */
-function watchmen($msg, $watchFlag = true, $type = 'InternetArchive', $addDate = true)
+function ia_watchmen($msg, $watchFlag = true, $type = 'InternetArchive', $addDate = true)
 {
 	if ($watchFlag) {
 		if ($addDate) {
