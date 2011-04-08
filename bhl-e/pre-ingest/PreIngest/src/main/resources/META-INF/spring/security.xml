@@ -8,16 +8,18 @@
            http://www.springframework.org/schema/security/spring-security.xsd">
 	
   	<http auto-config="true">
-  		<intercept-url pattern="/**" access="ROLE_USER" />
+  		<intercept-url pattern="/**" access="ROLE_USER" />  		
+  		<session-management>
+        	<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+    	</session-management>
   	</http>
-  	
+  		
+  	<beans:bean id="userservice" class="at.co.ait.web.common.UserServiceImpl">
+  		<beans:property name="config" ref="config" />
+  	</beans:bean>
+
   	<authentication-manager>
-	   	<authentication-provider>
-	    	<user-service>
-	    		<user  name="admin" password="pass" authorities="ROLE_USER, ROLE_ADMIN" />
-	    		<user name="user" password="pass" authorities="ROLE_USER" />
-	    	</user-service>
-		</authentication-provider>
+	   	<authentication-provider user-service-ref="userservice" />
 	</authentication-manager>
 	
 </beans:beans>

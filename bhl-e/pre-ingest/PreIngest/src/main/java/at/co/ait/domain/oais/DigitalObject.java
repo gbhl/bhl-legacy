@@ -116,7 +116,6 @@ public class DigitalObject extends GenericObject {
 
 	private UUID informationPackageUUID;
 
-
 	public UUID getInformationPackageUUID() {
 		return informationPackageUUID;
 	}

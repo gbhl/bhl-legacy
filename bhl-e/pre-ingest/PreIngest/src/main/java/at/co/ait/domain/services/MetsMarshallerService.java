@@ -166,7 +166,7 @@ public class MetsMarshallerService {
      * @param obj
      * @return
      */
-    public InformationPackageObject enrichInformationPackageObject(InformationPackageObject obj) {
+    public InformationPackageObject marshal(InformationPackageObject obj) {
     	obj.setMets(createMETS(obj));
     	return obj;
     }

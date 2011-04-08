@@ -11,12 +11,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.co.ait.domain.DirectoryListing;
+import at.co.ait.domain.services.DirectoryListingService;
 
 public class TestDirectoryListing {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TestDirectoryListing.class);
-	private DirectoryListing dirlist = new DirectoryListing();
+	private DirectoryListingService dirlist = new DirectoryListingService();
 
 	@Before
 	public void setUp() throws Exception {		

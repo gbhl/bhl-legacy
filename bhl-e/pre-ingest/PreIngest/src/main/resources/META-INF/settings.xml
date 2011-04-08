@@ -1,0 +1,27 @@
+<at.co.ait.web.common.Settings>
+	<settings>
+		<entry>
+			<string>alice</string>
+			<at.co.ait.web.common.UserPreferences>
+				<username>alice</username>
+				<password>pass_alice</password>
+				<roles>
+					<string>ROLE_USER</string>
+					<string>ROLE_ADMIN</string>
+				</roles>
+				<basedirectory>file:///C:/ProjectData/BHL-E-FTP/bhle-csic</basedirectory>
+			</at.co.ait.web.common.UserPreferences>
+		</entry>
+		<entry>
+			<string>bob</string>
+			<at.co.ait.web.common.UserPreferences>
+				<username>bob</username>
+				<password>pass_bob</password>
+				<roles>
+					<string>ROLE_USER</string>
+				</roles>
+				<basedirectory>file:///C:/ProjectData/BHL-E-FTP/bhle-ubbi</basedirectory>
+			</at.co.ait.web.common.UserPreferences>
+		</entry>
+	</settings>
+</at.co.ait.web.common.Settings>

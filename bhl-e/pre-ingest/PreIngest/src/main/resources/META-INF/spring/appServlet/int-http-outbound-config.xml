@@ -7,23 +7,23 @@
 		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http-2.0.xsd">
 
 	<int:gateway id="noidRequestGateway" service-interface="at.co.ait.domain.integration.IReqNoidGateway"
-		default-request-channel="noidRequestChannel" />
+		default-request-channel="noidRequestChannel" error-channel="logger" />
 
 	<int:channel id="noidRequestChannel" />
 
 	<int-http:outbound-gateway request-channel="noidRequestChannel"
-		url="http://localhost:3000/mint" http-method="GET"
+		url="http://localhost:3000/mint" http-method="GET" request-timeout="1000"
 		expected-response-type="java.lang.String" />
 
 	<int:gateway id="virusscanRequestGateway"
 		service-interface="at.co.ait.domain.integration.IReqVirusscanGateway"
-		default-request-channel="virusscanRequestChannel" />
+		default-request-channel="virusscanRequestChannel" error-channel="logger" />
 
 	<int:channel id="virusscanRequestChannel" />
-
+	
 	<int-http:outbound-gateway request-channel="virusscanRequestChannel"
 		url="http://127.0.0.1:9999/scan/{path}" http-method="GET"
-		expected-response-type="java.lang.String">
+		expected-response-type="java.lang.String" request-timeout="10000">
 		<int-http:uri-variable name="path" expression="payload"/>
 	</int-http:outbound-gateway>
 	

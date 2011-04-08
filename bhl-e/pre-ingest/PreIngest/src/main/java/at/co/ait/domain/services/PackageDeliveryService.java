@@ -18,7 +18,9 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import at.co.ait.domain.integration.ILoadingGateway;
 import at.co.ait.domain.integration.IPrepDigObjGateway;
 import at.co.ait.domain.integration.IPrepInfPkgGateway;
 import at.co.ait.domain.integration.IReqNoidGateway;
@@ -48,18 +50,8 @@ public class PackageDeliveryService {
 		return packages;
 	}
 
-	private @Inject
-	IPrepInfPkgGateway prepInfPkgGateway;
-	private @Inject
-	IPrepDigObjGateway prepDigObjGateway;
-	private IReqVirusscanGateway virusscanGateway;
 	private IReqNoidGateway noidGateway;
-
-	@Resource(name = "virusscanRequestGateway")
-	public void setVirusscanGateway(IReqVirusscanGateway virusscanGateway) {
-		this.virusscanGateway = virusscanGateway;
-	}
-
+	private @Autowired ILoadingGateway loading;
 	@Resource(name = "noidRequestGateway")
 	public void setNoidGateway(IReqNoidGateway noidGateway) {
 		this.noidGateway = noidGateway;
@@ -110,32 +102,17 @@ public class PackageDeliveryService {
 			}
 			// set the external identifier from information package
 			obj.setExternalIdentifier(infopackage.getExternalIdentifier());
-			// TODO create virusscan service
-			// send virusscan request to PyClamAVStomp
-			String virusscanResponse = null;
-			try {
-				// TODO use urlencode. base64 was used due to
-				// insane application/x-www-form-urlencoded python
-				// implementation
-				String encodedText = new String(Base64.encodeBase64(obj
-						.getSubmittedFile().getAbsolutePath().getBytes()));
-				virusscanResponse = virusscanGateway.requestVirusscan(
-						encodedText).get(1, TimeUnit.SECONDS);
-			} catch (InterruptedException e) {
-				logger.info(e.getClass().getName() + ":" + e.getMessage());
-			} catch (ExecutionException e) {
-				logger.info(e.getClass().getName() + ":" + e.getMessage());
-			} catch (TimeoutException e) {
-				logger.info(e.getClass().getName() + ":" + e.getMessage());
-			}
-			obj.setVirusscanResult(virusscanResponse);
 
 			// call gateway proxy and send the digital object to service
-			prepDigObjGateway.prepareDigitalObject(obj);
+			loading.load(obj, "digitalobject");
 		}
 	}
-
-	public void addDigObjToInfPkg(DigitalObject obj) {
+	
+	/**
+	 * Put DigitalObject into the box for further packaging and wrap-up.
+	 * @param obj
+	 */
+	public void box(DigitalObject obj) {
 		// add digital object to information package and deliver the package
 		InformationPackageObject pkg = null;
 		// iterate all information packages to find the one which holds the
@@ -153,10 +130,11 @@ public class PackageDeliveryService {
 		pkg.removeDigitalObjectUUID(obj.getId());
 		// invoke message to further process the information package
 		if (pkg.isReadyForDelivering())
-			prepInfPkgGateway.prepareInformationPackage(pkg);
+			// prepInfPkgGateway.prepareInformationPackage(pkg);
+			loading.load(pkg, "informationpackage");
 	}
 
-	public void createAIP(InformationPackageObject obj) {
+	public void wrapup(InformationPackageObject obj) {
 		String destfolder = "C:/ProjectData/BHL-Tests/archive/"
 				+ obj.getIdentifier() + "/";
 		synchronized (obj.getDigitalobjects()) {

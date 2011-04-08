@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:si="http://www.springframework.org/schema/integration"
+	xmlns:stream="http://www.springframework.org/schema/integration/stream"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/integration/stream 
+        http://www.springframework.org/schema/integration/stream/spring-integration-stream-2.0.xsd
+        http://www.springframework.org/schema/integration 
+        http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+	<!-- Necessary to use Annotations such as @Publisher, @ServiceActivator -->
+	<si:annotation-config default-publisher-channel="default" />
+	<si:channel id="default" />
+
+	<si:message-history />
+
+	<si:gateway id="loading"
+		service-interface="at.co.ait.domain.integration.ILoadingGateway"
+		default-request-channel="loading-ramp" />
+
+	<si:header-value-router input-channel="loading-ramp"
+		header-name="OBJECT_TYPE">
+		<si:mapping value="fileobject" channel="packaging" />
+		<si:mapping value="digitalobject" channel="security-check" />
+		<si:mapping value="informationpackage" channel="packaging-service" />
+	</si:header-value-router>
+
+	<si:channel id="packaging">
+		<si:interceptors>
+			<si:wire-tap channel="logger" />
+		</si:interceptors>
+	</si:channel>
+
+	<si:logging-channel-adapter id="logger"
+		level="INFO" expression="payload.name" />
+
+	<bean id="delivery" class="at.co.ait.domain.services.PackageDeliveryService" />
+	<si:service-activator input-channel="packaging"
+		method="preparePackage" ref="delivery" />
+
+	<bean id="virusscan" class="at.co.ait.domain.services.VirusscanService" />
+	<si:service-activator input-channel="security-check"
+		output-channel="techmetadata" method="scan" ref="virusscan" />
+
+	<!-- Extract technical metadata from DigitalObject -->
+	<bean id="jhove" class="at.co.ait.domain.services.TechMetadataExtractionService" />
+	<si:service-activator input-channel="techmetadata"
+		output-channel="deep-scan-object" method="enrich" ref="jhove" />
+
+	<!-- Extract DigitalObjectType from DigitalObject -->
+	<si:service-activator input-channel="deep-scan-object"
+		output-channel="route" method="enrich" ref="tika" />
+	<bean id="tika" class="at.co.ait.domain.services.DigitalObjectTypeExtractor" />
+
+	<si:router id="objectrouter" input-channel="route"
+		expression="payload.getObjecttypeIdx()">
+		<si:mapping value="1" channel="boxing" />
+		<si:mapping value="2" channel="converting" />
+		<si:mapping value="3" channel="mapping" />
+		<si:mapping value="4" channel="boxing" />
+		<si:mapping value="5" channel="boxing" />
+	</si:router>
+
+	<!-- Convert DigitalObject (such as image conversion ) -->
+	<si:service-activator input-channel="converting"
+		output-channel="boxing" method="convert" ref="conversion-service" />
+	<bean id="conversion-service" class="at.co.ait.domain.services.ConvertImageService" />
+
+	<!-- Mapping of metadata using SMT -->
+	<si:service-activator input-channel="mapping"
+		output-channel="boxing" method="map" ref="mapping-service" />
+	<bean id="mapping-service" class="at.co.ait.domain.services.MetadataMappingService" />
+
+	<!-- DigitalObjects are boxed together into on package -->
+	<si:service-activator input-channel="boxing"
+		method="box" ref="delivery" />
+
+	<!-- Creation of InformationPackage -->
+	<si:service-activator input-channel="packaging-service"
+		output-channel="create-aip" method="marshal" ref="mets-marshaller" />
+	<bean id="mets-marshaller" class="at.co.ait.domain.services.MetsMarshallerService" />
+
+	<!-- Wrap up of packages (copying to archive) -->
+	<si:service-activator input-channel="create-aip"
+		method="wrapup" ref="delivery" />
+
+</beans>
+
+
+

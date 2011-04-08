@@ -10,7 +10,11 @@
 		</layout>
 	</appender>
 	
-	<!-- Application Loggers -->
+	<!-- Application Loggers -->	
+	<logger name="org.springframework">
+		<level value="info" />
+	</logger>
+	
 	<logger name="at.co.ait">
 		<level value="info" />
 	</logger>

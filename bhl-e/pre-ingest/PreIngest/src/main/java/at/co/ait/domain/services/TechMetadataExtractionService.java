@@ -166,7 +166,7 @@ public class TechMetadataExtractionService {
      * @param obj DigitalObject is getting enriched by technical metadata.
      * @return
      */
-    public DigitalObject enrichDigitalObject(DigitalObject obj) {
+    public DigitalObject enrich(DigitalObject obj) {
     	try {
 			obj.setTechMetadata(this.getDocument(obj.getSubmittedFile()));
 		} catch (IOException e) {

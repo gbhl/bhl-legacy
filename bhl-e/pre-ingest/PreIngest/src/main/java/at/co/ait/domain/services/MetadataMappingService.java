@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import at.co.ait.domain.integration.IReqDescrMappingGateway;
 import at.co.ait.domain.oais.DigitalObject;
 
-public class DescrMetadataMapService {
+public class MetadataMappingService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(DescrMetadataMapService.class);
+	private static final Logger logger = LoggerFactory.getLogger(MetadataMappingService.class);
 	private IReqDescrMappingGateway descrMappingGateway;
 	
 	@Resource(name="descrMappingGateway")
@@ -28,7 +28,7 @@ public class DescrMetadataMapService {
      * @param obj DigitalObject is getting enriched by descriptive metadata.
      * @return
      */
-    public DigitalObject enrichDigitalObject(DigitalObject obj) {
+    public DigitalObject map(DigitalObject obj) {
 		String metadata = null; 
     	try {
     		// TODO read the config string out of User preferences

@@ -14,10 +14,10 @@ import org.slf4j.LoggerFactory;
 import at.co.ait.domain.services.DigitalObjectTypeExtractor;
 
 public class TestFileTypeDetectionService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(TestDirectoryListing.class);
 	private DigitalObjectTypeExtractor service = new DigitalObjectTypeExtractor();
-	
+
 	@Before
 	public void setUp() throws Exception {		
 	}
@@ -25,7 +25,7 @@ public class TestFileTypeDetectionService {
 	@After
 	public void tearDown() throws Exception {
 	}
-	
+
 	@Test
 	public void testIdentifyFile() {
 		logger.info("Testing identify");

@@ -78,7 +78,7 @@ public class DigitalObjectTypeExtractor {
 	 *            DigitalObject is getting enriched by technical metadata.
 	 * @return
 	 */
-	public DigitalObject enrichDigitalObject(DigitalObject obj) {
+	public DigitalObject enrich(DigitalObject obj) {
 		obj.setObjecttype(detectObjectType(obj.getSubmittedFile()));
 		return obj;
 	}

@@ -28,7 +28,7 @@ public class ConvertImageService {
 				outputimage.getAbsolutePath()});
 	}
 	
-	public DigitalObject enrichDigitalObject(DigitalObject digObj) {
+	public DigitalObject convert(DigitalObject digObj) {
 		return digObj;
 	}
 	

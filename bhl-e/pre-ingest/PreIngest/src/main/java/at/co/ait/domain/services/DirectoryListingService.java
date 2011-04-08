@@ -1,6 +1,8 @@
-package at.co.ait.domain;
+package at.co.ait.domain.services;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,52 +12,40 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-public class DirectoryListing {
-	private Collection<File> files = null;
-	private String basedir = null; 
-	private Map<Integer,String> allFilesAndFolders = new HashMap<Integer,String>();
-	private static final Logger logger = LoggerFactory.getLogger(DirectoryListing.class);
+import at.co.ait.web.common.UserPreferences;
+
+public class DirectoryListingService  {
+	private File basedir = null; 
+	private Map<Integer,String> visitedFilesAndFolders = new HashMap<Integer,String>();
+	private UserPreferences pref;
+	private static final Logger logger = LoggerFactory.getLogger(DirectoryListingService.class);
 	
-	public Collection<File> getFiles() {
-		return files;
+	public void init() throws MalformedURLException, IOException
+	{
+		pref = (UserPreferences) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Resource res = new UrlResource(pref.getBasedirectory());
+		setBasedir(res.getFile());
+		logger.info(pref.getBasedirectory());
+		visitedFilesAndFolders.put(basedir.hashCode(),
+    			basedir.getAbsolutePath());
+		addFolderContent(basedir);
 	}
 	
-	public void setFiles(Collection<File> files) {
-		this.files = files;
-	}
-	
-	public String getBasedir() {
+	public File getBasedir() {		
 		return basedir;
 	}
 	
-	public void setBasedir(String basedir) {
+	public void setBasedir(File basedir) {
 		this.basedir = basedir;
-		this.files = readFilesAndFoldersFromDir(basedir);	
-		this.simpleDirectoryWalker(new File(basedir));
 	}
 	
 	public File getFileByKey(Integer key) {
-		return new File(allFilesAndFolders.get(key));
+		return new File(visitedFilesAndFolders.get(key));
 	}
-	
-	/**
-	 * Invokes recursive listing of input directory.
-	 * @param fileObject Root directory's File object.
-	 */
-    private void simpleDirectoryWalker(File fileObject){		
-        if (fileObject.isDirectory()){
-        	allFilesAndFolders.put(fileObject.hashCode(),
-        			fileObject.getAbsolutePath());
-            File allFiles[] = fileObject.listFiles();
-            for(File aFile : allFiles){
-                simpleDirectoryWalker(aFile);
-        }
-        }else if (fileObject.isFile()){
-        	allFilesAndFolders.put(fileObject.hashCode(), 
-        			fileObject.getAbsolutePath());
-        }		
-    }
 	
 	/**
 	 * Read all files and folders from a directory.
@@ -71,6 +61,16 @@ public class DirectoryListing {
 		return coll;
 	}
 	
+	public void addFolderContent(File folder) {
+		File[] filesAndFolders = folder.listFiles();
+		for (File f : filesAndFolders) {			
+			if (f.isDirectory()) {
+			visitedFilesAndFolders.put(f.hashCode(),
+        			f.getAbsolutePath());
+			}
+		}
+	}
+	
 	/**
 	 * A directory tree contains a list of files and folders where each
 	 * list's entry contains a map with specific entries used by Dynatree.
@@ -78,23 +78,25 @@ public class DirectoryListing {
 	 * @return list of maps which can be serialized into JSON
 	 */
 	public List<Map<String,Object>> buildJSONMsgFromDir(String key) {
-		String dir;
+		String dir;		
 		// lookup key in a list of all files and folders to retrieve the
 		// corresponding folder
 		if (key==null) {
-			dir=allFilesAndFolders.get(new File(this.getBasedir()).hashCode());
+			dir=visitedFilesAndFolders.get(basedir.hashCode());
 		} else {			
-			dir=allFilesAndFolders.get(Integer.valueOf(key));
+			dir=visitedFilesAndFolders.get(Integer.valueOf(key));
 		}
+		// add new folders to visitedFilesAndFolders
+		logger.info("buildjsonmsg: " + dir);
+		addFolderContent(new File(dir));
 		
 		// build list of files and folders to be returned
-		List<Map<String,Object>> elements = new ArrayList<Map<String,Object>>();
+		List<Map<String,Object>> elements = new ArrayList<Map<String,Object>>();		
 		Collection<File> files = readFilesAndFoldersFromDir(dir);		
 		for (File file : files) {
 			Map<String,Object> map = new HashMap<String, Object>();
 			// subtract the basedir from the current dir
-//			map.put("title", StringUtils.remove(file.toString(), dir[0] + "\\") + " | " + identify(file));
-			map.put("title", StringUtils.remove(file.toString(), dir + "\\"));
+			map.put("title", StringUtils.remove(file.toString(), dir + File.separator));
 			// assign folder properties for dynatree
 			if(file.isDirectory()) {
 				map.put("isFolder", file.isDirectory());	

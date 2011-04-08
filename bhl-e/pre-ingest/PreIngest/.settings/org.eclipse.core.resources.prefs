@@ -1,5 +1,6 @@
-#Thu Mar 31 15:36:27 CEST 2011
+#Fri Apr 08 12:44:01 CEST 2011
 eclipse.preferences.version=1
 encoding//src/main/java/at/co/ait/web/FileBrowser.java=UTF-8
-encoding//src/main/resources/META-INF/spring/int-http-outbound-config.xml=UTF-8
+encoding//src/main/resources/META-INF/spring/appServlet/int-http-outbound-config.xml=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/layout.jsp=UTF-8
+encoding//src/test/resources/at/co/ait/web/common/TestConfigSerializer-context.xml=UTF-8

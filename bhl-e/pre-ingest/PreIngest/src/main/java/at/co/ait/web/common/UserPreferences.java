@@ -1,0 +1,66 @@
+package at.co.ait.web.common;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class UserPreferences implements UserDetails {
+	private String username;
+	private String password;
+	private String basedirectory;
+	private List<String> roles;
+	private List<GrantedAuthority> AUTHORITIES;
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public List<String> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+	public String getBasedirectory() {
+		return basedirectory;
+	}	
+	public void setBasedirectory(String basedirectory) {
+		this.basedirectory = basedirectory;
+	}
+	
+	public Collection<GrantedAuthority> getAuthorities() {
+		// XStream doesn't serialize AUTHORITIES so it needs to be initialized
+		if (AUTHORITIES==null || AUTHORITIES.isEmpty()) {
+			AUTHORITIES = new ArrayList<GrantedAuthority>();
+			for (String role: this.roles) {
+				AUTHORITIES.add(new GrantedAuthorityImpl(role));
+			}
+		}
+		return AUTHORITIES;
+	}
+	
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	public boolean isEnabled() {
+		return true;
+	}
+}
