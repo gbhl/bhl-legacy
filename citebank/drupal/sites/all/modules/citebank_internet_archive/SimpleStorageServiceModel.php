@@ -97,6 +97,19 @@ class SimpleStorageServiceModel
 	}
 
 	/**
+	* Set AWS access key and secret key
+	*
+	* @param string $accessKey Access key
+	* @param string $secretKey Secret key
+	* @return void
+	*/
+	public function setAccessKeys($accessKey, $secretKey) 
+	{
+		$this->$accessKey = $accessKey;
+		$this->$secretKey = $secretKey;
+	}
+
+	/**
 	 * setS3Obj - 
 	 */
 	public function setS3Obj($s3obj)
