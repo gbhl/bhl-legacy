@@ -16,57 +16,57 @@ require_once($includePath . 'SimpleStorageServiceRequest.php');
 require_once($includePath . 'SimpleStorageServiceModel.php');
 
 // local testing stub
-//require_once($includePath . 'DBInterfaceController.php');
+require_once($includePath . 'DBInterfaceController.php');
 
-function db_query($sql)
-{
-	$x = new DBInterfaceController();
-
-	$data = $x->fetch($sql);
-
-	return $data;
-}
-
-function db_insert($sql)
-{
-	$x = new DBInterfaceController();
-
-	$data = $x->insert($sql);
-
-	return $data;
-}
-
-function db_update($sql)
-{
-	$x = new DBInterfaceController();
-
-	$data = $x->update($sql);
-
-	return $data;
-}
-
-function db_fetch_object($sql, $list = 0)
-{
-	$x = new DBInterfaceController();
-
-	if ($list == 0) {
-		$data = $x->fetchobj($sql);
-	} else if ($list == 2) {
-		$data = $x->fetch($sql);
-	} else {
-		$data = $x->fetchobjlist($sql);
-	}
-
-	return $data;
-}
-
-function db_fetch($sql)
-{
-	$x = new DBInterfaceController();
-	$data = $x->fetch($sql);
-
-	return $data;
-}
+//function db_query($sql)
+//{
+//	$x = new DBInterfaceController_2();
+//
+//	$data = $x->fetch($sql);
+//
+//	return $data;
+//}
+//
+//function db_insert($sql)
+//{
+//	$x = new DBInterfaceController();
+//
+//	$data = $x->insert($sql);
+//
+//	return $data;
+//}
+//
+//function db_update($sql)
+//{
+//	$x = new DBInterfaceController();
+//
+//	$data = $x->update($sql);
+//
+//	return $data;
+//}
+//
+//function db_fetch_object($sql, $list = 0)
+//{
+//	$x = new DBInterfaceController();
+//
+//	if ($list == 0) {
+//		$data = $x->fetchobj($sql);
+//	} else if ($list == 2) {
+//		$data = $x->fetch($sql);
+//	} else {
+//		$data = $x->fetchobjlist($sql);
+//	}
+//
+//	return $data;
+//}
+//
+//function db_fetch($sql)
+//{
+//	$x = new DBInterfaceController();
+//	$data = $x->fetch($sql);
+//
+//	return $data;
+//}
 // local testing stub
 
 
@@ -81,8 +81,12 @@ class InternetArchiveModel
   private $accessKey; // AWS Access key
   private $secretKey; // AWS Secret key
   
+  private $loggingFlag;
+  
   private $s3;
   private $s3Model;
+  
+  private $dbi;
 
 	const CLASS_NAME    = 'InternetArchiveModel';
 	// TODO: put these in the database instead of here and have a drupal front end to change them
@@ -126,6 +130,10 @@ class InternetArchiveModel
 	 */
 	function initDefaults()
 	{
+		$this->loggingFlag = (0 + variable_get('citebank_internet_archive_loggingflag', 1) == 1 ? true : false);
+		$this->watchdog('init defaults started');
+		$this->dbi = new DBInterfaceController_2();
+
 		$this->className = self::CLASS_NAME;
 
 		$this->accessKey = self::ACCESS_KEY;
@@ -138,6 +146,8 @@ class InternetArchiveModel
 		$this->s3Model->setS3Obj($this->s3);
 		
 		$this->checkAndAddNewNodesForArchive();
+		
+		$this->watchdog('init defaults done');
 	}
 
 	/**
@@ -147,8 +157,8 @@ class InternetArchiveModel
 	{
 		$data = '';
 		
-		$type = 1; // test
-		//$type = 2; // drupal FIXME: set up to use drupal db calls
+		//$type = 1; // test
+		$type = 2; // drupal FIXME: set up to use drupal db calls
 		
 		if ($type == 1) {
 			// internal
@@ -235,11 +245,15 @@ class InternetArchiveModel
 					break;
 
 				case self::DBCMD_FETCH_OBJ:
-					$data = db_fetch_object($sql, 0);
+//					$data = db_fetch_object($sql, 0);
+					$result = db_query($sql);
+					$data = db_fetch_object($result);
 					break;
 
 				case self::DBCMD_FETCH_OBJ_LIST:
-					$data = db_fetch_object($sql, 2);
+//					$data = db_fetch_object($sql, 2);
+					$result = db_query($sql);
+					$data = db_fetch_object($result);
 					break;
 
 				case self::DBCMD_UPDATE:
@@ -302,6 +316,16 @@ class InternetArchiveModel
 	/**
 	 * process - check if set up (if not perform setup), look for items to send, and send them
 	 */
+	function watchdog($msg)
+	{
+		if ($this->loggingFlag) {
+			watchdog('InternetArchive', $msg);
+		}
+	}
+	
+	/**
+	 * process - check if set up (if not perform setup), look for items to send, and send them
+	 */
 	function process()
 	{
 		$count = 0;
@@ -311,19 +335,41 @@ class InternetArchiveModel
 		$year   = 'biblio_year';
 		$url    = 'biblio_url';
 			
+		$this->watchdog('go');
 		$nidList = $this->getAllReadyNids();
+		$this->watchdog('got nidlist');
 		
 		$readyToProcess = count($nidList);
+		
+		$this->watchdog('count of nids ' . $readyToProcess);
 
 		if (!$readyToProcess) {
 			// 'nothing to process';
 			// FIXME: log done
+			$msg = 'nothing to process';
+			$this->watchdog($msg);
 			
 			$statusInfo[] = array('nid' => 0, 'status' => 0);
 			// done.
 			return $statusInfo;
 		}
+
+		$this->watchdog('check the keys');
+		if (!$this->checkKeys()) {
+			// error, no keys
+			$msg = 'Cannot process. Must set the access keys!';
+			$this->watchdog($msg);
+
+			$statusInfo[] = array('nid' => 0, 'status' => 0);
+			return $statusInfo;
+		}
+		$this->watchdog('check done, now set them');
+		// set the keys, these define what/where we connect to and put our data on Internet Archive
+		$this->s3->setAccessKeys($this->accessKey, $this->secretKey);
+		$this->watchdog('s3, now s3Model');
+		$this->s3Model->setAccessKeys($this->accessKey, $this->secretKey);
 			
+		$this->watchdog('run thru list');
 		// get items to transfer (possibly build in some throttling)
 			// list of nids, that are 0 ready
 			// roll through nids
@@ -333,17 +379,32 @@ class InternetArchiveModel
 			//   send
 			//   mark as 1 sent
 			// self::IASTATUS_SENT
-		foreach ($nidList as $n) {
-			$nid            = $n->nid;
+		
+		$this->watchdog('nidList count pre');
+		if (count($nidList) == 0) {
+			$msg = 'Cannot process. No available nodes.';
+			$this->watchdog($msg);
 
-			$title          = $n->title;
-			$year           = $n->year;
-			$url            = $n->biblio_url;
-			
+			$statusInfo[] = array('nid' => 0, 'status' => 0);
+			return $statusInfo;
+		}
+		$this->watchdog('nidList count post');
+		
+		$this->watchdog('Nid List ' . print_r($nidList, 1));
+
+		foreach ($nidList as $keynids => $n) {
+			$nid            = $n['nid'];
+
+			$title          = $n['title'];
+			$year           = $n['year'];
+			$url            = $n['biblio_url'];
+		
 			$flagString = false;
 			
+			$this->watchdog('get item nid: ' . $nid);
 			// process
 			$fileToSend = $this->getItem($nid);
+			$this->watchdog('file to send: ' . $fileToSend);
 			
 			// check for remote file
 			$remote = substr_count($url, 'http://www.biodiversitylibrary.org/pdf');
@@ -360,7 +421,7 @@ class InternetArchiveModel
 			// build the IA (Internet Archive) name, the meta data, and send it over to IA
 			$bucket     = $this->makeIARecordName($nid, $title, $year);
 			$metaData   = $this->makeIARecordMetaData($nid);
-			$status     = $this->putItem($fileToSend, $bucket, $metaData, $flagString);
+//*** FIXME DLH FULLSTOP			//$status     = $this->putItem($fileToSend, $bucket, $metaData, $flagString);
 
 			// check off our item in the queue, preserve the original link, note the IA name
 			if ($status == 0) {
@@ -380,10 +441,29 @@ class InternetArchiveModel
 
 			$statusInfo[] = array('nid' => $nid, 'status' => $status);
 		}
+		$this->watchdog('done');
 
 		return $statusInfo;
 	}
 
+	/**
+	 * checkKeys - if we have no keys, we cannot put our data where we want it, so see if we have them.
+	 */
+	function checkKeys()
+	{
+		$flag = false;
+		$this->watchdog('keys 1');
+		if (strlen($this->accessKey) > 0) {
+			$this->watchdog('keys 2');
+			if (strlen($this->secretKey) > 0) {
+				$this->watchdog('keys 3');
+				$flag = true;
+			}
+		}
+$this->watchdog('keys done');
+		return $flag;
+	}
+	
 	/**
 	 * getItem - get items file
 	 */
@@ -417,13 +497,15 @@ class InternetArchiveModel
 		
 		// given a nid, we should be able to find a file for it
 		$sql = 'SELECT fid FROM '. $openBrace . 'upload' . $clseBrace . ' WHERE nid = ' . $nid . '';
-		$record = $this->getData($sql, self::DBCMD_FETCH_OBJ);
+		//$record = $this->getData($sql, self::DBCMD_FETCH_OBJ);
+		$record = $this->dbi->fetchobj($sql);
 
 		$fid = $record->fid;
 		
 		// given a fid, we should be able to find the filename and path
 		$sql = 'SELECT filepath, filename FROM '. $openBrace . 'files' . $clseBrace . ' WHERE nid = ' . $fid . '';
-		$record = $this->getData($sql, self::DBCMD_FETCH_OBJ);
+		//$record = $this->getData($sql, self::DBCMD_FETCH_OBJ);
+		$record = $this->dbi->fetchobj($sql);
 
 		$filename = $record->filename;  // get data file filename
 		
@@ -547,7 +629,8 @@ class InternetArchiveModel
 		//$sql = 'SELECT count(*) as total FROM '. self::ARCHIVE_TABLE .' WHERE 1';
 		$sql = 'SELECT count(*) as total FROM '. self::ARCHIVE_TABLE;
 
-		$record = $this->getData($sql, self::DBCMD_QUERY);
+		//$record = $this->getData($sql, self::DBCMD_QUERY);
+		$record = $this->dbi->fetchobj($sql);
 
 		$total = $record->total;
 		
@@ -578,7 +661,8 @@ class InternetArchiveModel
 		
 		$sql = 'SELECT count(*) as total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid)';
 
-		$record = $this->getData($sql, self::DBCMD_QUERY);
+		//$record = $this->getData($sql, self::DBCMD_QUERY);
+		$record = $this->dbi->fetchobj($sql);
 
 		$total = $record->total;
 		
@@ -594,7 +678,8 @@ class InternetArchiveModel
 		
 		$sql = 'SELECT count(*) as total FROM '. self::ARCHIVE_TABLE;
 
-		$record = $this->getData($sql, self::DBCMD_QUERY);
+		//$record = $this->getData($sql, self::DBCMD_QUERY);
+		$record = $this->dbi->fetchobj($sql);
 
 		$total = $record->total;
 		
@@ -610,7 +695,8 @@ class InternetArchiveModel
 		
 		$sql = 'SELECT * FROM '. self::ARCHIVE_TABLE . ' WHERE 1 ORDER BY nid';
 
-		$records = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$records = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		$record = $this->dbi->fetch($sql);
 
 		return $records;
 	}
@@ -630,7 +716,14 @@ class InternetArchiveModel
 		// SELECT * FROM citebank_internet_archive_records AS c JOIN node AS n ON (n.nid = c.nid) JOIN biblio AS b ON (c.nid = b.nid) WHERE c.archive_status = 0 ORDER BY c.nid
 		// SELECT c.nid, n.title, b.biblio_year as year FROM citebank_internet_archive_records AS c JOIN node AS n ON (n.nid = c.nid) JOIN biblio AS b ON (c.nid = b.nid) WHERE c.archive_status = 0 ORDER BY c.nid
 
-		$records = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$records = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$result = db_query($sql);
+		//$records = db_fetch_array($result);
+
+		$records = $this->dbi->fetch($sql);
+		
+		$this->watchdog($sql);
+		$this->watchdog('records List ' . print_r($records, 1));
 
 		return $records;
 	}
@@ -665,13 +758,15 @@ class InternetArchiveModel
 
 		// set url and ia title in our queue table
 		$sql = 'UPDATE ' . $table . ' SET biblio_url = ' . "'"  . $url . "'" . ', ia_title = ' . "'" . $bucket . "'" . ' WHERE nid = ' . $nid . '';
-		$ret = $this->getData($sql, self::DBCMD_UPDATE);
+		//$ret = $this->getData($sql, self::DBCMD_UPDATE);
+		$ret = $this->dbi->update($sql);
 
 		$ret = ($ret ? true : false);  // make if data, true else false
 
 		// update biblio entry with IA url
 		$sql = 'UPDATE biblio SET biblio_url = ' . "'" . $bucketUrl . "'" . ' WHERE nid = ' . $nid . '';
-		$ret = $this->getData($sql, self::DBCMD_UPDATE);
+		//$ret = $this->getData($sql, self::DBCMD_UPDATE);
+		$ret = $this->dbi->update($sql);
 
 		$ret = ($ret ? true : false);  // make if data, true else false
 
@@ -687,7 +782,8 @@ class InternetArchiveModel
 		
 		$sql = 'SELECT * FROM biblio as b JOIN node as n ON (n.nid = b.nid) WHERE b.nid = '.$nid.'';
 
-		$data = $this->getData($sql, self::DBCMD_FETCH);
+		//$data = $this->getData($sql, self::DBCMD_FETCH);
+		$data = $this->dbi->fetch($sql);
 
 		return $data[0];
 	}
@@ -1051,7 +1147,8 @@ class InternetArchiveModel
 		// SELECT n.nid, n.vid, f.filename, f.filepath, n.title FROM node AS n JOIN upload AS u ON n.nid = u.nid JOIN files AS f ON u.fid = f.fid WHERE n.nid = u.nid AND n.type = 'biblio' ORDER BY n.nid
 		$sql = "SELECT count(*) as total FROM node AS n JOIN upload AS u ON n.nid = u.nid JOIN files AS f ON u.fid = f.fid WHERE n.nid = u.nid AND n.type = 'biblio' ORDER BY n.nid";
 
-		$record = $this->getData($sql, self::DBCMD_FETCH_OBJ);
+		//$record = $this->getData($sql, self::DBCMD_FETCH_OBJ);
+		$record = $this->dbi->fetchobj($sql);
 
 		$total = $record->total;
 		
@@ -1065,7 +1162,10 @@ class InternetArchiveModel
 	{
 		//$num = $this->setNewNids();
 		$num = $this->checkAndAddNewNodesForArchive();
-		// FIXME: log number of new nodes 
+
+		$msg = 'Number of nodes added is ' . $num . '';
+		$this->watchdog($msg);
+
 		$this->setUpNids();
 	}
 	
@@ -1075,6 +1175,8 @@ class InternetArchiveModel
 	function checkAndAddNewNodesForArchive()
 	{
 		$countNewNodes = $this->getCountNewNodes();
+		$msg = 'count of new nodes ' . $countNewNodes . ' to add';
+		$this->watchdog($msg);
 		
 		if ($countNewNodes > 0) {
 			// find new ones
@@ -1083,8 +1185,19 @@ class InternetArchiveModel
 			$archive_status = -1;
 			$ia_title = 'blank';
 
-			foreach ($newNodes as $nid) {
-				$this->addArchiveRecord($nid, $archive_status, $ia_title);  // add them
+			if (count($newNodes)) {
+				foreach ($newNodes as $nid) {
+					
+					if ($nid > 0) {
+						$this->addArchiveRecord($nid, $archive_status, $ia_title);  // add them
+					}
+	
+					$msg = 'adding [' . $nid . '] to list';
+					$this->watchdog($msg);
+				}
+			} else {
+				$msg = 'no nodes to add (checkAndAddNewNodesForArchive)';
+				$this->watchdog($msg);
 			}
 		}
 		
@@ -1131,7 +1244,8 @@ class InternetArchiveModel
 
 		$records = array();
 
-		$records = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$records = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		$records = $this->dbi->fetchobjlist($sql);
 		
 		return $records;
 	}
@@ -1171,7 +1285,8 @@ class InternetArchiveModel
 
 		// I would prefer normal sql as opposed to drupals obfuscation.  surely you can't be serious?  I am serious, and don't call me Shirley.
 		$sql = 'INSERT INTO ' . $table . ' SET nid = ' . $nid . ', archive_status = ' . $archive_status . ', ia_title = ' . "'" . $ia_title . "'" . ', created = \''. $created . '\'';
-		$ret = $this->getData($sql, self::DBCMD_INSERT);
+		//$ret = $this->getData($sql, self::DBCMD_INSERT);
+		$ret = $this->dbi->insert($sql);
 
 		return $ret;
 	}
@@ -1191,16 +1306,23 @@ class InternetArchiveModel
 	 */
 	function setUpNids()
 	{
+		$this->watchdog('setUpNids 1');
+		
 		$nidListA = $this->getNidsAttachments();
 		$nidListB = $this->getNidsBhlArticles();
+		$this->watchdog('setUpNids 2');
 		
 		$nidList = array_merge($nidListA, $nidListB);
+		$this->watchdog('setUpNids 3');
 
 		$archive_status = 0;
 		
 		foreach ($nidList as $nid) {
+		$this->watchdog('setUpNids 4');
 			if ($this->isNidReady($nid)) {
+		$this->watchdog('setUpNids 6');
 				$this->updateArchiveRecordStatus($nid, $archive_status);
+		$this->watchdog('setUpNids 7');
 			}
 		}
 	}
@@ -1214,7 +1336,8 @@ class InternetArchiveModel
 
 		$records = array();
 
-		$recordList = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$recordList = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		$recordList = $this->dbi->fetchobjlist($sql);
 
 		foreach ($recordList as $record) { 
 			$records[] = $record->nid;
@@ -1232,7 +1355,8 @@ class InternetArchiveModel
 
 		$records = array();
 
-		$recordList = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$recordList = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		$recordList = $this->dbi->fetchobjlist($sql);
 
 		foreach ($recordList as $record) { 
 			$records[] = $record->nid;
@@ -1267,10 +1391,19 @@ class InternetArchiveModel
 
 		$records = array();
 
-		$recordList = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$recordList = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$result = db_query($sql);
+		//$recordList = db_fetch_array($result);
+		$recordList = $this->dbi->fetch($sql);
+				
+		$strRecords = print_r($recordList, 1);
+		
+		foreach ($recordList as $key => $record) { 
+			//$records[$record->nid] = $record->nid;
+			$records[$record] = $record;
 
-		foreach ($recordList as $record) { 
-			$records[$record->nid] = $record->nid;
+			$msg = 'getNidsArrayBiblio contains: [' . $record->nid . '] ' . '[' . $record . '] ' . '[' . $key . '] ' . $strRecords . '***';
+			watchdog('InternetArchive', $msg);
 		}
 		
 		return $records;
@@ -1286,10 +1419,24 @@ class InternetArchiveModel
 		
 		$records = array();
 
-		$recordList = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$recordList = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$result = db_query($sql);
+		//$recordList = db_fetch_array($result);
+		$recordList = $this->dbi->fetch($sql);
+		
+		if (count($recordList) && !empty($recordList)) {
 
-		foreach ($recordList as $record) { 
-			$records[$record->nid] = $record->nid;
+			//if ($this->loggingFlag) {
+			if (1) {
+				$what = print_r($recordList, 1);
+				$msg = 'Record list contains: [' . $what . '] ***';
+				watchdog('InternetArchive', $msg);
+			}
+
+			foreach ($recordList as $key => $record) { 
+				//$records[$record->nid] = $record->nid;
+				$records[$record] = $record;
+			}
 		}
 		
 		return $records;
@@ -1304,7 +1451,8 @@ class InternetArchiveModel
 		
 		$records = array();
 
-		$records = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		//$records = $this->getData($sql, self::DBCMD_QUERY_LIST);
+		$records = $this->dbi->fetchobjlist($sql);
 		
 		return $records;
 	}
@@ -1317,17 +1465,20 @@ class InternetArchiveModel
 		$stats = array();
 		
 		$sql = 'SELECT count(*) as total FROM '. self::ARCHIVE_TABLE . ' WHERE archive_status = -1';
-		$record = $this->getData($sql, self::DBCMD_QUERY);
+		//$record = $this->getData($sql, self::DBCMD_QUERY);
+		$record = $this->dbi->fetchobj($sql);
 		$total = $record->total;
 		$ignored = $total;
 
 		$sql = 'SELECT count(*) as total FROM '. self::ARCHIVE_TABLE . ' WHERE archive_status = 0';
-		$record = $this->getData($sql, self::DBCMD_QUERY);
+		//$record = $this->getData($sql, self::DBCMD_QUERY);
+		$record = $this->dbi->fetchobj($sql);
 		$total = $record->total;
 		$ready   = $total;
 
 		$sql = 'SELECT count(*) as total FROM '. self::ARCHIVE_TABLE . ' WHERE archive_status = 1';
-		$record = $this->getData($sql, self::DBCMD_QUERY);
+		//$record = $this->getData($sql, self::DBCMD_QUERY);
+		$record = $this->dbi->fetchobj($sql);
 		$total = $record->total;
 		$sent		 = $total;
 		
@@ -1348,7 +1499,8 @@ class InternetArchiveModel
 		// SELECT COUNT(*) AS total FROM citebank_internet_archive_records AS t WHERE t.nid = 1237
 		$sql = "SELECT count(*) as total FROM $table AS t WHERE t.nid = $nid";
 
-		$record = $this->getData($sql, self::DBCMD_QUERY);
+		//$record = $this->getData($sql, self::DBCMD_QUERY);
+		$record = $this->dbi->fetchobj($sql);
 		$total = $record->total;
 		
 		return ($total > 0 ? true : false );
@@ -1374,7 +1526,8 @@ SELECT COUNT(*) AS total FROM citebank_internet_archive_records AS t WHERE archi
 
 		$sql = "SELECT count(*) as total FROM $table AS t WHERE t.nid = $nid AND archive_status = -1";
 
-		$record = $this->getData($sql, self::DBCMD_QUERY);
+		//$record = $this->getData($sql, self::DBCMD_QUERY);
+		$record = $this->dbi->fetchobj($sql);
 
 		$total = $record->total;
 		
@@ -1421,6 +1574,7 @@ SELECT COUNT(*) AS total FROM citebank_internet_archive_records AS t WHERE archi
 
 		$sql = 'UPDATE ' . $table . ' SET archive_status = ' . $archive_status . ', created = ' . $created . ' WHERE nid = ' . $nid . ' ';
 		$ret = $this->getData($sql, self::DBCMD_UPDATE);
+		$ret = $this->dbi->update($sql);
 
 		$ret = ($ret ? true : false);  // make if data, true else false
 
