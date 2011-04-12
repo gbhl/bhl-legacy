@@ -19,7 +19,7 @@ require_once($includePath . 'FedoraController.php');
  */
 function citebank_fedora_commons_init()
 {
-	menu_rebuild();  // cut this out for production, this is helpful for development only
+	//menu_rebuild();  // cut this out for production, this is helpful for development only
 }
 
 /**
