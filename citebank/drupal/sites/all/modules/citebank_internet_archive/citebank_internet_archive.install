@@ -15,17 +15,17 @@
  */
 function citebank_internet_archive_install()
 {
+	cache_clear_all('*', 'cache', TRUE);
+  cache_clear_all('*', 'cache_filter', TRUE);
+  cache_clear_all('*', 'cache_menu', TRUE);
+  cache_clear_all('*', 'cache_page', TRUE);
+
 	$now = date('m/d/Y H:i:s');
 	$msg = 'Setting up database table for Citebank Internet Archive. ' . $now;
 	drupal_set_message(t($msg));
 	watchdog('database', $msg);
 
 	drupal_install_schema('citebank_internet_archive');
-
-	cache_clear_all('*', 'cache', TRUE);
-  cache_clear_all('*', 'cache_filter', TRUE);
-  cache_clear_all('*', 'cache_menu', TRUE);
-  cache_clear_all('*', 'cache_page', TRUE);
 }
 
 // sites/all/modules/citebank_internet_archive/citebank_internet_archive.module
