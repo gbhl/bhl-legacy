@@ -20,7 +20,7 @@ require_once($includePath . 'InternetArchiveModel.php');
  */
 function citebank_internet_archive_init()
 {
-	menu_rebuild();  // cut this out for production, this is helpful for development only
+	//menu_rebuild();  // cut this out for production, this is helpful for development only
 }
 
 /**
@@ -236,26 +236,44 @@ function citebank_internet_archive_configuration_form($form_state)
  */
 function citebank_internet_archive_cron(&$node = null, $teaser = FALSE, $page = FALSE)
 {
-	// we need an off switch if processed that file.
-	ia_watchmen('Internet Archive cron');
-	processCiteBankInternetArchive();
+	$cronGo = false;
+	
+	// try to make sure this runs only once a cycle
+	$cronTime = variable_get('citebank_internet_archive_crontime', 0);
+	
+	if ($cronTime == 0) {  // it's the first time
+		$cronGo = true;
+		$cronTime = variable_set('citebank_internet_archive_crontime', time());
+//		ia_watchmen('IA first time crontime ' . $cronTime);
+	} else if ($cronTime + 240 < time()) { // allow if past four minutes from last time  
+		// last time 3:30, now 3:45, then go
+		// last time 3:30:00, now 3:30:05, then dont go
+		$cronGo = true;
+		$cronTime = variable_set('citebank_internet_archive_crontime', time());
+//		ia_watchmen('IA crontime ' . $cronTime);
+	} else {
+		$cronGo = false;
+	}
+	
+	if ($cronGo) {
+		// we need an off switch if processed that file.
+//		ia_watchmen('Internet Archive cron');
+		citebank_internet_archive_processCiteBankInternetArchive();
+	}
 }
 
 /**
- * processCiteBankInternetArchive - 
+ * citebank_internet_archive_processCiteBankInternetArchive - 
  */
-function processCiteBankInternetArchive()
+function citebank_internet_archive_processCiteBankInternetArchive()
 {
 	// must be explicitly set
 	$processFlag = (0 + variable_get('citebank_internet_archive_processflag', 0) == 1 ? true : false);
 
 	// if 
 	if ($processFlag) {
+		//ia_watchmen('Citebank Internet Archive Run InternetArchiveModel');
 		$x = new InternetArchiveModel();
-		
-		$accessKey = variable_get('citebank_internet_archive_s3accesskey', '');
-		$secretKey = variable_get('citebank_internet_archive_s3secretkey', '');
-		$x->setAuth($accessKey, $secretKey);
 		
 		$x->process();
 	} else {
