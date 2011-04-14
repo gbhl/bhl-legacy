@@ -105,8 +105,8 @@ class SimpleStorageServiceModel
 	*/
 	public function setAccessKeys($accessKey, $secretKey) 
 	{
-		$this->$accessKey = $accessKey;
-		$this->$secretKey = $secretKey;
+		$this->accessKey = $accessKey;
+		$this->secretKey = $secretKey;
 	}
 
 	/**
