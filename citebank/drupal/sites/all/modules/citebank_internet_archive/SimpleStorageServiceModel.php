@@ -49,6 +49,7 @@ class SimpleStorageServiceModel
 	private $headers    = array( 'Host' => '', 'Date' => '', 'Content-MD5' => '', 'Content-Type' => '' );
   public $accessKey; // AWS Access key
   public $secretKey; // AWS Secret key
+  public $loggingFlag = false;
   
   public $s3obj;
 	
@@ -134,7 +135,10 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::listBuckets(): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::listBuckets(): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::listBuckets(): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
+
 			return false;
 		}
 
@@ -205,7 +209,10 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($response->error !== false) {
-			trigger_error(sprintf("S3::getBucket(): [%s] %s", $response->error['code'], $response->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::getBucket(): [%s] %s", $response->error['code'], $response->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::getBucket(): [%s] %s", $response->error['code'], $response->error['message']);
+			$this->watchdog($msg);
+			
 			return false;
 		}
 
@@ -299,6 +306,7 @@ class SimpleStorageServiceModel
 	public function putBucket($bucket, $acl = self::ACL_PUBLIC_READ, $location = false) 
 	{
 		$rest = $this->s3obj->S3Request('PUT', $bucket, '');
+
 		//$rest->setAmzHeader('x-amz-acl', $acl);
 		$rest->setAmzHeader('x-archive-acl', $acl);
 		$rest->setHeader('Content-Length', 0);
@@ -321,13 +329,24 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::putBucket({$bucket}, {$acl}, {$location}): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::putBucket({$bucket}, {$acl}, {$location}): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::putBucket({$bucket}, {$acl}, {$location}): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
 		
 		return true;
+	}
+
+	/**
+	 * process - check if set up (if not perform setup), look for items to send, and send them
+	 */
+	function watchdog($msg)
+	{
+		if ($this->loggingFlag) {
+			watchdog('S3', $msg);
+		}
 	}
 
 	/**
@@ -346,8 +365,9 @@ class SimpleStorageServiceModel
 		}
 			
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::deleteBucket({$bucket}): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::deleteBucket({$bucket}): [%s] %s",$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::deleteBucket({$bucket}): [%s] %s",$rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -365,7 +385,9 @@ class SimpleStorageServiceModel
 	public function inputFile($file, $md5sum = true) 
 	{
 		if (!file_exists($file) || !is_file($file) || !is_readable($file)) {
-			trigger_error('S3::inputFile(): Unable to open input file: '.$file, E_USER_WARNING);
+			//trigger_error('S3::inputFile(): Unable to open input file: '.$file, E_USER_WARNING);
+			$msg = 'S3::inputFile(): Unable to open input file: '.$file;
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -386,7 +408,9 @@ class SimpleStorageServiceModel
 	public function inputResource(&$resource, $bufferSize, $md5sum = '')
 	{
 		if (!is_resource($resource) || $bufferSize < 0) {
-			trigger_error('S3::inputResource(): Invalid resource or buffer size', E_USER_WARNING);
+			//trigger_error('S3::inputResource(): Invalid resource or buffer size', E_USER_WARNING);
+			$msg = 'S3::inputResource(): Invalid resource or buffer size';
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -417,6 +441,7 @@ class SimpleStorageServiceModel
 		// have to make new object for this to work, must be collision of some sort.
 		//$rest = $this->s3obj->S3Request('PUT', $bucket, $uri);
 		$s3obj      = new SimpleStorageServiceRequest();
+		$s3obj->setAccessKeys($this->accessKey, $this->secretKey);
 		$rest = $s3obj->S3Request('PUT', $bucket, $uri);
 
 		if (is_string($input)) {
@@ -482,14 +507,62 @@ class SimpleStorageServiceModel
 			//$rest->setAmzHeader('x-amz-acl', $acl);
 			$rest->setAmzHeader('x-archive-acl', $acl);
 			
-			$rest->setAmzHeader('x-archive-meta-collection', 'citebank');  // DLH FIXME maybe need if we already have metadata there
-			$rest->setAmzHeader('x-archive-ignore-preexisting-bucket', '1');  // DLH FIXME maybe need if we already have metadata there
+			$rest->setAmzHeader('x-archive-auto-make-bucket', '1');
+			$rest->setAmzHeader('x-archive-meta01-collection', 'citebank');  // Citebank Collection
+			$rest->setAmzHeader('x-archive-meta-mediatype', 'texts');
+			$rest->setAmzHeader('x-archive-ignore-preexisting-bucket', '1');  // supposed to ignore a preexisting bucket
+			$rest->setAmzHeader('x-archive-meta-language', 'eng');
+
+			$msg = 'size hint: (' . $rest->size . ')';
+			$this->watchdog($msg);
+			$rest->setAmzHeader('x-archive-size-hint', $rest->size);
 			
 			foreach ($metaHeaders as $h => $v) {
-				//echo '' . $h . ' ' . $v . '<br>';
 				//$rest->setAmzHeader('x-amz-meta-'.$h, $v);
-				$h = str_replace('_', '--', $h);
-				$rest->setAmzHeader('x-archive-meta-'.$h, $v);
+				// if author or subject, deal with arrays, else just add the item
+				switch ($h) {
+					case 'creator':
+					//case 'author':
+						if (count($v)) {
+							//$msg = 'creator list: ***' . print_r($v, 1) . '***';
+							//$this->watchdog($msg);
+
+							$authorCount = 1;
+							$authorList = explode('|', $v);
+							
+							foreach ($authorList as $vkey => $author) {
+								$metaCount = ($authorCount < 10 ? '0' . $authorCount : '' . $authorCount );
+
+								$msg = 'x-archive-meta'.$metaCount.'-'.$h . ':' . $author;
+								$this->watchdog($msg);
+								
+								$rest->setAmzHeader('x-archive-meta'.$metaCount.'-'.$h, $author);
+								$authorCount++;
+							}
+						}
+						break;
+						
+					case 'subject':
+						if (count($v)) {
+							//$msg = 'subject list: ***' . print_r($v, 1) . '***';
+							//$this->watchdog($msg);
+
+							$subjectCount = 1;
+							$subjectList = explode('|', $v);
+							
+							foreach ($subjectList as $vkey => $subject) {
+								$metaCount = ($subjectCount < 10 ? '0' . $subjectCount : '' . $subjectCount );
+								$rest->setAmzHeader('x-archive-meta'.$metaCount.'-'.$h, $subject);
+								$subjectCount++;
+							}
+						}
+						break;
+						
+					default:
+						$h = str_replace('_', '--', $h);
+						$rest->setAmzHeader('x-archive-meta-'.$h, $v);
+						break;
+				}
 			}
 
 			$rest->getResponse();
@@ -502,7 +575,9 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->response->error !== false) {
-			trigger_error(sprintf("S3::putObject(): [%s] %s", $rest->response->error['code'], $rest->response->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::putObject(): [%s] %s", $rest->response->error['code'], $rest->response->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::putObject(): [%s] %s", $rest->response->error['code'], $rest->response->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -575,8 +650,9 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->response->error !== false) {
-			trigger_error(sprintf("S3::getObject({$bucket}, {$uri}): [%s] %s",
-			$rest->response->error['code'], $rest->response->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::getObject({$bucket}, {$uri}): [%s] %s", $rest->response->error['code'], $rest->response->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::getObject({$bucket}, {$uri}): [%s] %s", $rest->response->error['code'], $rest->response->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -602,8 +678,9 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::getObjectInfo({$bucket}, {$uri}): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::getObjectInfo({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::getObjectInfo({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -654,8 +731,9 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::copyObject({$srcBucket}, {$srcUri}, {$bucket}, {$uri}): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::copyObject({$srcBucket}, {$srcUri}, {$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::copyObject({$srcBucket}, {$srcUri}, {$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -739,8 +817,9 @@ class SimpleStorageServiceModel
 		}
 			
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::setBucketLogging({$bucket}, {$uri}): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::setBucketLogging({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::setBucketLogging({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -768,8 +847,9 @@ class SimpleStorageServiceModel
 		}
 			
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::getBucketLogging({$bucket}): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::getBucketLogging({$bucket}): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::getBucketLogging({$bucket}): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -812,8 +892,9 @@ class SimpleStorageServiceModel
 		}
 			
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::getBucketLocation({$bucket}): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::getBucketLocation({$bucket}): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::getBucketLocation({$bucket}): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -880,8 +961,9 @@ class SimpleStorageServiceModel
 		}
 			
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::setAccessControlPolicy({$bucket}, {$uri}): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::setAccessControlPolicy({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::setAccessControlPolicy({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -907,8 +989,9 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::getAccessControlPolicy({$bucket}, {$uri}): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::getAccessControlPolicy({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::getAccessControlPolicy({$bucket}, {$uri}): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -972,8 +1055,9 @@ class SimpleStorageServiceModel
 		}
 			
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::deleteObject(): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::deleteObject(): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::deleteObject(): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -1110,8 +1194,9 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::createDistribution({$bucket}, ".(int)$enabled.", '$comment'): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::createDistribution({$bucket}, ".(int)$enabled.", '$comment'): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::createDistribution({$bucket}, ".(int)$enabled.", '$comment'): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 			
@@ -1140,8 +1225,9 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::getDistribution($distributionId): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::getDistribution($distributionId): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::getDistribution($distributionId): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 
 			return false;
 			
@@ -1176,8 +1262,9 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::updateDistribution({$dist['id']}, ".(int)$enabled.", '$comment'): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::updateDistribution({$dist['id']}, ".(int)$enabled.", '$comment'): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::updateDistribution({$dist['id']}, ".(int)$enabled.", '$comment'): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 			
@@ -1210,8 +1297,9 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::deleteDistribution({$dist['id']}): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::deleteDistribution({$dist['id']}): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::deleteDistribution({$dist['id']}): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 		}
@@ -1236,8 +1324,9 @@ class SimpleStorageServiceModel
 		}
 		
 		if ($rest->error !== false) {
-			trigger_error(sprintf("S3::listDistributions(): [%s] %s",
-			$rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			//trigger_error(sprintf("S3::listDistributions(): [%s] %s", $rest->error['code'], $rest->error['message']), E_USER_WARNING);
+			$msg = sprintf("S3::listDistributions(): [%s] %s", $rest->error['code'], $rest->error['message']);
+			$this->watchdog($msg);
 			
 			return false;
 			
