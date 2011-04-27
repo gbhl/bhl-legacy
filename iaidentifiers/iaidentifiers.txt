@@ -4223,6 +4223,7 @@ annalesdescience02fran
 annalesdessci791890miln
 annalesdesscie6121881miln
 annalesdesscie8161902miln
+annalesdesscie8181903miln
 annalesdesscie9141911miln
 annalesdesscie9191914miln
 annalesdesscien911905miln
@@ -4497,6 +4498,7 @@ annalidelmuse1171881muse
 annalidelmuse36muse
 annalidelmuse51192325muse
 annalidelmuse52192528muse
+annalidelmuse53192830muse
 annalidelmuse55193032muse
 annalidelmuse58193539muse
 annalidelmuse85198485muse
@@ -5523,8 +5525,10 @@ annualreportofbu39smithso
 annualreportofbu40smithso
 annualreportofbu418821883smit
 annualreportofbu41smithso
+annualreportofbu42smithso
 annualreportofbu43smithso
 annualreportofbu44smithso
+annualreportofbu45smithso
 annualreportofbu46smithso
 annualreportofbu47smithso
 annualreportofbu48smithso
@@ -8366,6 +8370,7 @@ australianlifein00buleuoft
 australianmuseum1192123aust
 australianpictur00willrich
 authentichistori00miln
+authentichistory00inmomb
 authentichistory00momb
 authenticletters00colu
 authoritybackgro00montrich
@@ -9033,6 +9038,7 @@ beitrgezurkent00zell
 beitrgezurkrypto01schw
 beitrgezurkrypto03schw
 beitrgezurlehr00mb
+beitrgezurmeer00sch
 beitrgezurmeer139178mb
 beitrgezurmeer181352mb
 beitrgezurmikr00cloe
@@ -9222,6 +9228,7 @@ berdieniereder00semp
 berdiepalade00dalm
 berdiepalpende00reut
 berdiespiralen00grab
+berdiestellung00krug
 berdievonherrn00simr
 berdiezoneavic00ditt
 bereinigevge00kitt
@@ -14855,8 +14862,21 @@ bulletinmassachu6610mass
 bulletinmassachu7190mass
 bulletinmassachu7998mass
 bulletinmassachu8604mass
+bulletinnewyork111893newy
+bulletinnewyork121895newy
+bulletinnewyork141895newy
+bulletinnewyork151895newy
+bulletinnewyork171897newy
+bulletinnewyork211898newy
+bulletinnewyork251898newy
+bulletinnewyork261899newy
+bulletinnewyorks21887newy
+bulletinnewyorks31888newy
+bulletinnewyorks51888newy
 bulletinnewyorks661903newy
 bulletinnewyorks681903newy
+bulletinnewyorks71889newy
+bulletinnewyorks81889newy
 bulletinnewyorks861905new
 bulletino163919061919brit
 bulletinofameric17alleuoft
@@ -20825,6 +20845,7 @@ cihm_46035
 cihm_46047
 cihm_46605
 cihm_46606
+cihm_47295
 cihm01316
 cihm01317
 cillybugsalvaget00montrich
@@ -24362,6 +24383,7 @@ dasssswasserpl00zach
 dassystemderlepi00esch
 dassystemderpilz00nee
 dassystemderpilz00nees
+dastabakmonopoli00busu
 dasterrariumunds00kukh
 dasthierlebender00tsch
 dasthierreichgeo01cuvi
@@ -26352,6 +26374,7 @@ diemeteorsteined01rei
 diemethodenderfo00heyeuoft
 diemglichkeite00bartuoft
 diemikroskopisch00bloc
+diemikroskopisch00kirc
 diemikroskopisch00lind
 diemitteleurop00mayr
 diemittelzurbek00holl
@@ -26748,6 +26771,7 @@ dievogelostafrik00fins
 dievogelsprachee00schm
 dievogelwartehel00gehe
 dievogelwartehel00gt
+dievollstndigs00reic
 dievollstndigs02reic
 dievollstndigs03reic
 dievonherrnprofe00manj
@@ -27684,6 +27708,7 @@ dynamicpropertie00harr
 dynamicsofliving00loeb
 dynamicsofliving1906loeb
 dynamicsofpartic00websrich
+dynamictheoryoff437taka
 dynamictheoryoff441taka
 dynamictheoryofl00alexrich
 dynamicwaveheigh00mill
@@ -35366,10 +35391,13 @@ gardenflowershow00randiala
 gardenflowershow01rand
 gardenflowersofy00londuoft
 gardenfoesinsect00sand
+gardenforestjou101897sarg
+gardenforestjour11888sarg
 gardenforestjour21889sarg
 gardenforestjour31890sarg
 gardenforestjour51892sarg
 gardenforestjour61893sarg
+gardenforestjour71894sarg
 gardenforestjour81895sarg
 gardenforestjour91896sarg
 gardenglmidlande00holmrich
@@ -36354,6 +36382,7 @@ geologyofwiscons02geolrich
 geologyofyellows00hagu
 geologyogdensbur00cushrich
 geologyquicksilv00bailrich
+geologywaterreso00fish
 geomagneticbathy00aver
 geometryofprofil00ever
 geomorphicvariab00moss
@@ -41143,6 +41172,7 @@ iberusrevistadel221soci
 iberusrevistadel81988soci
 iberusrevistadel91990soci
 ibexshootingonhi00taylrich
+ibiologicallabor00phil
 ibirdsfrommindor00mcgrrich
 ibis_21914brit
 ibis02brit
@@ -41491,6 +41521,7 @@ ignatiibornindex00born
 igoafishing00primiala
 igoafishing00primuoft
 igoafishing01prim
+iheringia111195759muse
 iheringia1227196062muse
 iheringia2837196369muse
 iheringia4245197374fund
@@ -42139,6 +42170,7 @@ indianmuseumnot211891indi
 indianmuseumnot221891indi
 indianmuseumnot231891indi
 indianmuseumnot241891indi
+indianmuseumnot261893indi
 indianmuseumnot271893indi
 indianmuseumnot311893indi
 indianmuseumnot321893indi
@@ -46808,6 +46840,7 @@ lebensgeschichte14kirc
 lebensweisevonfo00nord
 lebenundtreibend00mars
 leberundtorfmoos00warn
+lebonbergeroulev00brie
 lebonjardinieral00pari
 lebonjardinieral00poit
 lebotaniste01cent
@@ -47624,6 +47657,7 @@ lesirisdanslesja00corr
 lesjardinsdevers00nolhuoft
 leslacsdeshautsp00neve
 leslescanaries00pita
+leslimitesdelabi00gras
 lesloisdelagn00gouruoft
 lesloisirsduncam00pizzuoft
 lesmaladiescrypt00love
@@ -49178,6 +49212,7 @@ magazinfrdiena04hp
 magazinfrinsek06illi
 magicplantsbeing00heuc
 magnersabcguidet00magn
+magnersstoryoftw00magn
 magneticalobserv00kanerich
 magneticcircuit00karauoft
 magneticobservat00brituoft
@@ -50857,7 +50892,12 @@ memoiresdelasoci15agri
 memoiresdelasoci16agri
 memoiresdelasoci17agri
 memoiresdelasoci1840soci
+memoiresdelasoci18411agri
 memoiresdelasoci18412agri
+memoiresdelasoci1842agri
+memoiresdelasoci1846agri
+memoiresdelasoci1850agri
+memoiresdelasoci18572agri
 memoiresdelasoci1862soci
 memoiresdelasoci1864soci
 memoiresdelasoci1866soci
@@ -52391,6 +52431,7 @@ missionofforeign00unit
 missionscienti3121886miss
 missionscienti6271891miss
 missionscienti6281889miss
+missionscientif611891miss
 missionscientif631891miss
 missionscientifi00miss
 missionscientifi06miss
@@ -52759,6 +52800,7 @@ mlekopitaiushchi02satu
 mllersoperativ00ml
 mmittereportofco00calirich
 mmoireinstruct00turg
+mmoireprsent00lafi
 mmoires101903soci
 mmoires111903soci
 mmoires11319081912alja
@@ -53876,6 +53918,10 @@ monographonstruc00parkrich
 monographonsubcl01darw
 monographonsubcl02darw
 monographontermi40seev
+monographpheasa1Beeb
+monographpheasa2Beeb
+monographpheasa3Beeb
+monographpheasa4Beeb
 monographsofdipt00loew
 monographsofnort00coue
 monographsofunit101886geol
@@ -56198,6 +56244,7 @@ Naumann1Naum
 Naumann3Naum
 Naumann4Naum
 Naumann7Naum
+Naumann8Naum
 Naumann9Naum
 naumanniaarchivf01deut
 naumanniaarchivf02deut
@@ -56955,6 +57002,7 @@ neworchardgarden00laws
 neworderofsainth00osborich
 neworiginaltheor00rogerich
 neworlittleknown42rigg
+newornoteworthyp00merr
 newornoteworthyp03merrrich
 newornoteworthyp11merr
 newornoteworthysfigree
@@ -59701,6 +59749,7 @@ oldjimaverysownf01aver
 oldmansholidays00marsrich
 oldnegardencraft00seddrich
 oldnewplantlores11chas
+oldnewzealandta00mani
 oldplymouthtrail00pack
 oldplymouthtrail00packrich
 oldplymouthtrail00packuoft
@@ -60200,14 +60249,26 @@ ophthalmictestfo00unit
 ophthalmologyfor00shar
 ophthalmologyfor01shar
 opinionsdecla10195556inte
+opinionsdecla11195556inte
+opinionsdecla12195657inte
 opinionsdecla13195657inte
+opinionsdecla17195758inte
 opinionsdecla19195859inte
+opinionsdeclar1195556inte
 opinionsdeclar1195657inte
 opinionsdeclar1195758inte
+opinionsdeclar3194454inte
 opinionsdeclar6195455inte
+opinionsdeclar8195455inte
 opinionsdeclar9195455inte
+opinionsdeclara151957inte
+opinionsdeclara161958inte
+opinionsdeclara201959inte
 opinionsdeclarat11958int
 opinionsdeclarat11958inte
+opinionsdeclarat41954inte
+opinionsdeclarat51954inte
+opinionsdeclarat71954inte
 opinionsofscient00brad
 opisthobra151121983long
 opisthobranch10141978long
@@ -64065,6 +64126,13 @@ poultrydoctortre00dieh
 poultryeggsforma00newzrich
 poultryexhibitof00unit
 poultryexperienc00gros
+poultryfanciervo11chic
+poultryfanciervo12chic
+poultryfanciervo13chic
+poultryfanciervo14chic
+poultryfanciervo15chic
+poultryfanciervo16chic
+poultryfanciervo17chic
 poultryfarmpopul00watsrich
 poultryfeedsfeed00lamorich
 poultryforprofit00koetrich
@@ -65027,6 +65095,7 @@ proboscideamonog02osbo
 procambarusnewsu00ortm
 proceduresforhom00dawsrich
 proceduresforpre00sore
+proceeding10019871100biol
 proceedings00inte
 proceedings00symp
 proceedings01dave
@@ -65142,7 +65211,9 @@ proceedings64royauoft
 proceedings67royauoft
 proceedings6869195556biol
 proceedings69royauoft
+proceedings7071195758biol
 proceedings721928unit
+proceedings7273195960biol
 proceedings72royauoft
 proceedings7475196162biol
 proceedings75royauoft
@@ -65565,11 +65636,13 @@ proceedingsofasi96asia
 proceedingsofasi99asia
 proceedingsofass00assorich
 proceedingsofb1001987biol
+proceedingsofb1011988biol
 proceedingsofb1021989bio
 proceedingsofb1021989biol
 proceedingsofb1031990biol
 proceedingsofb1061993biol
 proceedingsofb1081995biol
+proceedingsofb1091996biol
 proceedingsofb1111998bio
 proceedingsofb1121999biol
 proceedingsofb1142001bio
@@ -65590,6 +65663,7 @@ proceedingsofbi371924biol
 proceedingsofbi381925biol
 proceedingsofbi391926biol
 proceedingsofbi401927biol
+proceedingsofbi411928biol
 proceedingsofbi421929biol
 proceedingsofbi431930biol
 proceedingsofbi461933biol
@@ -65601,6 +65675,7 @@ proceedingsofbi511938biol
 proceedingsofbi521939biol
 proceedingsofbi531940biol
 proceedingsofbi541941biol
+proceedingsofbi551942biol
 proceedingsofbi801967biol
 proceedingsofbi811968biol
 proceedingsofbi821969biol
@@ -65614,6 +65689,8 @@ proceedingsofbi941981bio
 proceedingsofbi941981biol
 proceedingsofbi961983biol
 proceedingsofbi971984bio
+proceedingsofbi971984biol
+proceedingsofbi981985biol
 proceedingsofbi991986biol
 proceedingsofbio01biol
 proceedingsofbio02biol
@@ -66186,6 +66263,7 @@ proceedingsofroc02roch
 proceedingsofroc03roch
 proceedingsofroc04roch
 proceedingsofroc05roch
+proceedingsofroy01dubl
 proceedingsofroy01edin
 proceedingsofroy01lond
 proceedingsofroy01proc
@@ -66202,8 +66280,10 @@ proceedingsofroy04proc
 proceedingsofroy04roya
 proceedingsofroy05proc
 proceedingsofroy05roya
+proceedingsofroy06dubl
 proceedingsofroy06proc
 proceedingsofroy06roya
+proceedingsofroy07dubl
 proceedingsofroy07roya
 proceedingsofroy08roya
 proceedingsofroy09roya
@@ -67269,6 +67349,7 @@ puremilkhowtoget00texa
 puremilkthepubli00wardrich
 puresaddlehorses01curr
 purificationpart00baum
+purificationplan00wisc
 purificationprop00jonerich
 putnamsgardenhan00croyrich
 putnamsvegetable00croyrich
@@ -69150,6 +69231,8 @@ reportofsecretar1950smit
 reportofsecretar1951smit
 reportofsecretar1952smit
 reportofsecretar1953smit
+reportofsecretar1954smit
+reportofsecretar1955smit
 reportofsecretar1956smit
 reportofsecretar1957smit
 reportofsecretar1958smit
@@ -69291,6 +69374,7 @@ reportonamcolleg00mallrich
 reportonanatomyo00forb
 reportonarkansas00unit
 reportonassessme00michuoft
+reportonbacillus00wool
 reportonbeetlede00frogrich
 reportonbigtrees00unit
 reportonbirdcens00cook
@@ -69475,10 +69559,28 @@ reportonprogress1921unit
 reportonprogress1922unit
 reportonprogress1924unit
 reportonprogress1925unit
+reportonprogress1926unit
 reportonprogress1927unit
 reportonprogress1928unit
 reportonprogress1929unit
 reportonprogress1930unit
+reportonprogress1933unit
+reportonprogress1934unit
+reportonprogress1935unit
+reportonprogress1936uni
+reportonprogress1937uni
+reportonprogress1938unit
+reportonprogress1939uni
+reportonprogress1940unit
+reportonprogress1941unit
+reportonprogress1942unit
+reportonprogress1943unit
+reportonprogress1944unit
+reportonprogress1945unit
+reportonprogress1946unit
+reportonprogress1947unit
+reportonprogress1949unit
+reportonprogress1950unit
 reportonprogress19unit
 reportonprogress20unit
 reportonprogress21unit
@@ -72724,7 +72826,6 @@ shellcatalogues00newyrich
 shellcollectorsh00will
 shelldiseaseofcr00nort
 shelledinvertebr101931bass
-shelleyhistwenti00tathrich
 shellfishcontami00stilrich
 shellfishindustr00kell
 shellfishindustr00kellrich
@@ -72748,6 +72849,9 @@ shellssea202471988long
 shellssealife00keep
 shellssealife00keeprich
 Shellssealife17
+Shellssealife17A
+Shellssealife18
+Shellssealife18A
 shellssealife2011988long
 shellssealife2031988long
 shellssealife211989long
@@ -73096,6 +73200,7 @@ sitzungsbericht110stuoft
 sitzungsbericht113stuoft
 sitzungsbericht114stuoft
 sitzungsbericht115stuoft
+sitzungsbericht171855kais
 sitzungsbericht641871kais
 sitzungsbericht951887kais
 sitzungsberichte00gese
@@ -73854,6 +73959,7 @@ smithsonianyeara1982smit
 smithsonianyeara1983smit
 smithsonianyeara1984smit
 smithsonianyeara1999smit
+smithsonianyeara2000smit
 smithsonianyeara8587smit
 smithsonianyeara8890smit
 smithsonianyeara9197smit
@@ -78270,6 +78376,7 @@ tettigidaeofnort00hanc
 teutschlandsphan00spen
 texasfarmopportu00unit
 texasfeverincali00salmrich
+texasfeverinphil00jobl
 texasfeveritshis00archrich
 texasricebook00soutrich
 texasstockdirect01jack
@@ -80341,6 +80448,7 @@ transactionsofod02odon
 transactionsofot1418971907otta
 transactionsofpa00paci
 transactionsofph00royarich
+transactionsofph01phil
 transactionsofro012oya
 transactionsofro015oya
 transactionsofro016oya
@@ -81768,6 +81876,7 @@ underafricansund00anso
 underappletrees00burr
 underappletrees00burrrich
 undergroundwater00jenk
+undergroundwater00veat
 undermaples00burr
 undermaples00burrrich
 underseawithhelm00dupo
