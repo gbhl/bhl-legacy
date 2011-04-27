@@ -292,10 +292,13 @@ class SimpleStorageServiceRequest
 		if (sizeof($amz) > 0) {
 			sort($amz);
 			$amz = "\n" . implode("\n", $amz);
+			//watchdog('S3 header sort', print_r($amz, 1));
 		} else {
 			$amz = '';
 		}
 		
+		//watchdog('S3 header', print_r($amz, 1));
+
 		// Authorization string (CloudFront stringToSign should only contain a date)
 		//$headers[] = 'Authorization: ' . $this->getSignature( ($this->headers['Host'] == 'cloudfront.amazonaws.com' ? $this->headers['Date'] : $this->verb . "\n" . $this->headers['Content-MD5'] . "\n". $this->headers['Content-Type'] . "\n" . $this->headers['Date'] . $amz . "\n" . $this->resource) );
 
