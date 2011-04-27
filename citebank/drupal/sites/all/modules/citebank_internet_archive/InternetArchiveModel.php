@@ -31,11 +31,14 @@ class InternetArchiveModel
   private $loggingFlag;
   private $throttle;
   private $throttleFlag;
+  private $prefix;
+  private $configs;
   
   private $s3;
   private $s3Model;
   
   private $dbi;
+  private $host;
 
 	const CLASS_NAME    = 'InternetArchiveModel';
 	// in the database, has a drupal front end to change them
@@ -45,7 +48,6 @@ class InternetArchiveModel
 
 	const ARCHIVE_TABLE = 'citebank_internet_archive_records';
 	
-	//const MAXLENGTH = 15;  // max length of title to use
 	const MAXLENGTH = 30;  // max length of title to use
 
 	const DOI_PREFIX = '123456789';  // DOI prefix for BHL, Citebank, etc... (TBD, possibly will not be one)
@@ -72,10 +74,13 @@ class InternetArchiveModel
 	function initDefaults()
 	{
 		$configs = $this->getConfig();
+		$this->configs = $configs;
 		$this->loggingFlag = $configs['loggingFlag'];
 
 		$this->throttle = $configs['throttle'];
 		$this->throttleFlag = $configs['throttleFlag'];
+
+		$this->prefix = $configs['citebankPrefix'];
 		
 		$this->dbi = new DBInterfaceController_2();
 
@@ -89,10 +94,13 @@ class InternetArchiveModel
 		
 		$this->s3->setAccessKeys($this->accessKey, $this->secretKey);
 		$this->s3Model->setS3Obj($this->s3);
+
+		$this->s3Model->loggingFlag = $this->loggingFlag;
 		
 		$this->checkAndAddNewNodesForArchive();
 
 		$this->statusCheck();
+		$this->host = $_SERVER['SERVER_NAME'];
 	}
 
 	/**
@@ -134,7 +142,6 @@ class InternetArchiveModel
 			// check if bhl article pdfs
 				// mark as 0, ready to transfer
 		if (!$this->checkReadyToProcess($count)) {
-			//$this->oneTimeSetup();
 			$this->setUpNids();
 			$flag = true;
 		} else {
@@ -147,7 +154,7 @@ class InternetArchiveModel
 	}
 
 	/**
-	 * process - check if set up (if not perform setup), look for items to send, and send them
+	 * watchdog - logging
 	 */
 	function watchdog($msg)
 	{
@@ -155,22 +162,60 @@ class InternetArchiveModel
 			watchdog('InternetArchive', $msg);
 		}
 	}
-	
+
 	/**
-	 * process - check if set up (if not perform setup), look for items to send, and send them
+	 * process - check if set up (if not perform setup - handled in constructor initilization)
 	 */
 	function process()
 	{
+		$this->drupalCronProcess();
+	}
+	
+	/**
+	 * drupalCronProcess - basic drupal cron, constructor handles the setup, just a stub for any future drupal cron activity
+	 */
+	function drupalCronProcess()
+	{
+		$statusInfo = array();
+			
+		$this->watchdog('drupalCronProcess done');
+
+		$statusInfo[] = array('nid' => 0, 'status' => 0);
+
+		return $statusInfo;
+	}
+	
+	/**
+	 * runExternalCronProcess - check if set up (if not perform setup), look for items to send, and send them.  
+	 *      external cron process calls this, as drupal cron process does not have time to handle the capacity, large files which could push way over the limited time window allotted for drupal.
+	 */
+	function runExternalCronProcess()
+	{
+		$statusInfo = 1;
+
+		$this->watchdog('runExternalCronProcess begin');
+
+		$this->processInternetArchiveRecords();
+		
+		$this->watchdog('runExternalCronProcess done');
+
+		return $statusInfo;
+	}
+	
+	/**
+	 * processInternetArchiveRecords - check if set up (if not perform setup), look for items to send, and send them.  this does the heavy lifting.
+	 */
+	function processInternetArchiveRecords()
+	{
 		$count = 0;
+		$status = 1;
 		$statusInfo = array();
 
 		$title  = 'title';
 		$year   = 'biblio_year';
 		$url    = 'biblio_url';
 			
-//		$this->watchdog('go');
 		$nidList = $this->getAllReadyNids();
-//		$this->watchdog('got nidlist');
 		
 		$readyToProcess = count($nidList);
 		
@@ -186,7 +231,8 @@ class InternetArchiveModel
 			return $statusInfo;
 		}
 
-//		$this->watchdog('check the keys');
+		$this->watchdog('check the keys');
+
 		if (!$this->checkKeys()) {
 			// error, no keys
 			$msg = 'Cannot process. Must set the access keys!';
@@ -196,15 +242,13 @@ class InternetArchiveModel
 			return $statusInfo;
 		}
 
-//		$this->watchdog('check done, now set them');
 		// set the keys, these define what/where we connect to and put our data on Internet Archive
 		$this->s3->setAccessKeys($this->accessKey, $this->secretKey);
-//		$this->watchdog('s3, now s3Model');
 		$this->s3Model->setAccessKeys($this->accessKey, $this->secretKey);
 			
 		$this->watchdog('run thru list');
-		// get items to transfer (possibly build in some throttling)
-			// list of nids, that are 0 ready
+		// get items to transfer (using throttling)
+			// list of nids, that are ready (archive_status = "0")
 			// roll through nids
 			// gather meta data for nid
 			// transfer,
@@ -213,7 +257,6 @@ class InternetArchiveModel
 			//   mark as 1 sent
 			// self::IASTATUS_SENT
 		
-//		$this->watchdog('nidList count pre');
 		if (count($nidList) == 0) {
 			$msg = 'Cannot process. No available nodes.';
 			$this->watchdog($msg);
@@ -221,10 +264,7 @@ class InternetArchiveModel
 			$statusInfo[] = array('nid' => 0, 'status' => 0);
 			return $statusInfo;
 		}
-//		$this->watchdog('nidList count post');
 		
-//		$this->watchdog('Nid List ' . print_r($nidList, 1));
-
 		foreach ($nidList as $keynids => $n) {
 			$nid            = $n['nid'];
 
@@ -237,42 +277,84 @@ class InternetArchiveModel
 			$this->watchdog('get item nid: ' . $nid);
 			// process
 			$fileToSend = $this->getItem($nid);
-//			$this->watchdog('file to send: ' . $fileToSend);
 			
+			$msg = 'url: ['.$url.']';
+			$this->watchdog($msg);
 			// check for remote file
 			$remote = substr_count($url, 'http://www.biodiversitylibrary.org/pdf');
 
 			// handle bhl article pdfs, pull the data from the url and send that "file"
 			if ($remote) {
+				$msg = 'remote: ['.($remote ? 'remote' : 'not here' ).']';
+				$this->watchdog($msg);
+
 				// http://www.biodiversitylibrary.org/pdf1/000100100036793.pdf
 				// bhl article pdf
 				// use remote file
+				$fileToSend = '';
 				$fileToSend = file_get_contents($url);  // get the remote file data
+
+				$msg = 'remote fileToSend: ['.$url.']';
+				$this->watchdog($msg);
+
 				$flagString = true;  // indicate that we need to send slightly differently
 			}
 
+			$msg = 'fileToSend: ['. ($flagString ? $url : $fileToSend) .']';
+			$this->watchdog($msg);
+
+			// no file name, then we best mark it so not to process and get out 
+			if (empty($fileToSend)) {
+				$archive_status = -2;  // TODO: maybe use the define, or make another one, for this case where we don't have files but should?
+				$this->updateArchiveRecordStatus($nid, $archive_status);
+
+				$msg = 'Cannot process. No file to send. ('.$nid.')';
+				$this->watchdog($msg);
+				$statusInfo[] = array('nid' => 0, 'status' => 0);
+
+				return $statusInfo;
+			}
+
 			// build the IA (Internet Archive) name, the meta data, and send it over to IA
+			$msg = 'bucket';
+			$this->watchdog($msg);
 			$bucket     = $this->makeIARecordName($nid, $title, $year);
+			$msg = 'metadata';
+			$this->watchdog($msg);
 			$metaData   = $this->makeIARecordMetaData($nid);
-//*** FIXME DLH FULLSTOP			//$status     = $this->putItem($fileToSend, $bucket, $metaData, $flagString);
+
+			$msg = 'putitem';
+			$this->watchdog($msg);
+			$status     = $this->putItem($fileToSend, $bucket, $metaData, $flagString);
+			$msg = 'putitem status ' . $status;
+			$this->watchdog($msg);
 
 			// check off our item in the queue, preserve the original link, note the IA name
 			if ($status == 0) {
+				$msg = 'status 0';
+				$this->watchdog($msg);
 				$this->markSentToIA($nid);
 				$this->updateBiblioUrl($nid, $bucket, $url);  // change biblio_url to www.archive.org/details/cbarchive_$nid_$bucket
 			} else if ($status == -1) {
 				// failed put file
 				// log entry?
+				$msg = 'status -1';
+				$this->watchdog($msg);
 
 			} else if ($status == -2) {
 				// failed make bucket
 				// log entry?
+				$msg = 'status -2';
+				$this->watchdog($msg);
 			} else {
 				// status == 1
-				
+				$msg = 'status 1';
+				$this->watchdog($msg);
 			}
 
 			$statusInfo[] = array('nid' => $nid, 'status' => $status);
+			$msg = 'statusinfo: ' . print_r($statusInfo, 1);
+			$this->watchdog($msg);
 		}
 
 		$this->watchdog('done');
@@ -351,18 +433,23 @@ class InternetArchiveModel
 		$resolverFlag = false;
 		$openBrace = ($resolverFlag ? '{' : '');
 		$clseBrace = ($resolverFlag ? '}' : '');
+		$filename = '';
 		
 		// given a nid, we should be able to find a file for it
 		$sql = 'SELECT fid FROM '. $openBrace . 'upload' . $clseBrace . ' WHERE nid = ' . $nid . '';
 		$record = $this->dbi->fetchobj($sql);
 
 		$fid = $record->fid;
+		$this->watchdog('getFilesFilename record fid : ' . $fid);
 		
-		// given a fid, we should be able to find the filename and path
-		$sql = 'SELECT filepath, filename FROM '. $openBrace . 'files' . $clseBrace . ' WHERE nid = ' . $fid . '';
-		$record = $this->dbi->fetchobj($sql);
-
-		$filename = $record->filename;  // get data file filename
+		if ($fid) {
+			// given a fid, we should be able to find the filename and path
+			$sql = 'SELECT filepath, filename FROM '. $openBrace . 'files' . $clseBrace . ' WHERE fid = ' . $fid . '';
+			$this->watchdog('getFilesFilename Fid : ' . $sql);
+			$record = $this->dbi->fetchobj($sql);
+	
+			$filename = $record->filename;  // get data file filename
+		}
 		
 		// if no file, then use the url, the bhl url.  which is handled later.
 		
@@ -390,10 +477,13 @@ class InternetArchiveModel
 		
 		// if no file, fail
 		if ($flagString == false) {  // if NOT a string, check the physical file.  if a "string" it is a remote pdf
+
 			if (!file_exists($uploadFile) || !is_file($uploadFile)) {
+
 				$status = -1; // no file?
 				// log no file for x
-				// log($str);
+				$this->watchdog('No file found for ' . $uploadFile);
+
 				return $status;
 			}
 
@@ -405,23 +495,51 @@ class InternetArchiveModel
 			// string item, cut up the bucket name and peel out a reasonable file name (remember it is title and year)
 			// uriName: the name of the item that is put in the bucket, ie "test.pdf"
 			$namePieces = explode('_', $bucketName);
-			$basename = $namePieces[2] . '.pdf';
+
+			$basename = $namePieces[2] . '.pdf';  
 			$uriName = $this->filterSymbols($basename);
 		}
 
 		// make an Internet Archive bucket, put the file and it's metadata there
 		if ($this->s3Model->putBucket($bucketName)) {
+
 			// if we are a file, put the object file; if we are a "string" (basically a pdf link), put the object string (and stream that pdf data over)
 			if (($flagString ? $this->s3Model->putObjectString($uploadFile, $bucketName, $uriName, SimpleStorageServiceModel::ACL_PUBLIC_READ, $metaData) : $this->s3Model->putObjectFile($uploadFile, $bucketName, $uriName, SimpleStorageServiceModel::ACL_PUBLIC_READ, $metaData) ) ) {
+
 				$status = 0;
 			} else {
 				// fails put the item
 				$status = -1;
 			}
 		} else {
-			// fails put the bucket
-			$status = -2;
+			// bucket exists? retry and just send the data to it.
+			// check if bucket exists, then just put the data
+			$this->watchdog('bucket exists, retry to send data');
+
+			$list = $this->listBuckets();
+			
+			foreach ($list as $bucketNameIA) {
+				if ($bucketName == $bucketNameIA) {
+					if (($flagString ? $this->s3Model->putObjectString($uploadFile, $bucketName, $uriName, SimpleStorageServiceModel::ACL_PUBLIC_READ, $metaData) : $this->s3Model->putObjectFile($uploadFile, $bucketName, $uriName, SimpleStorageServiceModel::ACL_PUBLIC_READ, $metaData) ) ) {
+						$this->watchdog('put data in existing bucket');
+						$status = 0;
+						break;
+					} else {
+						// fails put the item
+						$status = -1;
+					}
+				}
+			}
+			
+			if ($status == 0) {
+				$status = 0;
+			} else {
+				// fails put the bucket
+				$status = -2;
+			}
 		}
+		
+		$this->watchdog('putItem complete ' . $status);
 		
 		return $status;
 	}
@@ -480,6 +598,10 @@ class InternetArchiveModel
 	function getCountNids()
 	{
 		$flag = false;
+		$msg = '';
+		$total = 0;
+		$record = 0;
+		$sql = '';
 		
 		//$sql = 'SELECT count(*) as total FROM '. self::ARCHIVE_TABLE .' WHERE 1';
 		$sql = 'SELECT count(*) as total FROM '. self::ARCHIVE_TABLE;
@@ -563,7 +685,6 @@ class InternetArchiveModel
 		$flag = false;
 
 		//$sql = 'SELECT * FROM '. self::ARCHIVE_TABLE . ' WHERE archive_status = ' . self::IASTATUS_READY . ' ORDER BY nid';
-		//$sql = 'SELECT * FROM '. self::ARCHIVE_TABLE . ' WHERE archive_status = ' . self::IASTATUS_READY . ' ORDER BY nid';
 
 		// adds title and year for naming later
 		$sql = 'SELECT c.nid, n.title, b.biblio_year as year, b.biblio_url FROM '. self::ARCHIVE_TABLE . ' as c JOIN node as n ON (n.nid = c.nid) JOIN biblio as b ON (c.nid = b.nid) WHERE c.archive_status = ' . self::IASTATUS_READY . ' ORDER BY c.nid';
@@ -577,9 +698,6 @@ class InternetArchiveModel
 
 		$records = $this->dbi->fetch($sql);
 		
-		//$this->watchdog($sql);
-		//$this->watchdog('records List ' . print_r($records, 1));
-
 		return $records;
 	}
 
@@ -589,14 +707,15 @@ class InternetArchiveModel
 	function makeIARecordName($nid, $title = '', $year = '')
 	{
 		$recordName = '';
-		$prefix = self::PREFIX;
+		$prefix = $this->prefix;
 		
 		$title = $this->cleanTitle($title);
 		
 		$author = $this->cleanAuthor($author);
 
-		$recordName = strtolower($prefix . '_' . $nid . '_' . $title . $year);
 		// cbarchive_12345_bookofbutterfli1876
+		$recordName = strtolower($prefix . '_' . $nid . '_' . $title . $year);
+		//$recordName = strtolower($prefix . '_' . $nid . '_' . $title . $year . 'xtest120');  // FIXME: testing.  put back to normal
 		
 		return $recordName;
 	}
@@ -637,7 +756,42 @@ class InternetArchiveModel
 
 		$data = $this->dbi->fetch($sql);
 
+		$data[0]['biblio_contributors'] = $this->getBiblioAuthorsList($nid);
+		$data[0]['biblio_keywords'] = $this->getBiblioKeywordList($nid);
+
 		return $data[0];
+	}
+
+	// authors
+	//SELECT bcd.name FROM biblio AS b JOIN node AS n ON (n.nid = b.nid) JOIN biblio_contributor AS bc ON (b.nid = bc.nid) JOIN biblio_contributor_data AS bcd ON (bcd.cid = bc.cid) WHERE b.nid = 38006
+	/**
+	 * getBiblioAuthorsList - get biblio authors
+	 */
+	function getBiblioAuthorsList($nid)
+	{
+		$flag = false;
+		
+		$sql = 'SELECT bcd.name FROM biblio AS b JOIN node AS n ON (n.nid = b.nid) JOIN biblio_contributor AS bc ON (b.nid = bc.nid) JOIN biblio_contributor_data AS bcd ON (bcd.cid = bc.cid) WHERE b.nid = '.$nid.'';
+
+		$data = $this->dbi->fetch($sql);
+
+		return $data;
+	}
+
+	// authors
+	//SELECT word FROM biblio AS b JOIN node AS n ON (n.nid = b.nid) JOIN biblio_keyword AS bc ON (b.nid = bc.nid) JOIN biblio_keyword_data AS bcd ON (bcd.kid = bc.kid) WHERE b.nid =  = 38006
+	/**
+	 * getBiblioKeywordList - get biblio keywords
+	 */
+	function getBiblioKeywordList($nid)
+	{
+		$flag = false;
+		
+		$sql = 'SELECT word FROM biblio AS b JOIN node AS n ON (n.nid = b.nid) JOIN biblio_keyword AS bc ON (b.nid = bc.nid) JOIN biblio_keyword_data AS bcd ON (bcd.kid = bc.kid) WHERE b.nid = '.$nid.'';
+
+		$data = $this->dbi->fetch($sql);
+
+		return $data;
 	}
 
 	/**
@@ -773,9 +927,13 @@ class InternetArchiveModel
 			$metaData['full_text']             = $biblio_full_text;
 		}
 
-		if ($biblio_url) {
-			$metaData['url']                   = $biblio_url;
-		}
+//		if ($biblio_url) {
+//			$metaData['url']                   = $biblio_url;
+//		}
+
+		// use the citebank url to the item
+		$host = $this->host;
+		$metaData['url']                   = 'http://'.$host.'/node/'.$nid;
 
 		if ($biblio_issue) {
 			$metaData['issue']                 = $biblio_issue;
@@ -796,7 +954,12 @@ class InternetArchiveModel
 		if ($biblio_notes) {
 			$metaData['notes']                 = $biblio_notes;
 		}
+		
+		// FIXME: Rights, to be determined 
 
+//		if ($biblio_custom1) {
+//			$metaData['rights']                 = $biblio_custom1;
+//		}
 		//$metaData['custom1']               = $biblio_custom1;
 		//$metaData['custom2']               = $biblio_custom2;
 		//$metaData['custom3']               = $biblio_custom3;
@@ -854,12 +1017,12 @@ class InternetArchiveModel
 		//$metaData['remote_db_provider']    = $biblio_remote_db_provider;
 		//$metaData['label']                 = $biblio_label;
 
-		if ($biblio_remote_db_name) {
-			$metaData['source_organization']   = $biblio_remote_db_name;
+		if ($biblio_remote_db_provider) {
+			$metaData['source_organization']   = $biblio_remote_db_provider;
 		}
 
-		if ($biblio_remote_db_provider) {
-			$metaData['source_url']            = $biblio_remote_db_provider;
+		if ($biblio_remote_db_name) {
+			$metaData['source_url']            = $biblio_remote_db_name;
 		}
 
 		if ($biblio_label) {
@@ -877,11 +1040,97 @@ class InternetArchiveModel
 		if ($biblio_title) {
 			$metaData['title']                 = $biblio_title;
 		}
+
+		// xml clean for accents and such all the meta data
+		foreach ($metaData as $key => $val) {
+			//$metaData[$key] = $this->cleanTitle($val);
+			//$metaData[$key] = htmlentities(utf8_encode($val), ENT_QUOTES, 'UTF-8');		
+			$metaData[$key] = $this->xmlUtf8Clean($val);
+		}
+
+		// handle authors, "creator"s in IA terms
+		if ($biblio_contributors) {
+			$authors = '';
+			
+			foreach ($biblio_contributors as $biblio_contributorskeys => $author) {
+				//$authorName = htmlentities(utf8_encode($this->filterIASymbols($author['name'])), ENT_QUOTES, 'UTF-8');	
+				$authorName = $this->xmlUtf8ScrubClean($author['name']);
+				$authors .= $authorName;
+				$authors .= '|';
+			}
+			
+			$authors = rtrim($authors, '|');  // in the S3 model, the xml tags are created for each piped item
+			$metaData['creator']             = $authors;
+
+			$msg = 'metadata: authors(' . print_r($metaData['creator'], 1) . ')';
+			$this->watchdog($msg);
+		}
+
+		// handle keywords, "subject"s in IA terms
+		if ($biblio_keywords) {
+			$keywords = '';
+			
+			foreach ($biblio_keywords as $keywordkeys => $keyword) {
+				//$keywordItem = htmlentities(utf8_encode($this->filterIASymbols($keyword['word'])), ENT_QUOTES, 'UTF-8');	
+				$keywordItem = $this->xmlUtf8ScrubClean($keyword['word']);
+
+				$keywords .= $keywordItem;
+				$keywords .= '|';
+			}
+
+			$keywords = rtrim($keywords, '|');
+			$metaData['subject']             = $keywords;
+
+			$msg = 'metadata: subjects(' . print_r($metaData['subject'], 1) . ')';
+			$this->watchdog($msg);
+		}
+
+		//$metaData['description'] = '';
+		//$metaData['sponsor'] = 'Missiouri Botanical Garden';
+
+/*
+  <identifier>threenewlizardso00brow</identifier> 
+  <description>Beviora, no.464-487 (1981-1986), pp.1-12</description> 
+  <language>eng</language> 
+  <mediatype>texts</mediatype> 
+  <subject>Reptiles</subject> 
+  <title>Three new lizards of the genus Emoia (Scincidae) from southern New Guinea.</title> 
+  <collection>opensource</collection> 
+  <creator>W. C. Brown</creator> 
+  <creator>F. Parker</creator> 
+  <uploader>mike.lichtenberg@mobot.org</uploader> 
+  <identifier-access>http://www.archive.org/details/threenewlizardso00brow</identifier-access> 
+  <identifier-ark>ark:/13960/t3320fq6x</identifier-ark> 
+  <ppi>300</ppi> 
+  <ocr>ABBYY FineReader 8.0</ocr> 
+  
+  <publicdate>2009-09-16 18:50:44</publicdate> 
+*/
 		// ******************************
 		
 		return $metaData;
 	}
 
+	/**
+	 * xmlUtf8Clean - cleanse the string, handle accents
+	 */
+	function xmlUtf8Clean($str)
+	{
+		$cleanStr = htmlentities(utf8_encode($str), ENT_QUOTES, 'UTF-8');
+
+		return $cleanStr;
+	}
+	
+	/**
+	 * xmlUtf8ScrubClean - cleanse the string, handle accents, remove Internet Archive illegal chars too
+	 */
+	function xmlUtf8ScrubClean($str)
+	{
+		$cleanStr = htmlentities(utf8_encode($this->filterIASymbols($str)), ENT_QUOTES, 'UTF-8');
+
+		return $cleanStr;
+	}
+	
 	/**
 	 * cleanAuthor - cleanse the string
 	 */
@@ -903,8 +1152,16 @@ class InternetArchiveModel
 		// and other odd chars, and take out spaces to compress into nice useable string
 		//$search = array('*', '(', ')', '{', '}', '[', ']', '/', '\\', '$', '%', '@', '#', '^', '&', '|', '<', '>', "'", '~', '`', '!', '?', '+', '"', ':', '.', '-', ' ', ',');
 
+		//$giventitle = utf8_encode($giventitle);
+		//$giventitle = htmlentities($giventitle, ENT_QUOTES, 'UTF-8');
+		//$giventitle = str_replace(';', '', $giventitle);
+
+		$allowed = "/[^a-zA-Z0-9 _?=\/\\040\\.\\-\\_\\\\]/i";
+		$giventitle = preg_replace($allowed, "", $giventitle);
+				
 		//$title = str_replace($search, '', $giventitle);
 		$title = $this->cleanText($giventitle, $allChars);
+
 		
 		// remove preceding THE, A , OF , etc
 		
@@ -968,7 +1225,7 @@ class InternetArchiveModel
 	}
 
 	/**
-	 * filterSymbols - cleanse the text per IA requirements
+	 * filterAllSymbols - cleanse the text per IA requirements
 	 */
 	function filterAllSymbols($giventext)
 	{
@@ -978,6 +1235,23 @@ class InternetArchiveModel
 		// * ( ) { } [ ] / \ $ % @ # ^ & | < > ' ~ ` ! ? +
 		// and other odd chars, and take out spaces to compress into nice useable string
 		$search = array('*', '(', ')', '{', '}', '[', ']', '/', '\\', '$', '%', '@', '#', '^', '&', '|', '<', '>', "'", '~', '`', '!', '?', '+', '"', ':', '.', '-', ' ', ',');
+
+		$text = str_replace($search, '', $giventext);
+		
+		return $text;
+	}
+
+	/**
+	 * filterIASymbols - cleanse the text per IA requirements (leave in spaces, commmas, dashes)
+	 */
+	function filterIASymbols($giventext)
+	{
+		// take out " - : . space ( ) #
+		
+		// strip out for IA (Internet Archive) unwanted chars
+		// * ( ) { } [ ] / \ $ % @ # ^ & | < > ' ~ ` ! ? +
+		// and other odd chars, and take out spaces to compress into nice useable string
+		$search = array('*', '(', ')', '{', '}', '[', ']', '/', '\\', '$', '%', '@', '#', '^', '&', '|', '<', '>', "'", '~', '`', '!', '?', '+');
 
 		$text = str_replace($search, '', $giventext);
 		
@@ -1049,7 +1323,11 @@ class InternetArchiveModel
 					$counter++;
 					
 					if ($nid > 0) {
-						$this->addArchiveRecord($nid, $archive_status, $ia_title);  // add them
+						// make sure that the nid will be unique, only have one entered, avoid duplication
+						// the list of new ones should provide that, however, the isNid check makes certain.
+						if (!isNid($nid)) {
+							$this->addArchiveRecord($nid, $archive_status, $ia_title);  // add them
+						}
 					}
 				}
 			} else {
@@ -1161,13 +1439,17 @@ class InternetArchiveModel
 	 */
 	function setUpNids()
 	{
+		// get list of nodes that have attachments, 
+		// get list of nodes that have bhl article pdfs
 		$nidListA = $this->getNidsAttachments();
 		$nidListB = $this->getNidsBhlArticles();
 		
+		// make a list of nodes, remove duplicates
 		$nidList = array_merge($nidListA, $nidListB);
 
 		$archive_status = 0;
 		
+		// change the nodes status, from ignore (a new item, in this case) to ready for sending (we will pick up the ready to send ones later)
 		foreach ($nidList as $nid) {
 			if ($this->isNidReady($nid)) {
 				$this->updateArchiveRecordStatus($nid, $archive_status);
@@ -1263,7 +1545,7 @@ class InternetArchiveModel
 		$this->watchdog('getNidsArrayArchive');
 
 		// SELECT c.nid FROM citebank_internet_archive_records AS c  WHERE 1 ORDER BY c.nid
-		$sql = "SELECT c.nid FROM citebank_internet_archive_records AS c  WHERE 1 ORDER BY c.nid";
+		$sql = 'SELECT c.nid FROM citebank_internet_archive_records AS c  WHERE 1 ORDER BY c.nid';
 		
 		$records = array();
 
@@ -1332,10 +1614,11 @@ class InternetArchiveModel
 		$table = self::ARCHIVE_TABLE;
 
 		// SELECT COUNT(*) AS total FROM citebank_internet_archive_records AS t WHERE t.nid = 1237
-		$sql = "SELECT count(*) as total FROM $table AS t WHERE t.nid = $nid";
+		//$sql = "SELECT count(*) as total FROM $table AS t WHERE t.nid = $nid";
+		$sql = 'SELECT count(*) as total FROM ' . $table . ' AS t WHERE t.nid = ' . $nid . '';
 
-		$record = $this->dbi->fetchobj($sql);
-		$total = $record->total;
+		$record = $this->dbi->fetch($sql);
+		$total = $record[0]['total'];
 		
 		return ($total > 0 ? true : false );
 	}
@@ -1358,11 +1641,11 @@ SELECT COUNT(*) AS total FROM citebank_internet_archive_records AS t WHERE archi
 	{
 		$table = self::ARCHIVE_TABLE;
 
-		$sql = "SELECT count(*) as total FROM $table AS t WHERE t.nid = $nid AND archive_status = -1";
+		$sql = 'SELECT count(*) as total FROM ' . $table . ' AS t WHERE t.nid = ' . $nid . ' AND archive_status = -1';
 
-		$record = $this->dbi->fetchobj($sql);
+		$record = $this->dbi->fetch($sql);
 
-		$total = $record->total;
+		$total = $record[0]['total'];
 		
 		return ($total > 0 ? true : false );
 	}
