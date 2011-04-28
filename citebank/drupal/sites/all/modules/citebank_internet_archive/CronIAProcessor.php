@@ -54,9 +54,24 @@ class CronIAProcessor
 	 */
 	function runInternetArchiveCron()
 	{
-		$x = new InternetArchiveModel();
+		// must be explicitly set
+		$processFlag = (0 + variable_get('citebank_internet_archive_processflag', 0) == 1 ? true : false);
+		$ret = true;
+
+		// if 
+		if ($processFlag) {
+			$x = new InternetArchiveModel();
+			
+			$x->runExternalCronProcess();
+		} else {
+			$type = 'InternetArchive';
+			$msg = 'Citebank IA External cron PROCESSING IS OFF';
+			$msg .= ' ' . date('YmdHis');
+			watchdog($type, $msg);
+			$ret = false;
+		}
 		
-		$x->runExternalCronProcess();
+		return $ret;
 	}
 
 	/**

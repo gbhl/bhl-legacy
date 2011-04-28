@@ -21,17 +21,25 @@ require_once($includePath . 'CronIAProcessor.php');
 // ****************************************
 // ****************************************
 echo "\n";
-echo 'start' . date('Y/m/d H:i:s');
+echo 'start ' . date('Y/m/d H:i:s');
 echo "\n";
 $cronIA = new CronIAProcessor();
 echo "\n";
-echo 'begin' . date('Y/m/d H:i:s');
+echo 'begin ' . date('Y/m/d H:i:s');
 echo "\n";
-$cronIA->runInternetArchiveCron();
+$ret = $cronIA->runInternetArchiveCron();
+
+if (!$ret) {
+	echo "\n";
+	echo 'cron is OFF ' . date('Y/m/d H:i:s');
+	echo "\n";
+}
 
 echo "\n";
-echo 'end' . date('Y/m/d H:i:s');
+echo 'end ' . date('Y/m/d H:i:s');
 echo "\n";
+
+return ($ret ? 1 : 0);
 
 // ****************************************
 // ****************************************
