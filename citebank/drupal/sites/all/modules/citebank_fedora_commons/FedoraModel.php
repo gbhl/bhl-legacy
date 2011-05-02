@@ -206,7 +206,7 @@ class FedoraModel
 	}
 
 	/**
-	 * getNidsArrayArchive - get array of nodes in archive records
+	 * getNidsArrayFedora - get array of nodes in archive records
 	 */
 	function getNidsArrayFedora()
 	{
