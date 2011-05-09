@@ -27,7 +27,6 @@ class RightsModel
   public $licenseName;
   public $licenseUrl;
   public $statement;
-  public $jurisdiction;
   public $rightsHolder;   // publisher or name (copyrights holder)
   public $year;
   public $rank = self::RIGHTS_RANK_UNKNOWN;  // numeric representation of the different status types
@@ -60,14 +59,12 @@ class RightsModel
 	const RIGHTS_RANK_COPYRIGHT  = 2;  // in copyright
 	const RIGHTS_RANK_LIC_COPY   = 3;  // both licensed and copyright
 
-	const RIGHTS_LIC_NAME   = 'Attribution-NonCommercial 3.0 United States';
+	const RIGHTS_LIC_NAME   = 'Attribution-NonCommercial ShareAlike 3.0 Unported';
 
-	const RIGHTS_LIC_URL    = 'http://creativecommons.org/licenses/by-nc/3.0/us/';
+	const RIGHTS_LIC_URL    = 'http://creativecommons.org/licenses/by-nc/3.0/';
 
 	//const RIGHTS_STATEMENT  = 'Permission to host granted on behalf of the ';  // add to with publisher or copyright holder name
 	const RIGHTS_STATEMENT  = 'Permission to host granted on behalf of ';  // add to with publisher or copyright holder name
-
-	const RIGHTS_JURISDICTION  = 'us';
 
 	const BASE_YEAR  = 1923;  // this is a hard fixed date for public domain 
 
@@ -111,7 +108,6 @@ class RightsModel
 		$rights['licensename']  = $this->licenseName;
 		$rights['licenseUrl']   = $this->licenseUrl;
 		$rights['statement']    = $this->statement;
-		$rights['jurisdiction'] = $this->jurisdiction;
 
 		$rights['rank']         = $this->rank;
 
@@ -133,7 +129,6 @@ class RightsModel
 		$this->licenseName  = '';
 		$this->licenseUrl   = '';
 		$this->statement    = '';
-		$this->jurisdiction = '';
 		$this->rightsHolder = '';
 		$this->year         = '';
 		$this->rank         = '';
@@ -225,7 +220,6 @@ class RightsModel
 				$this->licenseName  = self::RIGHTS_LIC_NAME;
 				$this->licenseUrl   = self::RIGHTS_LIC_URL;
 				$this->statement    = self::RIGHTS_STATEMENT . ' ' . $this->rightsHolder;
-				$this->jurisdiction = self::RIGHTS_JURISDICTION;
 				$this->year         = $year;
 				
 				$rights = $this->loadRights();
@@ -262,7 +256,7 @@ class RightsModel
 	/**
 	 * setData - make property values based upon given parameters
 	 */
-	function setData($name, $year, $status, $licenseName, $licenseUrl, $statement, $jurisdiction)
+	function setData($name, $year, $status, $licenseName, $licenseUrl, $statement)
 	{
 		$this->clearRights();
 
@@ -270,7 +264,6 @@ class RightsModel
 		$this->licenseName  = $licenseName;
 		$this->licenseUrl   = $licenseUrl;
 		$this->statement    = $statement . ' ' . $name;
-		$this->jurisdiction = $jurisdiction;
 		$this->year         = $year;
 		$this->rightsHolder = $name;
 
@@ -283,7 +276,7 @@ class RightsModel
 	 * setCopyrightHolder - set the metadata, given the info from the biblio custom fields 
 	 *   (creates an Internet Archive compatible data chunk for metadata)
 	 */
-	function setIAMetaData(&$metaData, $year, $biblio_custom1, $biblio_custom2, $biblio_custom3, $biblio_custom4, $biblio_custom5)
+	function setIAMetaData(&$metaData, $year, $biblio_custom1, $biblio_custom2, $biblio_custom3, $biblio_custom4)
 	{
 		$this->clearRights();
 
@@ -291,15 +284,14 @@ class RightsModel
 		//
 		// biblio_custom1 = $this->status;
 		// biblio_custom2 = $this->statement;
-		// biblio_custom3 = $this->jurisdiction;
-		// biblio_custom4 = $this->licenseName;
-		// biblio_custom5 = $this->licenseUrl;
+		// biblio_custom3 = $this->licenseName;
+		// biblio_custom4 = $this->licenseUrl;
 
 		$this->status       = $biblio_custom1;
-		$this->licenseName  = $biblio_custom4;
-		$this->licenseUrl   = $biblio_custom5;
 		$this->statement    = $biblio_custom2;
-		$this->jurisdiction = $biblio_custom3;
+		$this->licenseName  = $biblio_custom3;
+		$this->licenseUrl   = $biblio_custom4;
+
 		$this->year         = (is_numeric($year) && ($year != 9999) ? $year : 'unknown');
 		$this->rightsHolder = $this->parseRightsHolder($biblio_custom2);
 
@@ -308,10 +300,9 @@ class RightsModel
 		$this->loadRights();
 		
 		$metaData['rights_' . 'status']       = $this->status;
+		$metaData['rights_' . 'statement']    = $this->statement;
 		$metaData['rights_' . 'license_name'] = $this->licenseName;
 		$metaData['rights_' . 'license_url']  = $this->licenseUrl;
-		$metaData['rights_' . 'statement']    = $this->statement;
-		$metaData['rights_' . 'jurisdiction'] = $this->jurisdiction;
 		$metaData['rights_' . 'rightsholder'] = $this->rightsHolder;
 		$metaData['rights_' . 'year']         = $this->year;
 		
@@ -364,9 +355,8 @@ class RightsModel
 	{
 		$biblio['biblio_custom1'] = $this->status;
 		$biblio['biblio_custom2'] = $this->statement;
-		$biblio['biblio_custom3'] = $this->jurisdiction;
-		$biblio['biblio_custom4'] = $this->licenseName;
-		$biblio['biblio_custom5'] = $this->licenseUrl;
+		$biblio['biblio_custom3'] = $this->licenseName;
+		$biblio['biblio_custom4'] = $this->licenseUrl;
 		
 		return $biblio;
 	}
@@ -411,9 +401,8 @@ class RightsModel
 			$this->statement      = $biblio['biblio_custom2'];
 		}
 		
-		$this->jurisdiction   = $biblio['biblio_custom3'];
-		$this->licenseName    = $biblio['biblio_custom4'];
-		$this->licenseUrl     = $biblio['biblio_custom5'];
+		$this->licenseName    = $biblio['biblio_custom3'];
+		$this->licenseUrl     = $biblio['biblio_custom4'];
 
 		$this->rank           = $this->selectRank($this->status);
 
@@ -459,14 +448,6 @@ class RightsModel
 
 		$this->rightsHolder   = $rightsHolder;
 
-		// FIXME: these may need to be determined somehow.  what about public domain data, etc.
-		$this->status         = self::RIGHTS_COPYRIGHT;
-		$this->jurisdiction   = self::RIGHTS_JURISDICTION;
-		$this->licenseName    = self::RIGHTS_LIC_NAME;
-		$this->licenseUrl     = self::RIGHTS_LIC_URL;
-		
-		$this->rank         = $this->selectRank($this->status);
-
 		// **********
 		// finish and set the data
 		$this->loadRights();
@@ -491,9 +472,6 @@ class RightsModel
 		$str .= "\n";
 		$str .= "\t";
 		$str .= 'statement="' . $this->statement . '" ';
-		$str .= "\n";
-		$str .= "\t";
-		$str .= 'jurisdiction="' . $this->jurisdiction . '" ';
 		$str .= "\n";
 		$str .= "\t";
 		$str .= 'licenseName="' . $this->licenseName . '" ';
@@ -535,12 +513,6 @@ class RightsModel
 		$str .= '<statement>';
 		$str .= $this->statement;
 		$str .= '</statement>';
-		$str .= "\n";
-
-		$str .= "\t";
-		$str .= '<jurisdiction>';
-		$str .= $this->jurisdiction;
-		$str .= '</jurisdiction>';
 		$str .= "\n";
 
 		$str .= "\t";
@@ -592,9 +564,6 @@ class RightsModel
 		$str .= 'statement="' . $this->statement . '" ';
 		$str .= "\n";
 		$str .= "\t";
-		$str .= 'jurisdiction="' . $this->jurisdiction . '" ';
-		$str .= "\n";
-		$str .= "\t";
 		$str .= 'licenseName="' . $this->licenseName . '" ';
 		$str .= "\n";
 		$str .= "\t";
@@ -635,8 +604,6 @@ class RightsModel
 		$str .= "\n";
 		$str .= ' statement = {' . $this->statement . '},';
 		$str .= "\n";
-		$str .= ' jurisdiction = {' . $this->jurisdiction . '},';
-		$str .= "\n";
 		$str .= ' year = {' . $this->year . '},';
 		$str .= "\n";
 		$str .= ' licenseName = {' . $this->licenseName . '},';
@@ -670,8 +637,6 @@ class RightsModel
 		$str .= 'N1 - ' . $this->status . '';
 		$str .= "\n";
 		$str .= 'N1 - ' . $this->statement . '';
-		$str .= "\n";
-		$str .= 'N1 - ' . $this->jurisdiction . '';
 		$str .= "\n";
 		$str .= 'Y1 - ' . $this->year . '';
 		$str .= "\n";
@@ -753,8 +718,6 @@ ER  - End of Reference (must be the last tag)
 		$str .= "\n";
 		$str .= '%2 ' . $this->statement . '';
 		$str .= "\n";
-		$str .= '%3 ' . $this->jurisdiction . '';
-		$str .= "\n";
 		$str .= '%D ' . $this->year . '';
 		$str .= "\n";
 		$str .= '%4 ' . $this->licenseName . '';
@@ -803,9 +766,6 @@ ER  - End of Reference (must be the last tag)
 		$str .= "\n";
 		$str .= "\t";
 		$str .= '<statement>' . $this->statement . '</statement>';
-		$str .= "\n";
-		$str .= "\t";
-		$str .= '<jurisdiction>' . $this->jurisdiction . '</jurisdiction>';
 		$str .= "\n";
 		$str .= "\t";
 		$str .= '<licenseName>' . $this->licenseName . '</licenseName>';
@@ -870,8 +830,6 @@ http://dublincore.org/documents/dces/
 		$info .= $this->statement;
 		$info .= '|';
 
-		$info .= $this->jurisdiction;
-		$info .= '|';
 		$info .= $this->licenseName;
 		$info .= '|';
 		$info .= $this->licenseUrl;
