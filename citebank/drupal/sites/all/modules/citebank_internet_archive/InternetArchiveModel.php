@@ -15,6 +15,8 @@ require_once($includePath . 'S3Keys.php');
 require_once($includePath . 'SimpleStorageServiceRequest.php');
 require_once($includePath . 'SimpleStorageServiceModel.php');
 require_once($includePath . 'DBInterfaceController.php');
+require_once($includePath . 'RightsModel.php');
+require_once($includePath . 'CiteBankHostConfig.php');
 
 
 /** 
@@ -97,10 +99,15 @@ class InternetArchiveModel
 
 		$this->s3Model->loggingFlag = $this->loggingFlag;
 		
+		$this->host = $_SERVER['SERVER_NAME'];
+
+		if (strlen($this->host) == 0) {
+			$this->host = CITEBANK_HOST; // 'citebank.org';
+		}
+
 		$this->checkAndAddNewNodesForArchive();
 
 		$this->statusCheck();
-		$this->host = $_SERVER['SERVER_NAME'];
 	}
 
 	/**
@@ -933,6 +940,7 @@ class InternetArchiveModel
 
 		// use the citebank url to the item
 		$host = $this->host;
+		
 		$metaData['url']                   = 'http://'.$host.'/node/'.$nid;
 
 		if ($biblio_issue) {
@@ -955,7 +963,9 @@ class InternetArchiveModel
 			$metaData['notes']                 = $biblio_notes;
 		}
 		
-		// FIXME: Rights, to be determined 
+		// Rights
+		$rights = new RightsModel();
+		$metaData = $rights->setIAMetaData($metaData, $biblio_year, $biblio_custom1, $biblio_custom2, $biblio_custom3, $biblio_custom4);
 
 //		if ($biblio_custom1) {
 //			$metaData['rights']                 = $biblio_custom1;
@@ -1325,7 +1335,7 @@ class InternetArchiveModel
 					if ($nid > 0) {
 						// make sure that the nid will be unique, only have one entered, avoid duplication
 						// the list of new ones should provide that, however, the isNid check makes certain.
-						if (!isNid($nid)) {
+						if (!$this->isNid($nid)) {
 							$this->addArchiveRecord($nid, $archive_status, $ia_title);  // add them
 						}
 					}
