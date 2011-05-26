@@ -23,7 +23,7 @@ class RightsModel
 {
 	public $className;
 
-  public $status;         // possibly can be BOTH 'in copyright' and 'licensed'  ...um, how can we do that?
+  public $status;         // public domain, 'in copyright', unknown or blank
   public $licenseName;
   public $licenseUrl;
   public $statement;
@@ -214,8 +214,10 @@ class RightsModel
 				break;
 			
 			case ($year >= $this->basePublicDomainYear):
-				$this->status = self::RIGHTS_LICENSED;
-				$this->rank   = self::RIGHTS_RANK_LICENSED;
+				//$this->status = self::RIGHTS_LICENSED;
+				//$this->rank   = self::RIGHTS_RANK_LICENSED;
+				$this->status = self::RIGHTS_COPYRIGHT;
+				$this->rank   = self::RIGHTS_RANK_COPYRIGHT;
 				
 				$this->licenseName  = self::RIGHTS_LIC_NAME;
 				$this->licenseUrl   = self::RIGHTS_LIC_URL;
@@ -256,16 +258,16 @@ class RightsModel
 	/**
 	 * setData - make property values based upon given parameters
 	 */
-	function setData($name, $year, $status, $licenseName, $licenseUrl, $statement)
+	function setData($rightsHolder, $year, $status, $licenseName, $licenseUrl, $statement)
 	{
 		$this->clearRights();
 
 		$this->status       = $status;
 		$this->licenseName  = $licenseName;
 		$this->licenseUrl   = $licenseUrl;
-		$this->statement    = $statement . ' ' . $name;
+		$this->statement    = $statement . ' ' . $rightsHolder;
 		$this->year         = $year;
-		$this->rightsHolder = $name;
+		$this->rightsHolder = $rightsHolder;
 
 		$this->rank         = $this->selectRank($status);
 
@@ -387,10 +389,22 @@ class RightsModel
 		if ($flagSetRightsHolder) {
 			$this->rightsHolder   = $biblio['biblio_publisher'];  // FIXME: define/determine more about this ...?
 		} else {
-			$pos = strpos($biblio['biblio_custom2'], self::RIGHTS_STATEMENT);
-			$pos += strlen(self::RIGHTS_STATEMENT);
+			
+			$statement = $biblio['biblio_custom2'];
+			$rights_statement = self::RIGHTS_STATEMENT;
+			
+			// try to pull out the rightsholder, if contains our standard statement
+			if (substr_count($statement, $rights_statement)) {
 
-			$this->rightsHolder   = substr($biblio['biblio_custom2'], $pos);
+				$pos = strpos($statement, $rights_statement);
+				$pos += strlen($rights_statement);
+	
+				$this->rightsHolder   = substr($biblio['biblio_custom2'], $pos);
+
+			} else {
+				$this->rightsHolder = '';
+			}
+			
 		}
 
 		$this->status         = $biblio['biblio_custom1'];
@@ -557,6 +571,7 @@ class RightsModel
 
 		$str .= '<rights ';
 		$str .= "\n";
+
 		$str .= "\t";
 		$str .= 'status="' . $this->status . '" ';
 		$str .= "\n";
@@ -567,8 +582,17 @@ class RightsModel
 		$str .= 'licenseName="' . $this->licenseName . '" ';
 		$str .= "\n";
 		$str .= "\t";
-		$str .= 'licenseUrl="' . $this->licenseUrl . '">';
+		$str .= 'licenseUrl="' . $this->licenseUrl . '" ';
 		$str .= "\n";
+
+		$str .= "\t";
+		$str .= 'rightsHolder="' . $this->rightsHolder . '" ';
+		$str .= "\n";
+		$str .= "\t";
+		$str .= 'year="' . $this->year . '"';
+		$str .= '>';
+		$str .= "\n";
+
 		$str .= '</rights>';
 		$str .= "\n";
 
@@ -761,6 +785,7 @@ ER  - End of Reference (must be the last tag)
 
 		$str .= '<rights>';
 		$str .= "\n";
+
 		$str .= "\t";
 		$str .= '<status>' . $this->status . '</status>';
 		$str .= "\n";
@@ -773,6 +798,14 @@ ER  - End of Reference (must be the last tag)
 		$str .= "\t";
 		$str .= '<licenseUrl>' . $this->licenseUrl . '</licenseUrl>';
 		$str .= "\n";
+
+		$str .= "\t";
+		$str .= '<rightsHolder>' . $this->rightsHolder . '</rightsHolder>';
+		$str .= "\n";
+		$str .= "\t";
+		$str .= '<year>' . $this->year . '</year>';
+		$str .= "\n";
+
 		$str .= '</rights>';
 		$str .= "\n";
 
@@ -833,6 +866,21 @@ http://dublincore.org/documents/dces/
 		$info .= $this->licenseName;
 		$info .= '|';
 		$info .= $this->licenseUrl;
+		
+		$info = str_replace('|||', '', $info);  // if it is blank, send empty instead of empty pipes
+		
+		// dont do this
+		// <dc:rights>|||</dc:rights>
+
+		// unknown
+		// <dc:rights></dc:rights>
+
+		// public domain
+		// <dc:rights>public domain</dc:rights>
+
+		// in copyright
+		// <dc:rights>in copyright|statement|license|url</dc:rights>
+
 
 //		$info .= '|';
 //		$info .= $this->year;
