@@ -15,6 +15,7 @@ $includePath = dirname(__FILE__) . '/';
 require_once($includePath . 'FedoraModel.php');
 require_once($includePath . 'FedoraClient.php');
 require_once($includePath . 'FedoraFoxXmlController.php');
+require_once($includePath . 'RightsModel.php');
 
 // FEDORA -  Flexible Extensible Digitial Object and Repository Architecture
 /** 
@@ -540,7 +541,10 @@ class FedoraController
 		$this->fedoraFoxXml->language    = $node['biblio_lang'];
 		$this->fedoraFoxXml->relation    = '';
 		$this->fedoraFoxXml->coverage    = '';
-		$this->fedoraFoxXml->rights      = ''; //'public domain';  // TODO: is this something else? 
+		
+		$rights = new RightsModel();
+		$rights->setFromNode($node);
+		$this->fedoraFoxXml->rights      = '' . $rights; // sets the rights, listed pipe delimited values, for: status, statement, license name, license url
 	
 		$this->fedoraFoxXml->pidName     = $pidName;
 		$this->fedoraFoxXml->pid         = $pidNum;
