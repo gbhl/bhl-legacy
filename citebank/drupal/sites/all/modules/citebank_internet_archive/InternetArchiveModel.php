@@ -41,6 +41,9 @@ class InternetArchiveModel
   
   private $dbi;
   private $host;
+	public $publicationNames;
+	public $publicationKeys;
+	public $listFlag;
 
 	const CLASS_NAME    = 'InternetArchiveModel';
 	// in the database, has a drupal front end to change them
@@ -98,6 +101,11 @@ class InternetArchiveModel
 		$this->s3Model->setS3Obj($this->s3);
 
 		$this->s3Model->loggingFlag = $this->loggingFlag;
+
+		$this->publicationNames = array();
+		$this->publicationKeys = array();
+		$this->listFlag = false;
+		$this->getPublicationTypesData($this->publicationNames, $this->publicationKeys, $this->listFlag);		
 		
 		$this->host = $_SERVER['SERVER_NAME'];
 
@@ -200,13 +208,50 @@ class InternetArchiveModel
 	{
 		$statusInfo = 1;
 
-		$this->watchdog('runExternalCronProcess begin');
+		if ($this->isRunning()) {
+			// continue 
+			$this->watchdog('runExternalCronProcess is still running');
 
-		$this->processInternetArchiveRecords();
-		
-		$this->watchdog('runExternalCronProcess done');
+		} else {
+			$this->watchdog('runExternalCronProcess begin');
+			
+			$this->isRunningOn();
+	
+			$this->processInternetArchiveRecords();
+
+			$this->isRunningOff();
+			
+			$this->watchdog('runExternalCronProcess done');
+		}
 
 		return $statusInfo;
+	}
+
+	/**
+	 * isRunningOn - turn the running flag on
+	 */
+	function isRunningOn()
+	{
+		variable_set('citebank_internet_archive_isrunning', 1);
+	}
+
+	/**
+	 * isRunningOff - turn the running flag off
+	 */
+	function isRunningOff()
+	{
+		variable_set('citebank_internet_archive_isrunning', 0);
+	}
+
+	/**
+	 * isRunning - check if the external cron process is running
+	 */
+	function isRunning()
+	{
+		$isRunningFlag = 0;
+		$isRunningFlag = variable_get('citebank_internet_archive_isrunning', '0');
+		
+		return $isRunningFlag;
 	}
 	
 	/**
@@ -945,6 +990,11 @@ class InternetArchiveModel
 
 		if ($biblio_issue) {
 			$metaData['issue']                 = $biblio_issue;
+		}
+
+		// add in publication type text, as in: Journal Article
+		if ($biblio_type) {
+			$metaData['publication_type']      = $this->getPublicationType($biblio_type);  // translate number into human word
 		}
 
 		if ($biblio_type_of_work) {
@@ -1704,6 +1754,42 @@ SELECT COUNT(*) AS total FROM citebank_internet_archive_records AS t WHERE archi
 		$ret = ($ret ? true : false);  // make if data, true else false
 
 		return $ret;
+	}
+
+	/**
+	 *  getPublicationTypesData - get number values for word values of publication types
+	 */
+	function getPublicationTypesData(&$publicationNames, &$publicationKeys, &$listFlag)
+	{
+		$sql = 'SELECT * FROM {biblio_types}';
+		$res = db_query($sql);
+
+		if ($res) {
+			while ($data = db_fetch_object($res)) {
+				$key  = $data->tid;
+				$name = $data->name;
+
+				$publicationNames[strtolower($name)] = $key;
+				$publicationKeys[$key] = $name;
+			}
+
+			if (count($publicationNames) > 0) {
+				$listFlag = true;
+			}
+		}
+	}
+
+	/**
+	 *  getPublicationType - get publication type from number key
+	 */
+	function getPublicationType($key)
+	{
+		$type = '';
+		if ($this->listFlag) {
+			$type = $this->publicationKeys[$key];
+		}
+		
+		return $type;
 	}
 
 	/**
