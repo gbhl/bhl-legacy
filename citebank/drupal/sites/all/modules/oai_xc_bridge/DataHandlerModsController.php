@@ -13,6 +13,7 @@
 $includePath = dirname(__FILE__) . '/';
 
 require_once($includePath . 'DataHandlerModel.php');
+//require_once($includePath . 'RightsModel.php');
 
 /** 
  * class DataHandlerModsController - mods to biblio 
@@ -83,7 +84,7 @@ class DataHandlerModsController extends DataHandlerModel
 	{
 	  // Get the title information
 	  $titleInfoList = $this->xpath->query('/x:mods/x:titleInfo');
-	  
+
 		// BIBLIO_FIELD_TOPIC: Journal Title
 		// BIBLIO_FIELD: title
 	  foreach ($titleInfoList as $titleInfo) {
@@ -108,6 +109,63 @@ class DataHandlerModsController extends DataHandlerModel
 				if ($subTitle->length > 0) {
 					$this->data_title = $this->data_title . ' ' . $subTitle->item(0)->nodeValue;
 				}
+			} else {
+				// has attribute type
+				/* 
+					new types:
+					
+					translated
+					abbreviated
+					alternative
+					uniform
+					
+					caveats, it is possible to have multiple alternative titles, and possibly some of the other types as well.
+					   we are just going to only be able to handle only ONE of each.
+
+						no type      maps to: data_title             (node title)
+						translated   maps to: data_translated_title  (biblio_translated_title)
+						abbreviated  maps to: data_short_title       (biblio_short_title)
+						alternative  maps to: data_alternate_title   (biblio_alternate_title)
+						uniform      maps to: data_secondary_title   (biblio_secondary_title)
+						
+						No real match on ‘uniform’ in biblio, so secondary is just a remaining likely slot.
+
+				*/
+
+				$type = $titleInfo->hasAttribute('type');
+				$title = $titleInfo->getElementsByTagName('title');
+				
+				switch ($type)
+				{
+					case 'translated':
+						if (!$this->data_translated_title) {
+							$this->data_translated_title = $title;
+						}
+						break;
+
+					case 'abbreviated':
+						if (!$this->data_short_title) {
+							$this->data_short_title = $title;
+						}
+						break;
+
+					case 'alternative':
+						if (!$this->data_alternate_title) {
+							$this->data_alternate_title = $title;
+						}
+						break;
+
+					case 'uniform':
+						if (!$this->data_secondary_title) {
+							$this->data_secondary_title = $title;
+						}
+						break;
+
+					default:
+						break;
+				}
+	  
+				
 			}
 	  }
 	}
@@ -425,6 +483,34 @@ class DataHandlerModsController extends DataHandlerModel
 	/**
 	 * parseValue_ - parse the data values
 	 */
+	protected function parseValue_Rights()
+	{
+		$accessConditionData = '';
+		//$accessConditionType = '';
+		
+	  $mods = $this->xpath->query('/x:mods');
+
+	  if (count($mods)) {
+		  foreach ($mods as $mod) {
+
+		  	$rightsTag = $mod->getElementsByTagName('accessCondition');
+
+		  	$accessConditionData .= $rightsTag->item(0)->nodeValue;
+
+		  	break; // there is only one in a given record that we are working with
+			}
+		}
+
+		//$type = 'Mods';
+		//$msg = 'rights: ' . $accessConditionType . ' [' . $accessConditionData . ']';
+		//watchdog($type, $msg); 
+
+		$this->data_custom2 = $accessConditionData;
+	}
+
+	/**
+	 * parseValue_ - parse the data values
+	 */
 	protected function parseValue_Edition()
 	{
 		$biblioTypes = $this->loadPublicationTypes();
@@ -546,6 +632,9 @@ class DataHandlerModsController extends DataHandlerModel
 		// BIBLIO_FIELD_TOPIC: Edition
 		// BIBLIO_FIELD: Edition:  originInfo   edition
 		$this->parseValue_Edition();
+
+		// BIBLIO_FIELD: custom_field2   accessCondition   useAndReproduction
+		$this->parseValue_Rights();
 
 		return $this->info;
 	}
