@@ -167,7 +167,8 @@ class BiblioNodeData
 		$this->data_call_number                 = (isset($node['biblio_call_number']) ? $node['biblio_call_number'] : '');
 		$this->data_citekey                     = (isset($node['biblio_citekey']) ? $node['biblio_citekey'] : '');
 		$this->data_coins                       = (isset($node['biblio_coins']) ? $node['biblio_coins'] : '');
-		$this->data_contributors                = (isset($node['biblio_contributors']) ? $node['biblio_contributors'] : array());
+		//$this->data_contributors                = (isset($node['biblio_contributors']) ? $node['biblio_contributors'] : array());
+		$this->data_contributors                = (isset($node['biblio_contributors']) ? $node['biblio_contributors'] : '');
 		$this->data_custom1                     = (isset($node['biblio_custom1']) ? $node['biblio_custom1'] : '');
 		$this->data_custom2                     = (isset($node['biblio_custom2']) ? $node['biblio_custom2'] : '');
 		$this->data_custom3                     = (isset($node['biblio_custom3']) ? $node['biblio_custom3'] : '');
