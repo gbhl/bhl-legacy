@@ -172,6 +172,7 @@ function processCiteBankImport()
 				//echo '****[' . 'Write the record here' . ']****' . '<br>' . "\n";
 			} else {
 				//echo '****[' . 'Skip the duplicate record here' . ']****' . '<br>' . "\n";
+				watchmen('duplicate file skipped: [' . $filename . '] [' . $x->biblioNode->data_url . ']');
 			}
 	
 			//echo '****************************************';
