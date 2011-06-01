@@ -16,7 +16,8 @@ $includePath = dirname(__FILE__) . '/';
 require_once($includePath . 'DrupalNode.php');
 require_once($includePath . 'BiblioNode.php');
 require_once($includePath . 'BiblioAuthorHandler.php');
-require_once($includePath . 'DBInterfaceController.php');
+//require_once($includePath . 'DBInterfaceController.php');
+require_once($includePath . 'DBInterfaceController_3.php');
 
 
 /** 
@@ -56,7 +57,8 @@ class CiteBankBiblio
 	 */
 	function initDefaults()
 	{
-		$this->dbi = new DBInterfaceController();
+		//$this->dbi = new DBInterfaceController();
+		$this->dbi = new DBInterfaceController_3();
 		$this->drupalNode = new DrupalNode();
 		$this->biblioNode = new BiblioNode();
 	}
@@ -453,13 +455,13 @@ class CiteBankBiblio
 	{
 		// bulletproofing ****
 		if (strlen($filename) == 0) {
-			$errmsg = 'error: no filename';
+			$errmsg = 'error: no filename ' . $filename;
 			watchdog('CiteBankBiblio', $errmsg);  // drupal system call
 			return;
 		}
 
 		if (strlen($title) == 0) {
-			$errmsg = 'error: no title';
+			$errmsg = 'error: no title ' . $filename;
 			watchdog('CiteBankBiblio', $errmsg);  // drupal system call
 			return;
 		}

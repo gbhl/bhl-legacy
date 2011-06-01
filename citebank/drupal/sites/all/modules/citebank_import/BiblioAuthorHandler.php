@@ -11,7 +11,7 @@
  */
 
 $includePath = dirname(__FILE__) . '/';
-require_once($includePath . 'DBInterfaceController.php');
+//require_once($includePath . 'DBInterfaceController.php');
 
 /** 
  * class BiblioAuthorHandler - handle biblios author structure

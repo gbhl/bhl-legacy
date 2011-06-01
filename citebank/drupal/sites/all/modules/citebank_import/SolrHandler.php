@@ -13,7 +13,7 @@
 
 $includePath = dirname(__FILE__) . '/';
 
-require_once($includePath . 'DBInterfaceController.php');
+//require_once($includePath . 'DBInterfaceController.php');
 
 /** 
  * class SolrHandler - handles Solr queue for nodes
@@ -40,7 +40,7 @@ class SolrHandler
 	 */
 	function initDefaults()
 	{
-		$this->dbi = new DBInterfaceController();
+		$this->dbi = new DBInterfaceController_3();
 	}
 
 	/**
