@@ -150,6 +150,8 @@ class BiblioNode extends BiblioNodeData
 		foreach ($node as $key => $val) {
 			
 			$val = trim($val, '"');  // pull off quote fluff
+			$val = str_replace('""', '"', $val);  // fix dumb excel csv format failure, you can no longer configure the Text Qualifier, plus it adds extra double quotes now.
+			$val = mysql_real_escape_string($val);  // sanitize the data, escape the ' and " to avoid busting the sql statement.
 
 			switch ($key)
 			{
@@ -212,7 +214,8 @@ class BiblioNode extends BiblioNodeData
 		$this->data_call_number                 = (isset($node['biblio_call_number']) ? $node['biblio_call_number'] : '');
 		$this->data_citekey                     = (isset($node['biblio_citekey']) ? $node['biblio_citekey'] : '');
 		$this->data_coins                       = (isset($node['biblio_coins']) ? $node['biblio_coins'] : '');
-		$this->data_contributors                = (isset($node['biblio_contributors']) ? $node['biblio_contributors'] : array());
+		//$this->data_contributors                = (isset($node['biblio_contributors']) ? $node['biblio_contributors'] : array());
+		$this->data_contributors                = (isset($node['biblio_contributors']) ? $node['biblio_contributors'] : '');
 		$this->data_custom1                     = (isset($node['biblio_custom1']) ? $node['biblio_custom1'] : '');
 		$this->data_custom2                     = (isset($node['biblio_custom2']) ? $node['biblio_custom2'] : '');
 		$this->data_custom3                     = (isset($node['biblio_custom3']) ? $node['biblio_custom3'] : '');
@@ -279,7 +282,8 @@ class BiblioNode extends BiblioNodeData
 		$this->data_call_number                 = (isset($node['data_call_number']) ? $node['data_call_number'] : '');
 		$this->data_citekey                     = (isset($node['data_citekey']) ? $node['data_citekey'] : '');
 		$this->data_coins                       = (isset($node['data_coins']) ? $node['data_coins'] : '');
-		$this->data_contributors                = (isset($node['data_contributors']) ? $node['data_contributors'] : array());
+		//$this->data_contributors                = (isset($node['data_contributors']) ? $node['data_contributors'] : array());
+		$this->data_contributors                = (isset($node['data_contributors']) ? $node['data_contributors'] : '');
 		$this->data_custom1                     = (isset($node['data_custom1']) ? $node['data_custom1'] : '');
 		$this->data_custom2                     = (isset($node['data_custom2']) ? $node['data_custom2'] : '');
 		$this->data_custom3                     = (isset($node['data_custom3']) ? $node['data_custom3'] : '');
