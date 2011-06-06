@@ -20,7 +20,7 @@ public class TestDirectoryListing {
 
 	@Before
 	public void setUp() throws Exception {		
-		dirlist.setBasedir("C:\\ProjectData\\BHL-E-FTP\\bhle-csic");
+		dirlist.setBasedir(new File("C:\\ProjectData\\BHL-E-FTP\\bhle-csic"));
 	}
 
 	@After

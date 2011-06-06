@@ -18,27 +18,37 @@
 	<si:gateway id="loading"
 		service-interface="at.co.ait.domain.integration.ILoadingGateway"
 		default-request-channel="loading_ramp" />
-
+		
 	<bean id="loading_file" class="at.co.ait.domain.services.PreparePackageService" />
+	<si:service-activator input-channel="loading_ramp" output-channel="sender_label"
+		method="prepareDigitalObject" ref="loading_file" />
 
-	<si:chain input-channel="loading_ramp" output-channel="techmetadata">
-		<si:service-activator
-			expression="@loading_file.prepare(payload,headers.PREFERENCES)" />
-		<si:splitter />
-	</si:chain>
-
-	<si:channel id="techmetadata">
-		<si:queue />
-		<si:interceptors>
-			<si:wire-tap channel="logger" />
-		</si:interceptors>
+	<si:header-value-router input-channel="loading_ramp"
+		header-name="OBJECT_TYPE">
+		<si:mapping value="fileobject" channel="packaging" />
+		<si:mapping value="digitalobject" channel="sender_label" />
+		<si:mapping value="informationpackage" channel="security_check" />
+	</si:header-value-router>
+	
+	<si:channel id="techmetadata">	
+		<si:queue/>	
 	</si:channel>
 
+	<si:chain input-channel="sender_label" output-channel="techmetadata">
+		<si:header-enricher>
+			<si:header name="smtparams" expression="@usersession.smtparams" />
+		</si:header-enricher>
+	</si:chain>
+
 	<si:logging-channel-adapter id="logger"
-		level="INFO" expression="headers" />
+		level="INFO" />
 
 	<si:poller id="poller" default="true" fixed-rate="30"
 		receive-timeout="30000" />
+
+	<bean id="delivery" class="at.co.ait.domain.services.PackageDeliveryService" />
+	<si:service-activator input-channel="packaging"
+		method="preparePackage" ref="delivery" />
 
 	<!-- Extract technical metadata from DigitalObject -->
 	<bean id="jhove" class="at.co.ait.domain.services.TechMetadataExtractionService" />
@@ -66,28 +76,15 @@
 
 	<!-- Mapping of metadata using SMT -->
 	<si:service-activator input-channel="mapping"
-		output-channel="boxing" expression="@mapping_service.map(payload,payload.prefs.smtparams)" />
+		output-channel="boxing" expression="@mapping_service.map(payload,headers.smtparams)" />
 	<bean id="mapping_service" class="at.co.ait.domain.services.SMTService" />
 
 	<!-- DigitalObjects are boxed together into on package -->
-	<bean id="aggregator" class="at.co.ait.domain.services.DeliveryService" />
-	<si:aggregator input-channel="boxing" ref="aggregator"
-		method="prepareDelivery" output-channel="label_service" />
-		
-	<si:service-activator id="label" input-channel="label_service"
-	method="enrich" output-channel="deliveries">
-		<bean class="at.co.ait.domain.services.LabellingService" />
-	</si:service-activator>
-
-	<si:channel id="deliveries">
-		<si:queue />
-		<si:interceptors>
-			<si:wire-tap channel="logger" />
-		</si:interceptors>
-	</si:channel>
+	<si:service-activator input-channel="boxing"
+		method="box" ref="delivery" />
 
 	<bean id="virusscan_service" class="at.co.ait.domain.services.VirusscanService" />
-	<si:service-activator input-channel="deliveries"
+	<si:service-activator input-channel="security_check"
 		output-channel="permid_service" expression="@virusscan_service.scan(payload)">
 	</si:service-activator>
 
@@ -97,15 +94,13 @@
 	</si:service-activator>
 
 	<!-- Creation of InformationPackage -->
-	<bean id="mets_marshaller" class="at.co.ait.domain.services.MetsMarshallerService" />
 	<si:service-activator input-channel="packaging_service"
 		output-channel="create_aip" method="marshal" ref="mets_marshaller" />
-	
+	<bean id="mets_marshaller" class="at.co.ait.domain.services.MetsMarshallerService" />
 
 	<!-- Wrap up of packages (copying to archive) -->
-	<bean id="wrapup_service" class="at.co.ait.domain.services.WrapUpService" />
 	<si:service-activator input-channel="create_aip"
-		method="wrapup" ref="wrapup_service" />	
+		method="wrapup" ref="delivery" />
 
 </beans>
 

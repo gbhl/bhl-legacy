@@ -8,13 +8,15 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 
+
 public class ConfigSerializer {	
 	private static final Logger logger = LoggerFactory.getLogger(ConfigSerializer.class);
-    private Settings settings;
+    private @Autowired Settings settings;
 	private Marshaller marshaller;
     private Unmarshaller unmarshaller;
     private Resource fileResource;
@@ -33,7 +35,6 @@ public class ConfigSerializer {
 	}
 
 	public void setSettings(Settings settings) {
-		logger.info("setting Settings");
 		this.settings = settings;
 	}
 
@@ -48,6 +49,7 @@ public class ConfigSerializer {
     public void saveSettings() throws IOException {
         FileOutputStream os = null;
         try {
+        	logger.info("Writing to " + filename);
             os = new FileOutputStream(filename);
             this.marshaller.marshal(settings, new StreamResult(os));
         } finally {

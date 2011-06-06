@@ -11,14 +11,14 @@
         
     <beans:bean id="settings" class="at.co.ait.web.common.Settings" />
 
+    <beans:bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+    </beans:bean>
+    
     <beans:bean id="config" class="at.co.ait.web.common.ConfigSerializer">
     	<beans:property name="settings" ref="settings" />
         <beans:property name="marshaller" ref="xstreamMarshaller" />
         <beans:property name="unmarshaller" ref="xstreamMarshaller" />
         <beans:property name="fileResource" value="classpath:/META-INF/settings.xml" />
-    </beans:bean>
-
-    <beans:bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
     </beans:bean>
     
 </beans:beans>

@@ -12,9 +12,17 @@ public class UserPreferences implements UserDetails {
 	private String username;
 	private String password;
 	private String basedirectory;
+	private String workdirectory;
 	private List<String> roles;
 	private List<GrantedAuthority> AUTHORITIES;
+	private String smtparams;
 	
+	public String getSmtparams() {
+		return smtparams;
+	}
+	public void setSmtparams(String smtparams) {
+		this.smtparams = smtparams;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -38,6 +46,12 @@ public class UserPreferences implements UserDetails {
 	}	
 	public void setBasedirectory(String basedirectory) {
 		this.basedirectory = basedirectory;
+	}
+	public String getWorkdirectory() {
+		return workdirectory;
+	}
+	public void setWorkdirectory(String workdirectory) {
+		this.workdirectory = workdirectory;
 	}
 	
 	public Collection<GrantedAuthority> getAuthorities() {

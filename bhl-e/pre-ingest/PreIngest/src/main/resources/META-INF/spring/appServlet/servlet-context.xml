@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/mvc 
@@ -12,31 +11,42 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
-	<beans:bean id="mbeanServerFactory" class="org.springframework.jmx.support.MBeanServerFactoryBean" >
-    	<beans:property name="locateExistingServerIfPossible" value="true" />
-    </beans:bean>
-	
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<beans:bean id="mbeanServerFactory"
+		class="org.springframework.jmx.support.MBeanServerFactoryBean">
+		<beans:property name="locateExistingServerIfPossible"
+			value="true" />
+	</beans:bean>
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-	
-	<beans:bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+
+	<beans:bean id="jsonConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
 		<beans:property name="supportedMediaTypes" value="application/json" />
 	</beans:bean>
-	
-	<beans:bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-	   <beans:property name="messageConverters">
-	       <beans:list>
-	           <beans:ref bean="jsonConverter" />
-	       </beans:list>
-	   </beans:property>
+
+	<beans:bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<beans:property name="messageConverters">
+			<beans:list>
+				<beans:ref bean="jsonConverter" />
+			</beans:list>
+		</beans:property>
 	</beans:bean>
-	
-	<beans:bean id="directorylist" class="at.co.ait.domain.services.DirectoryListingService" init-method="init" scope="session">
-		<aop:scoped-proxy/>
+
+	<beans:bean id="usersession" class="at.co.ait.web.common.UserSession"
+		init-method="init">
 	</beans:bean>
-	
+
+	<beans:bean id="directorylist"
+		class="at.co.ait.domain.services.DirectoryListingService" init-method="init"
+		scope="session">
+		<aop:scoped-proxy />
+	</beans:bean>
+
 	<!-- Use multiple view resolver: Internal, Tiles2 -->
 	<beans:import resource="view-resolver.xml" />
 
@@ -45,9 +55,9 @@
 
 	<!-- Imports user-defined @Controller beans that process client requests -->
 	<beans:import resource="controllers.xml" />
-	
+
 	<!-- Spring Integration -->
 	<beans:import resource="int-http-outbound-config.xml" />
 	<beans:import resource="integration.xml" />
-	
+
 </beans:beans>

@@ -2,6 +2,7 @@ package at.co.ait.domain.services;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,15 +19,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import at.co.ait.web.common.UserPreferences;
 
-public class DirectoryListingService  {
+public class DirectoryListingService implements Serializable {
+
 	private File basedir = null; 
 	private Map<Integer,String> visitedFilesAndFolders = new HashMap<Integer,String>();
+	private SecurityContextHolder holder;
 	private UserPreferences pref;
 	private static final Logger logger = LoggerFactory.getLogger(DirectoryListingService.class);
 	
 	public void init() throws MalformedURLException, IOException
 	{
-		pref = (UserPreferences) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		pref = (UserPreferences) holder.getContext().getAuthentication().getPrincipal();
 		Resource res = new UrlResource(pref.getBasedirectory());
 		setBasedir(res.getFile());
 		logger.info(pref.getBasedirectory());

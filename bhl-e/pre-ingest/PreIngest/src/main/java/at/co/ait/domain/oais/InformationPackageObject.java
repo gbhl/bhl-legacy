@@ -1,9 +1,13 @@
 package at.co.ait.domain.oais;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import au.edu.apsr.mtk.base.METSWrapper;
 
@@ -19,16 +23,20 @@ public class InformationPackageObject extends GenericObject {
 	/**
 	 * IP holds all submitted files.
 	 */
-	private Set<DigitalObject> digitalobjects = Collections
-			.synchronizedSet(new HashSet<DigitalObject>());
+	private List<DigitalObject> digitalobjects = new ArrayList<DigitalObject>();
 
-	public Set<DigitalObject> getDigitalobjects() {
+	public List<DigitalObject> getDigitalobjects() {
 		return digitalobjects;
 	}
-	
+
+	public void setDigitalobjects(List<DigitalObject> digitalobjects) {
+		this.digitalobjects = digitalobjects;
+	}
+
 	private Set<UUID> digitalObjectUUID = new HashSet<UUID>();
 	
 	public void addDigitalObjectUUID(UUID id) {
+		logger.debug(id.toString());
 		digitalObjectUUID.add(id);
 	}
 	
@@ -36,8 +44,12 @@ public class InformationPackageObject extends GenericObject {
 		digitalObjectUUID.remove(id);
 	}
 	
+	private static final Logger logger = LoggerFactory
+	.getLogger(InformationPackageObject.class);
+	
 	public Boolean isReadyForDelivering() {		
 		Boolean returnVal = false;
+		logger.debug(String.valueOf(digitalObjectUUID.size()));
 		if (digitalObjectUUID.size() == 0) returnVal = true;
 		return returnVal;
 	}
@@ -84,6 +96,19 @@ public class InformationPackageObject extends GenericObject {
 
 	public void addDigitalObject(DigitalObject obj) {
 		getDigitalobjects().add(obj);
+	}
+	
+	/**
+	 * Store virusscan results for folder
+	 */
+	private String scanlog;
+
+	public String getScanlog() {
+		return scanlog;
+	}
+
+	public void setScanlog(String scanlog) {
+		this.scanlog = scanlog;
 	}
 
 	@Override

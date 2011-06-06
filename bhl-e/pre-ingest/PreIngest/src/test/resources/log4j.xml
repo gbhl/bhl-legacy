@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="at.co.ait">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

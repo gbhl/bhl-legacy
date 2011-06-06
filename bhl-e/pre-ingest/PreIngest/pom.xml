@@ -2,17 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>at.co</groupId>
-	<artifactId>ait</artifactId>
+	<groupId>at.co.ait</groupId>
+	<artifactId>PreIngest</artifactId>
 	<name>PreIngest</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.6</java-version>
-		<org.springframework-version>3.0.4.RELEASE</org.springframework-version>
-		<spring.oxm.version>3.0.4.RELEASE</spring.oxm.version>
+		<org.springframework-version>3.0.5.RELEASE</org.springframework-version>
+		<spring.oxm.version>3.0.5.RELEASE</spring.oxm.version>
 		<org.springframework.roo-version>1.0.2.RELEASE</org.springframework.roo-version>
-		<spring.integration.version>2.0.0.RELEASE</spring.integration.version>
+		<spring.integration.version>2.0.4.RELEASE</spring.integration.version>
 		<spring.security.version>3.0.5.RELEASE</spring.security.version>
 		<org.aspectj-version>1.6.9</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
@@ -275,18 +275,6 @@
 			<version>1.1</version>
 		</dependency>
 
-		<!-- ActiveMQ 5.4.1 -->
-		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-core</artifactId>
-			<version>5.4.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xbean</groupId>
-			<artifactId>xbean-spring</artifactId>
-			<version>3.5</version>
-		</dependency>
-
 		<!-- XStream -->
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
@@ -434,7 +422,7 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>cluster-test</id>
+			<id>remote-test</id>
 			<build>
 				<plugins>
 					<plugin>
@@ -452,13 +440,14 @@
 		<profile>
 			<id>local-test</id>
 			<build>
+				<finalName>${artifactId}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>tomcat-maven-plugin</artifactId>
 						<version>1.0-beta-1</version>
 						<configuration>
-							<url>http://localhost:8989/manager/html</url>
+							<url>http://bhl-mandible.nhm.ac.uk:8080/manager/html</url>
 							<server>tomcatSolr</server>
 						</configuration>
 					</plugin>

@@ -18,14 +18,14 @@ public class DigitalObjectTypeExtractor {
 	private static final Tika tika = new Tika();
 	static private List<String> imageMimeTypes = new ArrayList<String>();
 	static private List<String> metadataMimeTypes = new ArrayList<String>();
-	static private List<String> derivativeMimeTypes = new ArrayList<String>();
+	static private List<String> pdfMimeTypes = new ArrayList<String>();
 	static {
 		imageMimeTypes.add("image/tiff");
 		imageMimeTypes.add("image/jpeg");
 		metadataMimeTypes.add("text/xml");
 		metadataMimeTypes.add("application/xml");		
-		derivativeMimeTypes.add("application/pdf");
-		derivativeMimeTypes.add("application/octet-stream");
+		pdfMimeTypes.add("application/pdf");
+		pdfMimeTypes.add("application/octet-stream");
 	}
 
 	/**
@@ -66,8 +66,8 @@ public class DigitalObjectTypeExtractor {
 		if (metadataMimeTypes.contains(mimeType) ||
 			mimeType.startsWith("text"))
 			return DigitalObjectType.METADATA;
-		if (derivativeMimeTypes.contains(mimeType))
-				return DigitalObjectType.DERIVATIVE;
+		if (pdfMimeTypes.contains(mimeType))
+				return DigitalObjectType.PDF;
 		return DigitalObjectType.UNKNOWN;
 	}
 

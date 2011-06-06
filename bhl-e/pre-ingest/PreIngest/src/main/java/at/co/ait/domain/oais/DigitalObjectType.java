@@ -5,7 +5,7 @@ public enum DigitalObjectType {
 	INFORMATIONPACKAGE(1),
 	IMAGE(2),
 	METADATA(3),
-	DERIVATIVE(4),
+	PDF(4),
 	UNKNOWN(5);
 	
 	private int index;

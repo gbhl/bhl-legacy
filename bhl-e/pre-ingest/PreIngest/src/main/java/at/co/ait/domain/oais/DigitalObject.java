@@ -30,6 +30,7 @@ public class DigitalObject extends GenericObject {
 		this.virusscanResult = virusscanResult;
 	}
 
+
 	/**
 	 * Identifier used by content producers to identify the uploaded information
 	 * package. Doesn't identify the file.
@@ -42,19 +43,6 @@ public class DigitalObject extends GenericObject {
 
 	public void setExternalIdentifier(String externalIdentifier) {
 		this.externalIdentifier = externalIdentifier;
-	}
-
-	/**
-	 * Secure hash (SHA-1) of the submitted file.
-	 */
-	private String digestValueinHex;
-
-	public String getDigestValueinHex() {
-		return digestValueinHex;
-	}
-
-	public void setDigestValueinHex(String digestValueinHex) {
-		this.digestValueinHex = digestValueinHex;
 	}
 
 	/**
@@ -87,31 +75,18 @@ public class DigitalObject extends GenericObject {
 
 	// needed for SpEL evaluation
 	public Integer getObjecttypeIdx() {
-		logger.info(String.valueOf(objecttype.getIndex()));
 		return objecttype.getIndex();
 	}
 
 	// FIXXME: mapped metadata using SMT
-	private String descrMappedMetadata;
+	private File descrMappedMetadata;
 
-	public String getDescrMappedMetadata() {
+	public File getDescrMappedMetadata() {
 		return descrMappedMetadata;
 	}
 
-	public void setDescrMappedMetadata(String descrMappedMetadata) {
+	public void setDescrMappedMetadata(File descrMappedMetadata) {
 		this.descrMappedMetadata = descrMappedMetadata;
-	}
-
-	// FIXXME: structure info is optional;
-	// e.g. articles belonging to other DigitalObjects
-	private String addedStructureInformation;
-
-	public String getAddedStructureInformation() {
-		return addedStructureInformation;
-	}
-
-	public void setAddedStructureInformation(String addedStructureInformation) {
-		this.addedStructureInformation = addedStructureInformation;
 	}
 
 	private UUID informationPackageUUID;
@@ -123,36 +98,45 @@ public class DigitalObject extends GenericObject {
 	public void setInformationPackageUUID(UUID informationPackageUUID) {
 		this.informationPackageUUID = informationPackageUUID;
 	}
+	
+	private File folder;
 
-	/**
-	 * Calculate SHA-1 hash value for submitted file
-	 * 
-	 * @param fileObj
-	 *            Submitted File.
-	 * @throws IOException
-	 * @throws NoSuchAlgorithmException
-	 */
-	public void calculateHash(File fileObj) throws IOException,
-			NoSuchAlgorithmException {
+	public File getFolder() {
+		return folder;
+	}
 
-		byte[] digest = Files.getDigest(fileObj,
-				MessageDigest.getInstance("SHA"));
+	public void setFolder(File folder) {
+		this.folder = folder;
+	}
+	
+	private Integer order;
 
-		this.setDigestValueinHex(new String(Hex.encodeHex(digest)));
+	public Integer getOrder() {
+		return order;
+	}
 
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
+	
+	private String smtServiceLog;
+
+	public String getSmtServiceLog() {
+		return smtServiceLog;
+	}
+
+	public void setSmtServiceLog(String smtServiceLog) {
+		this.smtServiceLog = smtServiceLog;
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		// TODO use getClass() to build toString()
-		return "submitted file: " + getSubmittedFile() + "\n"
+		return "submitted file: " + getSubmittedFile().getName() + "\n"
 				+ "external identifier: " + getExternalIdentifier() + "\n"
-				+ "secure hash: " + getDigestValueinHex() + "\n"
-				+ "virusscan: " + getVirusscanResult() + "\n"
-				+ "technical metadata: " + getTechMetadata().substring(0, 200)
-				+ "\n" + "descriptive metadata: " + getDescrMappedMetadata()
-				+ "\n";
+				+ "order: " + getOrder() + "\n"
+				+ "by: " + getPrefs().getUsername() + "\n";
 	}
 
 }

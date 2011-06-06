@@ -12,27 +12,31 @@
 	
 	<!-- Application Loggers -->	
 	<logger name="org.springframework">
-		<level value="info" />
+		<level value="warn" />
 	</logger>
 	
 	<logger name="at.co.ait">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
-		<level value="info" />
+		<level value="warn" />
 	</logger>
 	
 	<logger name="org.springframework.beans">
-		<level value="info" />
+		<level value="warn" />
 	</logger>
 	
 	<logger name="org.springframework.context">
-		<level value="info" />
+		<level value="warn" />
 	</logger>
 
 	<logger name="org.springframework.web">
+		<level value="warn" />
+	</logger>
+	
+	<logger name="org.springframework.integration">
 		<level value="info" />
 	</logger>
 

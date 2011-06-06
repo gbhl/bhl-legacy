@@ -8,6 +8,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,8 @@ import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.domain.oais.InformationPackageObject;
 import at.co.ait.domain.services.DirectoryListingService;
 import at.co.ait.domain.services.PackageDeliveryService;
+import at.co.ait.web.common.Settings;
+import at.co.ait.web.common.UserPreferences;
 
 /**
  * Handles requests for the application home page.
@@ -30,7 +35,7 @@ public class FileBrowser {
 
 	private static final Logger logger = LoggerFactory.getLogger(FileBrowser.class);
 	private @Autowired DirectoryListingService directorylist;
-	private @Autowired PackageDeliveryService delivery;
+//	private @Autowired PackageDeliveryService delivery;
 	private @Autowired ILoadingGateway loading;
 
 	@RequestMapping(value="index", method=RequestMethod.GET)
@@ -39,26 +44,26 @@ public class FileBrowser {
 		return null;
 	}
 	
-	@RequestMapping(value="status/infopackageobjects", method=RequestMethod.GET, headers="Accept=application/json")
-	public @ResponseBody List<String> getInfoPackageObjectsStatus() {
-		List<String> reply = new ArrayList<String>();
-		for (Iterator<InformationPackageObject> it=delivery.getPackageInfo().iterator(); it.hasNext(); ) {
-			reply.add(it.next().toString());
-		}
-		return reply;
-	}
-	
-	@RequestMapping(value="status/digitalobjects", method=RequestMethod.GET, headers="Accept=application/json")
-	public @ResponseBody List<String> getDigitalObjectsStatus() {
-		List<String> reply = new ArrayList<String>();
-		for (Iterator<InformationPackageObject> it=delivery.getPackageInfo().iterator(); it.hasNext(); ) {
-			InformationPackageObject tempinfpkg = it.next();
-			for (Iterator<DigitalObject> digobj=tempinfpkg.getDigitalobjects().iterator(); digobj.hasNext(); ) {				
-				reply.add(digobj.next().toString());
-			}
-		}
-		return reply;
-	}
+//	@RequestMapping(value="status/infopackageobjects", method=RequestMethod.GET, headers="Accept=application/json")
+//	public @ResponseBody List<String> getInfoPackageObjectsStatus() {
+//		List<String> reply = new ArrayList<String>();
+//		for (Iterator<InformationPackageObject> it=delivery.getPackageInfo().iterator(); it.hasNext(); ) {
+//			reply.add(it.next().toString());
+//		}
+//		return reply;
+//	}
+//	
+//	@RequestMapping(value="status/digitalobjects", method=RequestMethod.GET, headers="Accept=application/json")
+//	public @ResponseBody List<String> getDigitalObjectsStatus() {
+//		List<String> reply = new ArrayList<String>();
+//		for (Iterator<InformationPackageObject> it=delivery.getPackageInfo().iterator(); it.hasNext(); ) {
+//			InformationPackageObject tempinfpkg = it.next();
+//			for (Iterator<DigitalObject> digobj=tempinfpkg.getDigitalobjects().iterator(); digobj.hasNext(); ) {				
+//				reply.add(digobj.next().toString());
+//			}
+//		}
+//		return reply;
+//	}
 	
 	@RequestMapping(value="ajaxTree", method=RequestMethod.GET, headers="Accept=application/json")
 	public @ResponseBody List<Map<String,Object>> getAjaxTree() {
@@ -78,8 +83,10 @@ public class FileBrowser {
 	
 	@RequestMapping(value="sendNodes", method=RequestMethod.POST)
 	public @ResponseBody String sendNodes(@RequestParam(value="selNodes", required=true) List<String> keys) {
+		// only folders are submitted, no files
 		for (String key : keys) {
-			loading.load(directorylist.getFileByKey(Integer.valueOf(key)), "fileobject");
+			UserPreferences prefs = (UserPreferences) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			loading.loadfolder(directorylist.getFileByKey(Integer.valueOf(key)), prefs);
 		}
 		return "done";
 	}	
