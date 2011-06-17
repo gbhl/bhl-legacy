@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import at.co.ait.domain.integration.ILoadingGateway;
 import at.co.ait.domain.oais.DigitalObject;
-import at.co.ait.domain.oais.InformationPackageObject;
+import at.co.ait.domain.oais.TrackingObject;
 import at.co.ait.web.common.UserPreferences;
 
 public class PreparePackageService {
 	
 	private @Autowired ILoadingGateway loading;
+	private DigitalObject digitalobject;
 
 	public List<DigitalObject> prepare(File folderFileObj, UserPreferences prefs) {
 		List<DigitalObject> objlist = new ArrayList<DigitalObject>();

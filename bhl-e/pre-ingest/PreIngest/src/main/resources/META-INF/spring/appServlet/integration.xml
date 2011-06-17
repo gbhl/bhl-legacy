@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:si="http://www.springframework.org/schema/integration"
 	xmlns:stream="http://www.springframework.org/schema/integration/stream"
+	xmlns:int-jmx="http://www.springframework.org/schema/integration/jmx"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -9,7 +10,17 @@
         http://www.springframework.org/schema/integration/stream/spring-integration-stream-2.0.xsd
         http://www.springframework.org/schema/integration 
         http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/integration/jmx 
+        http://www.springframework.org/schema/integration/jmx/spring-integration-jmx.xsd
         ">
+
+	<int-jmx:mbean-export default-domain="packaging"
+		server="mbeanServer" />
+	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+		<property name="locateExistingServerIfPossible" value="true" />
+	</bean>
+
+	<si:message-history />
 
 	<!-- Necessary to use Annotations such as @Publisher, @ServiceActivator -->
 	<si:annotation-config default-publisher-channel="default" />
@@ -18,12 +29,19 @@
 	<si:gateway id="loading"
 		service-interface="at.co.ait.domain.integration.ILoadingGateway"
 		default-request-channel="loading_ramp" />
+	
+	<si:channel id="loading_ramp">
+		<si:queue />
+		<si:interceptors>
+			<si:wire-tap channel="logger" />
+		</si:interceptors>
+	</si:channel>
 
 	<bean id="loading_file" class="at.co.ait.domain.services.PreparePackageService" />
 
 	<si:chain input-channel="loading_ramp" output-channel="techmetadata">
 		<si:service-activator
-			expression="@loading_file.prepare(payload,headers.PREFERENCES)" />
+			expression="@loading_file.prepare(payload,headers.PREFERENCES)" />		
 		<si:splitter />
 	</si:chain>
 
@@ -34,7 +52,12 @@
 		</si:interceptors>
 	</si:channel>
 
-	<si:logging-channel-adapter id="logger"
+	<!-- object tracking (logging) service -->
+	<bean id="object_tracking" class="at.co.ait.domain.services.ObjectTrackingService" />
+	<si:service-activator input-channel="logger"
+		expression="@object_tracking.log(payload,headers,headers.PREFERENCES.username)" />
+
+	<si:logging-channel-adapter id="si_logger"
 		level="INFO" expression="headers" />
 
 	<si:poller id="poller" default="true" fixed-rate="30"
@@ -73,13 +96,13 @@
 	<bean id="aggregator" class="at.co.ait.domain.services.DeliveryService" />
 	<si:aggregator input-channel="boxing" ref="aggregator"
 		method="prepareDelivery" output-channel="label_service" />
-		
+
 	<si:service-activator id="label" input-channel="label_service"
-	method="enrich" output-channel="deliveries">
+		method="enrich" output-channel="deliveries">
 		<bean class="at.co.ait.domain.services.LabellingService" />
 	</si:service-activator>
 
-	<si:channel id="deliveries">
+	<si:channel id="boxing">
 		<si:queue />
 		<si:interceptors>
 			<si:wire-tap channel="logger" />
@@ -100,14 +123,17 @@
 	<bean id="mets_marshaller" class="at.co.ait.domain.services.MetsMarshallerService" />
 	<si:service-activator input-channel="packaging_service"
 		output-channel="create_aip" method="marshal" ref="mets_marshaller" />
-	
 
 	<!-- Wrap up of packages (copying to archive) -->
 	<bean id="wrapup_service" class="at.co.ait.domain.services.WrapUpService" />
 	<si:service-activator input-channel="create_aip"
-		method="wrapup" ref="wrapup_service" />	
+		output-channel="nullChannel" method="wrapup" ref="wrapup_service" />
+
+	<si:channel id="create_aip">
+		<si:queue />
+		<si:interceptors>
+			<si:wire-tap channel="logger" />
+		</si:interceptors>
+	</si:channel>
 
 </beans>
-
-
-

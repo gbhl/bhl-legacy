@@ -6,7 +6,8 @@ public enum DigitalObjectType {
 	IMAGE(2),
 	METADATA(3),
 	PDF(4),
-	UNKNOWN(5);
+	UNKNOWN(5),
+	DIGITALOBJECT(6);
 	
 	private int index;
 	private DigitalObjectType(int idx) {

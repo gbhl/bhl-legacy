@@ -14,7 +14,7 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
 
-	<beans:bean id="mbeanServerFactory"
+	<beans:bean id="mbeanServer"
 		class="org.springframework.jmx.support.MBeanServerFactoryBean">
 		<beans:property name="locateExistingServerIfPossible"
 			value="true" />
@@ -22,6 +22,8 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
+
+	<beans:bean id="trackingobject" class="at.co.ait.domain.oais.TrackingObject" />
 
 	<beans:bean id="jsonConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">

@@ -13,9 +13,9 @@ import at.co.ait.web.common.UserPreferences;
 import com.google.common.io.Files;
 
 public class GenericObject implements IGenericObject {
-
+	
 	public GenericObject() {
-		this.setId(UUID.randomUUID());
+		this.setId(UUID.randomUUID());		
 	}
 
 	/**
@@ -116,4 +116,5 @@ public class GenericObject implements IGenericObject {
 	public void setPrefs(UserPreferences prefs) {
 		this.prefs = prefs;
 	}
+	
 }

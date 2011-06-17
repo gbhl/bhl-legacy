@@ -25,6 +25,7 @@ $(function(){
         }
     });
 });
+
 </script>
 
 <!-- Include the required JavaScript libraries: -->
@@ -52,5 +53,70 @@ YUI().use('tabview', function(Y) {
     });
  
     tabview.render();
+    
+	// finally set a listener for a tab selection change
+	tabview.on("selectionChange", function(e) {
+
+		var tabSelected = e.newVal.get("index");
+		var channelSelected = null;
+
+		switch (tabSelected) {
+		case 0:
+			channelSelected = "loading_ramp";
+			break;
+		case 1:
+			channelSelected = "techmetadata";
+			break;
+		case 2:
+			channelSelected = "boxing";
+			break;
+		case 3:
+			channelSelected = "create_aip";
+			break;
+		}
+		
+	    $.getJSON("${pageContext.request.contextPath}/filebrowser/status/objects",
+			    {
+			     channel: channelSelected
+			    },
+			   	function(data) {
+			    	setObjectInfo(data, tabSelected);
+			    });
+	    
+	    function setObjectInfo(data, tab) {
+	    	  var tabcontent = "";
+	    	  
+	    	  $.each(data, function(i,value){	    	
+	    	    tabcontent += "<li>"+line(value)+"</li>";
+	    	  });
+	    	  
+	    	  function line(data) {
+	    		  var line = "";
+	    		  var separator = " - ";
+		    	  $.each(data, function(k,item){		    		  
+			    	    line += item;
+			    	    if (k <= data.length-2) line += separator;	    		  
+			      });
+		    	  return line;
+	    	  }
+	    	  
+  			switch (tab) {
+			case 0:
+				content = "#loadingcontent ul";
+				break;
+			case 1:
+				content = "#splittercontent ul";
+				break;
+			case 2:
+				content = "#aggregatorcontent ul";
+				break;
+			case 3:
+				content = "#wrapupcontent ul";
+				break;
+			}
+	    	$(content).html(tabcontent);
+	    	};
+	});    
+    
 });
 </script>

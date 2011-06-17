@@ -15,3 +15,7 @@ h1.heading {
 .yui3-loading #menu {
 	display: none;
 }
+
+#contenttabs div div * ul li {
+	list-style: none;
+}

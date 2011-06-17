@@ -6,16 +6,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.apache.commons.codec.binary.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.io.Files;
 
 public class DigitalObject extends GenericObject {
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(DigitalObject.class);
 
 	/**
 	 * Submitted file is immediately scanned for viruses.
@@ -29,7 +30,6 @@ public class DigitalObject extends GenericObject {
 	public void setVirusscanResult(String virusscanResult) {
 		this.virusscanResult = virusscanResult;
 	}
-
 
 	/**
 	 * Identifier used by content producers to identify the uploaded information
@@ -98,7 +98,7 @@ public class DigitalObject extends GenericObject {
 	public void setInformationPackageUUID(UUID informationPackageUUID) {
 		this.informationPackageUUID = informationPackageUUID;
 	}
-	
+
 	private File folder;
 
 	public File getFolder() {
@@ -108,7 +108,7 @@ public class DigitalObject extends GenericObject {
 	public void setFolder(File folder) {
 		this.folder = folder;
 	}
-	
+
 	private Integer order;
 
 	public Integer getOrder() {
@@ -118,7 +118,7 @@ public class DigitalObject extends GenericObject {
 	public void setOrder(Integer order) {
 		this.order = order;
 	}
-	
+
 	private String smtServiceLog;
 
 	public String getSmtServiceLog() {
@@ -135,8 +135,8 @@ public class DigitalObject extends GenericObject {
 		// TODO use getClass() to build toString()
 		return "submitted file: " + getSubmittedFile().getName() + "\n"
 				+ "external identifier: " + getExternalIdentifier() + "\n"
-				+ "order: " + getOrder() + "\n"
-				+ "by: " + getPrefs().getUsername() + "\n";
+				+ "order: " + getOrder() + "\n" + "by: "
+				+ getPrefs().getUsername() + "\n";
 	}
 
 }
