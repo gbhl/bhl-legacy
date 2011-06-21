@@ -152,7 +152,11 @@ function myOai_harvest($schedule_id, $schedule_name, $provider_id, $url, $set, $
 
     // do first request (once), or the resumption request (repeat)
     if ($is_first) {
-      $params = array('set' => $set, 'metadataPrefix' => $metadataPrefix);
+    	if (strlen($set) > 0) {
+      	$params = array('set' => $set, 'metadataPrefix' => $metadataPrefix);
+    	} else {
+      	$params = array('metadataPrefix' => $metadataPrefix);
+    	}
       $is_first = FALSE;
       
     } else {

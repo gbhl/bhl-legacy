@@ -461,7 +461,11 @@ class manualOaiHarvesterModel
 	
 	    // do first request (once), or the resumption request (repeat)
 	    if ($is_first) {
-	      $params = array('set' => $set, 'metadataPrefix' => $metadataPrefix);
+	    	if (strlen($set) > 0) {
+	      	$params = array('set' => $set, 'metadataPrefix' => $metadataPrefix);
+	    	} else {
+	      	$params = array('metadataPrefix' => $metadataPrefix);
+	    	}
 	      $is_first = false;
 
 				// check if we are rolling through from a previous large set or using the dates to window over 
