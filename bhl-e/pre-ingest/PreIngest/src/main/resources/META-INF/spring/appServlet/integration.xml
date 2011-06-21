@@ -33,7 +33,7 @@
 	<si:channel id="loading_ramp">
 		<si:queue />
 		<si:interceptors>
-			<si:wire-tap channel="logger" />
+			<si:wire-tap channel="tracking" />
 		</si:interceptors>
 	</si:channel>
 
@@ -48,13 +48,13 @@
 	<si:channel id="techmetadata">
 		<si:queue />
 		<si:interceptors>
-			<si:wire-tap channel="logger" />
+			<si:wire-tap channel="tracking" />
 		</si:interceptors>
 	</si:channel>
 
 	<!-- object tracking (logging) service -->
 	<bean id="object_tracking" class="at.co.ait.domain.services.ObjectTrackingService" />
-	<si:service-activator input-channel="logger"
+	<si:service-activator input-channel="tracking"
 		expression="@object_tracking.log(payload,headers,headers.PREFERENCES.username)" />
 
 	<si:logging-channel-adapter id="si_logger"
@@ -105,13 +105,18 @@
 	<si:channel id="boxing">
 		<si:queue />
 		<si:interceptors>
-			<si:wire-tap channel="logger" />
+			<si:wire-tap channel="tracking" />
 		</si:interceptors>
 	</si:channel>
 
 	<bean id="virusscan_service" class="at.co.ait.domain.services.VirusscanService" />
 	<si:service-activator input-channel="deliveries"
-		output-channel="permid_service" expression="@virusscan_service.scan(payload)">
+		output-channel="nfo_rdf" expression="@virusscan_service.scan(payload)">
+	</si:service-activator>
+	
+	<bean id="aperture_service" class="at.co.ait.domain.services.ApertureService" />
+	<si:service-activator input-channel="nfo_rdf"
+		output-channel="permid_service" expression="@aperture_service.process(payload)">
 	</si:service-activator>
 
 	<bean id="noid_service" class="at.co.ait.domain.services.NoidService" />
@@ -127,13 +132,7 @@
 	<!-- Wrap up of packages (copying to archive) -->
 	<bean id="wrapup_service" class="at.co.ait.domain.services.WrapUpService" />
 	<si:service-activator input-channel="create_aip"
-		output-channel="nullChannel" method="wrapup" ref="wrapup_service" />
-
-	<si:channel id="create_aip">
-		<si:queue />
-		<si:interceptors>
-			<si:wire-tap channel="logger" />
-		</si:interceptors>
-	</si:channel>
+		output-channel="tracking" method="wrapup" ref="wrapup_service" />	
+	
 
 </beans>

@@ -8,22 +8,28 @@
         <put-attribute name="title" value="" />
         <put-attribute name="header" value="/WEB-INF/jsp/header.jsp" />
         <put-attribute name="menu" value="/WEB-INF/jsp/menu.jsp" />
-        <put-attribute name="leftcolumn" value="" />
-        <put-attribute name="rightcolumn" value="" />
+        <put-attribute name="body" value="" />
         <put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />
         <put-attribute name="scripts" value="/WEB-INF/jsp/scripts.jsp" />
     </definition>
- 
-    <definition name="submittedfiles" extends="base.definition">
-        <put-attribute name="title" value="Tiles Generated Submitted Files" />
-        <put-attribute name="leftcolumn" value="" />
-        <put-attribute name="rightcolumn" value="/WEB-INF/views/submittedfiles.jsp" />
+    
+    <definition name="base.submissions" template="/WEB-INF/jsp/2columns.jsp">
+        <put-attribute name="leftcolumn" value="/WEB-INF/views/filebrowser/index.jsp" />
+        <put-attribute name="rightcolumn" value="/WEB-INF/views/filebrowser/objects.jsp" />
+    </definition>
+    
+    <definition name="base.channels" template="/WEB-INF/jsp/body.jsp">
+        <put-attribute name="content" value="/WEB-INF/views/channels/index.jsp" />
     </definition>
     
     <definition name="filebrowser/index" extends="base.definition">
         <put-attribute name="title" value="PreIngest - File Browser" />
-        <put-attribute name="leftcolumn" value="/WEB-INF/views/filebrowser/index.jsp" />
-        <put-attribute name="rightcolumn" value="/WEB-INF/views/filebrowser/objects.jsp" />
+        <put-attribute name="body" value="base.submissions" />
+    </definition>
+    
+    <definition name="channels/index" extends="base.definition">
+        <put-attribute name="title" value="PreIngest - Channels" />
+        <put-attribute name="body" value="base.channels" />
     </definition>
  
 </tiles-definitions>

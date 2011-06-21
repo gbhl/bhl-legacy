@@ -10,7 +10,7 @@ import at.co.ait.domain.oais.InformationPackageObject;
 
 public class WrapUpService {
 	
-	public void wrapup(InformationPackageObject obj) {
+	public InformationPackageObject wrapup(InformationPackageObject obj) {
 		String destfolder = "C:/ProjectData/BHL-Tests/archive/"
 				+ obj.getIdentifier() + "/";
 		synchronized (obj.getDigitalobjects()) {
@@ -26,5 +26,6 @@ public class WrapUpService {
 				}
 			}
 		}
+		return obj;
 	}
 }

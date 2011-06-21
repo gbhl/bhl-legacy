@@ -1,6 +1,8 @@
-<script src='${pageContext.request.contextPath}/resources/jquery/jquery.js' type='text/javascript'></script>
-<script src='${pageContext.request.contextPath}/resources/jquery/jquery-ui.custom.js' type='text/javascript'></script>
-<script src='${pageContext.request.contextPath}/resources/dynatree/jquery.dynatree.js' type='text/javascript'></script>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
+<script src="<spring:url value ='/resources/jquery/jquery.js' />" type='text/javascript'></script>
+<script src="<spring:url value ='/resources/jquery/jquery-ui.custom.js' />" type='text/javascript'></script>
+<script src="<spring:url value ='/resources/dynatree/jquery.dynatree.js' />" type='text/javascript'></script>
 
 <!-- Add code to initialize the tree when the document is loaded: -->
 <script type='text/javascript'>
@@ -29,7 +31,7 @@ $(function(){
 </script>
 
 <!-- Include the required JavaScript libraries: -->
-<script src="http://yui.yahooapis.com/3.3.0/build/yui/yui.js"></script>
+<script src="<spring:url value ='/resources/yui/build/yui/yui.js' />"></script>
 
 <script type='text/javascript'>
 //Call the "use" method, passing in "node-menunav".  This will load the

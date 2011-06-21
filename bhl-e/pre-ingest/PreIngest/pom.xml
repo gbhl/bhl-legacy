@@ -294,6 +294,32 @@
 			<version>0.9</version>
 		</dependency>
 
+		<!-- Aperture -->
+		<dependency>
+			<groupId>org.semanticdesktop.aperture</groupId>
+			<artifactId>aperture-core</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+
+		<!-- RDF2Go -->
+		<dependency>
+			<groupId>org.semweb4j</groupId>
+			<artifactId>rdf2go.api</artifactId>
+			<version>4.7.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.semweb4j</groupId>
+			<artifactId>rdf2go.impl.sesame23</artifactId>
+			<version>4.7.4</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.semweb4j</groupId>
+					<artifactId>rdf2go.api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 	</dependencies>
 	<repositories>
 		<!-- For testing against latest Spring snapshots -->
@@ -339,6 +365,24 @@
 			<id>cedarsoft-thirdparty</id>
 			<url>http://maven.cedarsoft.com/content/repositories/thirdparty/</url>
 		</repository>
+
+		<!-- Aperture -->
+		<repository>
+			<id>aperture-repo</id>
+			<url>http://aperture.sourceforge.net/maven/</url>
+			<name>Aperture Maven Repository</name>
+		</repository>
+
+		<!-- RDF2Go -->
+		<repository>
+			<id>semweb4j-repo</id>
+			<name>Semweb4j.org maven repo</name>
+			<url>http://semweb4j.org/repo/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+
 	</repositories>
 	<build>
 		<plugins>

@@ -7,10 +7,13 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8"> 
 		<tiles:insertAttribute name="scripts" />
 		<title><tiles:insertAttribute name="title" ignore="true" /></title>
-		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.3.0/build/cssreset/reset-min.css&3.3.0/build/cssfonts/fonts-min.css&3.3.0/build/cssgrids/grids-min.css&3.3.0/build/cssbase/base-min.css" />
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/layout/layout.css" />
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/<spring:theme code="css"/>" />
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/dynatree/skin/ui.dynatree.css" />
+		<link rel="stylesheet" type="text/css" href="<spring:url value ='/resources/yui/build/cssreset/reset-min.css' />" />
+		<link rel="stylesheet" type="text/css" href="<spring:url value ='/resources/yui/build/cssfonts/fonts-min.css' />" />
+		<link rel="stylesheet" type="text/css" href="<spring:url value ='/resources/yui/build/cssgrids/grids-min.css' />" />
+		<link rel="stylesheet" type="text/css" href="<spring:url value ='/resources/yui/build/cssbase/base-min.css' />" />
+		<link rel="stylesheet" type="text/css" href="<spring:url value ='/resources/layout/layout.css' />" />
+		<link rel="stylesheet" type="text/css" href="<spring:url value ='/' /><spring:theme code="css" />" />
+		<link rel="stylesheet" type="text/css" href="<spring:url value ='/resources/dynatree/skin/ui.dynatree.css' />" />
 		<script type="text/javascript"> 
 			//	Hide the menu while its dependencies are being loaded
 			document.documentElement.className = "yui3-loading";
@@ -27,11 +30,7 @@
 				</div>	
 	        </div>
 	        <div id="rightcolumn">
-	        	<div class="yui3-g">
-	        		<p class="first-of-a-type" />	        			 	
-	        		<div class="yui3-u-1-3"><tiles:insertAttribute name="leftcolumn" /></div>
-	        		<div class="yui3-u-2-3"><tiles:insertAttribute name="rightcolumn" /></div>	        					
-	 			</div>
+	        	<tiles:insertAttribute name="body" />	        	
 	        </div>
 	    </div>
 		<div id="footer"><tiles:insertAttribute name="footer" /></div>
