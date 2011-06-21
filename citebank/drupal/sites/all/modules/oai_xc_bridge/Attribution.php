@@ -28,6 +28,11 @@ class Attribution
 	 */
 	function getAttributionSource($hay)
 	{
+		// an ugly kludge.  the whole thing (Attribution) relies on guessing from the inconsistent identifier what our source is.
+		if (substr_count($hay, 'zookeys')) {
+			$hay = 'pensoft';
+		}
+
 		$source = $this->matchIdentifier($hay);
 		
 		return $source;
@@ -66,6 +71,10 @@ class Attribution
 	{
 		$urlpart = str_replace('http://', '', $url);
 		$urlpart = str_replace('www.', '', $urlpart);
+
+		// avoid some problem matches  things like  oai.pensoft.eu  create false matches
+		$urlpart = str_replace('oai:', '', $urlpart);
+		$urlpart = str_replace('oai.', '', $urlpart);
 		
 		$parts = explode('.', $urlpart);
 	
