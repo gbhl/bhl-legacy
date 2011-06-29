@@ -378,6 +378,7 @@ abbildungenundbe12phil
 abbildungenundbe13phil
 abbildungenzukar00stur
 abbildungenzukar01stur
+AbbildungenzurN00Wied
 abbildungundbesc00hepp
 abbottbiology00abborich
 abcbuttermakingh00burc
@@ -793,6 +794,7 @@ actaacademiaesci80impe
 actaacademiaesci81impe
 actaacademiaesci82impe
 actaamazonica22brazuoft
+ActadelaAcademi1Acad
 actahelveticaphy01helv
 actahelveticaphy03helv
 actahelveticaphy04helv
@@ -1617,8 +1619,10 @@ albumcraftylesch00craf
 albumdeavesamazo00gl
 albumdelaflor00arge
 albumdelafloram00arge
+albumdernatuur5263haar
 albumdernatuur52haar
 albumdernatuur54haar
+albumdernatuur56haar
 albumdernatuur58haar
 albumdernatuur60haar
 albumdernatuur61haar
@@ -1637,7 +1641,10 @@ albumdernatuur74haar
 albumdernatuur75haar
 albumdernatuur76haar
 albumdernatuur77haar
+albumdernatuur78haar
+albumdernatuur80haar
 albumdernatuur82haar
+albumdernatuur8394haar
 albumdesorchid1899corr
 albumgnralde00coup
 albummilitaire00slsn
@@ -3635,6 +3642,7 @@ animalkingdoma01cuvi
 animalkingdoma02cuvi
 animalkingdoma04cuvi
 animalkingdoma09cuvi
+animalkingdoma14cuvi
 animalkingdoma15cuvi
 animalkingdomar00cuvi
 animalkingdomar14cuvi
@@ -3654,6 +3662,8 @@ animalkingdomarr03cuvier
 animalkingdomarr04cuvi
 animalkingdomarr05cuvi
 animalkingdomarr06cuvi
+animalkingdomarr07cuvi
+animalkingdomarr08cuvi
 animalkingdomarr09cuvi
 animalkingdomarr10cuvi
 animalkingdomarr11831cuvi
@@ -4864,7 +4874,17 @@ annalsofnaturalh04lond
 annalsofnaturalh05lond
 annalsofnaturera01lexi
 annalsofnew1218991900newy
+annalsofnewy23191314newy
+annalsofnewyo10189798newy
+annalsofnewyo14190103newy
+annalsofnewyo16190506newy
+annalsofnewyo22191213newy
+annalsofnewyo7190607newy
 annalsofnewyor191909newy
+annalsofnewyor2188083newy
+annalsofnewyor3188385newy
+annalsofnewyor9189697newy
+annalsofnewyork111898newy
 annalsofnewyorka05newy
 annalsofnewyorka08newy
 annalsofnewyorka18newy
@@ -5324,6 +5344,7 @@ annualreportnewy81903newy
 annualreportnewy91904newy
 annualreportny10newyuoft
 annualreporto1971mont
+annualreporto79185456newy
 annualreportoes1903unit
 annualreportoes1905unit
 annualreportoes1906unit
@@ -7017,7 +7038,9 @@ archivesdeparasi71903pari
 archivesdesmissi01fran
 archivesdesmissi02fran
 archivesdesmissi0311fran
+archivesdesmissi03fran
 archivesdesmissi04fran
+archivesdesmissi05fran
 archivesdesmissi06fran
 archivesdesmissi07fran
 archivesdesmissi08fran
@@ -7167,6 +7190,7 @@ archivesdumuse212teyl
 archivesdumuse28teyl
 archivesdumuse29teyl
 archivesdumusete45teyl
+ArchivesduMuseY10Muse
 archivesdumusu01muse
 archivesdumusu02mus
 archivesdumusu02muse
@@ -7538,6 +7562,17 @@ archivfrnaturg97berl
 archivfrnaturg98berl
 archivfrnaturges21berl
 archivfrnaturges32berl
+archivfrphysio1879berl
+archivfrphysio1879berl2
+archivfrphysio1880berl
+archivfrphysio1882berl2
+archivfrphysio1884berl
+archivfrphysio1885berl2
+archivfrphysio1891berl
+archivfrphysio1893berl2
+archivfrphysio1895berl
+archivfrphysio1897berl
+archivfrphysio1901berl2
 archivfrphysio1909phys
 archivfrphysio1910phys
 archivfrphysio1910physiol
@@ -8211,11 +8246,13 @@ attidellasociet13soci
 attidellasociet14soci
 attidellasociet15soci
 attidellasociet21876soci
+attidellasociet301915soci
 attidellasociet31214189395soci
 attidellasociet31516189698soci
 attidellasociet31soci
 attidellasociet323188384soci
 attidellasociet323188687soci
+attidellasociet341922soci
 attidellasociet346188587soci
 attidellasociet371888soci
 attidellasociet3811188992soci
@@ -8495,6 +8532,7 @@ availableenergyo00arms
 availableenergyo01arms
 averagemonthlysu00hick
 averagemonthlywi00morg
+Aves00Shar
 avesappendixonso00ogil
 avesdapeninsulai00paul
 avesderapiaysu00medi
@@ -9436,6 +9474,7 @@ berichtdersencke4142senc
 berichtdersencke4344senc
 berichtdersencke4547senc
 berichtdersencke4849senc
+berichtdes371906natu
 berichtdesnaturh08natu
 berichtdesnaturh131860natu
 berichtdesnaturh141861natu
@@ -12184,6 +12223,7 @@ botanicalcontrib00gray
 botanicaldiction00eato
 botanicalexercis00eatorich
 botanicalexplora00hellrich
+botanicalexplora00stjo
 botanicalfeature00cannuoft
 botanicalgazette14hano
 botanicalgazette56hano
@@ -13193,7 +13233,9 @@ britishwildflowe00sowe
 britishwildflowe06horwiala
 britishwoodliceb00webb
 britishwormscat00brituoft
+britishzoolog01penn
 britishzoolog02penn
+britishzoolog03penn
 britishzoolog04penn
 britishzoology01penn
 britishzoology02penn
@@ -15007,6 +15049,7 @@ bulletinnewyor1091907newy
 bulletinnewyor1101907newy
 bulletinnewyor1111907newy
 bulletinnewyor1121907newy
+bulletinnewyor1131907newy
 bulletinnewyor1141907newy
 bulletinnewyor1181908newy
 bulletinnewyork101890newy
@@ -17201,6 +17244,7 @@ canadianfarmersm00whit
 canadianfield1152001otta
 canadianfieldn1152001otta
 canadianfieldn1162002otta
+canadianfieldn1172003otta
 canadianfieldnat01gill
 canadianfieldnat02gill
 canadianfieldnat03otta
@@ -19958,13 +20002,6 @@ cihm_09647
 cihm_09671
 cihm_09672
 cihm_09673
-cihm_09684
-cihm_09685
-cihm_09686
-cihm_09687
-cihm_09688
-cihm_09689
-cihm_09690
 cihm_09706
 cihm_09744
 cihm_09746
@@ -21557,6 +21594,7 @@ classesordersofl02dupp
 classesplantarum00agar
 classicpapersing00pete
 classicsofmodern00knic
+classificationde00kaup
 classificationde00tsch
 classificationde1904camu
 classificationev45ross
@@ -21699,6 +21737,7 @@ coatessherdbook07stra
 coatessherdbook08stra
 coatessherdbook09stra
 coatessherdbook10stra
+coatessherdbook11stra
 coatessherdbook12stra
 coatessherdbook13stra
 coatessherdbook14stra
@@ -21707,6 +21746,7 @@ coatessherdbook16stra
 coatessherdbook17stra
 coatessherdbook18stra
 coatessherdbook19stra
+coatessherdbook20stra
 coatessherdbook51stra
 coatessherdbook52stra
 cobbettspoormans00cobbrich
@@ -22770,6 +22810,7 @@ comptesrendusdes72soci
 comptesrendusdes73soci
 comptesrendusdes74soci
 comptesrendusdes75soci
+comptesrendusdes76soci
 comptesrendusdes77soci
 comptesrendusdes78soci
 comptesrendusdes79soci
@@ -25225,6 +25266,7 @@ denkschriftens671899akad
 denkschriftens691901akad
 denkschriftens701900akad
 denkschriftens7511913akad
+denkschriftens971921akad
 denmarksrovebeet01joha
 denmarksrovebeet02joha
 denmarksrovebeet03joha
@@ -27242,6 +27284,7 @@ dieurtiereeineei00gold
 dievderprovinzos00tisc
 dievegetationsor00kars
 dievegetationsve00beckuoft
+dievegetationsve00schn
 dieverbindungzwi00metz
 dieverbreitungde00pala
 dieverbreitungde1913feke
@@ -27432,8 +27475,10 @@ dipterologischeb00loew
 dipterologisches00becker
 dipterologisches15beckfo
 diptres00bigo
+diptresexotiq12macq
 diptresexotiqu04macqfo
 diptresexotiqu12macqfo
+diptresexotiqu16macq
 diptresexotiqu22macq
 diptresnouveau00bigo
 diptresnouveau00bigot
@@ -31969,6 +32014,7 @@ faunadergaskohle9901fria
 faunaderinderpal11west
 faunaderinderpal12west
 faunaderkielerbu01meye
+faunaderkielerbu85meye
 faunaderlandunds00biel
 faunaderlandunds00jick
 faunadernassauis00koberich
@@ -33785,6 +33831,7 @@ floraofnorthwest00piperich
 floraofnorthwest00pipeuoft
 floraofnorthwest01howeuoft
 floraofonondagac00good
+floraofoxfordsh00walk
 floraofoxfordshi00walk
 floraofpacificco00hallrich
 floraofpalousere00pipe
@@ -40229,6 +40276,7 @@ historyofbritish00newm
 historyofbritish00newmuoft
 historyofbritish00owen
 historyofbritish00owenuoft
+historyofbritish00selb
 historyofbritish00whyt
 historyofbritish00yarr
 historyofbritish01barr
@@ -40327,6 +40375,7 @@ historyofbritish23barr
 historyofbritish36yarr
 historyofbritishb05inmacg
 historyofbritishbi04macg
+historyofbritishs00john
 historyofbrockle00coll
 historyofbrockle02coll
 historyofbucksco01davi
@@ -41798,6 +41847,7 @@ iberusrevis1819200001soci
 iberusrevista14198184soci
 iberusrevista57198587soci
 iberusrevistade198197soci
+iberusrevistadel15soci
 iberusrevistadel202soci
 iberusrevistadel212soci
 iberusrevistadel221soci
@@ -42105,6 +42155,7 @@ iconographiegn48jang
 iconographiegn49jang
 iconographiegn50jang
 iconographiemala00bour
+Iconographieorn00DesMA
 iconographietde02mill
 iconographiezoop00mich
 iconographiezoopp00mich
@@ -45762,6 +45813,8 @@ journalofhymen16n2inte
 journalofhymen1712008inte
 journalofhymen1722008inte
 journalofhymen1812009inte
+journalofhymen1822009inte
+journalofhymen1912010inte
 journalofhymen1922010inte
 journalofhymenop00inte
 journalofhymenop09inte
@@ -48984,7 +49037,10 @@ linguisticfamili00powe
 linksinchainorpo00keariala
 linkswithpastinp00sewa
 linnaea02schl
+linnaea09schl
 linnaea24schl
+linnaea25schl
+linnaea26schl
 linnaea27schl
 linnaeaentomolog00ento
 linnaeaentomolog111857ento
@@ -53535,6 +53591,7 @@ mlekopitaiushchi02satu
 mllersoperativ00ml
 mmittereportofco00calirich
 mmoireinstruct00turg
+mmoirepourserv310ecke
 mmoireprsent00lafi
 mmoires101903soci
 mmoires111903soci
@@ -54413,6 +54470,7 @@ monographiederca16eisi
 monographiederec00balt
 monographiederec34balt
 monographiederf00ortl
+monographiederfa00kalt
 monographiederfa00urba
 monographiederfo00haeu
 monographiederfo00schu
@@ -54732,6 +54790,7 @@ monographsofunit91885geol
 monographsonisop00rich
 monographTrochi1Goul
 monographTrochi2Goul
+monographTrochi3Goul
 monographTrochi4Goul
 monographTrochi5Goul
 monographTrochiSupplementGoul
@@ -55294,6 +55353,7 @@ museumboltenianu02bolt
 museumbull1361371910newy
 museumbull1501511911newy
 museumbulle1551571912newy
+museumbulle1731741914newy
 museumbulletin1191908newy
 museumbulletin1231908newy
 museumbulletin1251908newy
@@ -55302,6 +55362,7 @@ museumbulletin1291909newy
 museumbulletin1311909newy
 museumbulletin1381910newy
 museumbulletin1391910newy
+museumbulletin1401910newy
 museumbulletin1411910newy
 museumbulletin1421910newy
 museumbulletin1431910newy
@@ -55311,6 +55372,7 @@ museumbulletin1471911newy
 museumbulletin1491911newy
 museumbulletin1531911newy
 museumbulletin1541911newy
+museumbulletin1581912newy
 museumbulletin1591912newy
 museumbulletin1611912newy
 museumbulletin1621912newy
@@ -55322,6 +55384,7 @@ museumbulletin1711914newy
 museumbulletin1721914newy
 museumbulletin1751915newy
 museumbulletin1761915newy
+museumbulletin1771915newy
 museumbulletin1781915newy
 museumbulletin1791915newy
 museumbulletin1801916newy
@@ -57995,20 +58058,26 @@ newwormsnakefrom3417marx
 newyorkhorticult5556reag
 newyorkjournalof01colu
 newyorksreportof00newyrich
+newyorkst209218191819newy
 newyorkstat2032041919newy
 newyorkstat2052061919newy
 newyorkstat2312321921newy
 newyorkstat2352381920newy
 newyorkstat2452481921newy
+newyorkstate1821916newy
 newyorkstateagri00newy
 newyorkstateagri00will
 newyorkstateagri01newy
 newyorkstateagri02newy
 newyorkstateagri03newy
 newyorkstatemu1861916newy
+newyorkstatemu1881916newy
 newyorkstatemu1891916newy
 newyorkstatemu1901916newy
+newyorkstatemu1911916newy
+newyorkstatemu1921917newy
 newyorkstatemu1941917newy
+newyorkstatemu1951917newy
 newyorkstatemu2011918newy
 newyorkstatemu2021918newy
 newyorkstatemus207208newy
@@ -58828,6 +58897,8 @@ notestoassistmem00hamiuoft
 notesupondairyin00pear
 notesurlafaunede00dogn
 notesurlecallovi00thi
+notesurlenonvomi310flou
+notesurlescolo310blan
 notesurquelquese00osor
 notesurquelquesn310miln
 notesurquelquesu00germ
@@ -58956,6 +59027,8 @@ nouveaujardinier00leli
 nouveaumanuelcom00duja
 nouveaumanuelcom00henr
 nouveaumanuelcom00verg
+Nouveaurecueild1Temm
+Nouveaurecueild2Temm
 nouveausystmed00brun
 nouveausystmed00brunn
 nouveautesmalaco00bour
@@ -59602,6 +59675,7 @@ observationssurl00pr
 observationssurl00vand
 observationssurl01guet
 observationssurl12duch
+observationssurl310dure
 observationsupon00need
 observationsupon00whit
 observationumbot00hedw
@@ -62253,6 +62327,7 @@ pacificcoastavif15coop
 pacificcoastavif16190009coop
 pacificcoastavif710191214coop
 pacificcoastrace00swarrich
+pacificcodfisher01cobb
 pacificfisherman104portrich
 pacificfisherman1915seat
 pacifichalibut00bell
@@ -67182,6 +67257,7 @@ proceedingsoflin0502linn
 proceedingsoflin0601linn
 proceedingsoflin09linn
 proceedingsoflin100linn
+proceedingsoflin101linn
 proceedingsoflin102linn
 proceedingsoflin103linn
 proceedingsoflin104linn
@@ -68596,6 +68672,7 @@ quarterlyjourn171861geol
 quarterlyjourn281872geol
 quarterlyjourna101854geol
 quarterlyjourna211865geol
+quarterlyjourna601904geol
 quarterlyjournal00roya
 quarterlyjournal01bost
 quarterlyjournal01comp
@@ -68700,6 +68777,7 @@ quarterlyjournal480405lond
 quarterlyjournal490506lond
 quarterlyjournal501906lond
 quarterlyjournal511907lond
+quarterlyjournal51849geol
 quarterlyjournal51857lond
 quarterlyjournal51865lond
 quarterlyjournal51868lond
@@ -70482,6 +70560,7 @@ reportofsomeinju00lintrich
 reportofsouthafr01sout
 reportofsouthafr0304sout
 reportofsouthafr05sout
+reportofsouthlon79sout
 reportofspeciala00unite
 reportofspecialc00wash
 reportofspecialc00washrich
@@ -74365,9 +74444,12 @@ siebenbrgensk00petr
 siedelungundagra01meituoft
 siedelungundagra02meituoft
 siegeconquestofn00brycrich
+siegfriedjacobyf01bunzrs
 siegfriedjacobyf02bunzrs
+siegfriedjacobyf04bunzrs
 siegfriedjacobyf05bunzrs
 siegfriedjacobyf06bunzrs
+siegfriedjacobyf07bunzrs
 siesdahliamanual00sies
 siesdahliamanual00siesrich
 sieteaosdeaven00mast
@@ -74505,6 +74587,9 @@ sitesofreserveph383mart
 sitesurveyingfor00hiro
 sitkaspruceitsus00cary
 sitzungsberich1091900kais
+sitzungsberich1191910kais
+sitzungsberich1301921kais
+sitzungsberich1321923kais
 sitzungsberich601869kais
 sitzungsbericht100stuoft
 sitzungsbericht101stuoft
@@ -74520,7 +74605,9 @@ sitzungsbericht171855kais
 sitzungsbericht201856kais
 sitzungsbericht391860kais
 sitzungsbericht641871kais
+sitzungsbericht891884kais
 sitzungsbericht951887kais
+sitzungsbericht991890kais
 sitzungsberichte00gese
 sitzungsberichte0164ikais
 sitzungsberichte03stuoft
@@ -78534,6 +78621,7 @@ surlathoriedel00fred
 surlclassificati00sl
 surlegammarusber00chev
 surlemaleadulted00chev
+surlesanimauxver310gerv
 surlesinsectesfo00weye
 surleturf00craf
 surlintervention00bruy
@@ -78914,6 +79002,7 @@ synopsisfloraefo00mass
 synopsisfloraege00koch
 synopsisfloraegef00koch
 synopsisfungorum00schw
+synopsisgenerumc00less
 synopsishallscot00hall
 synopsishepatica00gott
 synopsishymenoph00bosc
@@ -82119,6 +82208,9 @@ transactionspro22bota
 transactionspro25bota
 transactionspro27bota
 transactionspro30newz
+transactionspro331909roya
+transactionspro341910roya
+transactionspro391915roya
 transactionsproc00newz
 transactionsproc0140newz
 transactionsproc01bota
@@ -82151,6 +82243,7 @@ transactionsproc22newz
 transactionsproc2324bota
 transactionsproc23newz
 transactionsproc24newz
+transactionsproc24roya
 transactionsproc25newz
 transactionsproc26bota
 transactionsproc26newz
@@ -82776,6 +82869,8 @@ tromsmuseumsaars19011913trom
 tromsmuseumsrshe1620trom
 trophicecologyof00parm
 tropicalafrica00drum
+tropicalafrica01drum
+tropicalafrica021drum
 tropicalagricult00wilcrich
 tropicalagricult18821883colo
 tropicalagricult18831884colo
@@ -82952,6 +83047,7 @@ tudesdentomolo20ober
 tudesdhistoire00cl
 tudesdhistoire01hannuoft
 tudesdhistoire02hannuoft
+tudesembryog310quat
 tudeshistologi00meye
 tudesmdicale00viau
 tudesornitholo00gira
@@ -84170,8 +84266,11 @@ verhandlung3537188587sieb
 verhandlung3839188889sieb
 verhandlung4042189092sieb
 verhandlung4345189395sieb
+verhandlung5051190001sieb
 verhandlung5253190203sieb
 verhandlung5455190405sieb
+verhandlung5657190607sieb
+verhandlung5960190910sieb
 verhandlung6162191112sieb
 verhandlung6364191314sieb
 verhandlunge619051906orni
@@ -87596,6 +87695,8 @@ zoologist86lond
 zoologist87lond
 zoologist88lond
 zoologist89lond
+zoologistmonthly1904lond
+zoologistmonthly1911lond
 zoologiststextbo02brow
 zoologiststextbo11brow
 zoologya00packuoft
