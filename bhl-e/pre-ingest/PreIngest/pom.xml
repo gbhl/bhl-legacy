@@ -319,9 +319,17 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- PDFBOX -->
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>1.5.0</version>
+		</dependency>
 
 	</dependencies>
 	<repositories>
+		
 		<!-- For testing against latest Spring snapshots -->
 		<repository>
 			<id>org.springframework.maven.snapshot</id>
@@ -382,6 +390,13 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
+		
+		<!--  AIT repo for mets-api, jhove -->
+		<repository>
+			<id>ait-repo</id>
+			<url>http://dev.ait.co.at/maven-repo/</url>
+			<name>AIT Forschungsgesellschaft mbH Repository</name>
+		</repository>		
 
 	</repositories>
 	<build>
@@ -496,7 +511,7 @@
 						<artifactId>tomcat-maven-plugin</artifactId>
 						<version>1.0-beta-1</version>
 						<configuration>
-							<url>http://bhl-mandible.nhm.ac.uk:8080/manager/html</url>
+							<url>http://bhl-mandible.nhm.ac.uk/manager1/html</url>
 							<server>tomcatSolr</server>
 						</configuration>
 					</plugin>

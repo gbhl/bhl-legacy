@@ -78,15 +78,15 @@ public class DigitalObject extends GenericObject {
 		return objecttype.getIndex();
 	}
 
-	// FIXXME: mapped metadata using SMT
-	private File descrMappedMetadata;
+	// mods SMT
+	private String smtoutput;
 
-	public File getDescrMappedMetadata() {
-		return descrMappedMetadata;
+	public String getSmtoutput() {
+		return smtoutput;
 	}
 
-	public void setDescrMappedMetadata(File descrMappedMetadata) {
-		this.descrMappedMetadata = descrMappedMetadata;
+	public void setSmtoutput(String mods) {
+		this.smtoutput = mods;
 	}
 
 	private UUID informationPackageUUID;
@@ -127,6 +127,26 @@ public class DigitalObject extends GenericObject {
 
 	public void setSmtServiceLog(String smtServiceLog) {
 		this.smtServiceLog = smtServiceLog;
+	}
+	
+	private String ocr;
+
+	public String getOcr() {
+		return ocr;
+	}
+
+	public void setOcr(String ocr) {
+		this.ocr = ocr;
+	}
+	
+	private String taxa;
+
+	public String getTaxa() {
+		return taxa;
+	}
+
+	public void setTaxa(String taxa) {
+		this.taxa = taxa;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package at.co.ait.domain.services;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -28,10 +29,13 @@ import at.co.ait.domain.oais.InformationPackageObject;
 public class ApertureService {
 
 	private Boolean suppressParentChildLinks = Boolean.FALSE;
+	private ByteArrayOutputStream baos = new ByteArrayOutputStream ();  
 
 	public InformationPackageObject process(InformationPackageObject obj) throws Exception {		
         // start crawling and exit afterwards
-        doCrawling(obj.getSubmittedFile());     
+        doCrawling(obj.getSubmittedFile());
+        String nfo = baos.toString("UTF-8");
+        obj.setNepomukFileOntology(nfo);
         return obj;
 	}
 	
@@ -50,19 +54,19 @@ public class ApertureService {
         FileSystemCrawler crawler = new FileSystemCrawler();
         crawler.setDataSource(source);
         crawler.setDataAccessorRegistry(new DefaultDataAccessorRegistry());
-        crawler.setCrawlerHandler(new TutorialCrawlerHandler());
+        crawler.setCrawlerHandler(new CrawlerHandler(baos));
 
         // start crawling
         crawler.crawl();
-        System.out.println(crawler.getCrawlReport().getNewCount());
     }
     
-    private class TutorialCrawlerHandler extends CrawlerHandlerBase {
+    private class CrawlerHandler extends CrawlerHandlerBase {
 
 		// our 'persistent' modelSet
         private ModelSet modelSet;
 
-        public TutorialCrawlerHandler() throws ModelException {
+        public CrawlerHandler(ByteArrayOutputStream baos) throws ModelException {
+        	// _must_ be set
         	super(new MagicMimeTypeIdentifier(),null,null);
             modelSet = RDF2Go.getModelFactory().createModelSet();
             modelSet.open();            
@@ -70,7 +74,7 @@ public class ApertureService {
 
         public void crawlStopped(Crawler crawler, ExitCode exitCode) {
             try {
-                modelSet.writeTo(System.out, Syntax.RdfXml);
+                modelSet.writeTo(baos, Syntax.RdfXml);
             }
             catch (Exception e) {
                 throw new RuntimeException(e);

@@ -78,14 +78,29 @@
 		<si:mapping value="1" channel="boxing" />
 		<si:mapping value="2" channel="converting" />
 		<si:mapping value="3" channel="mapping" />
-		<si:mapping value="4" channel="boxing" />
+		<si:mapping value="4" channel="pdfbox" />
 		<si:mapping value="5" channel="boxing" />
 	</si:router>
+	
+	<!-- Convert DigitalObject (such as image conversion ) -->
+	<si:service-activator input-channel="pdfbox"
+		output-channel="taxonfinder" method="extract" ref="pdfbox_service" />
+	<bean id="pdfbox_service" class="at.co.ait.domain.services.PDFBoxService" />
 
 	<!-- Convert DigitalObject (such as image conversion ) -->
 	<si:service-activator input-channel="converting"
-		output-channel="boxing" method="convert" ref="conversion_service" />
+		output-channel="ocr" method="convert" ref="conversion_service" />
 	<bean id="conversion_service" class="at.co.ait.domain.services.ConvertImageService" />
+	
+	<!-- Convert DigitalObject (such as image conversion ) -->
+	<si:service-activator input-channel="ocr"
+		output-channel="taxonfinder" method="scan" ref="ocr_service" />
+	<bean id="ocr_service" class="at.co.ait.domain.services.OCRService" />
+	
+	<!-- Convert DigitalObject (such as image conversion ) -->
+	<si:service-activator input-channel="taxonfinder"
+		output-channel="boxing" method="enrich" ref="taxonfinder_service" />
+	<bean id="taxonfinder_service" class="at.co.ait.domain.services.TaxonFinderService" />
 
 	<!-- Mapping of metadata using SMT -->
 	<si:service-activator input-channel="mapping"
@@ -132,7 +147,6 @@
 	<!-- Wrap up of packages (copying to archive) -->
 	<bean id="wrapup_service" class="at.co.ait.domain.services.WrapUpService" />
 	<si:service-activator input-channel="create_aip"
-		output-channel="tracking" method="wrapup" ref="wrapup_service" />	
-	
+		output-channel="tracking" method="wrapup" ref="wrapup_service" />
 
 </beans>

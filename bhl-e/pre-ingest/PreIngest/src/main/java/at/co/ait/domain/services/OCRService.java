@@ -13,38 +13,32 @@ import org.slf4j.LoggerFactory;
 import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.web.common.UserPreferences;
 
-public class SMTService extends ProcessbuilderService {
-	
+public class OCRService extends ProcessbuilderService {
+
 	private static final Logger logger = LoggerFactory
-	.getLogger(SMTService.class);
-	
+			.getLogger(OCRService.class);
+
 	private List<String> commands;
 	private UserPreferences prefs;
 
-	public DigitalObject map(DigitalObject obj, String params)
-			throws MalformedURLException, IOException, InterruptedException {
+	public DigitalObject scan(DigitalObject obj) throws MalformedURLException,
+			IOException, InterruptedException {
 		commands = new ArrayList<String>();
-		commands.add("java");
-		commands.add("-jar");
 		commands.add((new java.net.URL(
-				"file://C:/SourceCode/smt-cli/SMT-CLI.jar")).getPath());
-		for (String param : params.split(" ")) {
-			commands.add(param);
-		}
-		commands.add("-if");
+				"file://C:/Utilities/Tesseract-OCR/tesseract.exe")).getPath());
 		commands.add(obj.getSubmittedFile().getAbsolutePath());
-		commands.add("-of");
-		commands.add(obj.getSubmittedFile().getAbsolutePath() + ".smt");
-		process(commands);		
+		// create temporary file
+		commands.add(obj.getSubmittedFile().getAbsolutePath() + ".ocr");
+		commands.add("-lang");
+		commands.add("eng");
+		process(commands);
 		// read temporary file contents
 		File output = new File(obj.getSubmittedFile()
-				.getAbsolutePath() + ".smt");
+				.getAbsolutePath() + ".ocr.txt");
 		// set ocr on digitalobject
-		obj.setSmtoutput(FileUtils.readFileToString(output));
+		obj.setOcr(FileUtils.readFileToString(output));
 		// deleted temporary file
 		output.delete();
-		obj.setSmtServiceLog(stdout.toString());
 		return obj;
 	}
-
 }

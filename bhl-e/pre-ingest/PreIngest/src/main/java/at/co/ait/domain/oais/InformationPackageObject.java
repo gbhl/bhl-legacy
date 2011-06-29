@@ -110,6 +110,17 @@ public class InformationPackageObject extends GenericObject {
 	public void setScanlog(String scanlog) {
 		this.scanlog = scanlog;
 	}
+	
+	private String nepomukFileOntology;
+	
+
+	public String getNepomukFileOntology() {
+		return nepomukFileOntology;
+	}
+
+	public void setNepomukFileOntology(String nepomukFileOntology) {
+		this.nepomukFileOntology = nepomukFileOntology;
+	}
 
 	@Override
 	public String toString() {
