@@ -20,11 +20,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.jdom.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import at.co.ait.domain.oais.DigitalObject;
+import at.co.ait.utils.ConfigUtils;
 import edu.harvard.hul.ois.jhove.App;
 import edu.harvard.hul.ois.jhove.ErrorMessage;
 import edu.harvard.hul.ois.jhove.JhoveBase;
@@ -168,7 +170,10 @@ public class TechMetadataExtractionService {
      */
     public DigitalObject enrich(DigitalObject obj) {
     	try {
-			obj.setTechMetadata(this.getDocument(obj.getSubmittedFile()));
+			String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".jhove");
+			File output = new File(tmpfile);
+			FileUtils.writeStringToFile(output, this.getDocument(obj.getSubmittedFile()), "UTF-8");
+			obj.setTechMetadata(output);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,5 +1,6 @@
 package at.co.ait.domain.oais;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -101,24 +102,23 @@ public class InformationPackageObject extends GenericObject {
 	/**
 	 * Store virusscan results for folder
 	 */
-	private String scanlog;
-
-	public String getScanlog() {
+	private File scanlog;
+	
+	public File getScanlog() {
 		return scanlog;
 	}
 
-	public void setScanlog(String scanlog) {
+	public void setScanlog(File scanlog) {
 		this.scanlog = scanlog;
 	}
-	
-	private String nepomukFileOntology;
-	
 
-	public String getNepomukFileOntology() {
+	private File nepomukFileOntology;
+
+	public File getNepomukFileOntology() {
 		return nepomukFileOntology;
 	}
 
-	public void setNepomukFileOntology(String nepomukFileOntology) {
+	public void setNepomukFileOntology(File nepomukFileOntology) {
 		this.nepomukFileOntology = nepomukFileOntology;
 	}
 

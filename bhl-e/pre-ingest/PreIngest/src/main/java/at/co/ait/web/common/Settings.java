@@ -9,15 +9,6 @@ import org.slf4j.LoggerFactory;
 public class Settings {
 	private static final Logger logger = LoggerFactory.getLogger(Settings.class);
 	private HashMap<String,UserPreferences> userprefs = new HashMap<String, UserPreferences>();	
-	private HashMap<String,List<String>> externalcommands = new HashMap<String, List<String>>();	
-	
-	public void addExternalCommand(String cmd, List<String> params) {
-		externalcommands.put(cmd, params);
-	}
-	
-	public List<String> getExternalCommand(String cmd) {
-		return externalcommands.get(cmd);
-	}
 
 	public UserPreferences getUserSettingsByName(String username) {
 		UserPreferences usrpref = null;

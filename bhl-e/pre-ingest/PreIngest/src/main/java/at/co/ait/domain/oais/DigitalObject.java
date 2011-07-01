@@ -49,13 +49,14 @@ public class DigitalObject extends GenericObject {
 	 * Extracted technical metadata of the submitted file. Generated using JHOVE
 	 * library.
 	 */
-	private String techMetadata;
+	private File techMetadata;
 
-	public String getTechMetadata() {
+
+	public File getTechMetadata() {
 		return techMetadata;
 	}
 
-	public void setTechMetadata(String techMetadata) {
+	public void setTechMetadata(File techMetadata) {
 		this.techMetadata = techMetadata;
 	}
 
@@ -78,15 +79,16 @@ public class DigitalObject extends GenericObject {
 		return objecttype.getIndex();
 	}
 
-	// mods SMT
-	private String smtoutput;
+	/**
+	 * File reference to output of SMTService
+	 */
+	private File smtoutput;
 
-	public String getSmtoutput() {
+	public File getSmtoutput() {
 		return smtoutput;
 	}
-
-	public void setSmtoutput(String mods) {
-		this.smtoutput = mods;
+	public void setSmtoutput(File smtoutput) {
+		this.smtoutput = smtoutput;
 	}
 
 	private UUID informationPackageUUID;
@@ -129,23 +131,26 @@ public class DigitalObject extends GenericObject {
 		this.smtServiceLog = smtServiceLog;
 	}
 	
-	private String ocr;
+	/**
+	 * OCR'ed text - can be dirty.
+	 */
+	private File ocr;
 
-	public String getOcr() {
+	public File getOcr() {
 		return ocr;
 	}
 
-	public void setOcr(String ocr) {
+	public void setOcr(File ocr) {
 		this.ocr = ocr;
 	}
-	
-	private String taxa;
 
-	public String getTaxa() {
+	private File taxa;
+
+	public File getTaxa() {
 		return taxa;
 	}
 
-	public void setTaxa(String taxa) {
+	public void setTaxa(File taxa) {
 		this.taxa = taxa;
 	}
 

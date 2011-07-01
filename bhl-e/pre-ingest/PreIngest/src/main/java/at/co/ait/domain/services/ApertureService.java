@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.ontoware.rdf2go.RDF2Go;
 import org.ontoware.rdf2go.exception.ModelException;
 import org.ontoware.rdf2go.model.Model;
@@ -25,6 +26,7 @@ import org.semanticdesktop.aperture.rdf.impl.RDFContainerImpl;
 import org.semanticdesktop.aperture.subcrawler.SubCrawlerException;
 
 import at.co.ait.domain.oais.InformationPackageObject;
+import at.co.ait.utils.ConfigUtils;
 
 public class ApertureService {
 
@@ -35,7 +37,10 @@ public class ApertureService {
         // start crawling and exit afterwards
         doCrawling(obj.getSubmittedFile());
         String nfo = baos.toString("UTF-8");
-        obj.setNepomukFileOntology(nfo);
+		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".nfo.rdf");
+		File output = new File(tmpfile);
+		FileUtils.writeStringToFile(output, nfo, "UTF-8");
+        obj.setNepomukFileOntology(output);
         return obj;
 	}
 	

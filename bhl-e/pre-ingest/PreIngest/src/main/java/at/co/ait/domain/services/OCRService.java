@@ -3,6 +3,7 @@ package at.co.ait.domain.services;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import at.co.ait.domain.oais.DigitalObject;
+import at.co.ait.utils.ConfigUtils;
+import at.co.ait.utils.Configuration;
 import at.co.ait.web.common.UserPreferences;
 
 public class OCRService extends ProcessbuilderService {
@@ -21,24 +24,24 @@ public class OCRService extends ProcessbuilderService {
 	private List<String> commands;
 	private UserPreferences prefs;
 
-	public DigitalObject scan(DigitalObject obj) throws MalformedURLException,
+	public DigitalObject scan(DigitalObject obj, String lang) throws MalformedURLException,
 			IOException, InterruptedException {
+		
+		// empty postfix since tesseract uses .txt extensions
+		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),Configuration.getString("OCRService.postfix")); //$NON-NLS-1$
+		String srcfile = obj.getSubmittedFile().getAbsolutePath();
+		URL ocrexec = new URL(Configuration.getString("OCRService.executable")); //$NON-NLS-1$
+		
 		commands = new ArrayList<String>();
-		commands.add((new java.net.URL(
-				"file://C:/Utilities/Tesseract-OCR/tesseract.exe")).getPath());
-		commands.add(obj.getSubmittedFile().getAbsolutePath());
-		// create temporary file
-		commands.add(obj.getSubmittedFile().getAbsolutePath() + ".ocr");
-		commands.add("-lang");
-		commands.add("eng");
+		commands.add(ocrexec.getPath());
+		commands.add(srcfile);
+		commands.add(tmpfile);
+		commands.add(Configuration.getString("OCRService.languageparam")); //$NON-NLS-1$
+		if (lang.isEmpty()) lang = Configuration.getString("OCRService.defaultlanguage"); //$NON-NLS-1$
+		commands.add(lang);
 		process(commands);
-		// read temporary file contents
-		File output = new File(obj.getSubmittedFile()
-				.getAbsolutePath() + ".ocr.txt");
-		// set ocr on digitalobject
-		obj.setOcr(FileUtils.readFileToString(output));
-		// deleted temporary file
-		output.delete();
+		
+		obj.setOcr(new File(tmpfile + Configuration.getString("OCRService.postfixFromTesseract"))); //$NON-NLS-1$
 		return obj;
 	}
 }

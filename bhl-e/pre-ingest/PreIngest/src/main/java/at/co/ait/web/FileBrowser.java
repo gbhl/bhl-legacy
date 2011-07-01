@@ -1,5 +1,6 @@
 package at.co.ait.web;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,51 +24,67 @@ import at.co.ait.web.common.UserPreferences;
  * Handles requests for the application home page.
  */
 @Controller
-@RequestMapping(value="/filebrowser/*")
+@RequestMapping(value = "/filebrowser/*")
 public class FileBrowser {
 
-	private static final Logger logger = LoggerFactory.getLogger(FileBrowser.class);
-	private @Autowired DirectoryListingService directorylist;
-    private @Autowired TrackingObject trackingobject;
-	private @Autowired ILoadingGateway loading;
+	private static final Logger logger = LoggerFactory
+			.getLogger(FileBrowser.class);
+	private @Autowired
+	DirectoryListingService directorylist;
+	private @Autowired
+	TrackingObject trackingobject;
+	private @Autowired
+	ILoadingGateway loading;
 
-	@RequestMapping(value="index", method=RequestMethod.GET)
+	@RequestMapping(value = "index", method = RequestMethod.GET)
 	@ModelAttribute("fileList")
 	public List<String> getMyFiles() {
 		return null;
 	}
-	
-	@RequestMapping(value="status/objects", method=RequestMethod.GET, headers="Accept=application/json")
-	public @ResponseBody List<List<String>> getObjectTrackingStatus(@RequestParam String channel) {
+
+	@RequestMapping(value = "status/objects", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody
+	List<List<String>> getObjectTrackingStatus(@RequestParam String channel) {
 		logger.debug("status request " + trackingobject.getQueue(channel));
 		return trackingobject.getQueue(channel);
 	}
-	
-	@RequestMapping(value="ajaxTree", method=RequestMethod.GET, headers="Accept=application/json")
-	public @ResponseBody List<Map<String,Object>> getAjaxTree() {
+
+	@RequestMapping(value = "ajaxTree", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody
+	List<Map<String, Object>> getAjaxTree() {
 		return directorylist.buildJSONMsgFromDir(null);
 	}
-	
-	@RequestMapping(value="sendData", method=RequestMethod.GET, headers="Accept=application/json")
-	public @ResponseBody List<Map<String,Object>> getLazyNode(@RequestParam String key) {
+
+	@RequestMapping(value = "sendData", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody
+	List<Map<String, Object>> getLazyNode(@RequestParam String key) {
 		return directorylist.buildJSONMsgFromDir(key);
 	}
-	
-	@RequestMapping(value="submitNodes", method=RequestMethod.POST)
-	public @ResponseBody String submitNodes(@RequestParam(value="selNodes", required=false) String nodes) {
+
+	@RequestMapping(value = "submitNodes", method = RequestMethod.POST)
+	public @ResponseBody
+	String submitNodes(
+			@RequestParam(value = "selNodes", required = false) String nodes) {
 		logger.info(nodes);
 		return "submitted";
 	}
-	
-	@RequestMapping(value="sendNodes", method=RequestMethod.POST)
-	public @ResponseBody String sendNodes(@RequestParam(value="selNodes", required=true) List<String> keys) {
+
+	@RequestMapping(value = "sendNodes", method = RequestMethod.POST)
+	public @ResponseBody
+	String sendNodes(
+			@RequestParam(value = "selNodes", required = true) List<String> keys,
+			@RequestParam(value = "lang", required = false) String language) {
+		HashMap<String, String> options = new HashMap<String,String>();
+		options.put("lang", language);
+		System.out.println(language);
 		// only folders are submitted, no files
 		for (String key : keys) {
-			UserPreferences prefs = (UserPreferences) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			loading.loadfolder(directorylist.getFileByKey(Integer.valueOf(key)), prefs);
+			UserPreferences prefs = (UserPreferences) SecurityContextHolder
+					.getContext().getAuthentication().getPrincipal();
+			loading.loadfolder(
+					directorylist.getFileByKey(Integer.valueOf(key)), prefs, options);
 		}
 		return "done";
-	}	
-	
-}
+	}
 
+}

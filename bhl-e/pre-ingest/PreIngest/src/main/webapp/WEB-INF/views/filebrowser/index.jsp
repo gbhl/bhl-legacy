@@ -29,7 +29,8 @@
 </script>
 <!-- Add a <div> element where the tree should appear: -->
 <form method="POST" action="submitNodes">
-   Select folders to be processed:
+  OCR-Language: <input type="text" name="lang" maxlength="3"><br>
+  Select folders to be processed:
   <br>
   <!-- The name attribute is used by tree.serializeArray()  -->
   <div id="tree" id="selNodes" name="selNodes">

@@ -1,5 +1,7 @@
 package at.co.ait.domain.integration;
 
+import java.util.Map;
+
 import org.springframework.integration.annotation.Header;
 
 import at.co.ait.web.common.UserPreferences;
@@ -13,7 +15,8 @@ public interface ILoadingGateway {
 			@Header("USERNAME") String username);
 	
 	void loadfolder(Object object,
-			@Header("PREFERENCES") UserPreferences prefs);
+			@Header("PREFERENCES") UserPreferences prefs,
+			@Header("OPTIONS") Map<String,String> options);
 	
 	void loadfile(Object object,
 			@Header("PREFERENCES") UserPreferences prefs);

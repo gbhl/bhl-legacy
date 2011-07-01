@@ -1,6 +1,5 @@
 package at.co.ait.domain.services;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
@@ -14,6 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
+import org.jdom.input.SAXBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -94,6 +94,13 @@ public class MetsMarshallerService {
 			dmd.setID("J-1");
 			MdWrap mdw = dmd.newMdWrap();
 			mdw.setMDType("MODS");
+//			SAXBuilder parser = new SAXBuilder();
+//			Document modsdoc = null;
+//			for (DigitalObject digobj : obj.getDigitalobjects()) {
+//				if (digobj.getSmtoutput() != null) modsdoc = (Document) parser.build(digobj.getSmtoutput()); 
+//			}			
+//			mdw.setXmlData(modsdoc.getDocumentElement());
+//			dmd.setMdWrap(mdw);
 			mdw.setXmlData(createMODS("demo", "experiment").getDocumentElement());
 			dmd.setMdWrap(mdw);
 			

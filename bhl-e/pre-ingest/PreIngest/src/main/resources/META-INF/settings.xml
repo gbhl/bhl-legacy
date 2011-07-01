@@ -1,21 +1,4 @@
 <at.co.ait.web.common.Settings>
-	<externalcommands>
-		<entry>
-			<string>scan</string>
-			<list>
-				<string>file:///C:/Program Files (x86)/ClamWin/bin/clamscan.exe</string>
-				<string>--no-summary</string>
-			</list>
-		</entry>
-		<entry>
-			<string>smt</string>
-			<list>
-				<string>java</string>
-				<string>-jar</string>
-				<string>file:///C:/SourceCode/smt-cli/SMT-CLI.jar</string>				
-			</list>
-		</entry>
-	</externalcommands>
 	<userprefs>
 		<entry>
 			<string>superuser</string>

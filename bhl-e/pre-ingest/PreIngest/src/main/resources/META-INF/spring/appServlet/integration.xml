@@ -29,7 +29,7 @@
 	<si:gateway id="loading"
 		service-interface="at.co.ait.domain.integration.ILoadingGateway"
 		default-request-channel="loading_ramp" />
-	
+
 	<si:channel id="loading_ramp">
 		<si:queue />
 		<si:interceptors>
@@ -39,11 +39,15 @@
 
 	<bean id="loading_file" class="at.co.ait.domain.services.PreparePackageService" />
 
-	<si:chain input-channel="loading_ramp" output-channel="techmetadata">
+	<si:chain input-channel="loading_ramp" output-channel="delivery_truck">
 		<si:service-activator
-			expression="@loading_file.prepare(payload,headers.PREFERENCES)" />		
+			expression="@loading_file.prepare(payload,headers.PREFERENCES)" />
 		<si:splitter />
 	</si:chain>
+	
+	<si:filter input-channel="delivery_truck" output-channel="techmetadata" method="filter">
+		<bean class="at.co.ait.domain.integration.HiddenFolderFilter" />
+	</si:filter>
 
 	<si:channel id="techmetadata">
 		<si:queue />
@@ -81,7 +85,7 @@
 		<si:mapping value="4" channel="pdfbox" />
 		<si:mapping value="5" channel="boxing" />
 	</si:router>
-	
+
 	<!-- Convert DigitalObject (such as image conversion ) -->
 	<si:service-activator input-channel="pdfbox"
 		output-channel="taxonfinder" method="extract" ref="pdfbox_service" />
@@ -91,12 +95,12 @@
 	<si:service-activator input-channel="converting"
 		output-channel="ocr" method="convert" ref="conversion_service" />
 	<bean id="conversion_service" class="at.co.ait.domain.services.ConvertImageService" />
-	
+
 	<!-- Convert DigitalObject (such as image conversion ) -->
 	<si:service-activator input-channel="ocr"
-		output-channel="taxonfinder" method="scan" ref="ocr_service" />
+		output-channel="taxonfinder" expression="@ocr_service.scan(payload,headers.OPTIONS.lang)" />
 	<bean id="ocr_service" class="at.co.ait.domain.services.OCRService" />
-	
+
 	<!-- Convert DigitalObject (such as image conversion ) -->
 	<si:service-activator input-channel="taxonfinder"
 		output-channel="boxing" method="enrich" ref="taxonfinder_service" />
@@ -128,7 +132,7 @@
 	<si:service-activator input-channel="deliveries"
 		output-channel="nfo_rdf" expression="@virusscan_service.scan(payload)">
 	</si:service-activator>
-	
+
 	<bean id="aperture_service" class="at.co.ait.domain.services.ApertureService" />
 	<si:service-activator input-channel="nfo_rdf"
 		output-channel="permid_service" expression="@aperture_service.process(payload)">
@@ -147,6 +151,7 @@
 	<!-- Wrap up of packages (copying to archive) -->
 	<bean id="wrapup_service" class="at.co.ait.domain.services.WrapUpService" />
 	<si:service-activator input-channel="create_aip"
-		output-channel="tracking" method="wrapup" ref="wrapup_service" />
+		output-channel="tracking"
+		expression="@wrapup_service.wrapup(payload,headers.PREFERENCES.workdirectory)" />
 
 </beans>
