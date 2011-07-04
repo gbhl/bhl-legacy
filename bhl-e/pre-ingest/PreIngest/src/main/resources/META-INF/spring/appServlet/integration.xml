@@ -39,15 +39,13 @@
 
 	<bean id="loading_file" class="at.co.ait.domain.services.PreparePackageService" />
 
-	<si:chain input-channel="loading_ramp" output-channel="delivery_truck">
+	<si:chain input-channel="loading_ramp" output-channel="techmetadata">
 		<si:service-activator
 			expression="@loading_file.prepare(payload,headers.PREFERENCES)" />
-		<si:splitter />
+		<si:splitter method="split">
+			<bean class="at.co.ait.domain.integration.DigitalObjectSplitter" />
+		</si:splitter>
 	</si:chain>
-	
-	<si:filter input-channel="delivery_truck" output-channel="techmetadata" method="filter">
-		<bean class="at.co.ait.domain.integration.HiddenFolderFilter" />
-	</si:filter>
 
 	<si:channel id="techmetadata">
 		<si:queue />

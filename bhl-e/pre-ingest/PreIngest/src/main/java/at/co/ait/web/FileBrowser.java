@@ -29,12 +29,9 @@ public class FileBrowser {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(FileBrowser.class);
-	private @Autowired
-	DirectoryListingService directorylist;
-	private @Autowired
-	TrackingObject trackingobject;
-	private @Autowired
-	ILoadingGateway loading;
+	private @Autowired DirectoryListingService directorylist;
+	private @Autowired TrackingObject trackingobject;
+	private @Autowired ILoadingGateway loading;
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	@ModelAttribute("fileList")
@@ -43,46 +40,41 @@ public class FileBrowser {
 	}
 
 	@RequestMapping(value = "status/objects", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody
-	List<List<String>> getObjectTrackingStatus(@RequestParam String channel) {
+	public @ResponseBody List<List<String>> getObjectTrackingStatus(@RequestParam String channel) {
 		logger.debug("status request " + trackingobject.getQueue(channel));
 		return trackingobject.getQueue(channel);
 	}
 
 	@RequestMapping(value = "ajaxTree", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody
-	List<Map<String, Object>> getAjaxTree() {
+	public @ResponseBody List<Map<String, Object>> getAjaxTree() {
 		return directorylist.buildJSONMsgFromDir(null);
 	}
 
 	@RequestMapping(value = "sendData", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody
-	List<Map<String, Object>> getLazyNode(@RequestParam String key) {
+	public @ResponseBody List<Map<String, Object>> getLazyNode(@RequestParam String key) {
 		return directorylist.buildJSONMsgFromDir(key);
 	}
 
 	@RequestMapping(value = "submitNodes", method = RequestMethod.POST)
-	public @ResponseBody
-	String submitNodes(
+	public @ResponseBody String submitNodes(
 			@RequestParam(value = "selNodes", required = false) String nodes) {
 		logger.info(nodes);
 		return "submitted";
 	}
 
 	@RequestMapping(value = "sendNodes", method = RequestMethod.POST)
-	public @ResponseBody
-	String sendNodes(
+	public @ResponseBody String sendNodes(
 			@RequestParam(value = "selNodes", required = true) List<String> keys,
 			@RequestParam(value = "lang", required = false) String language) {
+		// create new map with optional user input to add to the message header
 		HashMap<String, String> options = new HashMap<String,String>();
 		options.put("lang", language);
-		System.out.println(language);
+		// aquire user preferences object to add to the message header
+		UserPreferences prefs = (UserPreferences) SecurityContextHolder
+		.getContext().getAuthentication().getPrincipal();
 		// only folders are submitted, no files
 		for (String key : keys) {
-			UserPreferences prefs = (UserPreferences) SecurityContextHolder
-					.getContext().getAuthentication().getPrincipal();
-			loading.loadfolder(
-					directorylist.getFileByKey(Integer.valueOf(key)), prefs, options);
+			loading.loadfolder(directorylist.getFileByKey(Integer.valueOf(key)), prefs, options);
 		}
 		return "done";
 	}

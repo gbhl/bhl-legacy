@@ -24,7 +24,7 @@ public class TaxonFinderService {
 		String taxa = null;
 		String text = FileUtils.readFileToString(obj.getOcr());
 		taxa = taxonfinderGateway.requestTaxa(URLEncoder.encode(text,"UTF-8"))
-				.get(1, TimeUnit.SECONDS);
+				.get(2, TimeUnit.SECONDS);
 		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".taxa");
 		File output = new File(tmpfile);
 		FileUtils.writeStringToFile(output, taxa, "UTF-8");

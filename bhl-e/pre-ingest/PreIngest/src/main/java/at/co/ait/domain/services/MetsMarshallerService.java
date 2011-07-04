@@ -1,5 +1,6 @@
 package at.co.ait.domain.services;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,7 @@ import org.xml.sax.SAXException;
 
 import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.domain.oais.InformationPackageObject;
+import at.co.ait.utils.ConfigUtils;
 import au.edu.apsr.mtk.base.Agent;
 import au.edu.apsr.mtk.base.Div;
 import au.edu.apsr.mtk.base.DmdSec;
@@ -63,7 +66,7 @@ public class MetsMarshallerService {
         return doc;
     }
     
-    private METSWrapper createMETS(InformationPackageObject obj) {
+    private METSWrapper createMETS(InformationPackageObject obj) throws JDOMException, ParserConfigurationException {
     	METSWrapper mw = null;
     	try {
 			mw = new METSWrapper();
@@ -97,10 +100,12 @@ public class MetsMarshallerService {
 //			SAXBuilder parser = new SAXBuilder();
 //			Document modsdoc = null;
 //			for (DigitalObject digobj : obj.getDigitalobjects()) {
-//				if (digobj.getSmtoutput() != null) modsdoc = (Document) parser.build(digobj.getSmtoutput()); 
+//				if (digobj.getSmtoutput() != null) {
+//					System.out.println("building mods");
+//					modsdoc = (Document) parser.build(digobj.getSmtoutput()); 
+//				}
 //			}			
 //			mdw.setXmlData(modsdoc.getDocumentElement());
-//			dmd.setMdWrap(mdw);
 			mdw.setXmlData(createMODS("demo", "experiment").getDocumentElement());
 			dmd.setMdWrap(mdw);
 			
@@ -152,9 +157,6 @@ public class MetsMarshallerService {
 		} catch (METSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -172,9 +174,17 @@ public class MetsMarshallerService {
      * Enriches the information package object by adding METS metadata
      * @param obj
      * @return
+     * @throws ParserConfigurationException 
+     * @throws JDOMException 
+     * @throws IOException 
      */
-    public InformationPackageObject marshal(InformationPackageObject obj) {
-    	obj.setMets(createMETS(obj));
+    public InformationPackageObject marshal(InformationPackageObject obj) throws JDOMException, ParserConfigurationException, IOException {
+    	System.out.println("marshalling to METS");
+    	obj.setMets(createMETS(obj));    	
+		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".mets.xml");
+		System.out.println("saving mets to " + tmpfile);
+		File metsfile = new File(tmpfile);
+		obj.getMets().write(FileUtils.openOutputStream(metsfile));    	
     	return obj;
     }
 		
