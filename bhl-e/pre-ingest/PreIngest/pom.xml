@@ -319,7 +319,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- PDFBOX -->
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>
@@ -329,7 +329,7 @@
 
 	</dependencies>
 	<repositories>
-		
+
 		<!-- For testing against latest Spring snapshots -->
 		<repository>
 			<id>org.springframework.maven.snapshot</id>
@@ -390,13 +390,13 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-		
-		<!--  AIT repo for mets-api, jhove -->
+
+		<!-- AIT repo for mets-api, jhove -->
 		<repository>
 			<id>ait-repo</id>
 			<url>http://dev.ait.co.at/maven-repo/</url>
 			<name>AIT Forschungsgesellschaft mbH Repository</name>
-		</repository>		
+		</repository>
 
 	</repositories>
 	<build>
