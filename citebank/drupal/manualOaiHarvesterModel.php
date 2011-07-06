@@ -66,6 +66,7 @@ class manualOaiHarvesterModel
 		
 		// build our list of harvest schedules
 		$sql = 'SELECT * FROM oaiharvester_harvester_schedules AS oais JOIN oaiharvester_sets AS oaisets ON (oaisets.set_id = oais.set_id) JOIN oaiharvester_harvest_queue AS oaiq ON (oaiq.harvest_schedule_id = oais.harvest_schedule_id)  ORDER BY oais.harvest_schedule_id';
+		//$sql = 'SELECT * FROM oaiharvester_harvester_schedules AS oais JOIN oaiharvester_sets AS oaisets ON (oaisets.set_id = oais.set_id) JOIN oaiharvester_harvest_queue AS oaiq ON (oaiq.harvest_id = oais.harvest_schedule_id)  ORDER BY oais.harvest_schedule_id';
 		$result = db_query($sql);
 		
 		$harvestList = array();
@@ -423,6 +424,56 @@ class manualOaiHarvesterModel
 		return $flag;
 	}
 
+	/*
+	 *  checkOaiError - check if the error is just an empty response
+	 */
+	function checkOaiError($error)
+	{
+		$flag = false;
+		$passError = 'noRecordsMatch';
+		
+		$code = $error['error'][0]['attributes']['code'];
+			  	//$msg = print_r($oai, true);
+			  	//$this->myOaiLogMsg($msg);		
+
+  	//$msg = 'Code: [' . print_r($code, true) . ']';
+  	//$this->myOaiLogMsg($msg);		
+
+//Array ( 
+//[responseDate] => 2011-07-01T18:07:24Z 
+//[request] => Array 
+//	( 
+//		[attributes] => Array 
+//		( 
+//			[verb] => ListRecords 
+//			[from] => 2011-01-30 
+//			[until] => 2011-01-31 
+//			[set] => phytokeys 
+//			[metadataPrefix] => oai_dc
+//		)
+//	[text] => http://oai.pensoft.eu 
+//	)
+//[error] => Array 
+//	( [0] => Array 
+//		( 
+//			[attributes] => Array 
+//			( 
+//				[code] => noRecordsMatch 
+//			) 
+//		[text] => oai.noRecordsMatch 
+//		) 
+//	) 
+//)
+
+
+		if (substr_count($code, $passError)) {
+			$flag = true;
+		}
+		
+		// <error code="noRecordsMatch">
+
+		return $flag;
+	}
 	/**
 	 * myOai_harvest - reworked oaiharvester _harvest function
 	 * Harvest the records
@@ -505,8 +556,29 @@ class manualOaiHarvesterModel
 	
 		  // error? or records processed?
 		  if (isset($oai['error'])) {  // errors
-		  	$msg = print_r($oai, true);
-		  	$this->myOaiLogMsg($msg);
+		  	
+		  	// if the error is something like: <error code="noRecordsMatch">
+		  	//  and we are running a daily from until, then just let it pass as successful, there was no data for that day and move on
+		    if ($this->checkOaiError($oai)) {
+			    // if using from until dates, bump the dates by a day
+			    if ($flagNextFromUntil && !$flagResumption) {
+
+				   	//$msg = 'No data for this range: From date: [' . $from_date . ']' . 'Until date: [' . $until_date . ']';
+				   	$msg = 'No data. Range: [' . $from_date . ']' . ' - [' . $until_date . ']';
+				   	$this->myOaiLogMsg($msg);
+	
+						$from_date = $until_date;
+						$until_date = $this->makeNextDate($until_date);
+	
+						$this->setFromUntil($this->harvestId, $from_date, $until_date);
+				    $msg = '(' . $this->harvestId . ') NEXT From date: [' . $from_date . ']' . 'Until date: [' . $until_date . ']';
+				   	$this->myOaiLogMsg($msg);
+				   	$flagNextFromUntil = false;
+			    }
+			  } else {
+			  	$msg = print_r($oai, true);
+			  	$this->myOaiLogMsg($msg);
+			  }
 		  	
 		  } else {  // records processed
 		    $msg = 'Number of records: ' . count($oai['ListRecords']['record']);
