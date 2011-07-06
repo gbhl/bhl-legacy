@@ -387,6 +387,8 @@ abstract class DataHandlerModel
 				break;
 
 			case 'en_US':
+			case 'en_us':
+			case 'en-us':
 			case 'eng':
 			case 'en':
 				$language = 'English';
