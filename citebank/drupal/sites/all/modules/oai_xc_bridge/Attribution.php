@@ -24,14 +24,48 @@ class Attribution
 	}
 
 	/**
+	 *	translateHay - check hay for a translation
+	 */
+	function translateHay($hay)
+	{
+		// an ugly kludge.  the whole thing (Attribution) relies on guessing from the inconsistent identifier what our source is.
+		// TODO: make a better way to do this
+		if (substr_count($hay, 'zookeys')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'phytokeys')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'biorisk')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'journal_of_hymenoptera_research')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'international_journal_of_myriapodology')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'comparative_cytogenetics')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'subterranean_biology')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'nature_conservation')) {
+			$hay = 'pensoft';
+		}
+
+		return $hay;
+	}
+
+	/**
 	 *	getAttributionSource - get sourcing info
 	 */
 	function getAttributionSource($hay)
 	{
 		// an ugly kludge.  the whole thing (Attribution) relies on guessing from the inconsistent identifier what our source is.
-		if (substr_count($hay, 'zookeys')) {
-			$hay = 'pensoft';
-		}
+		// TODO: make a better way to do this
+		$hay = $this->translateHay($hay);
 
 		$source = $this->matchIdentifier($hay);
 		
