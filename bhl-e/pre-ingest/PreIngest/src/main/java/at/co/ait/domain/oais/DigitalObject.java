@@ -153,6 +153,17 @@ public class DigitalObject extends GenericObject {
 	public void setTaxa(File taxa) {
 		this.taxa = taxa;
 	}
+	
+	private String mimetype;
+	
+
+	public String getMimetype() {
+		return mimetype;
+	}
+
+	public void setMimetype(String mimetype) {
+		this.mimetype = mimetype;
+	}
 
 	@Override
 	public String toString() {

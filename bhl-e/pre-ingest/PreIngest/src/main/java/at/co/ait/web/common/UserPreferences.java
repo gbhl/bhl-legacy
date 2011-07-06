@@ -13,9 +13,17 @@ public class UserPreferences implements UserDetails {
 	private String password;
 	private String basedirectory;
 	private String workdirectory;
+	private String organization;
 	private List<String> roles;
 	private List<GrantedAuthority> AUTHORITIES;
 	private String smtparams;
+	
+	public String getOrganization() {
+		return organization;
+	}
+	public void setOrganization(String organization) {
+		this.organization = organization;
+	}
 	
 	public String getSmtparams() {
 		return smtparams;

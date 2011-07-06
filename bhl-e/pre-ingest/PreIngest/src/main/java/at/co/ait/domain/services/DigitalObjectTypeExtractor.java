@@ -80,6 +80,7 @@ public class DigitalObjectTypeExtractor {
 	 */
 	public DigitalObject enrich(DigitalObject obj) {
 		obj.setObjecttype(detectObjectType(obj.getSubmittedFile()));
+		obj.setMimetype(detectedMimeType(obj.getSubmittedFile()));
 		return obj;
 	}
 

@@ -23,8 +23,7 @@ public class VirusscanService extends ProcessbuilderService {
 	public InformationPackageObject scan(InformationPackageObject pkg) throws IOException, InterruptedException {
 		logger.debug("creating virusscan command");
 		commands = new ArrayList<String>();
-		commands.add((new java.net.URL(Configuration.getString("VirusscanService.0"))).getPath()); //$NON-NLS-1$
-		commands.add(Configuration.getString("VirusscanService.1")); //$NON-NLS-1$		
+		commands.add((new java.net.URL(Configuration.getString("VirusscanService.0"))).getPath()); //$NON-NLS-1$	
 		commands.add(pkg.getSubmittedFile().getAbsolutePath());	
 		process(commands);	
 		String tmpfile = ConfigUtils.getTmpFileName(pkg.getSubmittedFile(),".scan.log");

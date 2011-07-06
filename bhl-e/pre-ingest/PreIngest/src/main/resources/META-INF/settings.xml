@@ -13,6 +13,7 @@
 				</basedirectory>
 				<workdirectory>file://mnt/nfs-demeter/preingest/aip-temp
 				</workdirectory>
+				<organization>BHL-Europe</organization>
 				<smtparams>-m c -cm 5</smtparams>
 			</at.co.ait.web.common.UserPreferences>
 		</entry>
@@ -28,6 +29,7 @@
 				</basedirectory>
 				<workdirectory>file://mnt/nfs-demeter/preingest/aip-temp/uk-rbge
 				</workdirectory>
+				<organization>Royal Botanic Garden Edinburgh</organization>
 				<smtparams>-m c -cm 5</smtparams>
 			</at.co.ait.web.common.UserPreferences>
 		</entry>
@@ -35,7 +37,7 @@
 			<string>local</string>
 			<at.co.ait.web.common.UserPreferences>
 				<username>local</username>
-				<password>local</password>
+				<password>local</password>				
 				<roles>
 					<string>ROLE_USER</string>
 				</roles>
@@ -43,6 +45,7 @@
 				</basedirectory>
 				<workdirectory>file:///C:/ProjectData/BHL-Europe/UnitTestResourcesTmp
 				</workdirectory>
+				<organization>AIT</organization>
 				<smtparams>-m c -cm 5</smtparams>
 			</at.co.ait.web.common.UserPreferences>
 		</entry>

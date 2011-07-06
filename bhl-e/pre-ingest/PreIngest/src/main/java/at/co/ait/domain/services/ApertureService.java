@@ -31,10 +31,11 @@ import at.co.ait.utils.ConfigUtils;
 public class ApertureService {
 
 	private Boolean suppressParentChildLinks = Boolean.FALSE;
-	private ByteArrayOutputStream baos = new ByteArrayOutputStream ();  
+	private ByteArrayOutputStream baos = null;  
 
-	public InformationPackageObject process(InformationPackageObject obj) throws Exception {		
-        // start crawling and exit afterwards
+	public InformationPackageObject process(InformationPackageObject obj) throws Exception {
+		baos = new ByteArrayOutputStream (); 
+        // start crawling and exit afterwards		
         doCrawling(obj.getSubmittedFile());
         String nfo = baos.toString("UTF-8");
 		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".nfo.rdf");
@@ -54,6 +55,7 @@ public class ApertureService {
         source.setConfiguration(configuration);
         source.setRootFolder(rootFile.getAbsolutePath());
         source.setSuppressParentChildLinks(suppressParentChildLinks);
+        source.setMaximumDepth(1);
 
         // setup a crawler that can handle this type of DataSource
         FileSystemCrawler crawler = new FileSystemCrawler();

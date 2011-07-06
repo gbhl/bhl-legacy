@@ -144,7 +144,7 @@
 	<!-- Creation of InformationPackage -->
 	<bean id="mets_marshaller" class="at.co.ait.domain.services.MetsMarshallerService" />
 	<si:service-activator input-channel="packaging_service"
-		output-channel="create_aip" method="marshal" ref="mets_marshaller" />
+		output-channel="create_aip" expression="@mets_marshaller.marshal(payload,headers.PREFERENCES)" />
 
 	<!-- Wrap up of packages (copying to archive) -->
 	<bean id="wrapup_service" class="at.co.ait.domain.services.WrapUpService" />
