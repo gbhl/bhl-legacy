@@ -42,6 +42,7 @@ function manualOaiHarvesterCron($harvestId)
 	
 	// build our list of harvest schedules
 	$sql = 'SELECT * FROM oaiharvester_harvester_schedules AS oais JOIN oaiharvester_sets AS oaisets ON (oaisets.set_id = oais.set_id) JOIN oaiharvester_harvest_queue AS oaiq ON (oaiq.harvest_schedule_id = oais.harvest_schedule_id)  ORDER BY oais.harvest_schedule_id';
+	//$sql = 'SELECT * FROM oaiharvester_harvester_schedules AS oais JOIN oaiharvester_sets AS oaisets ON (oaisets.set_id = oais.set_id) JOIN oaiharvester_harvest_queue AS oaiq ON (oaiq.harvest_id = oais.harvest_schedule_id)  ORDER BY oais.harvest_schedule_id';
 	$result = db_query($sql);
 	
 	$harvestList = array();
