@@ -1,0 +1,56 @@
+####### nightly box backup (DO NOT CHANGE!)
+15 1 * * *      /root/bin/backup/backup_all.sh   
+
+#################################### CITEBANK ##################################
+####### citebank stats
+01 1 * * * cd /root/bin/citestats/; /root/bin/citestats/citestats.sh
+
+################### OFFICIAL DRUPAL
+####### run drupal crons
+25,55      * * * * wget -O - -q -t 1 http://citebank.org/cron.php > /dev/null
+15,45      * * * * wget -O - -q -t 1 http://staging.citebank.org/cron.php > /dev/null
+
+################### IA STUFF
+####### copy/hack import CSV files from /home/transfer/ to /var/www/../../files 
+00,15,30,45 * * * * /root/bin/import_ant.sh
+10,25,40,55 * * * * /root/bin/import_ant-staging.sh
+
+####### ia preprocessor
+15,30,45,00 * * * * /root/bin/iaprocessor.sh
+10,20,40,00 * * * * /root/bin/iaprocessor_staging.sh
+
+################### OAI JOBS
+####### 1 - Smithsonian Contributions to Zoology
+#00 1 * * * /root/bin/run_oai_staging.sh 1     
+15 1 * * * /root/bin/run_oai.sh 1
+
+####### 2 - Zookeys
+#15 1 * * * /root/bin/run_oai_staging.sh 2     
+#30 1 * * * /root/bin/run_oai.sh 2
+
+####### 3 - Scielo - Brazilian Journal of Medical and Biological Research
+#30 1 * * * /root/bin/run_oai_staging.sh 3     
+45 1 * * * /root/bin/run_oai.sh 3     
+
+####### 4 - Scielo - Revista de Saúde Pública
+#45 1 * * * /root/bin/run_oai_staging.sh 4
+00 2 * * * /root/bin/run_oai.sh 4
+
+####### 5 - BHL - pdfs
+#00 2 * * * /root/bin/run_oai_staging.sh 5    
+15 2 * * * /root/bin/run_oai.sh 5
+
+####### 6 - BHL - Title
+#15 2 * * * /root/bin/run_oai_staging.sh 6    
+30 2 * * * /root/bin/run_oai.sh 6
+
+####### 7 - Smithsonian - Attol
+#50 2 * * * /root/bin/run_oai_staging.sh 7   
+45 2 * * * /root/bin/run_oai.sh 7
+
+####### 8 - Phytokeys
+#45 2 * * * /root/bin/run_oai_staging.sh 8
+#00 3 * * * /root/bin/run_oai.sh 8
+*/2 * * * * /root/bin/run_oai.sh 8
+################################################################################
+
