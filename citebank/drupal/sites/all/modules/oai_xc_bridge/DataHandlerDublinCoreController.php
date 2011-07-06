@@ -84,6 +84,15 @@ class DataHandlerDublinCoreController extends DataHandlerModel
 	/**
 	 * parseValue_ - parse the data values
 	 */
+	protected function parseValue_Description()
+	{
+	  // Get the descriptioin and map to notes
+		$this->data_notes = $this->record->getElementsByTagName('description')->item(0)->nodeValue;
+	}
+	
+	/**
+	 * parseValue_ - parse the data values
+	 */
 	protected function parseValue_DateYear()
 	{
 	  $this->data_year = 9999;
@@ -305,6 +314,8 @@ class DataHandlerDublinCoreController extends DataHandlerModel
 		// BIBLIO_FIELD_TOPIC: Edition
 		// BIBLIO_FIELD: Edition:  originInfo   edition
 		$this->parseValue_Edition();
+
+		$this->parseValue_Description();
 
 		return $this->info;
 	}
