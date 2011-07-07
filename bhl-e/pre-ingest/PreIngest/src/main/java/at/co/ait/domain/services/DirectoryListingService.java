@@ -66,6 +66,9 @@ public class DirectoryListingService implements Serializable {
 	
 	public void addFolderContent(File folder) {
 		File[] filesAndFolders = folder.listFiles();
+		if(filesAndFolders == null) {
+			throw new RuntimeException("Not a folder or does not exist: " + folder.getAbsolutePath());
+		}
 		for (File f : filesAndFolders) {			
 			if (f.isDirectory()) {
 			visitedFilesAndFolders.put(f.hashCode(),
