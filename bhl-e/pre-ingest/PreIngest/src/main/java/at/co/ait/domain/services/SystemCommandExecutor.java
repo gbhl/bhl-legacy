@@ -124,10 +124,7 @@ public class SystemCommandExecutor
       // TODO deal with this here, or just throw it?
       throw e;
     }
-    finally
-    {
-      return exitValue;
-    }
+    return exitValue;
   }
 
   /**
