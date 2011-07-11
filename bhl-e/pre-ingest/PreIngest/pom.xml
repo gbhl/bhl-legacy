@@ -488,7 +488,7 @@
 		<profile>
 			<id>local-test</id>
 			<build>
-				<finalName>${artifactId}</finalName>
+				<finalName>${project.artifactId}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
@@ -505,25 +505,8 @@
 		<profile>
 			<id>deployment</id>
 			<build>
-				<finalName>${artifactId}</finalName>
+				<finalName>${project.artifactId}</finalName>
 				<plugins>
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>test</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<tasks>
-										<copy file="src/main/java/at/co/ait/utils/nhm-config.properties"
-											tofile="src/main/java/at/co/ait/utils/config.properties" />
-									</tasks>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>tomcat-maven-plugin</artifactId>
