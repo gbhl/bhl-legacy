@@ -9,11 +9,51 @@
 					<string>ROLE_USER</string>
 					<string>ROLE_ADMIN</string>
 				</roles>
-				<basedirectory>file://mnt/nfs-demeter/upload/providers
-				</basedirectory>
-				<workdirectory>file://mnt/nfs-demeter/preingest/aip-temp
-				</workdirectory>
-				<organization>BHL-Europe</organization>
+				<basedirectory>file:/mnt/nfs-demeter/upload/providers</basedirectory>
+				<workdirectory>file:/mnt/nfs-demeter/ingest/ingest-test</workdirectory>
+				<organization>Superuser</organization>
+				<smtparams>-m c -cm 5</smtparams>
+			</at.co.ait.web.common.UserPreferences>
+		</entry>
+		<entry>
+			<string>test</string>
+			<at.co.ait.web.common.UserPreferences>
+				<username>test</username>
+				<password>testme</password>
+				<roles>
+					<string>ROLE_USER</string>
+				</roles>
+				<basedirectory>file:/mnt/nfs-demeter/upload/providers/test/TEST_AIT</basedirectory>
+				<workdirectory>file:/mnt/nfs-demeter/ingest/ingest-test</workdirectory>
+				<organization>BHL-Europe PreIngest Test</organization>
+				<smtparams>-m c -cm 5</smtparams>
+			</at.co.ait.web.common.UserPreferences>
+		</entry>
+		<entry>
+			<string>local</string>
+			<at.co.ait.web.common.UserPreferences>
+				<username>local</username>
+				<password>local</password>
+				<roles>
+					<string>ROLE_USER</string>
+				</roles>
+				<basedirectory>file:///C:/ProjectData/BHL-Europe/UnitTestResources</basedirectory>
+				<workdirectory>file:///C:/ProjectData/BHL-Europe/UnitTestResourcesTmp</workdirectory>
+				<organization>AIT</organization>
+				<smtparams>-m c -cm 5</smtparams>
+			</at.co.ait.web.common.UserPreferences>
+		</entry>
+		<entry>
+			<string>csic</string>
+			<at.co.ait.web.common.UserPreferences>
+				<username>csic</username>
+				<password>csic</password>
+				<roles>
+					<string>ROLE_USER</string>
+				</roles>
+				<basedirectory>file:/mnt/nfs-demeter/upload/providers/es-csic</basedirectory>
+				<workdirectory>file:/mnt/nfs-demeter/ingest/es-csic</workdirectory>
+				<organization>CSIC</organization>
 				<smtparams>-m c -cm 5</smtparams>
 			</at.co.ait.web.common.UserPreferences>
 		</entry>
@@ -25,28 +65,10 @@
 				<roles>
 					<string>ROLE_USER</string>
 				</roles>
-				<basedirectory>file://mnt/nfs-demeter/upload/providers/uk-rbge
-				</basedirectory>
-				<workdirectory>file://mnt/nfs-demeter/preingest/aip-temp/uk-rbge
-				</workdirectory>
-				<organization>Royal Botanic Garden Edinburgh</organization>
-				<smtparams>-m c -cm 5</smtparams>
-			</at.co.ait.web.common.UserPreferences>
-		</entry>
-		<entry>
-			<string>local</string>
-			<at.co.ait.web.common.UserPreferences>
-				<username>local</username>
-				<password>local</password>				
-				<roles>
-					<string>ROLE_USER</string>
-				</roles>
-				<basedirectory>file:///C:/ProjectData/BHL-Europe/UnitTestResources
-				</basedirectory>
-				<workdirectory>file:///C:/ProjectData/BHL-Europe/UnitTestResourcesTmp
-				</workdirectory>
-				<organization>AIT</organization>
-				<smtparams>-m c -cm 5</smtparams>
+				<basedirectory>file:/mnt/nfs-demeter/upload/providers/uk-rbge</basedirectory>
+				<workdirectory>file:/mnt/nfs-demeter/ingest/uk-rbge</workdirectory>
+				<organization>RBGE</organization>
+				<smtparams>-m c -cm 4</smtparams>
 			</at.co.ait.web.common.UserPreferences>
 		</entry>
 	</userprefs>

@@ -1,8 +1,8 @@
 package at.co.ait.domain.services;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -10,7 +10,6 @@ import java.util.TimeZone;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.DOMOutputter;
@@ -77,28 +76,29 @@ public class MetsMarshallerService {
 		agent.setName("BHL-Europe Pre-Ingest Tool");
 		agent.setNote("Automatic processing of submitted content");
 		mh.addAgent(agent);
-		mets.setMetsHdr(mh);		
+		mets.setMetsHdr(mh);
 
 		// unique sequence number for each dmd section
-		int iter = 0;		
+		int unique_id = 0;
 		DmdSec dmd = null;
 		// create dmd entry for each METADATA file
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getObjecttype().equals(DigitalObjectType.METADATA)) {
-				iter++;
-				dmd = newDmdEntry(iter, "MODS", "derivative", digobj.getSmtoutput());
+				unique_id++;
+				dmd = newDmdEntry(unique_id, "MODS", "derivative",
+						digobj.getSmtoutput());
 				mets.addDmdSec(dmd);
 			}
 		}
-		iter++;
-		dmd = newDmdEntry(iter, "OTHER", "derivative", obj.getNepomukFileOntology());
+		unique_id++;
+		dmd = newDmdEntry(unique_id, "OTHER", "derivative",
+				obj.getNepomukFileOntology());
 		mets.addDmdSec(dmd);
-		
 
 		FileSec fs = mets.newFileSec();
 
 		// unique sequence number for each file
-		iter = 0;
+		unique_id = 0;
 		// create filegroup for each digitalobjecttype such as METADATA, IMAGE
 		for (DigitalObjectType value : DigitalObjectType.values()) {
 			FileGrp fg = fs.newFileGrp();
@@ -107,15 +107,16 @@ public class MetsMarshallerService {
 			for (DigitalObject digobj : obj.getDigitalobjects()) {
 				if (digobj.getObjecttype().equals(value)) {
 					au.edu.apsr.mtk.base.File f = fg.newFile();
-					f.setID("F-" + (++iter));
+					f.setID("F-" + (++unique_id));
 					f.setSize(FileUtils.sizeOf(digobj.getSubmittedFile()));
 					f.setMIMEType(digobj.getMimetype());
 					f.setChecksum(digobj.getDigestValueinHex());
 					f.setChecksumType("SHA-1");
 
 					FLocat fl = f.newFLocat();
-					fl.setHref(digobj.getSubmittedFile().getAbsolutePath());
+					fl.setHref(digobj.getSubmittedFile().getName());
 					fl.setLocType("OTHER");
+					fl.setOtherLocType("location is relative to location of file");
 					f.addFLocat(fl);
 					fg.addFile(f);
 				}
@@ -124,14 +125,14 @@ public class MetsMarshallerService {
 			if (fg.getFiles().size() > 0)
 				fs.addFileGrp(fg);
 		}
-		
+
 		// add taxa files to filesection
 		FileGrp fg = fs.newFileGrp();
 		fg.setUse("TAXA");
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getTaxa() != null) {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("F-" + (++iter));
+				f.setID("F-" + (++unique_id));
 				f.setSize(FileUtils.sizeOf(digobj.getTaxa()));
 				FLocat fl = f.newFLocat();
 				fl.setHref(digobj.getTaxa().getAbsolutePath());
@@ -141,16 +142,16 @@ public class MetsMarshallerService {
 			}
 			// if filegroup contains any files, add to filesection
 			if (fg.getFiles().size() > 0)
-				fs.addFileGrp(fg);			
+				fs.addFileGrp(fg);
 		}
-		
+
 		// add ocr files to filesection
 		fg = fs.newFileGrp();
 		fg.setUse("OCR");
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getOcr() != null) {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("F-" + (++iter));
+				f.setID("F-" + (++unique_id));
 				f.setSize(FileUtils.sizeOf(digobj.getOcr()));
 				FLocat fl = f.newFLocat();
 				fl.setHref(digobj.getOcr().getAbsolutePath());
@@ -160,16 +161,16 @@ public class MetsMarshallerService {
 			}
 			// if filegroup contains any files, add to filesection
 			if (fg.getFiles().size() > 0)
-				fs.addFileGrp(fg);			
+				fs.addFileGrp(fg);
 		}
-		
+
 		// add jhove files to filesection
 		fg = fs.newFileGrp();
 		fg.setUse("JHOVE");
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getTechMetadata() != null) {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("F-" + (++iter));
+				f.setID("F-" + (++unique_id));
 				f.setSize(FileUtils.sizeOf(digobj.getTechMetadata()));
 				FLocat fl = f.newFLocat();
 				fl.setHref(digobj.getTechMetadata().getAbsolutePath());
@@ -179,7 +180,7 @@ public class MetsMarshallerService {
 			}
 			// if filegroup contains any files, add to filesection
 			if (fg.getFiles().size() > 0)
-				fs.addFileGrp(fg);			
+				fs.addFileGrp(fg);
 		}
 
 		mets.setFileSec(fs);
@@ -200,13 +201,13 @@ public class MetsMarshallerService {
 
 		return mw;
 	}
-	
-	private DmdSec newDmdEntry(int iter, String type, String lbl, File metadata)
-			throws METSException, JDOMException, IOException {
+
+	private DmdSec newDmdEntry(int unique_id, String type, String lbl,
+			File metadata) throws METSException, JDOMException, IOException {
 		SAXBuilder parser = new SAXBuilder();
 		org.jdom.Document modsdoc = parser.build(metadata);
-		DmdSec dmd = mets.newDmdSec(); 
-		dmd.setID("dmd" + iter);
+		DmdSec dmd = mets.newDmdSec();
+		dmd.setID("dmd" + unique_id);
 		MdWrap mdw = dmd.newMdWrap();
 		mdw.setMDType(type);
 		mdw.setLabel(lbl);
@@ -225,12 +226,13 @@ public class MetsMarshallerService {
 	 * @throws ParserConfigurationException
 	 * @throws JDOMException
 	 * @throws IOException
-	 * @throws SAXException 
-	 * @throws METSException 
+	 * @throws SAXException
+	 * @throws METSException
 	 */
 	public InformationPackageObject marshal(InformationPackageObject obj,
 			UserPreferences prefs) throws JDOMException,
-			ParserConfigurationException, IOException, METSException, SAXException {
+			ParserConfigurationException, IOException, METSException,
+			SAXException {
 		obj.setMets(createMETS(obj, prefs));
 		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),
 				".mets.xml");
@@ -240,9 +242,10 @@ public class MetsMarshallerService {
 		format.setLineWidth(65);
 		format.setIndenting(true);
 		format.setIndent(2);
-		XMLSerializer serializer = new XMLSerializer(
-				FileUtils.openOutputStream(metsfile), format);
+		FileOutputStream out = FileUtils.openOutputStream(metsfile);
+		XMLSerializer serializer = new XMLSerializer(out, format);
 		serializer.serialize(doc);
+		out.close();
 		return obj;
 	}
 
