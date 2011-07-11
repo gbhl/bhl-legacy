@@ -512,7 +512,7 @@
 						<artifactId>tomcat-maven-plugin</artifactId>
 						<version>1.0-beta-1</version>
 						<configuration>
-							<url>http://127.0.0.1:8100/manager/html</url>
+							<url>http://127.0.0.1:8100/manager</url>
 							<server>tomcat</server>
 						</configuration>
 					</plugin>
