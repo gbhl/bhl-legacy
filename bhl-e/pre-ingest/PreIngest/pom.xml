@@ -529,7 +529,7 @@
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
 							<execution>
-								<phase>deploy</phase>
+								<phase>prepare-package</phase>
 								<configuration>
 									<tasks>
 										<copy file="src/main/resources/at/co/ait/utils/config.ait112.properties"
@@ -537,7 +537,7 @@
 									</tasks>
 								</configuration>
 								<goals>
-									<goal>run</goal>
+									<goal>config</goal>
 								</goals>
 							</execution>
 						</executions>
