@@ -407,7 +407,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>${java-version}</source>
-					<target>${java-version}</target>							
+					<target>${java-version}</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -516,6 +516,31 @@
 							<url>http://127.0.0.1:8100/manager</url>
 							<server>tomcat6-preingest</server>
 						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>ait112</id>
+			<build>
+				<finalName>${project.artifactId}</finalName>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>deploy</phase>
+								<configuration>
+									<tasks>
+										<copy file="src/main/resources/at/co/ait/utils/config.ait112.properties"
+											tofile="${project.build.outputDirectory}/at/co/ait/utils/config.properties" />
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
