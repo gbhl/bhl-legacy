@@ -529,7 +529,7 @@
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
 							<execution>
-								<phase>generate-sources</phase>
+								<phase>deploy</phase>
 								<configuration>
 									<tasks>
 										<copy file="src/main/resources/at/co/ait/utils/config.ait112.properties"
