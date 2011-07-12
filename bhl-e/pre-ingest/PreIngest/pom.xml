@@ -533,7 +533,8 @@
 								<configuration>
 									<tasks>
 										<copy file="src/main/resources/at/co/ait/utils/config.ait112.properties"
-											tofile="${project.build.outputDirectory}/at/co/ait/utils/config.properties" />
+											tofile="${project.build.outputDirectory}/at/co/ait/utils/config.properties" 
+											overwrite="true" />
 									</tasks>
 								</configuration>
 								<goals>
