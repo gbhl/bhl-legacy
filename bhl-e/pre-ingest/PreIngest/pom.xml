@@ -537,7 +537,7 @@
 									</tasks>
 								</configuration>
 								<goals>
-									<goal>resources</goal>
+									<goal>run</goal>
 								</goals>
 							</execution>
 						</executions>
