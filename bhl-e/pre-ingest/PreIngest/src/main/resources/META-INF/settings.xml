@@ -44,6 +44,21 @@
 			</at.co.ait.web.common.UserPreferences>
 		</entry>
 		<entry>
+			<string>ait112</string>
+			<at.co.ait.web.common.UserPreferences>
+				<username>ait112</username>
+				<password>ait112</password>
+				<roles>
+					<string>ROLE_USER</string>
+					<string>ROLE_ADMIN</string>
+				</roles>
+				<basedirectory>file:/mnt/p/AIT-Projekte/AIT_Forschungsprojekte/BHL_Europe/BHLE-Test-Buecher</basedirectory>
+				<workdirectory>file:/mnt/p/AIT-Projekte/AIT_Forschungsprojekte/BHL_Europe/BHLE-Test-Buecher</workdirectory>
+				<organization>AIT</organization>
+				<smtparams>-m c -cm 5</smtparams>
+			</at.co.ait.web.common.UserPreferences>
+		</entry>
+		<entry>
 			<string>csic</string>
 			<at.co.ait.web.common.UserPreferences>
 				<username>csic</username>
