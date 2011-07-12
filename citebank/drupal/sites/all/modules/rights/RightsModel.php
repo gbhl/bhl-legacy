@@ -305,7 +305,7 @@ class RightsModel
 		$metaData['rights_' . 'statement']    = $this->statement;
 		$metaData['rights_' . 'license_name'] = $this->licenseName;
 		$metaData['rights_' . 'license_url']  = $this->licenseUrl;
-		$metaData['rights_' . 'rightsholder'] = $this->rightsHolder;
+		//$metaData['rights_' . 'rightsholder'] = $this->rightsHolder;
 		//$metaData['rights_' . 'year']         = $this->year;
 		
 		return $metaData;
