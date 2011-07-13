@@ -393,6 +393,13 @@ class InternetArchiveModel
 				$msg = 'status -1';
 				$this->watchdog($msg);
 
+			} else if ($status == -3) {
+				// failed put file
+				// log entry?
+				$msg = 'status -3 No File';
+				$this->markNoFileToSend($nid);
+				$this->watchdog($msg);
+
 			} else if ($status == -2) {
 				// failed make bucket
 				// log entry?
@@ -532,7 +539,7 @@ class InternetArchiveModel
 
 			if (!file_exists($uploadFile) || !is_file($uploadFile)) {
 
-				$status = -1; // no file?
+				$status = -3; // no file?
 				// log no file for x
 				$this->watchdog('No file found for ' . $uploadFile);
 
@@ -1490,6 +1497,16 @@ class InternetArchiveModel
 	function markSentToIA($nid)
 	{
 		$archive_status = 1;
+		
+		$this->updateArchiveRecordStatus($nid, $archive_status);
+	}
+
+	/**
+	 * markNoFileToSend - 
+	 */
+	function markNoFileToSend($nid)
+	{
+		$archive_status = -3;
 		
 		$this->updateArchiveRecordStatus($nid, $archive_status);
 	}
