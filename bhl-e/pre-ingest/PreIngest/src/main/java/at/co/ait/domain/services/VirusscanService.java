@@ -16,12 +16,8 @@ import at.co.ait.utils.Configuration;
 public class VirusscanService extends ProcessbuilderService {
 	
 	List<String> commands;
-	
-	private static final Logger logger = LoggerFactory
-			.getLogger(VirusscanService.class);
 		
 	public InformationPackageObject scan(InformationPackageObject pkg) throws IOException, InterruptedException {
-		logger.debug("creating virusscan command");
 		commands = new ArrayList<String>();
 		commands.add((new java.net.URL(Configuration.getString("VirusscanService.0"))).getPath()); //$NON-NLS-1$	
 		commands.add(pkg.getSubmittedFile().getAbsolutePath());	

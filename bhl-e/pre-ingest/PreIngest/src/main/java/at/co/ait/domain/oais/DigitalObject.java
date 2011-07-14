@@ -1,34 +1,15 @@
 package at.co.ait.domain.oais;
 
 import java.io.File;
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.Observer;
 import java.util.UUID;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import org.apache.commons.codec.binary.Hex;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.google.common.io.Files;
-
 public class DigitalObject extends GenericObject {
-
-	/**
-	 * Submitted file is immediately scanned for viruses.
-	 */
-	private String virusscanResult;
-
-	public String getVirusscanResult() {
-		return virusscanResult;
-	}
-
-	public void setVirusscanResult(String virusscanResult) {
-		this.virusscanResult = virusscanResult;
+	
+	public DigitalObject(LogGenericObject loggenericobject) {		
+		addObserver((Observer)loggenericobject);
 	}
 
 	/**
@@ -43,6 +24,7 @@ public class DigitalObject extends GenericObject {
 
 	public void setExternalIdentifier(String externalIdentifier) {
 		this.externalIdentifier = externalIdentifier;
+		notifyObservers(externalIdentifier);
 	}
 
 	/**
@@ -58,6 +40,8 @@ public class DigitalObject extends GenericObject {
 
 	public void setTechMetadata(File techMetadata) {
 		this.techMetadata = techMetadata;
+		setChanged();
+		notifyObservers(techMetadata.getName());
 	}
 
 	/**
@@ -72,6 +56,8 @@ public class DigitalObject extends GenericObject {
 
 	public void setObjecttype(DigitalObjectType objecttype) {
 		this.objecttype = objecttype;
+		setChanged();
+		notifyObservers(objecttype.name());
 	}
 
 	// needed for SpEL evaluation
@@ -89,6 +75,8 @@ public class DigitalObject extends GenericObject {
 	}
 	public void setSmtoutput(File smtoutput) {
 		this.smtoutput = smtoutput;
+		setChanged();
+		notifyObservers(smtoutput.getName());
 	}
 
 	private UUID informationPackageUUID;
@@ -121,6 +109,9 @@ public class DigitalObject extends GenericObject {
 		this.order = order;
 	}
 
+	/**
+	 * SMT generated stderr/stdout.
+	 */
 	private String smtServiceLog;
 
 	public String getSmtServiceLog() {
@@ -142,8 +133,13 @@ public class DigitalObject extends GenericObject {
 
 	public void setOcr(File ocr) {
 		this.ocr = ocr;
+		setChanged();
+		notifyObservers(ocr.getName());
 	}
 
+	/**
+	 * File reference to taxon finder generated output
+	 */
 	private File taxa;
 
 	public File getTaxa() {
@@ -152,8 +148,13 @@ public class DigitalObject extends GenericObject {
 
 	public void setTaxa(File taxa) {
 		this.taxa = taxa;
+		setChanged();
+		notifyObservers(taxa.getName());
 	}
 	
+	/**
+	 * Mimetype of current submittedFile
+	 */
 	private String mimetype;
 	
 
@@ -163,6 +164,8 @@ public class DigitalObject extends GenericObject {
 
 	public void setMimetype(String mimetype) {
 		this.mimetype = mimetype;
+		setChanged();
+		notifyObservers(mimetype);
 	}
 
 	@Override

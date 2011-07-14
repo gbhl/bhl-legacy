@@ -51,7 +51,9 @@ public class TaxonFinderService {
 			String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),
 			".taxa");			
 			File output = new File(tmpfile);
-			FileUtils.writeStringToFile(output, taxa, "UTF-8");
+			if (!output.exists()) {
+				FileUtils.writeStringToFile(output, taxa, "UTF-8");
+			}
 			obj.setTaxa(output);
 		}
 		return obj;

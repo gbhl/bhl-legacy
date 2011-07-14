@@ -20,7 +20,14 @@ public class WrapUpService {
 				FileFilterUtils.fileFileFilter());
 		File tmp_aip = new File(obj.getSubmittedFile().getAbsolutePath() + File.separator + ".aip");
 		FileUtils.copyDirectory(tmp_aip, destfolder);
+		// TODO: decide whether to delete or not, after move		
 		FileUtils.deleteDirectory(tmp_aip);
+		
+		// clean up & remove all observers by disposing
+		for (DigitalObject digobj : obj.getDigitalobjects()) {
+			digobj.dispose();
+		}		
+		obj.dispose();
 		return obj;
 	}
 }

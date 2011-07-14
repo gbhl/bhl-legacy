@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Observable;
 import java.util.UUID;
 
 import org.apache.commons.codec.binary.Hex;
@@ -12,10 +13,11 @@ import at.co.ait.web.common.UserPreferences;
 
 import com.google.common.io.Files;
 
-public class GenericObject implements IGenericObject {
+public class GenericObject extends Observable {
+
 	
 	public GenericObject() {
-		this.setId(UUID.randomUUID());		
+		this.setId(UUID.randomUUID());	
 	}
 
 	/**
@@ -115,6 +117,12 @@ public class GenericObject implements IGenericObject {
 
 	public void setPrefs(UserPreferences prefs) {
 		this.prefs = prefs;
+	}
+	
+	public void dispose() {
+		setChanged();
+		notifyObservers("disposed");
+		deleteObservers();		
 	}
 	
 }

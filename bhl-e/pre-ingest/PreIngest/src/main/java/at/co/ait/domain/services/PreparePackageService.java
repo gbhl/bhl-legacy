@@ -8,19 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import at.co.ait.domain.integration.ILoadingGateway;
 import at.co.ait.domain.oais.DigitalObject;
-import at.co.ait.domain.oais.TrackingObject;
+import at.co.ait.domain.oais.LogGenericObject;
 import at.co.ait.web.common.UserPreferences;
 
 public class PreparePackageService {
 	
 	private @Autowired ILoadingGateway loading;
+	private @Autowired LogGenericObject loggenericobject;
 	private DigitalObject digitalobject;
 
 	public List<DigitalObject> prepare(File folderFileObj, UserPreferences prefs) {
 		List<DigitalObject> objlist = new ArrayList<DigitalObject>();
 		Integer order = 0;
 		for (File fileObj : folderFileObj.listFiles()) {
-			DigitalObject obj = new DigitalObject();
+			DigitalObject obj = new DigitalObject(loggenericobject);
 			objlist.add(obj);
 			obj.setFolder(folderFileObj);
 			obj.setOrder(order++);

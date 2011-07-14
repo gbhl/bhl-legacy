@@ -23,7 +23,7 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-	<beans:bean id="trackingobject" class="at.co.ait.domain.oais.TrackingObject" />
+	<beans:bean id="loggenericobject" class="at.co.ait.domain.oais.LogGenericObject" />
 
 	<beans:bean id="jsonConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">

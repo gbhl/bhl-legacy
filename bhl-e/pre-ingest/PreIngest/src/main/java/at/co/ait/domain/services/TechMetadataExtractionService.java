@@ -172,7 +172,9 @@ public class TechMetadataExtractionService {
     	try {
 			String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".jhove");
 			File output = new File(tmpfile);
-			FileUtils.writeStringToFile(output, this.getDocument(obj.getSubmittedFile()), "UTF-8");
+			if (!output.exists()) {
+				FileUtils.writeStringToFile(output, this.getDocument(obj.getSubmittedFile()), "UTF-8");
+			}
 			obj.setTechMetadata(output);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

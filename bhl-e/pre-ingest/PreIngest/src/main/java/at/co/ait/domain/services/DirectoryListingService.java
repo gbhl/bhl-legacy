@@ -32,7 +32,6 @@ public class DirectoryListingService implements Serializable {
 		pref = (UserPreferences) holder.getContext().getAuthentication().getPrincipal();
 		Resource res = new UrlResource(pref.getBasedirectory());
 		setBasedir(res.getFile());
-		logger.info(pref.getBasedirectory());
 		visitedFilesAndFolders.put(basedir.hashCode(),
     			basedir.getAbsolutePath());
 		addFolderContent(basedir);
@@ -93,7 +92,6 @@ public class DirectoryListingService implements Serializable {
 			dir=visitedFilesAndFolders.get(Integer.valueOf(key));
 		}
 		// add new folders to visitedFilesAndFolders
-		logger.info("buildjsonmsg: " + dir);
 		addFolderContent(new File(dir));
 		
 		// build list of files and folders to be returned

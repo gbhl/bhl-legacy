@@ -30,7 +30,9 @@
 				</div>	
 	        </div>
 	        <div id="rightcolumn">
-	        	<tiles:insertAttribute name="body" />	        	
+	        	<div class="yui3-g">
+	        	<tiles:insertAttribute name="body" />
+	        	</div>	        	
 	        </div>
 	    </div>
 		<div id="footer"><tiles:insertAttribute name="footer" /></div>

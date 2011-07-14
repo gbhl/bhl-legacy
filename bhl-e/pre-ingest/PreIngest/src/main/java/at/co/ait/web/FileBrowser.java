@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import at.co.ait.domain.integration.ILoadingGateway;
-import at.co.ait.domain.oais.TrackingObject;
+import at.co.ait.domain.oais.LogGenericObject;
 import at.co.ait.domain.services.DirectoryListingService;
 import at.co.ait.web.common.UserPreferences;
 
@@ -30,19 +30,12 @@ public class FileBrowser {
 	private static final Logger logger = LoggerFactory
 			.getLogger(FileBrowser.class);
 	private @Autowired DirectoryListingService directorylist;
-	private @Autowired TrackingObject trackingobject;
 	private @Autowired ILoadingGateway loading;
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	@ModelAttribute("fileList")
 	public List<String> getMyFiles() {
 		return null;
-	}
-
-	@RequestMapping(value = "status/objects", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody List<List<String>> getObjectTrackingStatus(@RequestParam String channel) {
-		logger.debug("status request " + trackingobject.getQueue(channel));
-		return trackingobject.getQueue(channel);
 	}
 
 	@RequestMapping(value = "ajaxTree", method = RequestMethod.GET, headers = "Accept=application/json")

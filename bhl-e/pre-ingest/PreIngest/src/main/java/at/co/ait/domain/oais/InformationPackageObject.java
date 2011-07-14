@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Observer;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,6 +21,10 @@ import au.edu.apsr.mtk.base.METSWrapper;
  * 
  */
 public class InformationPackageObject extends GenericObject {
+	
+	public InformationPackageObject(LogGenericObject loggenericobject) {
+		addObserver((Observer)loggenericobject);
+	}
 
 	/**
 	 * IP holds all submitted files.
@@ -66,6 +71,8 @@ public class InformationPackageObject extends GenericObject {
 
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
+		setChanged();
+		notifyObservers(identifier);
 	}
 
 	/**
@@ -80,6 +87,8 @@ public class InformationPackageObject extends GenericObject {
 
 	public void setExternalIdentifier(String externalIdentifier) {
 		this.externalIdentifier = externalIdentifier;
+		setChanged();
+		notifyObservers(externalIdentifier);
 	}
 
 	/**
@@ -93,10 +102,14 @@ public class InformationPackageObject extends GenericObject {
 
 	public void setMets(METSWrapper mets) {
 		this.mets = mets;
+		setChanged();
+		notifyObservers(mets.getMETSObject().getID());	
 	}
 
 	public void addDigitalObject(DigitalObject obj) {
 		getDigitalobjects().add(obj);
+		setChanged();
+		notifyObservers("add " + obj.getSubmittedFile().getName());
 	}
 	
 	/**
@@ -110,6 +123,8 @@ public class InformationPackageObject extends GenericObject {
 
 	public void setScanlog(File scanlog) {
 		this.scanlog = scanlog;
+		setChanged();
+		notifyObservers(scanlog.getName());
 	}
 
 	private File nepomukFileOntology;
@@ -120,6 +135,8 @@ public class InformationPackageObject extends GenericObject {
 
 	public void setNepomukFileOntology(File nepomukFileOntology) {
 		this.nepomukFileOntology = nepomukFileOntology;
+		setChanged();
+		notifyObservers(nepomukFileOntology.getName());
 	}
 
 	@Override

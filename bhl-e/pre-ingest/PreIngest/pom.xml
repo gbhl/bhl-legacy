@@ -517,6 +517,25 @@
 							<server>tomcat6-preingest</server>
 						</configuration>
 					</plugin>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>process-resources</phase>
+								<configuration>
+									<tasks>
+										<copy
+											file="src/main/resources/at/co/ait/utils/config.nhm.properties"
+											tofile="${project.build.outputDirectory}/at/co/ait/utils/config.properties"
+											overwrite="true" />
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -532,8 +551,9 @@
 								<phase>process-resources</phase>
 								<configuration>
 									<tasks>
-										<copy file="src/main/resources/at/co/ait/utils/config.ait112.properties"
-											tofile="${project.build.outputDirectory}/at/co/ait/utils/config.properties" 
+										<copy
+											file="src/main/resources/at/co/ait/utils/config.ait112.properties"
+											tofile="${project.build.outputDirectory}/at/co/ait/utils/config.properties"
 											overwrite="true" />
 									</tasks>
 								</configuration>

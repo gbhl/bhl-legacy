@@ -46,6 +46,7 @@ public class MetsMarshallerService {
 			UserPreferences prefs) throws JDOMException,
 			ParserConfigurationException, METSException, IOException,
 			SAXException {
+		
 		METSWrapper mw = null;
 		mw = new METSWrapper();
 
@@ -90,10 +91,6 @@ public class MetsMarshallerService {
 				mets.addDmdSec(dmd);
 			}
 		}
-		unique_id++;
-		dmd = newDmdEntry(unique_id, "OTHER", "derivative",
-				obj.getNepomukFileOntology());
-		mets.addDmdSec(dmd);
 
 		FileSec fs = mets.newFileSec();
 
@@ -183,31 +180,39 @@ public class MetsMarshallerService {
 				fs.addFileGrp(fg);
 		}
 
+		// add rdf nfo file to filesection
+		fg = fs.newFileGrp();
+		fg.setUse("NFO");
+		au.edu.apsr.mtk.base.File f = fg.newFile();
+		f.setID("F-" + (++unique_id));
+		f.setSize(FileUtils.sizeOf(obj.getNepomukFileOntology()));
+		FLocat fl = f.newFLocat();
+		fl.setHref(obj.getNepomukFileOntology().getAbsolutePath());
+		fl.setLocType("OTHER");
+		f.addFLocat(fl);
+		fg.addFile(f);
+		fs.addFileGrp(fg);
+
 		mets.setFileSec(fs);
-
-		StructMap sm = mets.newStructMap();
-		mets.addStructMap(sm);
-
+		
+		StructMap sm = mets.newStructMap();		
+		
 		Div d = sm.newDiv();
-		d.setType("investigation");
-		d.setDmdID("dmd1");
 		sm.addDiv(d);
-
-		Fptr fp = d.newFptr();
-		fp.setFileID("F-1");
-		d.addFptr(fp);
+		
+		mets.addStructMap(sm);
 
 		mw.validate();
 
 		return mw;
 	}
 
-	private DmdSec newDmdEntry(int unique_id, String type, String lbl,
+	private DmdSec newDmdEntry(int id, String type, String lbl,
 			File metadata) throws METSException, JDOMException, IOException {
 		SAXBuilder parser = new SAXBuilder();
 		org.jdom.Document modsdoc = parser.build(metadata);
 		DmdSec dmd = mets.newDmdSec();
-		dmd.setID("dmd" + unique_id);
+		dmd.setID("DMD-" + id);
 		MdWrap mdw = dmd.newMdWrap();
 		mdw.setMDType(type);
 		mdw.setLabel(lbl);

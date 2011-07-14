@@ -41,7 +41,7 @@ public class ApertureService {
 		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".nfo.rdf");
 		File output = new File(tmpfile);
 		FileUtils.writeStringToFile(output, nfo, "UTF-8");
-        obj.setNepomukFileOntology(output);
+        obj.setNepomukFileOntology(output);        
         return obj;
 	}
 	
@@ -55,7 +55,7 @@ public class ApertureService {
         source.setConfiguration(configuration);
         source.setRootFolder(rootFile.getAbsolutePath());
         source.setSuppressParentChildLinks(suppressParentChildLinks);
-        source.setMaximumDepth(1);
+        source.setMaximumDepth(0);
 
         // setup a crawler that can handle this type of DataSource
         FileSystemCrawler crawler = new FileSystemCrawler();

@@ -27,9 +27,10 @@ public class OCRService extends ProcessbuilderService {
 	public DigitalObject scan(DigitalObject obj, String lang) throws MalformedURLException,
 			IOException, InterruptedException {
 		
-		// empty postfix since tesseract uses .txt extensions
+		// empty postfix since tesseract uses .txt extension
 		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),Configuration.getString("OCRService.postfix")); //$NON-NLS-1$
 		String srcfile = obj.getSubmittedFile().getAbsolutePath();
+		File out = new File(tmpfile + Configuration.getString("OCRService.postfixFromTesseract")); //$NON-NLS-1$
 		URL ocrexec = new URL(Configuration.getString("OCRService.executable")); //$NON-NLS-1$
 		
 		commands = new ArrayList<String>();
@@ -39,9 +40,13 @@ public class OCRService extends ProcessbuilderService {
 		commands.add(Configuration.getString("OCRService.languageparam")); //$NON-NLS-1$
 		if (lang.isEmpty()) lang = Configuration.getString("OCRService.defaultlanguage"); //$NON-NLS-1$
 		commands.add(lang);
-		process(commands);
 		
-		obj.setOcr(new File(tmpfile + Configuration.getString("OCRService.postfixFromTesseract"))); //$NON-NLS-1$
+		// only process if file doesn't exist
+		if (!out.exists()) {
+			process(commands);
+		}
+		
+		obj.setOcr(out);
 		return obj;
 	}
 }
