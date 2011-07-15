@@ -42,13 +42,28 @@ class Attribution
 		if (substr_count($hay, 'journal_of_hymenoptera_research')) {
 			$hay = 'pensoft';
 		}
+		if (substr_count($hay, 'jhr')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'ijm')) {
+			$hay = 'pensoft';
+		}
 		if (substr_count($hay, 'international_journal_of_myriapodology')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'compcytogen')) {
 			$hay = 'pensoft';
 		}
 		if (substr_count($hay, 'comparative_cytogenetics')) {
 			$hay = 'pensoft';
 		}
+		if (substr_count($hay, 'subtbiol')) {
+			$hay = 'pensoft';
+		}
 		if (substr_count($hay, 'subterranean_biology')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'natureconservation')) {
 			$hay = 'pensoft';
 		}
 		if (substr_count($hay, 'nature_conservation')) {
