@@ -31,7 +31,7 @@ $(function(){
 </script>
 
 <!-- Include the required JavaScript libraries: -->
-<script src="<spring:url value ='/resources/yui/build/yui/yui.js' />"></script>
+<script src="<spring:url value ='/resources/yui/build/yui/yui-debug.js' />"></script>
 
 
 <script type='text/javascript'>

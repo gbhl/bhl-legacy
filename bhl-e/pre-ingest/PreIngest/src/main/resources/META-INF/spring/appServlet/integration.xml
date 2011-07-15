@@ -30,8 +30,16 @@
 		service-interface="at.co.ait.domain.integration.ILoadingGateway"
 		default-request-channel="loading_ramp" />
 
+	<!-- Extract technical metadata from DigitalObject -->
+	<bean id="packagequeue" class="at.co.ait.domain.integration.ProcessingQueue" />
+	<si:service-activator input-channel="processing_queue" output-channel="nullChannel"
+		expression="@packagequeue.handle(payload, headers.PREFERENCES.username)" />
+
 	<si:channel id="loading_ramp">
 		<si:queue />
+		<si:interceptors>
+			<si:wire-tap channel="processing_queue" />
+		</si:interceptors>
 	</si:channel>
 
 	<bean id="loading_file" class="at.co.ait.domain.services.PreparePackageService" />
@@ -135,7 +143,7 @@
 	<!-- Wrap up of packages (copying to archive) -->
 	<bean id="wrapup_service" class="at.co.ait.domain.services.WrapUpService" />
 	<si:service-activator input-channel="create_aip"
-		output-channel="nullChannel"
+		output-channel="processing_queue"
 		expression="@wrapup_service.wrapup(payload,headers.PREFERENCES.workdirectory)" />
 
 
