@@ -44,6 +44,20 @@
 			</at.co.ait.web.common.UserPreferences>
 		</entry>
 		<entry>
+			<string>ait018</string>
+			<at.co.ait.web.common.UserPreferences>
+				<username>ait018</username>
+				<password>ait018</password>
+				<roles>
+					<string>ROLE_USER</string>
+				</roles>
+				<basedirectory>file:/home/christoph/bhl-europe/testspace</basedirectory>
+				<workdirectory>file:/home/christoph/bhl-europe/testspace</workdirectory>
+				<organization>AIT</organization>
+				<smtparams>-m c -cm 5</smtparams>
+			</at.co.ait.web.common.UserPreferences>
+		</entry>
+		<entry>
 			<string>ait112</string>
 			<at.co.ait.web.common.UserPreferences>
 				<username>ait112</username>
