@@ -72,7 +72,7 @@ public class InformationPackageObject extends GenericObject {
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 		setChanged();
-		notifyObservers(identifier);
+		notifyObservers("PERMANENT_ID: " + identifier);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class InformationPackageObject extends GenericObject {
 	public void setExternalIdentifier(String externalIdentifier) {
 		this.externalIdentifier = externalIdentifier;
 		setChanged();
-		notifyObservers(externalIdentifier);
+		notifyObservers("EXTERNAL_ID: " + externalIdentifier);
 	}
 
 	/**
@@ -103,13 +103,13 @@ public class InformationPackageObject extends GenericObject {
 	public void setMets(METSWrapper mets) {
 		this.mets = mets;
 		setChanged();
-		notifyObservers(mets.getMETSObject().getID());	
+		notifyObservers("METS: " + getSubmittedFile().getName());	
 	}
 
 	public void addDigitalObject(DigitalObject obj) {
 		getDigitalobjects().add(obj);
 		setChanged();
-		notifyObservers("add " + obj.getSubmittedFile().getName());
+		notifyObservers("ADDED: " + obj.getSubmittedFile().getName());
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class InformationPackageObject extends GenericObject {
 	public void setScanlog(File scanlog) {
 		this.scanlog = scanlog;
 		setChanged();
-		notifyObservers(scanlog.getName());
+		notifyObservers("VIRUSSCAN_LOG: " + scanlog.getName());
 	}
 
 	private File nepomukFileOntology;
@@ -136,7 +136,7 @@ public class InformationPackageObject extends GenericObject {
 	public void setNepomukFileOntology(File nepomukFileOntology) {
 		this.nepomukFileOntology = nepomukFileOntology;
 		setChanged();
-		notifyObservers(nepomukFileOntology.getName());
+		notifyObservers("NEPOMUK_FILE_ONTOLOGY: " + nepomukFileOntology.getName());
 	}
 
 	@Override

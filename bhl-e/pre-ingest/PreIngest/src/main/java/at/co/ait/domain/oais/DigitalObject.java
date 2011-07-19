@@ -24,7 +24,7 @@ public class DigitalObject extends GenericObject {
 
 	public void setExternalIdentifier(String externalIdentifier) {
 		this.externalIdentifier = externalIdentifier;
-		notifyObservers(externalIdentifier);
+		notifyObservers("EXTERNAL_ID: " + externalIdentifier);
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class DigitalObject extends GenericObject {
 	public void setTechMetadata(File techMetadata) {
 		this.techMetadata = techMetadata;
 		setChanged();
-		notifyObservers(techMetadata.getName());
+		notifyObservers("TECH_METADATA: " + techMetadata.getName());
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class DigitalObject extends GenericObject {
 	public void setObjecttype(DigitalObjectType objecttype) {
 		this.objecttype = objecttype;
 		setChanged();
-		notifyObservers(objecttype.name());
+		notifyObservers("OBJECT_TYPE: " + objecttype.name());
 	}
 
 	// needed for SpEL evaluation
@@ -76,7 +76,7 @@ public class DigitalObject extends GenericObject {
 	public void setSmtoutput(File smtoutput) {
 		this.smtoutput = smtoutput;
 		setChanged();
-		notifyObservers(smtoutput.getName());
+		notifyObservers("SCHEMA_MAPPING_TOOL: " + smtoutput.getName());
 	}
 
 	private UUID informationPackageUUID;
@@ -134,7 +134,7 @@ public class DigitalObject extends GenericObject {
 	public void setOcr(File ocr) {
 		this.ocr = ocr;
 		setChanged();
-		notifyObservers(ocr.getName());
+		notifyObservers("TESSERACT_OCR: " + ocr.getName());
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class DigitalObject extends GenericObject {
 	public void setTaxa(File taxa) {
 		this.taxa = taxa;
 		setChanged();
-		notifyObservers(taxa.getName());
+		notifyObservers("TAXON_FINDER: " + taxa.getName());
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public class DigitalObject extends GenericObject {
 	public void setMimetype(String mimetype) {
 		this.mimetype = mimetype;
 		setChanged();
-		notifyObservers(mimetype);
+		notifyObservers("MIMETYPE: " + mimetype);
 	}
 
 	@Override

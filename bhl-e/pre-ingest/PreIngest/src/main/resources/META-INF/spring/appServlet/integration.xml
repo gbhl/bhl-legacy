@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/integration/stream 
         http://www.springframework.org/schema/integration/stream/spring-integration-stream-2.0.xsd
         http://www.springframework.org/schema/integration 
-        http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
         http://www.springframework.org/schema/integration/jmx 
         http://www.springframework.org/schema/integration/jmx/spring-integration-jmx.xsd
         ">

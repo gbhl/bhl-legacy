@@ -1,5 +1,7 @@
 package at.co.ait.web;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,21 +24,28 @@ public class PackagesController {
 	private static final Logger logger = LoggerFactory.getLogger(PackagesController.class);	
 	private @Autowired LogGenericObject loggenericobject;
 	private @Autowired ProcessingQueue packagequeue;
+	
+	@RequestMapping(value="monitor")
+	public void monitorHandler() {
+	}
     
-	@RequestMapping(value="all", method=RequestMethod.GET)
-	@ModelAttribute("packageMap")
-	public Map<String,List<String>> getChannels() {
-		return loggenericobject.getBag();
+	@RequestMapping(value="monitor/json", method=RequestMethod.GET, headers="Accept=application/json")
+	public @ResponseBody Map<String,Object> getObserver(@RequestParam String show) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		List<?> list = loggenericobject.getBag();
+		Collections.reverse(list);
+		map.put("Result",list);
+		return map;
 	}
 	
-	@RequestMapping(value="queue", method=RequestMethod.GET)
-	@ModelAttribute("packagequeue")
-	public List<Map<String,String>> getPackagequeue() {
-		return packagequeue.getQueue();
+	@RequestMapping(value="queue")
+	public void queueHandler() {
 	}
 	
 	@RequestMapping(value="queue/json", method=RequestMethod.GET, headers="Accept=application/json")
-	public @ResponseBody List<Map<String,String>> getPackagequeue1() {
-		return packagequeue.getQueue();
+	public @ResponseBody Map<String,Object> getQueue(@RequestParam String show) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("Result",packagequeue.getQueue());
+		return map;
 	}
 }

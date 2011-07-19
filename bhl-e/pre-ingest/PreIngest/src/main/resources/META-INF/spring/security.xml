@@ -6,9 +6,9 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<beans:bean class="at.co.ait.utils.Startup" init-method="init" >
+	<beans:bean class="at.co.ait.utils.Startup" init-method="init">
 	</beans:bean>
-	
+
 	<http auto-config="true">
 		<intercept-url pattern="/**" access="ROLE_USER" />
 		<session-management>

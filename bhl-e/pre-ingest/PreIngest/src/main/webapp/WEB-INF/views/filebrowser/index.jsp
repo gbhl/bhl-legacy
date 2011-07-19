@@ -37,6 +37,7 @@
 		Select folders to be processed: <br>
 		<!-- The name attribute is used by tree.serializeArray()  -->
 		<div id="tree" id="selNodes" name="selNodes"></div>
-		<br> <input type="submit" value="Send data">
+		<br> <input type="submit" value="Submit selection for processing" id="sipsub"
+					onclick="this.disabled=true;window.setTimeout('document.getElementById(\'sipsub\').disabled = false;', 2500);">
 	</form>
 </div>

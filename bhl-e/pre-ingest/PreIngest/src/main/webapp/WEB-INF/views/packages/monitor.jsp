@@ -4,14 +4,14 @@
 	<div id="refresh">
 		<img src="<spring:url value="images/arrow_refresh.png" />" />
 	</div>
-	<div id="queue">
-	</div>
+	<div id="monitor"></div>
 </div>
+
 <script type="text/javascript">
 
-YUI().use("datasource-io", "datasource-jsonschema", "datatable-datasource", "datasource-polling", "datatable-sort", function(Y) {
+YUI().use("datasource-io", "datasource-jsonschema", "datatable-datasource", "datasource-polling", function(Y) {
 	
-	var myDataSource = new Y.DataSource.IO({source:"<spring:url value='queue/json' />",
+	var myDataSource = new Y.DataSource.IO({source:"<spring:url value='monitor/json' />",
 											ioConfig:{data:"show=1", 
 													  headers: {'Accept': 'application/json'}
 													  }
@@ -20,21 +20,22 @@ YUI().use("datasource-io", "datasource-jsonschema", "datatable-datasource", "dat
     myDataSource.plug(Y.Plugin.DataSourceJSONSchema, {
         schema: {
         	resultListLocator: "Result",
-            resultFields: ["date","path","files","size","user"]
+    		resultFields: ["displaydate","parentfolder","filename","username","observation"]
         }
     });
     
-    var cols = ["date","path","files","size","user"];
+    var cols = ["displaydate","parentfolder","filename","username","observation"];
+
     
     var table = new Y.DataTable.Base({
         columnset: cols,
-        summary: "All currently active queued folders",
-        caption: "Queue (reloads every 5 sec)"
+        summary: "Monitoring current system activity",
+        caption: "Monitoring last 100 pre-ingest activities (reloads every 5 seconds)"
     });
     
     table.plug(Y.Plugin.DataTableDataSource, {
         datasource: myDataSource
-    }).render("#queue");
+    }).render("#monitor");
     
     table.datasource.load();
     

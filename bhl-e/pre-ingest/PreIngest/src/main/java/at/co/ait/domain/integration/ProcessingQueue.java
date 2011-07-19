@@ -42,8 +42,8 @@ public class ProcessingQueue extends LinkedHashMap<Integer,LinkedHashMap<String,
 			Integer key = ((InformationPackageObject) payload).getSubmittedFile().hashCode();
 			remove(key);
 		}		
-	}
-		
+	}	
+	
 	public List<Map<String,String>> getQueue() {
 		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
 		for (LinkedHashMap<String,String> line : this.values()) {

@@ -1,8 +1,8 @@
 package at.co.ait.domain.oais;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -11,52 +11,60 @@ import java.util.Observer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import at.co.ait.utils.DateUtils;
+
 public class LogGenericObject implements Observer {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(LogGenericObject.class);
 
-	private Map<String, List<String>> bag = new LinkedHashMap<String, List<String>>();
+	private List<Map<String, String>> bag = new ArrayList<Map<String, String>>();
 
-	public Map<String, List<String>> getBag() {
+	public List<Map<String, String>> getBag() {
 		return bag;
 	}
 
 	public void update(Observable o, Object arg) {
 
-		List<String> info = new ArrayList<String>();
+		Map<String, String> info = null;		
+		final int MAX = 100;
 		String user = null;
 		String filename = null;
-		String parentkey = null;
-		int key = 0;
+		String parentfoldername = null;
+
+		int hashcode = 0;
 
 		if (o instanceof DigitalObject) {
 			user = ((DigitalObject) o).getPrefs().getUsername();
-			key = ((DigitalObject) o).getSubmittedFile().hashCode();
+			hashcode = ((DigitalObject) o).getSubmittedFile().hashCode();
 			filename = ((DigitalObject) o).getSubmittedFile().getName();
-			parentkey = String.valueOf(((DigitalObject) o).getSubmittedFile().getParentFile().hashCode());
+			parentfoldername = ((DigitalObject) o).getSubmittedFile()
+					.getParentFile().getName();
 		}
 		if (o instanceof InformationPackageObject) {
 			user = ((InformationPackageObject) o).getPrefs().getUsername();
-			key = ((InformationPackageObject) o).getSubmittedFile().hashCode();
+			hashcode = ((InformationPackageObject) o).getSubmittedFile()
+					.hashCode();
 			filename = ((InformationPackageObject) o).getSubmittedFile()
 					.getName();
-			parentkey = String.valueOf(((InformationPackageObject) o).getSubmittedFile().getParentFile().hashCode());
+			parentfoldername = ((InformationPackageObject) o)
+					.getSubmittedFile().getParentFile().getName();
 		}
 
-		if (bag.containsKey(String.valueOf(key))) {
-			info = bag.get(String.valueOf(key));
-			info.add(arg.toString());
-		} else {
-			info.add(filename);
-			info.add(user);
-			info.add(arg.toString());
-		}
-
-		if (arg.toString().equals("disposed")) {
-			bag.remove(String.valueOf(key));
-		} else {
-			bag.put(String.valueOf(key), info);
-		}
+		info = new HashMap<String, String>();
+		info.put("timestamp", new Date().toString());
+		info.put("displaydate",DateUtils.now());
+		info.put("parentfolder", parentfoldername);
+		info.put("filename", filename);
+		info.put("hashcode", String.valueOf(hashcode));
+		info.put("username", user);
+		info.put("observation", arg.toString());
+		bag.add(info);
+		
+		if (bag.size() > MAX) {
+			// delete first entry to keep size at MAX
+			bag.remove(0);
+		}		
 	}
+
 }

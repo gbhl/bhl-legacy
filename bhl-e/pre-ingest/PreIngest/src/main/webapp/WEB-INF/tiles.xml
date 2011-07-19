@@ -23,14 +23,19 @@
 		<put-attribute name="body" value="/WEB-INF/views/packages/index.jsp" />
 	</definition>
 
-	<definition name="packages/all" extends="base.definition">
-		<put-attribute name="title" value="PreIngest - Packaging" />
-		<put-attribute name="body" value="/WEB-INF/views/packages/all.jsp" />
+	<definition name="packages/monitor" extends="base.definition">
+		<put-attribute name="title" value="PreIngest - Monitoring" />
+		<put-attribute name="body" value="/WEB-INF/views/packages/monitor.jsp" />
 	</definition>
 	
 	<definition name="packages/queue" extends="base.definition">
 		<put-attribute name="title" value="PreIngest - Queue" />
 		<put-attribute name="body" value="/WEB-INF/views/packages/queue.jsp" />
+	</definition>
+	
+	<definition name="guidelines" extends="base.definition">
+		<put-attribute name="title" value="PreIngest - Queue" />
+		<put-attribute name="body" value="/WEB-INF/views/guidelines.jsp" />
 	</definition>
 
 </tiles-definitions>
