@@ -1,6 +1,7 @@
 package at.co.ait.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public class PackagesController {
 	@RequestMapping(value="monitor/json", method=RequestMethod.GET, headers="Accept=application/json")
 	public @ResponseBody Map<String,Object> getObserver(@RequestParam String show) {
 		Map<String,Object> map = new HashMap<String,Object>();
-		List<?> list = loggenericobject.getBag();
+		List<?> list = new ArrayList(loggenericobject.getBag());
 		Collections.reverse(list);
 		map.put("Result",list);
 		return map;
