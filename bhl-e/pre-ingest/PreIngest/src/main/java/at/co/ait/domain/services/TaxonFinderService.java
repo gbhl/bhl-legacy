@@ -49,7 +49,7 @@ public class TaxonFinderService {
 		// if ANY names are in the taxon finder's reply
 		if (nodes.getLength()>0) {			
 			String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),
-			".taxa");			
+			".taxa.txt");			
 			File output = new File(tmpfile);
 			if (!output.exists()) {
 				FileUtils.writeStringToFile(output, taxa, "UTF-8");

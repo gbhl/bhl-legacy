@@ -8,9 +8,11 @@
 
 	<beans:bean class="at.co.ait.utils.Startup" init-method="init">
 	</beans:bean>
-
+	
 	<http auto-config="true">
 		<intercept-url pattern="/**" access="ROLE_USER" />
+		<intercept-url pattern="/resources/**" filters="none" />
+		<intercept-url pattern="/archivingqueue/**" filters="none" />
 		<session-management>
 			<concurrency-control max-sessions="1"
 				error-if-maximum-exceeded="true" />

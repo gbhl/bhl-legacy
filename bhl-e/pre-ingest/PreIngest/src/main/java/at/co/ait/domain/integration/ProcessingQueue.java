@@ -16,6 +16,9 @@ import at.co.ait.utils.DateUtils;
 
 public class ProcessingQueue extends LinkedHashMap<Integer,LinkedHashMap<String,String>> {
 	
+	//TODO: make this queue persistent so that folders can be loaded again on restart
+	//TODO: implement spring event so that folders are loaded again on restart
+	
 	private static final Logger logger = LoggerFactory
 	.getLogger(ProcessingQueue.class);
 	

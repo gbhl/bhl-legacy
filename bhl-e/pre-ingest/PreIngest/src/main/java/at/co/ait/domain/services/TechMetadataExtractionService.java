@@ -170,7 +170,7 @@ public class TechMetadataExtractionService {
      */
     public DigitalObject enrich(DigitalObject obj) {
     	try {
-			String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".jhove");
+			String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".jhove.xml");
 			File output = new File(tmpfile);
 			if (!output.exists()) {
 				FileUtils.writeStringToFile(output, this.getDocument(obj.getSubmittedFile()), "UTF-8");

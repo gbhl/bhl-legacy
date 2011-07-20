@@ -13,6 +13,7 @@ import org.springframework.integration.annotation.ReleaseStrategy;
 import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.domain.oais.InformationPackageObject;
 import at.co.ait.domain.oais.LogGenericObject;
+import at.co.ait.utils.ConfigUtils;
 
 @MessageEndpoint
 public class DeliveryService {

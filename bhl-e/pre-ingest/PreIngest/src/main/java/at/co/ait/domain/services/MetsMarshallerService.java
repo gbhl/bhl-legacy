@@ -27,7 +27,6 @@ import au.edu.apsr.mtk.base.DmdSec;
 import au.edu.apsr.mtk.base.FLocat;
 import au.edu.apsr.mtk.base.FileGrp;
 import au.edu.apsr.mtk.base.FileSec;
-import au.edu.apsr.mtk.base.Fptr;
 import au.edu.apsr.mtk.base.METS;
 import au.edu.apsr.mtk.base.METSException;
 import au.edu.apsr.mtk.base.METSWrapper;
@@ -46,36 +45,35 @@ public class MetsMarshallerService {
 			UserPreferences prefs) throws JDOMException,
 			ParserConfigurationException, METSException, IOException,
 			SAXException {
-		
+
 		METSWrapper mw = null;
 		mw = new METSWrapper();
 
-		mets = mw.getMETSObject();
-
+		mets = mw.getMETSObject();		
 		mets.setObjID(String.valueOf(obj.getIdentifier()));
-		mets.setProfile("http://www.bhl-europe.eu/profiles/bhle-mets-profile-1.0");
-		mets.setType("investigation");
+		mets.setProfile("http://www.bhl-europe.eu/profiles/bhle-mets-profile-1.0"); //$NON-NLS-1$
+		mets.setType("investigation"); //$NON-NLS-1$
 
 		MetsHdr mh = mets.newMetsHdr();
 
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1"));
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"); //$NON-NLS-1$
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1")); //$NON-NLS-1$
 		String currentTime = df.format(cal.getTime());
 		mh.setCreateDate(currentTime);
-		mh.setRecordStatus("Complete");
+		mh.setRecordStatus("Complete"); //$NON-NLS-1$		
 
 		Agent agent = mh.newAgent();
-		agent.setRole("ARCHIVIST");
-		agent.setType("ORGANIZATION");
+		agent.setRole("ARCHIVIST"); //$NON-NLS-1$
+		agent.setType("ORGANIZATION"); //$NON-NLS-1$
 		agent.setName(prefs.getOrganization());
-		agent.setNote("BHL-Europe Content Provider");
+		agent.setNote("BHL-Europe Content Provider"); //$NON-NLS-1$
 		mh.addAgent(agent);
 
 		agent = mh.newAgent();
-		agent.setRole("ARCHIVIST");
-		agent.setType("OTHER");
-		agent.setName("BHL-Europe Pre-Ingest Tool");
-		agent.setNote("Automatic processing of submitted content");
+		agent.setRole("ARCHIVIST"); //$NON-NLS-1$
+		agent.setType("OTHER"); //$NON-NLS-1$
+		agent.setName("BHL-Europe Pre-Ingest Tool"); //$NON-NLS-1$
+		agent.setNote("Automatic processing of submitted content"); //$NON-NLS-1$
 		mh.addAgent(agent);
 		mets.setMetsHdr(mh);
 
@@ -86,7 +84,7 @@ public class MetsMarshallerService {
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getObjecttype().equals(DigitalObjectType.METADATA)) {
 				unique_id++;
-				dmd = newDmdEntry(unique_id, "MODS", "derivative",
+				dmd = newDmdEntry(unique_id, "MODS", "derivative", //$NON-NLS-1$ //$NON-NLS-2$
 						digobj.getSmtoutput());
 				mets.addDmdSec(dmd);
 			}
@@ -104,17 +102,14 @@ public class MetsMarshallerService {
 			for (DigitalObject digobj : obj.getDigitalobjects()) {
 				if (digobj.getObjecttype().equals(value)) {
 					au.edu.apsr.mtk.base.File f = fg.newFile();
-					f.setID("F-" + (++unique_id));
+					f.setID("F-" + (++unique_id)); //$NON-NLS-1$
 					f.setSize(FileUtils.sizeOf(digobj.getSubmittedFile()));
 					f.setMIMEType(digobj.getMimetype());
 					f.setChecksum(digobj.getDigestValueinHex());
-					f.setChecksumType("SHA-1");
-
-					FLocat fl = f.newFLocat();
-					fl.setHref(digobj.getSubmittedFile().getName());
-					fl.setLocType("OTHER");
-					fl.setOtherLocType("location is relative to location of file");
-					f.addFLocat(fl);
+					f.setChecksumType("SHA-1"); //$NON-NLS-1$
+					FLocat loc = createLocat(digobj.getSubmittedFile(),
+							prefs.getBasedirectory(), f);					
+					f.addFLocat(loc);
 					fg.addFile(f);
 				}
 			}
@@ -125,16 +120,15 @@ public class MetsMarshallerService {
 
 		// add taxa files to filesection
 		FileGrp fg = fs.newFileGrp();
-		fg.setUse("TAXA");
+		fg.setUse("TAXA"); //$NON-NLS-1$
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getTaxa() != null) {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("F-" + (++unique_id));
+				f.setID("F-" + (++unique_id)); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTaxa()));
-				FLocat fl = f.newFLocat();
-				fl.setHref(digobj.getTaxa().getAbsolutePath());
-				fl.setLocType("OTHER");
-				f.addFLocat(fl);
+				FLocat loc = createLocat(digobj.getTaxa(),
+						prefs.getBasedirectory(), f);	
+				f.addFLocat(loc);
 				fg.addFile(f);
 			}
 			// if filegroup contains any files, add to filesection
@@ -144,16 +138,15 @@ public class MetsMarshallerService {
 
 		// add ocr files to filesection
 		fg = fs.newFileGrp();
-		fg.setUse("OCR");
+		fg.setUse("OCR"); //$NON-NLS-1$
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getOcr() != null) {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("F-" + (++unique_id));
+				f.setID("F-" + (++unique_id)); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getOcr()));
-				FLocat fl = f.newFLocat();
-				fl.setHref(digobj.getOcr().getAbsolutePath());
-				fl.setLocType("OTHER");
-				f.addFLocat(fl);
+				FLocat loc = createLocat(digobj.getOcr(),
+						prefs.getBasedirectory(), f);	
+				f.addFLocat(loc);
 				fg.addFile(f);
 			}
 			// if filegroup contains any files, add to filesection
@@ -163,16 +156,15 @@ public class MetsMarshallerService {
 
 		// add jhove files to filesection
 		fg = fs.newFileGrp();
-		fg.setUse("JHOVE");
+		fg.setUse("JHOVE"); //$NON-NLS-1$
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getTechMetadata() != null) {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("F-" + (++unique_id));
+				f.setID("F-" + (++unique_id)); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTechMetadata()));
-				FLocat fl = f.newFLocat();
-				fl.setHref(digobj.getTechMetadata().getAbsolutePath());
-				fl.setLocType("OTHER");
-				f.addFLocat(fl);
+				FLocat loc = createLocat(digobj.getTechMetadata(),
+						prefs.getBasedirectory(), f);	
+				f.addFLocat(loc);
 				fg.addFile(f);
 			}
 			// if filegroup contains any files, add to filesection
@@ -182,24 +174,22 @@ public class MetsMarshallerService {
 
 		// add rdf nfo file to filesection
 		fg = fs.newFileGrp();
-		fg.setUse("NFO");
+		fg.setUse("NFO"); //$NON-NLS-1$
 		au.edu.apsr.mtk.base.File f = fg.newFile();
-		f.setID("F-" + (++unique_id));
+		f.setID("F-" + (++unique_id)); //$NON-NLS-1$
 		f.setSize(FileUtils.sizeOf(obj.getNepomukFileOntology()));
-		FLocat fl = f.newFLocat();
-		fl.setHref(obj.getNepomukFileOntology().getAbsolutePath());
-		fl.setLocType("OTHER");
-		f.addFLocat(fl);
-		fg.addFile(f);
+		FLocat loc = createLocat(obj.getNepomukFileOntology(),
+				prefs.getBasedirectory(), f);	
+		f.addFLocat(loc);
 		fs.addFileGrp(fg);
 
 		mets.setFileSec(fs);
-		
-		StructMap sm = mets.newStructMap();		
-		
+
+		StructMap sm = mets.newStructMap();
+
 		Div d = sm.newDiv();
 		sm.addDiv(d);
-		
+
 		mets.addStructMap(sm);
 
 		mw.validate();
@@ -207,12 +197,12 @@ public class MetsMarshallerService {
 		return mw;
 	}
 
-	private DmdSec newDmdEntry(int id, String type, String lbl,
-			File metadata) throws METSException, JDOMException, IOException {
+	private DmdSec newDmdEntry(int id, String type, String lbl, File metadata)
+			throws METSException, JDOMException, IOException {
 		SAXBuilder parser = new SAXBuilder();
 		org.jdom.Document modsdoc = parser.build(metadata);
 		DmdSec dmd = mets.newDmdSec();
-		dmd.setID("DMD-" + id);
+		dmd.setID("DMD-" + id); //$NON-NLS-1$
 		MdWrap mdw = dmd.newMdWrap();
 		mdw.setMDType(type);
 		mdw.setLabel(lbl);
@@ -221,6 +211,15 @@ public class MetsMarshallerService {
 		mdw.setXmlData(w3cDoc.getDocumentElement());
 		dmd.setMdWrap(mdw);
 		return dmd;
+	}
+
+	private FLocat createLocat(File file, String basedir,
+			au.edu.apsr.mtk.base.File f) throws METSException, IOException {
+		String fileurl = ConfigUtils.createFileURL(file,basedir);
+		FLocat loc = f.newFLocat();
+		loc.setHref(fileurl);
+		loc.setLocType("URL"); //$NON-NLS-1$		
+		return loc;
 	}
 
 	/**
@@ -240,8 +239,9 @@ public class MetsMarshallerService {
 			SAXException {
 		obj.setMets(createMETS(obj, prefs));
 		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),
-				".mets.xml");
+				".mets.xml"); //$NON-NLS-1$
 		File metsfile = new File(tmpfile);
+		obj.setMetsfileurl(ConfigUtils.createFileURL(metsfile, prefs.getBasedirectory()));
 		Document doc = obj.getMets().getMETSDocument();
 		OutputFormat format = new OutputFormat(doc);
 		format.setLineWidth(65);

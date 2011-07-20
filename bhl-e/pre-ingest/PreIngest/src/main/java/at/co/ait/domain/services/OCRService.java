@@ -29,10 +29,8 @@ public class OCRService extends ProcessbuilderService {
 		
 		// empty postfix since tesseract uses .txt extension
 		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),Configuration.getString("OCRService.postfix")); //$NON-NLS-1$
-		String srcfile = obj.getSubmittedFile().getAbsolutePath();
-		File out = new File(tmpfile + Configuration.getString("OCRService.postfixFromTesseract")); //$NON-NLS-1$
-		URL ocrexec = new URL(Configuration.getString("OCRService.executable")); //$NON-NLS-1$
-		
+		String srcfile = obj.getSubmittedFile().getAbsolutePath();		
+		URL ocrexec = new URL(Configuration.getString("OCRService.executable")); //$NON-NLS-1$		
 		commands = new ArrayList<String>();
 		commands.add(ocrexec.getPath());
 		commands.add(srcfile);
@@ -41,6 +39,7 @@ public class OCRService extends ProcessbuilderService {
 		if (lang.isEmpty()) lang = Configuration.getString("OCRService.defaultlanguage"); //$NON-NLS-1$
 		commands.add(lang);
 		
+		File out = new File(tmpfile + Configuration.getString("OCRService.postfixFromTesseract")); //$NON-NLS-1$
 		// only process if file doesn't exist
 		if (!out.exists()) {
 			process(commands);

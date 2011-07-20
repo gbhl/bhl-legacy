@@ -22,7 +22,7 @@ public class VirusscanService extends ProcessbuilderService {
 		commands.add((new java.net.URL(Configuration.getString("VirusscanService.0"))).getPath()); //$NON-NLS-1$	
 		commands.add(pkg.getSubmittedFile().getAbsolutePath());	
 		process(commands);	
-		String tmpfile = ConfigUtils.getTmpFileName(pkg.getSubmittedFile(),".scan.log");
+		String tmpfile = ConfigUtils.getTmpFileName(pkg.getSubmittedFile(),".scan.log.txt");
 		File output = new File(tmpfile);
 		FileUtils.writeStringToFile(output, stdout.toString(), "UTF-8");
 		pkg.setScanlog(output);		

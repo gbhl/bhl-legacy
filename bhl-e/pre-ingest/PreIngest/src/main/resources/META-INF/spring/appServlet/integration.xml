@@ -111,10 +111,9 @@
 	<si:aggregator input-channel="boxing" ref="aggregator"
 		method="prepareDelivery" output-channel="label_service" />
 
-	<si:service-activator id="label" input-channel="label_service"
-		method="enrich" output-channel="deliveries">
-		<bean class="at.co.ait.domain.services.LabellingService" />
-	</si:service-activator>
+	<bean id="label" class="at.co.ait.domain.services.LabellingService" />
+	<si:service-activator input-channel="label_service" output-channel="deliveries"
+		expression="@label.enrich(payload,headers.PREFERENCES.basedirectory)" />		
 
 	<si:channel id="boxing">
 		<si:queue />
@@ -142,9 +141,9 @@
 
 	<!-- Wrap up of packages (copying to archive) -->
 	<bean id="wrapup_service" class="at.co.ait.domain.services.WrapUpService" />
-	<si:service-activator input-channel="create_aip"
-		output-channel="processing_queue"
-		expression="@wrapup_service.wrapup(payload,headers.PREFERENCES.workdirectory)" />
+	<bean id="archivingqueue" class="at.co.ait.domain.integration.ArchivingQueue" />
+	<si:service-activator input-channel="create_aip" output-channel="processing_queue"
+		expression="@wrapup_service.wrapup(payload)" />
 
 
 

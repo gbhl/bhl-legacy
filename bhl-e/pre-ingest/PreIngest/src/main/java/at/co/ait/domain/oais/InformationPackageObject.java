@@ -138,7 +138,18 @@ public class InformationPackageObject extends GenericObject {
 		setChanged();
 		notifyObservers("NEPOMUK_FILE_ONTOLOGY: " + nepomukFileOntology.getName());
 	}
+	
+	private String metsfileurl;
+	
+	public void setMetsfileurl(String metsfileurl) {
+		this.metsfileurl = metsfileurl;
+	}
 
+	public String getMetsfileurl() {
+		return metsfileurl;
+	}	
+	
+	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

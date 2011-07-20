@@ -37,8 +37,8 @@
 				<roles>
 					<string>ROLE_USER</string>
 				</roles>
-				<basedirectory>file:///C:/ProjectData/BHL-Europe/UnitTestResources</basedirectory>
-				<workdirectory>file:///C:/ProjectData/BHL-Europe/UnitTestResourcesTmp</workdirectory>
+				<basedirectory>file:/C:/ProjectData/BHL-Europe/UnitTestResources</basedirectory>
+				<workdirectory>file:/C:/ProjectData/BHL-Europe/UnitTestResourcesTmp</workdirectory>
 				<organization>AIT</organization>
 				<smtparams>-m c -cm 5</smtparams>
 			</at.co.ait.web.common.UserPreferences>
