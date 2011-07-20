@@ -30,7 +30,6 @@ public class PackagesController {
 	private static final Logger logger = LoggerFactory.getLogger(PackagesController.class);	
 	private @Autowired LogGenericObject loggenericobject;
 	private @Autowired ProcessingQueue packagequeue;
-	private @Autowired ArchivingQueue archivingqueue;
 	
 	@RequestMapping(value="monitor")
 	public void monitorHandler() {
@@ -55,22 +54,5 @@ public class PackagesController {
 		map.put("Result",packagequeue.getQueue());
 		return map;
 	}
-	
-	@RequestMapping(value="/archivingqueue")
-	@ModelAttribute(value="ArchivingQueue")
-	public ArchivingQueue archivingqueueHandler() {
-		return archivingqueue;
-	}
-	
-	@RequestMapping(value="/archivingqueue/retrieve")
-	public @ResponseBody
-	String archivingqueueRetrieveHandler() throws JsonMappingException, JsonGenerationException, IOException {
-		return archivingqueue.toJson(true);
-	}
-	
-	@RequestMapping(value="/archivingqueue/reset")
-	public @ResponseBody String archivingqueueResetHandler() {
-		archivingqueue.clear();
-		return "ACK";
-	}
+
 }
