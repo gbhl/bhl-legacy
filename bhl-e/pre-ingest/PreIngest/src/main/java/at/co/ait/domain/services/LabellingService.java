@@ -12,7 +12,7 @@ public class LabellingService {
 		DigitalObject idol = pkg.getDigitalobjects().get(0);		
 		pkg.setPrefs(idol.getPrefs());
 		pkg.setSubmittedFile(idol.getSubmittedFile().getParentFile());
-		pkg.setFileurl(ConfigUtils.createFileURL(idol.getSubmittedFile().getParentFile(), basedir));
+		pkg.setFileurl(ConfigUtils.createFileURL(idol.getSubmittedFile().getParentFile()));
 		return pkg;
 	}
 	

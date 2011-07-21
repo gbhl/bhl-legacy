@@ -29,7 +29,7 @@ public class PreparePackageService {
 			obj.setOrder(order++);
 			obj.setSubmittedFile(fileObj);
 			obj.setPrefs(prefs);
-			obj.setFileurl(ConfigUtils.createFileURL(fileObj, prefs.getBasedirectory()));
+			obj.setFileurl(ConfigUtils.createFileURL(fileObj));
 		}	
 		return objlist;
 	}

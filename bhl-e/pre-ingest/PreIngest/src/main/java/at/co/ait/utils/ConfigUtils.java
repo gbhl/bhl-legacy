@@ -10,6 +10,8 @@ public class ConfigUtils {
 	public static final String TMP_PROCESSING = ".aip";
 	private static final String WEBAPP_ROOT = Configuration
 	.getString("ConfigUtils.0"); //$NON-NLS-1$
+	private static final String DATA_ROOT = Configuration
+	.getString("DataRoot"); //$NON-NLS-1$
 
 	public static String getTmpFileName(File file, String postfix) {
 		String name = null;
@@ -24,12 +26,12 @@ public class ConfigUtils {
 		return name;
 	}
 	
-	public static String createFileURL(File file, String basedir) throws IOException {
+	public static String createFileURL(File file) throws IOException {
 		File[] files = new File[1];
 		files[0] = file;
 		String fileurl = WEBAPP_ROOT
 				+ StringUtils.remove(FileUtils.toURLs(files)[0].toString(),
-						basedir);
+						DATA_ROOT);
 		return fileurl;
 	}
 

@@ -14,14 +14,6 @@
         http://www.springframework.org/schema/integration/jmx/spring-integration-jmx.xsd
         ">
 
-	<int-jmx:mbean-export default-domain="packaging"
-		server="mbeanServer" />
-	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
-		<property name="locateExistingServerIfPossible" value="true" />
-	</bean>
-
-	<si:message-history />
-
 	<!-- Necessary to use Annotations such as @Publisher, @ServiceActivator -->
 	<si:annotation-config default-publisher-channel="default" />
 	<si:channel id="default" />

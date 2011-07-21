@@ -521,6 +521,10 @@
 											file="src/main/resources/at/co/ait/utils/config.nhm.properties"
 											tofile="${project.build.outputDirectory}/at/co/ait/utils/config.properties"
 											overwrite="true" />
+										<copy
+											file="src/main/resources/META-INF/spring/appServlet/servlet-context.nhm.xml"
+											tofile="${project.build.outputDirectory}/META-INF/spring/appServlet/servlet-context.xml"
+											overwrite="true" />
 									</tasks>
 								</configuration>
 								<goals>
@@ -547,6 +551,10 @@
 										<copy
 											file="src/main/resources/at/co/ait/utils/config.ait112.properties"
 											tofile="${project.build.outputDirectory}/at/co/ait/utils/config.properties"
+											overwrite="true" />
+										<copy
+											file="src/main/resources/META-INF/spring/appServlet/servlet-context.ait112.xml"
+											tofile="${project.build.outputDirectory}/META-INF/spring/appServlet/servlet-context.xml"
 											overwrite="true" />
 									</tasks>
 								</configuration>

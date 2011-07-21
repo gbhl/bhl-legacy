@@ -29,6 +29,22 @@
 						return false;
 					});
 		});
+		//assuming we have an element on the page with an ID
+		//attribute "foo":
+		YUI().use('node-base', function(Y) {
+			var foo = Y.one("#sipsub");
+			var disableBtn = function() {
+				foo.set('disabled','disabled');
+			};
+			var enableBtn = function(e) {	
+				e.removeAttribute('disabled');
+			};	
+		    var handleClick = function(e, arg1) {
+		        disableBtn();
+				Y.later(2500,this,enableBtn,[foo],false);
+		    };			
+			foo.on("click", handleClick);
+		});
 	</script>
 	<br />
 	<!-- Add a <div> element where the tree should appear: -->
@@ -37,7 +53,6 @@
 		Select folders to be processed: <br>
 		<!-- The name attribute is used by tree.serializeArray()  -->
 		<div id="tree" id="selNodes" name="selNodes"></div>
-		<br> <input type="submit" value="Submit selection for processing" id="sipsub"
-					onclick="this.disabled=true;window.setTimeout('document.getElementById(\'sipsub\').disabled = false;', 2500);">
+		<br> <input type="submit" value="Submit selection for processing" id="sipsub" />
 	</form>
 </div>

@@ -215,7 +215,7 @@ public class MetsMarshallerService {
 
 	private FLocat createLocat(File file, String basedir,
 			au.edu.apsr.mtk.base.File f) throws METSException, IOException {
-		String fileurl = ConfigUtils.createFileURL(file,basedir);
+		String fileurl = ConfigUtils.createFileURL(file);
 		FLocat loc = f.newFLocat();
 		loc.setHref(fileurl);
 		loc.setLocType("URL"); //$NON-NLS-1$		
@@ -241,7 +241,7 @@ public class MetsMarshallerService {
 		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),
 				".mets.xml"); //$NON-NLS-1$
 		File metsfile = new File(tmpfile);
-		obj.setMetsfileurl(ConfigUtils.createFileURL(metsfile, prefs.getBasedirectory()));
+		obj.setMetsfileurl(ConfigUtils.createFileURL(metsfile));
 		Document doc = obj.getMets().getMETSDocument();
 		OutputFormat format = new OutputFormat(doc);
 		format.setLineWidth(65);
