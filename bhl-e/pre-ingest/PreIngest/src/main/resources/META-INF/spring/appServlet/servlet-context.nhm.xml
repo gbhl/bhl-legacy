@@ -23,7 +23,7 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<!-- FIXXME: DataRoot in config.properties must contain the resources location -->
 	<annotation-driven />
-	<resources mapping="/resources/**" location="resources/, file:/C:/ProjectData/BHL-Europe/UnitTestResources/" />
+	<resources mapping="/resources/**" location="resources/, file:/mnt/nfs-demeter/upload/providers/" />
 
 
 	<beans:bean id="loggenericobject" class="at.co.ait.domain.oais.LogGenericObject" />
