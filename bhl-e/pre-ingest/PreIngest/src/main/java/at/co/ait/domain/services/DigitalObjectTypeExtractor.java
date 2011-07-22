@@ -31,7 +31,7 @@ public class DigitalObjectTypeExtractor {
 	/**
 	 * Detect MIME type of file.
 	 */
-	public String detectedMimeType(File fileObj) {
+	public static String detectedMimeType(File fileObj) {
 		String mimeType = null;
 		try {
 			mimeType = tika.detect(fileObj);

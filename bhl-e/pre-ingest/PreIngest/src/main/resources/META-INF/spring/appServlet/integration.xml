@@ -127,7 +127,7 @@
 	</si:service-activator>
 
 	<!-- Creation of InformationPackage -->
-	<bean id="mets_marshaller" class="at.co.ait.domain.services.MetsMarshallerService" />
+	<bean id="mets_marshaller" class="at.co.ait.domain.services.FedoraMetsMarshallerService" />
 	<si:service-activator input-channel="packaging_service"
 		output-channel="create_aip" expression="@mets_marshaller.marshal(payload,headers.PREFERENCES)" />
 
