@@ -14,7 +14,7 @@
 		<intercept-url pattern="/resources/**" filters="none" />
 		<intercept-url pattern="/archivingqueue/**" filters="none" />
 		<session-management>
-			<concurrency-control max-sessions="1"
+			<concurrency-control max-sessions="5"
 				error-if-maximum-exceeded="true" />
 		</session-management>
 	</http>

@@ -16,6 +16,8 @@ import org.jdom.output.DOMOutputter;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import at.co.ait.domain.oais.DigitalObject;
@@ -51,18 +53,15 @@ public class FedoraMetsMarshallerService {
 		METSWrapper mw = null;
 		mw = new METSWrapper();
 
-		mets = mw.getMETSObject();		
-		mets.setObjID(String.valueOf(StringUtils.replace(obj.getIdentifier(), "/", ":")));
+		mets = mw.getMETSObject();
+		mets.setObjID(String.valueOf(StringUtils.replace(obj.getIdentifier(),
+				"/", ":")));
 		mets.setProfile("http://www.bhl-europe.eu/profiles/bhle-mets-profile-1.0"); //$NON-NLS-1$
 		mets.setType("FedoraObject"); //$NON-NLS-1$		
-		mets.setLabel("Collection: " + prefs.getOrganization() + ", " + "ID: " + obj.getIdentifier());
+		mets.setLabel("Collection: " + prefs.getOrganization() + ", " + "ID: "
+				+ obj.getIdentifier());
 
 		MetsHdr mh = mets.newMetsHdr();
-
-//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"); //$NON-NLS-1$
-//		df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"); //$NON-NLS-1$
-//		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1")); //$NON-NLS-1$
-//		String currentTime = df.format(cal.getTime());
 
 		mh.setRecordStatus("A"); //$NON-NLS-1$		
 
@@ -84,6 +83,7 @@ public class FedoraMetsMarshallerService {
 		// unique sequence number for each dmd section
 		int unique_id = 0;
 		DmdSec dmd = null;
+
 		// create dmd entry for each METADATA file
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getObjecttype().equals(DigitalObjectType.METADATA)) {
@@ -98,8 +98,7 @@ public class FedoraMetsMarshallerService {
 		FileGrp datastream = fs.newFileGrp();
 		String id = "DATASTREAMS";
 		datastream.setID(id);
-		
-		
+
 		// unique sequence number for each file
 		unique_id = 0;
 		// create filegroup for each digitalobjecttype such as METADATA, IMAGE
@@ -112,12 +111,12 @@ public class FedoraMetsMarshallerService {
 					au.edu.apsr.mtk.base.File f = fg.newFile();
 					f.setID(value.name() + "." + (unique_id++)); //$NON-NLS-1$
 					f.setSize(FileUtils.sizeOf(digobj.getSubmittedFile()));
-					f.setMIMEType(digobj.getMimetype());				
+					f.setMIMEType(digobj.getMimetype());
 					f.setChecksum(digobj.getDigestValueinHex());
 					f.setChecksumType("SHA-1"); //$NON-NLS-1$
 					f.setOwnerID("M");
 					FLocat loc = createLocat(digobj.getSubmittedFile(),
-							prefs.getBasedirectory(), f);					
+							prefs.getBasedirectory(), f);
 					f.addFLocat(loc);
 					fg.addFile(f);
 				}
@@ -136,10 +135,11 @@ public class FedoraMetsMarshallerService {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
 				f.setID("TAXA." + (unique_id++)); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTaxa()));
-				f.setMIMEType(DigitalObjectTypeExtractor.detectedMimeType(digobj.getTaxa()));
+				f.setMIMEType(DigitalObjectTypeExtractor
+						.detectedMimeType(digobj.getTaxa()));
 				f.setOwnerID("M");
 				FLocat loc = createLocat(digobj.getTaxa(),
-						prefs.getBasedirectory(), f);	
+						prefs.getBasedirectory(), f);
 				f.addFLocat(loc);
 				fg.addFile(f);
 			}
@@ -157,10 +157,11 @@ public class FedoraMetsMarshallerService {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
 				f.setID("OCR." + (unique_id++)); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getOcr()));
-				f.setMIMEType(DigitalObjectTypeExtractor.detectedMimeType(digobj.getOcr()));
+				f.setMIMEType(DigitalObjectTypeExtractor
+						.detectedMimeType(digobj.getOcr()));
 				f.setOwnerID("M");
 				FLocat loc = createLocat(digobj.getOcr(),
-						prefs.getBasedirectory(), f);	
+						prefs.getBasedirectory(), f);
 				f.addFLocat(loc);
 				fg.addFile(f);
 			}
@@ -168,7 +169,7 @@ public class FedoraMetsMarshallerService {
 			if (fg.getFiles().size() > 0)
 				datastream.addFileGrp(fg);
 		}
-		
+
 		unique_id = 0;
 		// add jhove files to filesection
 		fg = fs.newFileGrp();
@@ -179,9 +180,10 @@ public class FedoraMetsMarshallerService {
 				f.setID("JHOVE." + (unique_id++)); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTechMetadata()));
 				f.setOwnerID("M");
-				f.setMIMEType(DigitalObjectTypeExtractor.detectedMimeType(digobj.getTechMetadata()));
+				f.setMIMEType(DigitalObjectTypeExtractor
+						.detectedMimeType(digobj.getTechMetadata()));
 				FLocat loc = createLocat(digobj.getTechMetadata(),
-						prefs.getBasedirectory(), f);	
+						prefs.getBasedirectory(), f);
 				f.addFLocat(loc);
 				fg.addFile(f);
 			}
@@ -189,7 +191,7 @@ public class FedoraMetsMarshallerService {
 			if (fg.getFiles().size() > 0)
 				datastream.addFileGrp(fg);
 		}
-		
+
 		unique_id = 0;
 		// add rdf nfo file to filesection
 		fg = fs.newFileGrp();
@@ -198,9 +200,10 @@ public class FedoraMetsMarshallerService {
 		f.setID("NFO." + (unique_id++)); //$NON-NLS-1$
 		f.setSize(FileUtils.sizeOf(obj.getNepomukFileOntology()));
 		f.setOwnerID("M");
-		f.setMIMEType(DigitalObjectTypeExtractor.detectedMimeType(obj.getNepomukFileOntology()));
+		f.setMIMEType(DigitalObjectTypeExtractor.detectedMimeType(obj
+				.getNepomukFileOntology()));
 		FLocat loc = createLocat(obj.getNepomukFileOntology(),
-				prefs.getBasedirectory(), f);	
+				prefs.getBasedirectory(), f);
 		f.addFLocat(loc);
 		fg.addFile(f);
 		datastream.addFileGrp(fg);
@@ -266,8 +269,34 @@ public class FedoraMetsMarshallerService {
 		File metsfile = new File(tmpfile);
 		obj.setMetsfileurl(ConfigUtils.createFileURL(metsfile));
 		Document doc = obj.getMets().getMETSDocument();
-		Element element = (Element)doc.getElementsByTagName("mets").item(0);
+
+		Element element = (Element) doc.getElementsByTagName("mets").item(0);
 		element.setAttribute("EXT_VERSION", "1.1");
+		element.setAttribute("xmlns", "http://www.loc.gov/METS/");
+		element.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+		element.setAttribute("xmlns:xsi",
+				"http://www.w3.org/2001/XMLSchema-instance");
+		element.setAttribute(
+				"xmlns:schemaLocation",
+				"http://www.loc.gov/METS/ http://www.fedora.info/definitions/1/0/mets-fedora-ext1-1.xsd");
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"); //$NON-NLS-1$
+		df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"); //$NON-NLS-1$
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1")); //$NON-NLS-1$
+		String currentTime = df.format(cal.getTime());
+
+		NodeList nodeList = doc.getElementsByTagName("dmdSec");
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node node = nodeList.item(i);
+			Node content = node.getChildNodes().item(0).cloneNode(true);
+			Element add = doc.createElement("descMD");
+			add.setAttribute("ID", String.valueOf(i));
+			add.setAttribute("OWNERID", "M");
+			add.setAttribute("CREATED", currentTime);
+			node.replaceChild(add, node.getChildNodes().item(0));
+			add.appendChild(content);
+		}
+
 		OutputFormat format = new OutputFormat(doc);
 		format.setLineWidth(65);
 		format.setIndenting(true);
