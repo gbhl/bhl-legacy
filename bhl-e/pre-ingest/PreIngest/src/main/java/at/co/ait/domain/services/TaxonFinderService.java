@@ -35,7 +35,7 @@ public class TaxonFinderService {
 		String taxa = null;
 		String text = FileUtils.readFileToString(obj.getOcr());
 		taxa = taxonfinderGateway.requestTaxa(URLEncoder.encode(text, "UTF-8"))
-				.get(2, TimeUnit.SECONDS);		
+				.get(10, TimeUnit.SECONDS);		
 		Object o = XPathFactory
 				.newInstance()
 				.newXPath()

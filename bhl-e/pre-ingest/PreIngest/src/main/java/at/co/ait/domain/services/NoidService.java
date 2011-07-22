@@ -22,7 +22,7 @@ public class NoidService {
 			throws InterruptedException, ExecutionException, TimeoutException {
 		// request new NOID mint from PlNoidStomp
 		String identifier = null;
-		identifier = noidGateway.requestNoid("mint").get(2, TimeUnit.SECONDS);
+		identifier = noidGateway.requestNoid("mint").get(10, TimeUnit.SECONDS);
 		pkg.setIdentifier(identifier);
 		return pkg;
 	}
