@@ -66,18 +66,12 @@ public class FedoraMetsMarshallerService {
 		mh.setRecordStatus("A"); //$NON-NLS-1$		
 
 		Agent agent = mh.newAgent();
-		agent.setRole("ARCHIVIST"); //$NON-NLS-1$
+		agent.setRole("IPOWNER"); //$NON-NLS-1$
 		agent.setType("ORGANIZATION"); //$NON-NLS-1$
 		agent.setName(prefs.getOrganization());
 		agent.setNote("BHL-Europe Content Provider"); //$NON-NLS-1$
 		mh.addAgent(agent);
-
-		agent = mh.newAgent();
-		agent.setRole("ARCHIVIST"); //$NON-NLS-1$
-		agent.setType("OTHER"); //$NON-NLS-1$
-		agent.setName("BHL-Europe Pre-Ingest Tool"); //$NON-NLS-1$
-		agent.setNote("Automatic processing of submitted content"); //$NON-NLS-1$
-		mh.addAgent(agent);
+		
 		mets.setMetsHdr(mh);
 
 		// unique sequence number for each dmd section
@@ -88,7 +82,7 @@ public class FedoraMetsMarshallerService {
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getObjecttype().equals(DigitalObjectType.METADATA)) {
 				unique_id++;
-				dmd = newDmdEntry(unique_id, "MODS", "derivative", //$NON-NLS-1$ //$NON-NLS-2$
+				dmd = newDmdEntry(unique_id, "OTHER", "derivative", //$NON-NLS-1$ //$NON-NLS-2$
 						digobj.getSmtoutput());
 				mets.addDmdSec(dmd);
 			}
@@ -103,13 +97,12 @@ public class FedoraMetsMarshallerService {
 		unique_id = 0;
 		// create filegroup for each digitalobjecttype such as METADATA, IMAGE
 		for (DigitalObjectType value : DigitalObjectType.values()) {
-			FileGrp fg = fs.newFileGrp();
-			fg.setID(value.name());
-
 			for (DigitalObject digobj : obj.getDigitalobjects()) {
 				if (digobj.getObjecttype().equals(value)) {
+					FileGrp fg = fs.newFileGrp();
+					fg.setID(value.name() + "." + (++unique_id));
 					au.edu.apsr.mtk.base.File f = fg.newFile();
-					f.setID(value.name() + "." + (unique_id++)); //$NON-NLS-1$
+					f.setID(value.name() + "." + unique_id + ".FILE"); //$NON-NLS-1$
 					f.setSize(FileUtils.sizeOf(digobj.getSubmittedFile()));
 					f.setMIMEType(digobj.getMimetype());
 					f.setChecksum(digobj.getDigestValueinHex());
@@ -119,21 +112,20 @@ public class FedoraMetsMarshallerService {
 							prefs.getBasedirectory(), f);
 					f.addFLocat(loc);
 					fg.addFile(f);
+					datastream.addFileGrp(fg);
 				}
-			}
-			// if filegroup contains any files, add to filesection
-			if (fg.getFiles().size() > 0)
-				datastream.addFileGrp(fg);
+			}			
 		}
 
 		unique_id = 0;
 		// add taxa files to filesection
-		FileGrp fg = fs.newFileGrp();
-		fg.setID("TAXA"); //$NON-NLS-1$
+
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getTaxa() != null) {
+				FileGrp fg = fs.newFileGrp();
+				fg.setID("TAXA." + (++unique_id)); //$NON-NLS-1$
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("TAXA." + (unique_id++)); //$NON-NLS-1$
+				f.setID("TAXA." + unique_id + ".FILE"); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTaxa()));
 				f.setMIMEType(DigitalObjectTypeExtractor
 						.detectedMimeType(digobj.getTaxa()));
@@ -142,20 +134,18 @@ public class FedoraMetsMarshallerService {
 						prefs.getBasedirectory(), f);
 				f.addFLocat(loc);
 				fg.addFile(f);
-			}
-			// if filegroup contains any files, add to filesection
-			if (fg.getFiles().size() > 0)
 				datastream.addFileGrp(fg);
+			}
 		}
 
 		unique_id = 0;
 		// add ocr files to filesection
-		fg = fs.newFileGrp();
-		fg.setID("OCR"); //$NON-NLS-1$
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getOcr() != null) {
+				FileGrp fg = fs.newFileGrp();
+				fg.setID("OCR." + (++unique_id)); //$NON-NLS-1$
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("OCR." + (unique_id++)); //$NON-NLS-1$
+				f.setID("OCR." + unique_id + ".FILE"); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getOcr()));
 				f.setMIMEType(DigitalObjectTypeExtractor
 						.detectedMimeType(digobj.getOcr()));
@@ -164,20 +154,18 @@ public class FedoraMetsMarshallerService {
 						prefs.getBasedirectory(), f);
 				f.addFLocat(loc);
 				fg.addFile(f);
-			}
-			// if filegroup contains any files, add to filesection
-			if (fg.getFiles().size() > 0)
 				datastream.addFileGrp(fg);
+			}				
 		}
 
 		unique_id = 0;
 		// add jhove files to filesection
-		fg = fs.newFileGrp();
-		fg.setID("JHOVE"); //$NON-NLS-1$
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getTechMetadata() != null) {
+				FileGrp fg = fs.newFileGrp();
+				fg.setID("JHOVE." + (++unique_id)); //$NON-NLS-1$
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("JHOVE." + (unique_id++)); //$NON-NLS-1$
+				f.setID("JHOVE." + unique_id + ".FILE"); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTechMetadata()));
 				f.setOwnerID("M");
 				f.setMIMEType(DigitalObjectTypeExtractor
@@ -186,18 +174,16 @@ public class FedoraMetsMarshallerService {
 						prefs.getBasedirectory(), f);
 				f.addFLocat(loc);
 				fg.addFile(f);
-			}
-			// if filegroup contains any files, add to filesection
-			if (fg.getFiles().size() > 0)
 				datastream.addFileGrp(fg);
+			}
 		}
 
 		unique_id = 0;
 		// add rdf nfo file to filesection
-		fg = fs.newFileGrp();
+		FileGrp fg = fs.newFileGrp();
 		fg.setID("NFO"); //$NON-NLS-1$
 		au.edu.apsr.mtk.base.File f = fg.newFile();
-		f.setID("NFO." + (unique_id++)); //$NON-NLS-1$
+		f.setID("NFO." + (++unique_id) + ".FILE"); //$NON-NLS-1$
 		f.setSize(FileUtils.sizeOf(obj.getNepomukFileOntology()));
 		f.setOwnerID("M");
 		f.setMIMEType(DigitalObjectTypeExtractor.detectedMimeType(obj
@@ -287,7 +273,7 @@ public class FedoraMetsMarshallerService {
 
 		NodeList nodeList = doc.getElementsByTagName("dmdSec");
 		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node node = nodeList.item(i);
+			Node node = nodeList.item(i);			
 			Node content = node.getChildNodes().item(0).cloneNode(true);
 			Element add = doc.createElement("descMD");
 			add.setAttribute("ID", String.valueOf(i));
@@ -295,7 +281,8 @@ public class FedoraMetsMarshallerService {
 			add.setAttribute("CREATED", currentTime);
 			node.replaceChild(add, node.getChildNodes().item(0));
 			add.appendChild(content);
-		}
+			doc.renameNode(node, "", "dmdSecFedora");
+		}		
 
 		OutputFormat format = new OutputFormat(doc);
 		format.setLineWidth(65);

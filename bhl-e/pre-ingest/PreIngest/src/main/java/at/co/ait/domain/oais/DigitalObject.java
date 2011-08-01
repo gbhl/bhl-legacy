@@ -4,12 +4,10 @@ import java.io.File;
 import java.util.Observer;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class DigitalObject extends GenericObject {
-	
-	public DigitalObject(LogGenericObject loggenericobject) {		
-		addObserver((Observer)loggenericobject);
+
+	public DigitalObject(LogGenericObject loggenericobject) {
+		addObserver((Observer) loggenericobject);
 	}
 
 	/**
@@ -32,7 +30,6 @@ public class DigitalObject extends GenericObject {
 	 * library.
 	 */
 	private File techMetadata;
-
 
 	public File getTechMetadata() {
 		return techMetadata;
@@ -73,6 +70,7 @@ public class DigitalObject extends GenericObject {
 	public File getSmtoutput() {
 		return smtoutput;
 	}
+
 	public void setSmtoutput(File smtoutput) {
 		this.smtoutput = smtoutput;
 		setChanged();
@@ -121,7 +119,7 @@ public class DigitalObject extends GenericObject {
 	public void setSmtServiceLog(String smtServiceLog) {
 		this.smtServiceLog = smtServiceLog;
 	}
-	
+
 	/**
 	 * OCR'ed text - can be dirty.
 	 */
@@ -132,8 +130,11 @@ public class DigitalObject extends GenericObject {
 	}
 
 	public void setOcr(File ocr) {
-		this.ocr = ocr;
-		setChanged();
+		// check if file exists because tesseract sometimes crashes
+		if (ocr.exists()) {
+			this.ocr = ocr;
+			setChanged();
+		}
 		notifyObservers("TESSERACT_OCR: " + ocr.getName());
 	}
 
@@ -151,12 +152,11 @@ public class DigitalObject extends GenericObject {
 		setChanged();
 		notifyObservers("TAXON_FINDER: " + taxa.getName());
 	}
-	
+
 	/**
 	 * Mimetype of current submittedFile
 	 */
 	private String mimetype;
-	
 
 	public String getMimetype() {
 		return mimetype;

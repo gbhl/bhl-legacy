@@ -32,29 +32,31 @@ public class TaxonFinderService {
 			ExecutionException, TimeoutException, IOException,
 			ParserConfigurationException, SAXException,
 			XPathExpressionException {
-		String taxa = null;
-		String text = FileUtils.readFileToString(obj.getOcr());
-		taxa = taxonfinderGateway.requestTaxa(URLEncoder.encode(text, "UTF-8"))
-				.get(10, TimeUnit.SECONDS);		
-		Object o = XPathFactory
-				.newInstance()
-				.newXPath()
-				.evaluate("/child::*/child::*",
-						new InputSource(new StringReader(taxa)),
-						XPathConstants.NODESET);
-		NodeList nodes = (NodeList) o;
-		System.out.println(nodes.getLength() + " "
-				+ nodes.item(nodes.getLength() - 1));
-		
-		// if ANY names are in the taxon finder's reply
-		if (nodes.getLength()>0) {			
-			String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),
-			".taxa.txt");			
-			File output = new File(tmpfile);
-			if (!output.exists()) {
-				FileUtils.writeStringToFile(output, taxa, "UTF-8");
+		if (obj.getOcr() != null) {
+			String taxa = null;
+			String text = FileUtils.readFileToString(obj.getOcr());
+			taxa = taxonfinderGateway.requestTaxa(URLEncoder.encode(text, "UTF-8"))
+					.get(10, TimeUnit.SECONDS);		
+			Object o = XPathFactory
+					.newInstance()
+					.newXPath()
+					.evaluate("/child::*/child::*",
+							new InputSource(new StringReader(taxa)),
+							XPathConstants.NODESET);
+			NodeList nodes = (NodeList) o;
+			System.out.println(nodes.getLength() + " "
+					+ nodes.item(nodes.getLength() - 1));
+			
+			// if ANY names are in the taxon finder's reply
+			if (nodes.getLength()>0) {			
+				String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),
+				".taxa.txt");			
+				File output = new File(tmpfile);
+				if (!output.exists()) {
+					FileUtils.writeStringToFile(output, taxa, "UTF-8");
+				}
+				obj.setTaxa(output);
 			}
-			obj.setTaxa(output);
 		}
 		return obj;
 	}
