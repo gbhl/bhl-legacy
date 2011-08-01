@@ -22,14 +22,15 @@ public class PreparePackageService {
 	public List<DigitalObject> prepare(File folderFileObj, UserPreferences prefs) throws IOException {
 		List<DigitalObject> objlist = new ArrayList<DigitalObject>();
 		Integer order = 0;
-		for (File fileObj : folderFileObj.listFiles()) {
+		for (File fileObj : folderFileObj.listFiles()) {			
 			DigitalObject obj = new DigitalObject(loggenericobject);
-			objlist.add(obj);
+			// warn: prefs needs to be the first setter
+			obj.setPrefs(prefs);			
 			obj.setFolder(folderFileObj);
 			obj.setOrder(order++);
-			obj.setSubmittedFile(fileObj);
-			obj.setPrefs(prefs);
+			obj.setSubmittedFile(fileObj);			
 			obj.setFileurl(ConfigUtils.createFileURL(fileObj));
+			objlist.add(obj);
 		}	
 		return objlist;
 	}

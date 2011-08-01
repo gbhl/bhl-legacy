@@ -54,21 +54,20 @@ public class TechMetadataExtractionService {
     private static final String Rights = "Copyright 2004-2006 by the President " +
     "and Fellows of Harvard College. Released under the GNU Lesser General " +
     "Public License.";
-
+   
     private static final String[] Modules = {
-            "edu.harvard.hul.ois.jhove.module.AiffModule",
-            "edu.harvard.hul.ois.jhove.module.WaveModule",
-            "edu.harvard.hul.ois.jhove.module.PdfModule",
-            "edu.harvard.hul.ois.jhove.module.Jpeg2000Module",
-            "edu.harvard.hul.ois.jhove.module.JpegModule",
-            "edu.harvard.hul.ois.jhove.module.GifModule",
-            "edu.harvard.hul.ois.jhove.module.TiffModule",
-            "edu.harvard.hul.ois.jhove.module.XmlModule",
-            "edu.harvard.hul.ois.jhove.module.HtmlModule",
-            "edu.harvard.hul.ois.jhove.module.AsciiModule",
-    "edu.harvard.hul.ois.jhove.module.Utf8Module"};
-
+        "edu.harvard.hul.ois.jhove.module.PdfModule",
+        "edu.harvard.hul.ois.jhove.module.Jpeg2000Module",
+        "edu.harvard.hul.ois.jhove.module.JpegModule",
+        "edu.harvard.hul.ois.jhove.module.TiffModule",
+        "edu.harvard.hul.ois.jhove.module.XmlModule",
+        "edu.harvard.hul.ois.jhove.module.AsciiModule",
+    	"edu.harvard.hul.ois.jhove.module.Utf8Module"};
+    
     // Removed:  "edu.harvard.hul.ois.jhove.module.BytestreamModule"
+    // FIXXME:  Removed: "edu.harvard.hul.ois.jhove.module.HtmlModule" because of blocking issue with 
+    //			lestrematodes00vercRMCA_0002.tif
+    // TODO: switch to JHOVE2??
 
     private static final String EXCEPTION_JAVA_VERSION = "Java 1.4.x is required for the JHOVE API.";
 
@@ -84,7 +83,7 @@ public class TechMetadataExtractionService {
             m_module_list = new LinkedList();
 
             // Set the log level for the JHOVE package.
-            java.util.logging.Logger.getLogger("edu.harvard.hul.ois.jhove").setLevel(java.util.logging.Level.SEVERE);
+            java.util.logging.Logger.getLogger("edu.harvard.hul.ois.jhove").setLevel(java.util.logging.Level.INFO);
 
             // Set up a placeholder JhoveBase instance.
             App m_application = new App(ApplicationName, Release, ApplicationDate, Usage, Rights);
@@ -93,10 +92,10 @@ public class TechMetadataExtractionService {
                     // Create base JHOVE object, We won't actually use this class but a
                     // quirk of the architecture requires that it be passed to the Modules.
                     m_jhove = new JhoveBase();
-                    m_jhove.setLogLevel("SEVERE");
+                    m_jhove.setLogLevel("INFO");
                     m_jhove.setChecksumFlag(false);
                     m_jhove.setShowRawFlag(false);
-                    m_jhove.setSignatureFlag(false);
+                    m_jhove.setSignatureFlag(false);                    
             }
             catch(JhoveException e)
             {
@@ -137,10 +136,10 @@ public class TechMetadataExtractionService {
      * Get a JHOVE Document from a {@link File}
      * @param file  a resource {@link File}
      * @return a JDOM Document
-     * @throws IOException
+     * @throws Exception 
      * @throws JDOMException
      */
-    public String getDocument(File file) throws IOException
+    public String getDocument(File file) throws Exception
     {
             // Create the RepInfo instance.
             RepInfo representation = new RepInfo(file.toString());
@@ -167,13 +166,16 @@ public class TechMetadataExtractionService {
      * Enriches the digtal object by adding technical metadata
      * @param obj DigitalObject is getting enriched by technical metadata.
      * @return
+     * @throws Exception 
      */
-    public DigitalObject enrich(DigitalObject obj) {
+    public DigitalObject enrich(DigitalObject obj) throws Exception {
     	try {
+    		logger.debug("JHOVE starting on " + obj.getSubmittedFile().getName());
 			String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".jhove.xml");
 			File output = new File(tmpfile);
 			if (!output.exists()) {
 				FileUtils.writeStringToFile(output, this.getDocument(obj.getSubmittedFile()), "UTF-8");
+				logger.debug("JHOVE successful on " + obj.getSubmittedFile().getName());
 			}
 			obj.setTechMetadata(output);
 		} catch (IOException e) {
@@ -187,9 +189,9 @@ public class TechMetadataExtractionService {
      * Populate the representation information for JHOVE Document from a specific File.
      * @param representation a RepInfo
      * @param file  a File containing the representation information
-     * @throws IOException
+     * @throws Exception 
      */
-    private void populateRepresentation(RepInfo representation, File file) throws IOException
+    private void populateRepresentation(RepInfo representation, File file) throws Exception
     {
             // Iterate through the modules and process.
             Iterator iterator = m_module_list.iterator();
@@ -197,7 +199,7 @@ public class TechMetadataExtractionService {
             {
                     Module module = (Module)iterator.next();
                     module.setBase(m_jhove);
-                    module.setVerbosity(Module.MINIMUM_VERBOSITY);
+                    module.setVerbosity(Module.MAXIMUM_VERBOSITY);
 
                     // m_logger.info(module.toString());
                     RepInfo persistent = (RepInfo)representation.clone();

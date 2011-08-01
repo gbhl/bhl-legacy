@@ -75,7 +75,9 @@ public class GenericObject extends Observable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}		
+		}
+		setChanged();
+		notifyObservers("SUBMITTED: " + getSubmittedFile().getName());
 	}
 
 	/**
@@ -99,7 +101,7 @@ public class GenericObject extends Observable {
 			NoSuchAlgorithmException {
 
 		byte[] digest = Files.getDigest(fileObj,
-				MessageDigest.getInstance("SHA"));
+				MessageDigest.getInstance("SHA-1"));
 
 		return (new String(Hex.encodeHex(digest)));
 

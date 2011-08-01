@@ -25,8 +25,7 @@ public class OCRService extends ProcessbuilderService {
 	private UserPreferences prefs;
 
 	public DigitalObject scan(DigitalObject obj, String lang) throws MalformedURLException,
-			IOException, InterruptedException {
-		
+			IOException, InterruptedException {		
 		// empty postfix since tesseract uses .txt extension
 		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),Configuration.getString("OCRService.postfix")); //$NON-NLS-1$
 		String srcfile = obj.getSubmittedFile().getAbsolutePath();		
@@ -42,7 +41,10 @@ public class OCRService extends ProcessbuilderService {
 		File out = new File(tmpfile + Configuration.getString("OCRService.postfixFromTesseract")); //$NON-NLS-1$
 		// only process if file doesn't exist
 		if (!out.exists()) {
+			logger.debug("TESSERACT starting on " + obj.getSubmittedFile().getName());
 			process(commands);
+			logger.debug("TESSERACT: " + out.getName() + "STDOUT: " + stdout.toString());
+			logger.debug("TESSERACT: " + out.getName() + "STDERR: " + stderr.toString());
 		}
 		
 		obj.setOcr(out);

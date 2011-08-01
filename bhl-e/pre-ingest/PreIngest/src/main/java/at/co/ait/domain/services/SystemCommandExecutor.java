@@ -69,7 +69,6 @@ public class SystemCommandExecutor
   public SystemCommandExecutor(final List<String> commandInformation)
   {
     if (commandInformation==null) throw new NullPointerException("The commandInformation is required.");
-    logger.debug(String.valueOf(commandInformation.size()));
     this.commandInformation = commandInformation;
     this.adminPassword = null;
   }

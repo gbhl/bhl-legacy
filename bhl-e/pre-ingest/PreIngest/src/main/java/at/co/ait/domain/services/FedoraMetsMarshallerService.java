@@ -114,7 +114,7 @@ public class FedoraMetsMarshallerService {
 					fg.addFile(f);
 					datastream.addFileGrp(fg);
 				}
-			}			
+			}
 		}
 
 		unique_id = 0;
@@ -276,13 +276,16 @@ public class FedoraMetsMarshallerService {
 			Node node = nodeList.item(i);			
 			Node content = node.getChildNodes().item(0).cloneNode(true);
 			Element add = doc.createElement("descMD");
-			add.setAttribute("ID", String.valueOf(i));
-			add.setAttribute("OWNERID", "M");
-			add.setAttribute("CREATED", currentTime);
+			add.setAttribute("ID", "DESC." + String.valueOf(i));
 			node.replaceChild(add, node.getChildNodes().item(0));
 			add.appendChild(content);
 			doc.renameNode(node, "", "dmdSecFedora");
-		}		
+		}
+		
+		String remElement = "structMap";		
+		element = (Element)doc.getElementsByTagName(remElement).item(0);
+		element.getParentNode().removeChild(element);
+		doc.normalize();
 
 		OutputFormat format = new OutputFormat(doc);
 		format.setLineWidth(65);

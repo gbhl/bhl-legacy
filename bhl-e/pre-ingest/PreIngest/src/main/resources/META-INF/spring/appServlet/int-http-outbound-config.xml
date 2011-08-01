@@ -23,7 +23,7 @@
 	<int:channel id="taxon_finder_request" />
 
 	<int-http:outbound-gateway request-channel="taxon_finder_request" url="http://localhost:4567/find?input={input}"
-		http-method="GET" request-timeout="5000" expected-response-type="java.lang.String">
+		http-method="GET" request-timeout="10000" expected-response-type="java.lang.String">
 		<int-http:uri-variable name="input" expression="payload"/>
 	</int-http:outbound-gateway>
 

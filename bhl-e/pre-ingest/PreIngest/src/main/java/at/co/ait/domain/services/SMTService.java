@@ -47,6 +47,8 @@ public class SMTService extends ProcessbuilderService {
 		if (!out.exists()) {
 			process(commands);
 			obj.setSmtServiceLog(stdout.toString());
+			logger.debug("SMT: " + out.getName() + "STDOUT: " + stdout.toString());
+			logger.debug("SMT: " + out.getName() + "STDERR: " + stderr.toString());
 		}
 		obj.setSmtoutput(out);		
 		return obj;
