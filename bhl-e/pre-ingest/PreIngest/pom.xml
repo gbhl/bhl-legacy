@@ -567,5 +567,36 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>ait020</id>
+			<build>
+				<finalName>${project.artifactId}</finalName>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>process-resources</phase>
+								<configuration>
+									<tasks>
+										<copy
+											file="src/main/resources/at/co/ait/utils/config.ait020.properties"
+											tofile="${project.build.outputDirectory}/at/co/ait/utils/config.properties"
+											overwrite="true" />
+										<copy
+											file="src/main/resources/META-INF/spring/appServlet/servlet-context.ait020.xml"
+											tofile="${project.build.outputDirectory}/META-INF/spring/appServlet/servlet-context.xml"
+											overwrite="true" />
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 </project>
