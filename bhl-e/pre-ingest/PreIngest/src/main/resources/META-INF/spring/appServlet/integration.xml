@@ -13,6 +13,16 @@
         http://www.springframework.org/schema/integration/jmx 
         http://www.springframework.org/schema/integration/jmx/spring-integration-jmx.xsd
         ">
+        
+    <!-- Logging & co  -->
+	<si:logging-channel-adapter id="si_logger"
+		level="INFO" expression="headers" />
+
+	<si:poller id="poller" default="true" fixed-rate="30"
+		receive-timeout="30000" />
+	<!-- - - - - -  -->
+
+
 
 	<!-- Necessary to use Annotations such as @Publisher, @ServiceActivator -->
 	<si:annotation-config default-publisher-channel="default" />
@@ -21,11 +31,6 @@
 	<si:gateway id="loading"
 		service-interface="at.co.ait.domain.integration.ILoadingGateway"
 		default-request-channel="loading_ramp" />
-
-	<!-- Extract technical metadata from DigitalObject -->
-	<bean id="packagequeue" class="at.co.ait.domain.integration.ProcessingQueue" />
-	<si:service-activator input-channel="processing_queue" output-channel="nullChannel"
-		expression="@packagequeue.handle(payload, headers.PREFERENCES.username)" />
 
 	<si:channel id="loading_ramp">
 		<si:queue />
@@ -39,7 +44,7 @@
 	<si:chain input-channel="loading_ramp" output-channel="techmetadata">
 		<si:service-activator
 			expression="@loading_file.prepare(payload,headers.PREFERENCES)" />
-		<si:splitter method="split">
+		<si:splitter method="filter">
 			<bean class="at.co.ait.domain.integration.DigitalObjectSplitter" />
 		</si:splitter>
 	</si:chain>
@@ -47,12 +52,6 @@
 	<si:channel id="techmetadata">
 		<si:queue />
 	</si:channel>
-
-	<si:logging-channel-adapter id="si_logger"
-		level="INFO" expression="headers" />
-
-	<si:poller id="poller" default="true" fixed-rate="30"
-		receive-timeout="30000" />
 
 	<!-- Extract technical metadata from DigitalObject -->
 	<bean id="jhove" class="at.co.ait.domain.services.TechMetadataExtractionService" />
@@ -136,6 +135,11 @@
 	<bean id="archivingqueue" class="at.co.ait.domain.integration.ArchivingQueue" />
 	<si:service-activator input-channel="create_aip" output-channel="processing_queue"
 		expression="@wrapup_service.wrapup(payload)" />
+
+	<!-- Extract technical metadata from DigitalObject -->
+	<bean id="packagequeue" class="at.co.ait.domain.integration.ProcessingQueue" />
+	<si:service-activator input-channel="processing_queue" output-channel="nullChannel"
+		expression="@packagequeue.handle(payload, headers.PREFERENCES.username)" />
 
 
 

@@ -3,6 +3,8 @@ package at.co.ait.domain.services;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,9 @@ public class PreparePackageService {
 	public List<DigitalObject> prepare(File folderFileObj, UserPreferences prefs) throws IOException {
 		List<DigitalObject> objlist = new ArrayList<DigitalObject>();
 		Integer order = 0;
-		for (File fileObj : folderFileObj.listFiles()) {			
+		List<File> files = Arrays.asList(folderFileObj.listFiles());
+		Collections.sort(files);
+		for (File fileObj : files) {			
 			DigitalObject obj = new DigitalObject(loggenericobject);
 			// warn: prefs needs to be the first setter
 			obj.setPrefs(prefs);			

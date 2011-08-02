@@ -13,7 +13,10 @@ public class DigitalObject extends GenericObject {
 	/**
 	 * Identifier used by content producers to identify the uploaded information
 	 * package. Doesn't identify the file.
+	 * 
 	 */
+	//TODO externalIdentifier currently unused 
+	// folder name of submission (identifier@submitters site)
 	private String externalIdentifier;
 
 	public String getExternalIdentifier() {
@@ -63,7 +66,7 @@ public class DigitalObject extends GenericObject {
 	}
 
 	/**
-	 * File reference to output of SMTService
+	 * File reference to output of SMTService (Schema Mapping Tool)
 	 */
 	private File smtoutput;
 
@@ -130,7 +133,7 @@ public class DigitalObject extends GenericObject {
 	}
 
 	public void setOcr(File ocr) {
-		// check if file exists because tesseract sometimes crashes
+		// FIXME check if file exists because tesseract sometimes crashes
 		if (ocr.exists()) {
 			this.ocr = ocr;
 			setChanged();

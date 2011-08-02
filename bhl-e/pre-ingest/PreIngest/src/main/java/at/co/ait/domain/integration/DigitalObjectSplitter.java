@@ -7,7 +7,7 @@ import at.co.ait.domain.oais.DigitalObject;
 
 public class DigitalObjectSplitter {
 	
-	public List<DigitalObject> split(List<DigitalObject> objlist) {
+	public List<DigitalObject> filter(List<DigitalObject> objlist) {
 		// remove hidden folder from list since they must not be processed
 		List<DigitalObject> newList = new ArrayList<DigitalObject>();
 		for (DigitalObject obj : objlist) {

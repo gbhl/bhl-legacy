@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -35,7 +36,8 @@ public class ProcessingQueue extends LinkedHashMap<Integer,LinkedHashMap<String,
 			// KB, MB, GB of files in folder
 			line.put("size",FileUtils.byteCountToDisplaySize(foldersize));
 			// number of files in folder
-			line.put("files",String.valueOf(((File) payload).listFiles().length));
+			File[] files = ((File) payload).listFiles();
+			line.put("files",String.valueOf(files.length));
 			line.put("user",username);			
 			put(key, line);
 		}
