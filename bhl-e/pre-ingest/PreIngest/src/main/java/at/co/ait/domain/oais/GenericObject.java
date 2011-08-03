@@ -137,7 +137,7 @@ public class GenericObject extends Observable {
 	
 	public void dispose() {
 		setChanged();
-		notifyObservers("FINISHED: " + getSubmittedFile().getName());
+		notifyObservers("DISPOSED: " + getSubmittedFile().getName());
 		deleteObservers();		
 	}
 	
