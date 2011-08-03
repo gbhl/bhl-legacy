@@ -54,12 +54,13 @@ public class FedoraMetsMarshallerService {
 		mw = new METSWrapper();
 
 		mets = mw.getMETSObject();
-		mets.setObjID(String.valueOf(StringUtils.replace(obj.getIdentifier(),
-				"/", ":")));
+//		mets.setObjID(String.valueOf(StringUtils.replace(obj.getIdentifier(),
+//				"/", ":")));
 		mets.setProfile("http://www.bhl-europe.eu/profiles/bhle-mets-profile-1.0"); //$NON-NLS-1$
 		mets.setType("FedoraObject"); //$NON-NLS-1$		
-		mets.setLabel("Collection: " + prefs.getOrganization() + ", " + "ID: "
-				+ obj.getIdentifier());
+		mets.setLabel("External ID: " + obj.getExternalIdentifier() + 
+				      "Collection: " + prefs.getOrganization() + ", " + 
+				      "ID: " + obj.getIdentifier());
 
 		MetsHdr mh = mets.newMetsHdr();
 

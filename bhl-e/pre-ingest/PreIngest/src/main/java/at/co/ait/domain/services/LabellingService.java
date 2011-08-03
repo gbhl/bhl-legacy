@@ -14,6 +14,7 @@ public class LabellingService {
 		pkg.setSubmittedFile(idol.getSubmittedFile().getParentFile());
 		// Needed for archiving queue
 		pkg.setFileurl(ConfigUtils.createFileURL(idol.getSubmittedFile().getParentFile()));
+		pkg.setExternalIdentifier(idol.getSubmittedFile().getParentFile().getName());
 		return pkg;
 	}
 	
