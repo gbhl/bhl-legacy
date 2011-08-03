@@ -26,7 +26,9 @@ public class PreparePackageService {
 		Integer order = 0;
 		List<File> files = Arrays.asList(folderFileObj.listFiles());
 		Collections.sort(files);
-		for (File fileObj : files) {			
+		
+		for (File fileObj : files) {
+			System.out.println(fileObj.getName());
 			DigitalObject obj = new DigitalObject(loggenericobject);
 			// warn: prefs needs to be the first setter
 			obj.setPrefs(prefs);			

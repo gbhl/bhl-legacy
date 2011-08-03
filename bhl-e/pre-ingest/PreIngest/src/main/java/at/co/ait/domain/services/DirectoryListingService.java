@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,8 +97,10 @@ public class DirectoryListingService implements Serializable {
 		
 		// build list of files and folders to be returned
 		List<Map<String,Object>> elements = new ArrayList<Map<String,Object>>();		
-		Collection<File> files = readFilesAndFoldersFromDir(dir);		
-		for (File file : files) {
+		Collection<File> files = readFilesAndFoldersFromDir(dir);
+		ArrayList<File> filelist = new ArrayList<File>(files);
+		Collections.sort(filelist);
+		for (File file : filelist) {
 			Map<String,Object> map = new HashMap<String, Object>();
 			// subtract the basedir from the current dir
 			map.put("title", StringUtils.remove(file.toString(), dir + File.separator));
