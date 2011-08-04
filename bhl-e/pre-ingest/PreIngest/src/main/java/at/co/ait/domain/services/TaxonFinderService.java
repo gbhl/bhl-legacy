@@ -44,6 +44,7 @@ public class TaxonFinderService {
 				text = FileUtils.readFileToString(obj.getOcr());
 			} catch (IOException e) {
 				logger.error("Couldn't read OCR file.");
+				return obj;
 			}
 			
 			// URL encode OCR text
@@ -51,7 +52,7 @@ public class TaxonFinderService {
 			try {
 				enc = URLEncoder.encode(text, "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				logger.error("Couldn't find UTF-8 encoding to encode taxa string.");
+				throw new RuntimeException(e);
 			}
 			
 			// send URL encoded OCR text to Taxon Finder gateway
@@ -59,10 +60,13 @@ public class TaxonFinderService {
 				taxa = taxonfinderGateway.requestTaxa(enc).get(10, TimeUnit.SECONDS);
 			} catch (InterruptedException e) {
 				logger.error("Taxonfinder gateway call was interrupted.");
+				return obj;
 			} catch (ExecutionException e) {
 				logger.error("Taxonfinder gateway call wasn't executed properly.");
+				return obj;
 			} catch (TimeoutException e) {
 				logger.error("Taxonfinder gateway call has timed out (max. 10 sec).");
+				return obj;
 			}
 			
 			// Taxonfinder reply is XML formatted, check here if it has content 
@@ -76,13 +80,14 @@ public class TaxonFinderService {
 								XPathConstants.NODESET);
 			} catch (XPathExpressionException e) {
 				logger.error("Couldn't apply XPath Expression to Taxonfinder's reply.");
+				return obj;
 			}
 			
 			NodeList nodes = (NodeList) o;
 			// if ANY names are in the taxon finder's reply, save it to file
 			if (nodes.getLength() > 0) {
 				String tmpfile = ConfigUtils.getTmpFileName(
-						obj.getSubmittedFile(), ".taxa.txt");
+						obj.getSubmittedFile(), ".taxa.xml");
 				File output = new File(tmpfile);
 				if (!output.exists()) {
 					
@@ -90,6 +95,7 @@ public class TaxonFinderService {
 						FileUtils.writeStringToFile(output, taxa, "UTF-8");
 					} catch (IOException e) {
 						logger.error("Couldn't write Taxa file.");
+						return obj;
 					}
 				}
 				obj.setTaxa(output);
