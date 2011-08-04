@@ -13,7 +13,7 @@ import org.apache.tika.Tika;
 import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.domain.oais.DigitalObjectType;
 
-public class DigitalObjectTypeExtractor {
+public class TikaService {
 
 	private static final Tika tika = new Tika();
 	static private List<String> imageMimeTypes = new ArrayList<String>();
@@ -22,6 +22,7 @@ public class DigitalObjectTypeExtractor {
 	static {
 		imageMimeTypes.add("image/tiff");
 		imageMimeTypes.add("image/jpeg");
+		// FIXME: maybe not every text or xml file is metadata
 		metadataMimeTypes.add("text/xml");
 		metadataMimeTypes.add("application/xml");		
 		pdfMimeTypes.add("application/pdf");

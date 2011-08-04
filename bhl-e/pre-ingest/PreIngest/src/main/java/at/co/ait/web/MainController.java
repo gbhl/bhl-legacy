@@ -40,8 +40,8 @@ public class MainController {
 	
 	@RequestMapping(value="/archivingqueue")
 	@ModelAttribute(value="ArchivingQueue")
-	public ArchivingQueue archivingqueueHandler() {
-		return archivingqueue;
+	public @ResponseBody String archivingqueueHandler() {
+		return "Archivingqueue shows are AIP which are ready for ingest.";
 	}
 	
 	@RequestMapping(value="/archivingqueue/retrieve")

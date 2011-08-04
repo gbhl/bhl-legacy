@@ -11,12 +11,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.co.ait.domain.services.DigitalObjectTypeExtractor;
+import at.co.ait.domain.services.TikaService;
 
 public class TestFileTypeDetectionService {
 
 	private static final Logger logger = LoggerFactory.getLogger(TestDirectoryListing.class);
-	private DigitalObjectTypeExtractor service = new DigitalObjectTypeExtractor();
+	private TikaService service = new TikaService();
 
 	@Before
 	public void setUp() throws Exception {		

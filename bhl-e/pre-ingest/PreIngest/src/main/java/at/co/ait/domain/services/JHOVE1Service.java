@@ -36,9 +36,9 @@ import edu.harvard.hul.ois.jhove.OutputHandler;
 import edu.harvard.hul.ois.jhove.RepInfo;
 import edu.harvard.hul.ois.jhove.handler.XmlHandler;
 
-public class TechMetadataExtractionService {
+public class JHOVE1Service {
 	// Log4j instance.
-	private static final Logger logger = LoggerFactory.getLogger(TechMetadataExtractionService.class);
+	private static final Logger logger = LoggerFactory.getLogger(JHOVE1Service.class);
 	
     private List m_module_list = null;
 
@@ -74,7 +74,7 @@ public class TechMetadataExtractionService {
     /**
      * Private constructor.  Initializes the logger and loads modules.
      */
-    public TechMetadataExtractionService()
+    public JHOVE1Service()
     {
             String version = System.getProperty("java.vm.version");
             if(version.compareTo("1.4.0") < 0)

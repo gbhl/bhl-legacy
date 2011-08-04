@@ -12,16 +12,16 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.co.ait.domain.services.TechMetadataExtractionService;
+import at.co.ait.domain.services.JHOVE1Service;
 
 public class TestTechMetadataExtractService {
 
-	TechMetadataExtractionService md = new TechMetadataExtractionService();
-	private static final Logger logger = LoggerFactory.getLogger(TechMetadataExtractionService.class);
+	JHOVE1Service md = new JHOVE1Service();
+	private static final Logger logger = LoggerFactory.getLogger(JHOVE1Service.class);
 
 	@Before
 	public void setUp() throws Exception {
-		md = new TechMetadataExtractionService();
+		md = new JHOVE1Service();
 	}
 
 	@After

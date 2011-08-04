@@ -15,16 +15,20 @@ import at.co.ait.utils.Configuration;
 
 public class VirusscanService extends ProcessbuilderService {
 	
+	private static final Logger logger = LoggerFactory
+	.getLogger(VirusscanService.class);
+	
 	List<String> commands;
 		
 	public InformationPackageObject scan(InformationPackageObject pkg) throws IOException, InterruptedException {
 		commands = new ArrayList<String>();
 		commands.add((new java.net.URL(Configuration.getString("VirusscanService.0"))).getPath()); //$NON-NLS-1$	
-		commands.add(pkg.getSubmittedFile().getAbsolutePath());	
-		process(commands);	
+		commands.add(pkg.getSubmittedFile().getAbsolutePath());		
 		String tmpfile = ConfigUtils.getTmpFileName(pkg.getSubmittedFile(),".scan.log.txt");
 		File output = new File(tmpfile);
 		if (!output.exists()) {
+			logger.debug("starting scan...");
+			process(commands);
 			FileUtils.writeStringToFile(output, stdout.toString(), "UTF-8");
 		}
 		pkg.setScanlog(output);		
