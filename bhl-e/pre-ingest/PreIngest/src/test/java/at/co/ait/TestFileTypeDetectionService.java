@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import at.co.ait.domain.services.TikaService;
+import at.co.ait.utils.TikaUtils;
 
 public class TestFileTypeDetectionService {
 
@@ -29,8 +30,8 @@ public class TestFileTypeDetectionService {
 	@Test
 	public void testIdentifyFile() {
 		logger.info("Testing identify");
-		assertEquals("image/tiff",service.detectedMimeType(new File("C:\\ProjectData\\BHL-E-FTP\\bhle-mnhn\\PR 260 (Museum)\\ANNALES MUSEUM\\011802.DIR\\000001.TIF")));
-		assertEquals("application/xml",service.detectedMimeType(new File("C:\\ProjectData\\BHL-E-FTP\\bhle-mnhn\\PR 260 (Museum)\\ANNALES MUSEUM\\011802.DIR\\TDM\\011802.xml")));
+		assertEquals("image/tiff",TikaUtils.detectedMimeType(new File("C:\\ProjectData\\BHL-E-FTP\\bhle-mnhn\\PR 260 (Museum)\\ANNALES MUSEUM\\011802.DIR\\000001.TIF")));
+		assertEquals("application/xml",TikaUtils.detectedMimeType(new File("C:\\ProjectData\\BHL-E-FTP\\bhle-mnhn\\PR 260 (Museum)\\ANNALES MUSEUM\\011802.DIR\\TDM\\011802.xml")));
 	}
 
 }
