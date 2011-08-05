@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import at.co.ait.domain.integration.ILoadingGateway;
@@ -16,6 +18,9 @@ import at.co.ait.utils.ConfigUtils;
 import at.co.ait.web.common.UserPreferences;
 
 public class PreparePackageService {
+	
+	private static final Logger logger = LoggerFactory
+	.getLogger(PreparePackageService.class);
 	
 	private @Autowired ILoadingGateway loading;
 	private @Autowired LogGenericObject loggenericobject;
@@ -28,7 +33,7 @@ public class PreparePackageService {
 	
 		DigitalObject prev = null;
 		for (File fileObj : files) {
-			System.out.println(fileObj.getName());
+			logger.debug(fileObj.getName());
 			DigitalObject obj = new DigitalObject(loggenericobject);
 			// warn: prefs needs to be the first setter
 			obj.setPrefs(prefs);			

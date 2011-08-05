@@ -27,9 +27,10 @@ public class VirusscanService extends ProcessbuilderService {
 		String tmpfile = ConfigUtils.getTmpFileName(pkg.getSubmittedFile(),".scan.log.txt");
 		File output = new File(tmpfile);
 		if (!output.exists()) {
-			logger.debug("starting scan...");
+			logger.debug("starting scan on " + pkg.getSubmittedFile().getName());
 			process(commands);
 			FileUtils.writeStringToFile(output, stdout.toString(), "UTF-8");
+			logger.debug("SMT: " + output.getName() + "STDERR: " + stderr.toString());
 		}
 		pkg.setScanlog(output);		
 		return pkg;
