@@ -2,9 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:si="http://www.springframework.org/schema/integration"
 	xmlns:int-jmx="http://www.springframework.org/schema/integration/jmx"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/task 
+		http://www.springframework.org/schema/task/spring-task-3.0.xsd
         http://www.springframework.org/schema/integration 
         http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
         http://www.springframework.org/schema/integration/jmx 
@@ -80,6 +83,12 @@
 	<si:service-activator input-channel="converting"
 		output-channel="ocr" method="convert" ref="conversion_service" />
 	<bean id="conversion_service" class="at.co.ait.domain.services.ConvertImageService" />
+	
+	<!-- FIXME: test invoking OCR on 4 threads -->
+	<task:executor id="pool" pool-size="4"/>
+	<si:channel id="ocr">
+		<si:dispatcher task-executor="pool" />	
+	</si:channel>
 
 	<!-- Invoke Tesseract 3 to generate dirty OCR -->
 	<si:service-activator input-channel="ocr"
