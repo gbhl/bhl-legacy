@@ -102,7 +102,19 @@ public class DigitalObject extends GenericObject {
 
 	private Integer order;
 
+	/** Ordner (unique) number in Mods.
+	 * 
+	 * @return
+	 */
 	public Integer getOrder() {
+		if(order == null) {
+			if(prev == null) {
+				order = 0;
+			} else {
+				order = prev.getOrder() + 1;
+			}
+			
+		}
 		return order;
 	}
 
@@ -110,6 +122,27 @@ public class DigitalObject extends GenericObject {
 		this.order = order;
 	}
 
+	private DigitalObject prev;
+	
+
+	/** Set a the previous DO in the chain.
+	 * 
+	 * If the order Number is not set its automatically a sequence.
+	 * 
+	 * @param prev Previous object
+	 */
+	public void setPrev(DigitalObject prev) {
+		this.prev = prev;
+	}
+
+	/** Previuos DO in the chain.
+	 * 
+	 * @return the prev
+	 */
+	public DigitalObject getPrev() {
+		return prev;
+	}
+	
 	/**
 	 * SMT generated stderr/stdout.
 	 */
@@ -173,12 +206,12 @@ public class DigitalObject extends GenericObject {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		// TODO use getClass() to build toString()
 		return "submitted file: " + getSubmittedFile().getName() + "\n"
 				+ "external identifier: " + getExternalIdentifier() + "\n"
 				+ "order: " + getOrder() + "\n" + "by: "
 				+ getPrefs().getUsername() + "\n";
 	}
+
 
 }

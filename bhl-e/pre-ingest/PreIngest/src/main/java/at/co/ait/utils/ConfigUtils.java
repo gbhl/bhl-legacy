@@ -16,12 +16,22 @@ public class ConfigUtils {
 	public static String getTmpFileName(File file, String postfix) {
 		String name = null;
 		if (file.isFile()) {
-			name = file.getParent() + File.separator + TMP_PROCESSING
-					+ File.separator + file.getName() + postfix;
+			File parent = file.getParentFile();
+			if(parent.getName().equals(TMP_PROCESSING)) {
+				name = file.getAbsolutePath() + postfix;
+			} else {
+				name = file.getParent() + File.separator + TMP_PROCESSING
+						+ File.separator + file.getName() + postfix;
+			}
 		}
 		if (file.isDirectory()) {
-			name = file.getAbsolutePath() + File.separator + TMP_PROCESSING
-			+ File.separator + file.getName() + postfix;
+			if(file.getName().equals(TMP_PROCESSING) 
+					|| file.getParentFile().getName().equals(TMP_PROCESSING)) {
+				name = file.getAbsolutePath() + postfix;
+			} else {
+				name = file.getAbsolutePath() + File.separator + TMP_PROCESSING
+				+ File.separator + file.getName() + postfix;
+			}
 		}
 		return name;
 	}

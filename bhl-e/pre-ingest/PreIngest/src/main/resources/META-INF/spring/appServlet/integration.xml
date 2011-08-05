@@ -36,9 +36,13 @@
 
 	<bean id="loading_file" class="at.co.ait.domain.services.PreparePackageService" />
 
-	<si:chain input-channel="loading_ramp" output-channel="techmetadata">
-		<si:service-activator
+	<si:service-activator input-channel="loading_ramp" output-channel="pdfpreprocess"
 			expression="@loading_file.prepare(payload,headers.PREFERENCES)" />
+			
+	<!-- Extract TIF / OCR from PDF -->
+	<bean id="pdfbox_service" class="at.co.ait.domain.services.PDFBoxService" />
+	<si:chain input-channel="pdfpreprocess" output-channel="techmetadata">
+		<si:service-activator method="extract" ref="pdfbox_service" />
 		<si:splitter method="filter">
 			<bean class="at.co.ait.domain.integration.DigitalObjectSplitter" />
 		</si:splitter>
@@ -67,14 +71,10 @@
 		<si:mapping value="1" channel="boxing" />
 		<si:mapping value="2" channel="converting" />
 		<si:mapping value="3" channel="mapping" />
-		<si:mapping value="4" channel="pdfbox" />
+		<si:mapping value="4" channel="taxonfinder" /><!-- pdfbox moved to start  -->
 		<si:mapping value="5" channel="boxing" />
 	</si:router>
 
-	<!-- Extract TIF / OCR from PDF -->
-	<si:service-activator input-channel="pdfbox"
-		output-channel="taxonfinder" method="extract" ref="pdfbox_service" />
-	<bean id="pdfbox_service" class="at.co.ait.domain.services.PDFBoxService" />
 
 	<!-- Invoke Imagemagick to process / convert images -->
 	<si:service-activator input-channel="converting"

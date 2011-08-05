@@ -23,20 +23,21 @@ public class PreparePackageService {
 
 	public List<DigitalObject> prepare(File folderFileObj, UserPreferences prefs) throws IOException {
 		List<DigitalObject> objlist = new ArrayList<DigitalObject>();
-		Integer order = 0;
 		List<File> files = Arrays.asList(folderFileObj.listFiles());
 		Collections.sort(files);
-		
+	
+		DigitalObject prev = null;
 		for (File fileObj : files) {
 			System.out.println(fileObj.getName());
 			DigitalObject obj = new DigitalObject(loggenericobject);
 			// warn: prefs needs to be the first setter
 			obj.setPrefs(prefs);			
 			obj.setFolder(folderFileObj);
-			obj.setOrder(order++);
+			obj.setPrev(prev);
 			obj.setSubmittedFile(fileObj);			
 			obj.setFileurl(ConfigUtils.createFileURL(fileObj));
 			objlist.add(obj);
+			prev = obj;
 		}	
 		return objlist;
 	}

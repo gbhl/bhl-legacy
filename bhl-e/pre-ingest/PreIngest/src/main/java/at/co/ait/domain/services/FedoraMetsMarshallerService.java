@@ -24,6 +24,7 @@ import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.domain.oais.DigitalObjectType;
 import at.co.ait.domain.oais.InformationPackageObject;
 import at.co.ait.utils.ConfigUtils;
+import at.co.ait.utils.TikaUtils;
 import at.co.ait.web.common.UserPreferences;
 import au.edu.apsr.mtk.base.Agent;
 import au.edu.apsr.mtk.base.Div;
@@ -120,7 +121,7 @@ public class FedoraMetsMarshallerService {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
 				f.setID("TAXA." + digobj.getOrder() + ".FILE"); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTaxa()));
-				f.setMIMEType(TikaService
+				f.setMIMEType(TikaUtils
 						.detectedMimeType(digobj.getTaxa()));
 				f.setOwnerID("M");
 				FLocat loc = createLocat(digobj.getTaxa(),
@@ -139,7 +140,7 @@ public class FedoraMetsMarshallerService {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
 				f.setID("OCR." + digobj.getOrder() + ".FILE"); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getOcr()));
-				f.setMIMEType(TikaService
+				f.setMIMEType(TikaUtils
 						.detectedMimeType(digobj.getOcr()));
 				f.setOwnerID("M");
 				FLocat loc = createLocat(digobj.getOcr(),
@@ -159,7 +160,7 @@ public class FedoraMetsMarshallerService {
 				f.setID("JHOVE." + digobj.getOrder() + ".FILE"); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTechMetadata()));
 				f.setOwnerID("M");
-				f.setMIMEType(TikaService
+				f.setMIMEType(TikaUtils
 						.detectedMimeType(digobj.getTechMetadata()));
 				FLocat loc = createLocat(digobj.getTechMetadata(),
 						prefs.getBasedirectory(), f);
@@ -176,7 +177,7 @@ public class FedoraMetsMarshallerService {
 		f.setID("NFO.FILE"); //$NON-NLS-1$
 		f.setSize(FileUtils.sizeOf(obj.getNepomukFileOntology()));
 		f.setOwnerID("M");
-		f.setMIMEType(TikaService.detectedMimeType(obj
+		f.setMIMEType(TikaUtils.detectedMimeType(obj
 				.getNepomukFileOntology()));
 		FLocat loc = createLocat(obj.getNepomukFileOntology(),
 				prefs.getBasedirectory(), f);

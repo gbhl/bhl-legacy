@@ -2,7 +2,6 @@ package at.co.ait.domain.services;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +11,11 @@ import org.apache.tika.Tika;
 
 import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.domain.oais.DigitalObjectType;
+import at.co.ait.utils.TikaUtils;
 
 public class TikaService {
 
-	private static final Tika tika = new Tika();
+	public static final Tika tika = new Tika();
 	static private List<String> imageMimeTypes = new ArrayList<String>();
 	static private List<String> metadataMimeTypes = new ArrayList<String>();
 	static private List<String> pdfMimeTypes = new ArrayList<String>();
@@ -27,20 +27,6 @@ public class TikaService {
 		metadataMimeTypes.add("application/xml");		
 		pdfMimeTypes.add("application/pdf");
 		pdfMimeTypes.add("application/octet-stream");
-	}
-
-	/**
-	 * Detect MIME type of file.
-	 */
-	public static String detectedMimeType(File fileObj) {
-		String mimeType = null;
-		try {
-			mimeType = tika.detect(fileObj);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return mimeType;
 	}
 
 	/**
@@ -59,7 +45,7 @@ public class TikaService {
 	}
 
 	private DigitalObjectType decideImageOrMetadata(File fileObj) {
-		String mimeType = detectedMimeType(fileObj);
+		String mimeType = TikaUtils.detectedMimeType(fileObj);
 		if (imageMimeTypes.contains(mimeType))
 			return DigitalObjectType.IMAGE;
 		// FIXME metadataMimeTypes isn't particularly needed, but startsWith("text") seems 
@@ -81,7 +67,7 @@ public class TikaService {
 	 */
 	public DigitalObject enrich(DigitalObject obj) {
 		obj.setObjecttype(detectObjectType(obj.getSubmittedFile()));
-		obj.setMimetype(detectedMimeType(obj.getSubmittedFile()));
+		obj.setMimetype(TikaUtils.detectedMimeType(obj.getSubmittedFile()));
 		return obj;
 	}
 
