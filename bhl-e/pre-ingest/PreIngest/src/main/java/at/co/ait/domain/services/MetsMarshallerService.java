@@ -77,14 +77,11 @@ public class MetsMarshallerService {
 		mh.addAgent(agent);
 		mets.setMetsHdr(mh);
 
-		// unique sequence number for each dmd section
-		int unique_id = 0;
 		DmdSec dmd = null;
 		// create dmd entry for each METADATA file
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getObjecttype().equals(DigitalObjectType.METADATA)) {
-				unique_id++;
-				dmd = newDmdEntry(unique_id, "MODS", "derivative", //$NON-NLS-1$ //$NON-NLS-2$
+				dmd = newDmdEntry(digobj.getOrder(), "MODS", "derivative", //$NON-NLS-1$ //$NON-NLS-2$
 						digobj.getSmtoutput());
 				mets.addDmdSec(dmd);
 			}
@@ -92,8 +89,6 @@ public class MetsMarshallerService {
 
 		FileSec fs = mets.newFileSec();
 
-		// unique sequence number for each file
-		unique_id = 0;
 		// create filegroup for each digitalobjecttype such as METADATA, IMAGE
 		for (DigitalObjectType value : DigitalObjectType.values()) {
 			FileGrp fg = fs.newFileGrp();
@@ -102,7 +97,7 @@ public class MetsMarshallerService {
 			for (DigitalObject digobj : obj.getDigitalobjects()) {
 				if (digobj.getObjecttype().equals(value)) {
 					au.edu.apsr.mtk.base.File f = fg.newFile();
-					f.setID("F-" + (++unique_id)); //$NON-NLS-1$
+					f.setID("F-" + digobj.getOrder()); //$NON-NLS-1$
 					f.setSize(FileUtils.sizeOf(digobj.getSubmittedFile()));
 					f.setMIMEType(digobj.getMimetype());
 					f.setChecksum(digobj.getDigestValueinHex());
@@ -124,7 +119,7 @@ public class MetsMarshallerService {
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getTaxa() != null) {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("F-" + (++unique_id)); //$NON-NLS-1$
+				f.setID("F-" + digobj.getOrder()); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTaxa()));
 				FLocat loc = createLocat(digobj.getTaxa(),
 						prefs.getBasedirectory(), f);	
@@ -142,7 +137,7 @@ public class MetsMarshallerService {
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getOcr() != null) {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("F-" + (++unique_id)); //$NON-NLS-1$
+				f.setID("F-" + digobj.getOrder()); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getOcr()));
 				FLocat loc = createLocat(digobj.getOcr(),
 						prefs.getBasedirectory(), f);	
@@ -160,7 +155,7 @@ public class MetsMarshallerService {
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getTechMetadata() != null) {
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("F-" + (++unique_id)); //$NON-NLS-1$
+				f.setID("F-" + digobj.getOrder()); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTechMetadata()));
 				FLocat loc = createLocat(digobj.getTechMetadata(),
 						prefs.getBasedirectory(), f);	
@@ -176,7 +171,7 @@ public class MetsMarshallerService {
 		fg = fs.newFileGrp();
 		fg.setUse("NFO"); //$NON-NLS-1$
 		au.edu.apsr.mtk.base.File f = fg.newFile();
-		f.setID("F-" + (++unique_id)); //$NON-NLS-1$
+		f.setID("F-NFO"); //$NON-NLS-1$
 		f.setSize(FileUtils.sizeOf(obj.getNepomukFileOntology()));
 		FLocat loc = createLocat(obj.getNepomukFileOntology(),
 				prefs.getBasedirectory(), f);	

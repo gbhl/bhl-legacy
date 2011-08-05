@@ -75,15 +75,12 @@ public class FedoraMetsMarshallerService {
 		
 		mets.setMetsHdr(mh);
 
-		// unique sequence number for each dmd section
-		int unique_id = 0;
 		DmdSec dmd = null;
 
 		// create dmd entry for each METADATA file
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getObjecttype().equals(DigitalObjectType.METADATA)) {
-				unique_id++;
-				dmd = newDmdEntry(unique_id, "OTHER", "derivative", //$NON-NLS-1$ //$NON-NLS-2$
+				dmd = newDmdEntry(digobj.getOrder(), "OTHER", "derivative", //$NON-NLS-1$ //$NON-NLS-2$
 						digobj.getSmtoutput());
 				mets.addDmdSec(dmd);
 			}
@@ -94,16 +91,14 @@ public class FedoraMetsMarshallerService {
 		String id = "DATASTREAMS";
 		datastream.setID(id);
 
-		// unique sequence number for each file
-		unique_id = 0;
 		// create filegroup for each digitalobjecttype such as METADATA, IMAGE
 		for (DigitalObjectType value : DigitalObjectType.values()) {
 			for (DigitalObject digobj : obj.getDigitalobjects()) {
 				if (digobj.getObjecttype().equals(value)) {
 					FileGrp fg = fs.newFileGrp();
-					fg.setID(value.name() + "." + (++unique_id));
+					fg.setID(value.name() + "." + digobj.getOrder());
 					au.edu.apsr.mtk.base.File f = fg.newFile();
-					f.setID(value.name() + "." + unique_id + ".FILE"); //$NON-NLS-1$
+					f.setID(value.name() + "." + digobj.getOrder() + ".FILE"); //$NON-NLS-1$
 					f.setSize(FileUtils.sizeOf(digobj.getSubmittedFile()));
 					f.setMIMEType(digobj.getMimetype());
 					f.setChecksum(digobj.getDigestValueinHex());
@@ -118,15 +113,12 @@ public class FedoraMetsMarshallerService {
 			}
 		}
 
-		unique_id = 0;
-		// add taxa files to filesection
-
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getTaxa() != null) {
 				FileGrp fg = fs.newFileGrp();
-				fg.setID("TAXA." + (++unique_id)); //$NON-NLS-1$
+				fg.setID("TAXA." + digobj.getOrder()); //$NON-NLS-1$
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("TAXA." + unique_id + ".FILE"); //$NON-NLS-1$
+				f.setID("TAXA." + digobj.getOrder() + ".FILE"); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTaxa()));
 				f.setMIMEType(TikaService
 						.detectedMimeType(digobj.getTaxa()));
@@ -139,14 +131,13 @@ public class FedoraMetsMarshallerService {
 			}
 		}
 
-		unique_id = 0;
 		// add ocr files to filesection
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getOcr() != null) {
 				FileGrp fg = fs.newFileGrp();
-				fg.setID("OCR." + (++unique_id)); //$NON-NLS-1$
+				fg.setID("OCR." + digobj.getOrder()); //$NON-NLS-1$
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("OCR." + unique_id + ".FILE"); //$NON-NLS-1$
+				f.setID("OCR." + digobj.getOrder() + ".FILE"); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getOcr()));
 				f.setMIMEType(TikaService
 						.detectedMimeType(digobj.getOcr()));
@@ -159,14 +150,13 @@ public class FedoraMetsMarshallerService {
 			}				
 		}
 
-		unique_id = 0;
 		// add jhove files to filesection
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getTechMetadata() != null) {
 				FileGrp fg = fs.newFileGrp();
-				fg.setID("JHOVE." + (++unique_id)); //$NON-NLS-1$
+				fg.setID("JHOVE." + digobj.getOrder()); //$NON-NLS-1$
 				au.edu.apsr.mtk.base.File f = fg.newFile();
-				f.setID("JHOVE." + unique_id + ".FILE"); //$NON-NLS-1$
+				f.setID("JHOVE." + digobj.getOrder() + ".FILE"); //$NON-NLS-1$
 				f.setSize(FileUtils.sizeOf(digobj.getTechMetadata()));
 				f.setOwnerID("M");
 				f.setMIMEType(TikaService
@@ -179,12 +169,11 @@ public class FedoraMetsMarshallerService {
 			}
 		}
 
-		unique_id = 0;
 		// add rdf nfo file to filesection
 		FileGrp fg = fs.newFileGrp();
 		fg.setID("NFO"); //$NON-NLS-1$
 		au.edu.apsr.mtk.base.File f = fg.newFile();
-		f.setID("NFO." + (++unique_id) + ".FILE"); //$NON-NLS-1$
+		f.setID("NFO.FILE"); //$NON-NLS-1$
 		f.setSize(FileUtils.sizeOf(obj.getNepomukFileOntology()));
 		f.setOwnerID("M");
 		f.setMIMEType(TikaService.detectedMimeType(obj
