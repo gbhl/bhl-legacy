@@ -45,11 +45,55 @@
 		    };			
 			foo.on("click", handleClick);
 		});
+		$(document).ready(function() {
+			$('#fbSelectLang').change(function() {
+				$("#fbDetectLangHint").text("");
+			});
+		})	
 	</script>
 	<br />
 	<!-- Add a <div> element where the tree should appear: -->
 	<form method="POST" action="submitNodes">
-		OCR-Language: <input type="text" name="lang"><br>
+		OCR-Language: <select id="fbSelectLang" size="1" name="lang">
+<option value=""></option>
+<option value="bul">bul</option>
+<option value="cat">cat</option>
+<option value="ces">ces</option>
+<option value="dan">dan</option>
+<option value="dan-frak">dan-frak</option>
+<option value="data">data</option>
+<option value="deu">deu</option>
+<option value="deu-f">deu-f</option>
+<option value="ell">ell</option>
+<option value="eng">eng</option>
+<option value="fin">fin</option>
+<option value="fra">fra</option>
+<option value="hun">hun</option>
+<option value="ind">ind</option>
+<option value="ita">ita</option>
+<option value="lang">lang</option>
+<option value="language">language</option>
+<option value="lav">lav</option>
+<option value="lit">lit</option>
+<option value="nld">nld</option>
+<option value="nor">nor</option>
+<option value="pol">pol</option>
+<option value="por">por</option>
+<option value="ron">ron</option>
+<option value="rus">rus</option>
+<option value="slk">slk</option>
+<option value="slv">slv</option>
+<option value="spa">spa</option>
+<option value="srp">srp</option>
+<option value="swe">swe</option>
+<option value="tgl">tgl</option>
+<option value="tur">tur</option>
+<option value="ukr">ukr</option>
+<option value="vie">vie</option>
+</select>
+<input type="hidden" id="fbDetectOnOff" checked="checked" value="true"/><label for="fbDetectOnOff">detect</label>
+<span id="fbDetectLangHint"></span>
+		<br>
 		Select folders to be processed: <br>
 		<!-- The name attribute is used by tree.serializeArray()  -->
 		<div id="tree" id="selNodes" name="selNodes"></div>

@@ -11,7 +11,34 @@ $(function(){
     	checkbox: true,
     	selectMode: 2,
         onActivate: function(node) {
-            alert("You activated " + node);
+            alert("You activated: node # " + node.data.key);
+        },
+        onSelect: function(flag, node) {
+        	// what node.data contains: http://wwwendt.de/tech/dynatree/doc/dynatree-doc.html#h4.2.1
+        		
+        	//alert("Selected node " + node.data.title);
+        	if(flag) { if ($("#fbDetectOnOff").val() != "") {
+	            jQuery.ajax({
+		            url: "${pageContext.request.contextPath}/filebrowser/detectLanguage",
+		            data: {"node": node.data.key
+		                   },
+		            async: false,
+		            success: function(data) {
+		            	if(data == "") {
+			            	$("#fbSelectLang").val(data);
+			            	$("#fbDetectLangHint").text("(" + node.data.title + ": no language code found)");
+		            	} else {
+		            		$("#fbSelectLang").val(data);
+			            	$("#fbDetectLangHint").text("(from " + node.data.title + ")");
+		            	}
+		            }
+		            
+	            
+	        	});
+        	}}
+        },
+        onDeactivate: function(node) {
+            alert("You deactivated " + node);
         },
 	    initAjax: {url: "${pageContext.request.contextPath}/filebrowser/ajaxTree",
                data: {key: "root", // Optional arguments to append to the url
