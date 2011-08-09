@@ -138,27 +138,30 @@ public class FileBrowser {
 			logger.error("XPATH invalid", e1);
 			return "ERROR - see log";
 		}
-		for(File inspect : file.listFiles((FilenameFilter) 
-				FileFilterUtils.suffixFileFilter(".xml"))) {
-			logger.debug(inspect.getAbsolutePath());
-			try {
-				Document doc = DOM.parse(inspect);
-				NodeList nl = (NodeList) getCtrlFld8
-					.evaluate(doc, XPathConstants.NODESET);
-				logger.debug("008: " +nl.getLength());
-				for(int i = 0; i < nl.getLength(); ++i) {
-					Element e = (Element) nl.item(i);
-					String val = e.getTextContent();
-					if(val.length() > 37) {
-						String marcLangCode = val.substring(35, 38).trim();
-						String tessLang = marcLang2TesseractLang.get(marcLangCode);
-						return tessLang == null? "" : tessLang;
+		do {
+			for(File inspect : file.listFiles((FilenameFilter) 
+					FileFilterUtils.suffixFileFilter(".xml"))) {
+				logger.debug(inspect.getAbsolutePath());
+				try {
+					Document doc = DOM.parse(inspect);
+					NodeList nl = (NodeList) getCtrlFld8
+						.evaluate(doc, XPathConstants.NODESET);
+					logger.debug("008: " +nl.getLength());
+					for(int i = 0; i < nl.getLength(); ++i) {
+						Element e = (Element) nl.item(i);
+						String val = e.getTextContent();
+						if(val.length() > 37) {
+							String marcLangCode = val.substring(35, 38).trim();
+							String tessLang = marcLang2TesseractLang.get(marcLangCode);
+							return tessLang == null? "" : tessLang;
+						}
 					}
+				} catch (XPathExpressionException e) {
+					logger.error(file.getAbsolutePath() + " XPath eval error.", e);
 				}
-			} catch (XPathExpressionException e) {
-				logger.error(file.getAbsolutePath() + " XPath eval error.", e);
 			}
-		}
+			file = file.getParentFile();
+		} while(file != null);
 		return "";
 	}
 
