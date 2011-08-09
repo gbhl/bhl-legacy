@@ -48,6 +48,7 @@
 		$(document).ready(function() {
 			$('#fbSelectLang').change(function() {
 				$("#fbDetectLangHint").text("");
+				$("#fbDetectOnOff").val([]);
 			});
 		})	
 	</script>
@@ -91,7 +92,7 @@
 <option value="ukr">ukr</option>
 <option value="vie">vie</option>
 </select>
-<input type="hidden" id="fbDetectOnOff" checked="checked" value="true"/><label for="fbDetectOnOff">detect</label>
+<input type="checkbox" id="fbDetectOnOff" checked="checked" value="true"/><label for="fbDetectOnOff">detect</label>
 <span id="fbDetectLangHint"></span>
 		<br>
 		Select folders to be processed: <br>

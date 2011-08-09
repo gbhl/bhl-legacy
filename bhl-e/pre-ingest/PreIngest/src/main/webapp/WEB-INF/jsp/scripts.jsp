@@ -11,13 +11,12 @@ $(function(){
     	checkbox: true,
     	selectMode: 2,
         onActivate: function(node) {
-            alert("You activated: node # " + node.data.key);
+            //alert("You activated: node # " + node.data.key);
         },
         onSelect: function(flag, node) {
         	// what node.data contains: http://wwwendt.de/tech/dynatree/doc/dynatree-doc.html#h4.2.1
         		
-        	//alert("Selected node " + node.data.title);
-        	if(flag) { if ($("#fbDetectOnOff").val() != "") {
+        	if(flag) { if ($("#fbDetectOnOff:checkbox:checked").val()) {
 	            jQuery.ajax({
 		            url: "${pageContext.request.contextPath}/filebrowser/detectLanguage",
 		            data: {"node": node.data.key
@@ -38,7 +37,7 @@ $(function(){
         	}}
         },
         onDeactivate: function(node) {
-            alert("You deactivated " + node);
+            //alert("You deactivated " + node);
         },
 	    initAjax: {url: "${pageContext.request.contextPath}/filebrowser/ajaxTree",
                data: {key: "root", // Optional arguments to append to the url
