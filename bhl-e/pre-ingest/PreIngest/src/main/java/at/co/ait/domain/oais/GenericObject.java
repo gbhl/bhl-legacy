@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import org.apache.commons.codec.binary.Hex;
 
-import at.co.ait.utils.ConfigUtils;
 import at.co.ait.web.common.UserPreferences;
 
 import com.google.common.io.Files;

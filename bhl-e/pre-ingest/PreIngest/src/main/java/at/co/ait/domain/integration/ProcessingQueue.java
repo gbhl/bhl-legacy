@@ -7,21 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.FileFilterUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
 import at.co.ait.domain.oais.InformationPackageObject;
 import at.co.ait.utils.DateUtils;
 
 public class ProcessingQueue extends LinkedHashMap<Integer,LinkedHashMap<String,String>> {
 	
+	private static final long serialVersionUID = 1L;
+	
 	//TODO: make this queue persistent so that folders can be loaded again on restart
 	//TODO: implement spring event so that folders are loaded again on restart
 	
-	private static final Logger logger = LoggerFactory
-	.getLogger(ProcessingQueue.class);
+	//unused: private static final Logger logger = LoggerFactory.getLogger(ProcessingQueue.class);
 	
 	public void handle(Object payload, String username) {
 		// folder is entering integration queue

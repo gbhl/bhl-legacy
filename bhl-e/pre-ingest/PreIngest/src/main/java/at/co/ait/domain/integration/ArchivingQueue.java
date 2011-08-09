@@ -13,8 +13,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.co.ait.domain.services.DirectoryListingService;
-
 /**
  * ArchivingQueue contains all generated and ready-to-be ingested AIPs.
  * @author sprogerb
@@ -22,6 +20,8 @@ import at.co.ait.domain.services.DirectoryListingService;
  */
 public class ArchivingQueue extends ArrayList<Map<String,String>> {
 	
+	private static final long serialVersionUID = 1L;
+
 	private static final Logger logger = LoggerFactory.getLogger(ArchivingQueue.class);
 
     private ObjectMapper m = new ObjectMapper();
