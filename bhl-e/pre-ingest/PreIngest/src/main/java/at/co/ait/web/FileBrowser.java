@@ -2,25 +2,15 @@ package at.co.ait.web;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.filechooser.FileFilter;
-import javax.xml.namespace.NamespaceContext;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.io.filefilter.FileFilterUtils;
-import org.jdom.xpath.XPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import at.co.ait.domain.integration.ILoadingGateway;
-import at.co.ait.domain.oais.LogGenericObject;
 import at.co.ait.domain.services.DirectoryListingService;
 import at.co.ait.utils.DOM;
 import at.co.ait.web.common.UserPreferences;
@@ -99,37 +87,38 @@ public class FileBrowser {
 		//http://www.loc.gov/marc/languages/language_code.html#f
 		marcLang2TesseractLang = new HashMap<String, String>();
 		marcLang2TesseractLang.put("bul", "bul");
-		marcLang2TesseractLang.put("", "cat");
-		marcLang2TesseractLang.put("", "ces");
+		marcLang2TesseractLang.put("cat", "cat");
+		marcLang2TesseractLang.put("cze", "ces");
 		marcLang2TesseractLang.put("dan", "dan");
 		marcLang2TesseractLang.put("", "dan-frak");
 		marcLang2TesseractLang.put("", "data");
 		marcLang2TesseractLang.put("ger", "deu");
 		marcLang2TesseractLang.put("", "deu-f");
-		marcLang2TesseractLang.put("", "ell");
+		marcLang2TesseractLang.put("grc", "ell"); // antike till 1453
+		marcLang2TesseractLang.put("gre", "ell"); // modern age since 1453
 		marcLang2TesseractLang.put("eng", "eng");
 		marcLang2TesseractLang.put("fin", "fin");
 		marcLang2TesseractLang.put("fre", "fra");
 		marcLang2TesseractLang.put("hun", "hun");
-		marcLang2TesseractLang.put("", "ind");
-		marcLang2TesseractLang.put("", "ita");
-		marcLang2TesseractLang.put("", "lav");
-		marcLang2TesseractLang.put("", "lit");
-		marcLang2TesseractLang.put("", "nld");
-		marcLang2TesseractLang.put("", "nor");
-		marcLang2TesseractLang.put("", "pol");
-		marcLang2TesseractLang.put("", "por");
-		marcLang2TesseractLang.put("", "ron");
-		marcLang2TesseractLang.put("", "rus");
-		marcLang2TesseractLang.put("", "slk");
-		marcLang2TesseractLang.put("", "slv");
-		marcLang2TesseractLang.put("", "spa");
-		marcLang2TesseractLang.put("", "srp");
-		marcLang2TesseractLang.put("", "swe");
-		marcLang2TesseractLang.put("", "tgl");
-		marcLang2TesseractLang.put("", "tur");
-		marcLang2TesseractLang.put("", "ukr");
-		marcLang2TesseractLang.put("", "vie");
+		marcLang2TesseractLang.put("ind", "ind");
+		marcLang2TesseractLang.put("ita", "ita");
+		marcLang2TesseractLang.put("lav", "lav");
+		marcLang2TesseractLang.put("lit", "lit");
+		marcLang2TesseractLang.put("dut", "nld");
+		marcLang2TesseractLang.put("nor", "nor");
+		marcLang2TesseractLang.put("pol", "pol");
+		marcLang2TesseractLang.put("por", "por");
+		marcLang2TesseractLang.put("rum", "ron");
+		marcLang2TesseractLang.put("rus", "rus");
+		marcLang2TesseractLang.put("slo", "slk");
+		marcLang2TesseractLang.put("slv", "slv");
+		marcLang2TesseractLang.put("spa", "spa");
+		marcLang2TesseractLang.put("srp", "srp");
+		marcLang2TesseractLang.put("swe", "swe");
+		marcLang2TesseractLang.put("tgl", "tgl");
+		marcLang2TesseractLang.put("tur", "tur");
+		marcLang2TesseractLang.put("ukr", "ukr");
+		marcLang2TesseractLang.put("vie", "vie");
 
 	}
 	
