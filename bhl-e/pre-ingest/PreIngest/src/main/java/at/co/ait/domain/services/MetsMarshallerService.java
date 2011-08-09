@@ -197,7 +197,7 @@ public class MetsMarshallerService {
 		SAXBuilder parser = new SAXBuilder();
 		org.jdom.Document modsdoc = parser.build(metadata);
 		DmdSec dmd = mets.newDmdSec();
-		dmd.setID("DMD-" + id); //$NON-NLS-1$
+		dmd.setID(lbl + "-" + id); //$NON-NLS-1$
 		MdWrap mdw = dmd.newMdWrap();
 		mdw.setMDType(type);
 		mdw.setLabel(lbl);
