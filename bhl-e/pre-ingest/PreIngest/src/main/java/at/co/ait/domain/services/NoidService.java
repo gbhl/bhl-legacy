@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import at.co.ait.domain.integration.IReqNoidGateway;
 import at.co.ait.domain.oais.InformationPackageObject;
 import at.co.ait.utils.ConfigUtils;
-import at.co.ait.utils.Configuration;
 
 public class NoidService {
 	

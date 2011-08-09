@@ -40,7 +40,7 @@ public class JHOVE1Service {
 	// Log4j instance.
 	private static final Logger logger = LoggerFactory.getLogger(JHOVE1Service.class);
 	
-    private List m_module_list = null;
+    private List<Module> m_module_list = null;
 
     // JHOVE API
     private JhoveBase m_jhove = null;
@@ -80,7 +80,7 @@ public class JHOVE1Service {
             if(version.compareTo("1.4.0") < 0)
                     throw new RuntimeException(EXCEPTION_JAVA_VERSION);
 
-            m_module_list = new LinkedList();
+            m_module_list = new LinkedList<Module>();
 
             // Set the log level for the JHOVE package.
             java.util.logging.Logger.getLogger("edu.harvard.hul.ois.jhove").setLevel(java.util.logging.Level.INFO);
@@ -107,10 +107,10 @@ public class JHOVE1Service {
             {
                     try
                     {
-                            Class module_class = Class.forName(Modules[i]);
+                            Class<?> module_class = Class.forName(Modules[i]);
                             Module module = (Module)module_class.newInstance();
                             module.init(null);
-                            module.setDefaultParams(new LinkedList());
+                            module.setDefaultParams(new LinkedList<Object>());
                             m_module_list.add(module);
                     }
                     catch(ClassNotFoundException e)
@@ -194,7 +194,7 @@ public class JHOVE1Service {
     private void populateRepresentation(RepInfo representation, File file) throws Exception
     {
             // Iterate through the modules and process.
-            Iterator iterator = m_module_list.iterator();
+            Iterator<Module> iterator = m_module_list.iterator();
             while(iterator.hasNext())
             {
                     Module module = (Module)iterator.next();
@@ -288,7 +288,7 @@ public class JHOVE1Service {
             OutputHandler _return = new XmlHandler();
             try
             {
-                    _return.setDefaultParams(new java.util.ArrayList());
+                    _return.setDefaultParams(new java.util.ArrayList<Object>());
                     _return.setApp(m_application);
                     _return.setBase(m_jhove);                    
             }

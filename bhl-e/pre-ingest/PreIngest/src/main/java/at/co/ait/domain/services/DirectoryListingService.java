@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,15 +21,16 @@ import at.co.ait.web.common.UserPreferences;
 
 public class DirectoryListingService implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private File basedir = null; 
 	private Map<Integer,String> visitedFilesAndFolders = new HashMap<Integer,String>();
-	private SecurityContextHolder holder;
 	private UserPreferences pref;
-	private static final Logger logger = LoggerFactory.getLogger(DirectoryListingService.class);
+	//unused: private static final Logger logger = LoggerFactory.getLogger(DirectoryListingService.class);
 	
 	public void init() throws MalformedURLException, IOException
 	{
-		pref = (UserPreferences) holder.getContext().getAuthentication().getPrincipal();
+		pref = (UserPreferences) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Resource res = new UrlResource(pref.getBasedirectory());
 		setBasedir(res.getFile());
 		visitedFilesAndFolders.put(basedir.hashCode(),
