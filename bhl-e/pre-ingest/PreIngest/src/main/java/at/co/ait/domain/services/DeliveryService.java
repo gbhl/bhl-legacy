@@ -1,5 +1,7 @@
 package at.co.ait.domain.services;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,6 +26,11 @@ public class DeliveryService {
 
 	public InformationPackageObject prepareDelivery(List<DigitalObject> digitalobjects) {
 		InformationPackageObject pkg = new InformationPackageObject(loggenericobject);
+		Collections.sort(digitalobjects, new Comparator<DigitalObject>() {
+			public int compare(DigitalObject o1, DigitalObject o2) {
+				return o1.getOrder() - o2.getOrder();
+			}
+		});
 		pkg.setDigitalobjects(digitalobjects);
 		return pkg;
 	}
