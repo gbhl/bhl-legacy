@@ -27,7 +27,7 @@ public class ConfigUtils {
 		if (file.isDirectory()) {
 			if(file.getName().equals(TMP_PROCESSING) 
 					|| file.getParentFile().getName().equals(TMP_PROCESSING)) {
-				name = file.getAbsolutePath() + postfix;
+				name = file.getAbsolutePath() + File.separator + postfix;
 			} else {
 				name = file.getAbsolutePath() + File.separator + TMP_PROCESSING
 				+ File.separator + file.getName() + postfix;
