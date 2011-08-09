@@ -18,6 +18,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import at.co.ait.utils.ConfigUtils;
 import at.co.ait.web.common.UserPreferences;
 
 public class DirectoryListingService implements Serializable {
@@ -107,7 +108,11 @@ public class DirectoryListingService implements Serializable {
 			// assign folder properties for dynatree
 			if(file.isDirectory()) {
 				map.put("isFolder", file.isDirectory());	
-				map.put("isLazy", true);				
+				map.put("isLazy", true);
+				if(file.getName().equals(ConfigUtils.TMP_PROCESSING)) {
+					map.put("unselectable", true);
+					map.put("hideCheckbox", true);	
+				}
 			} else {	
 				map.put("unselectable", true);
 				map.put("hideCheckbox", true);				
