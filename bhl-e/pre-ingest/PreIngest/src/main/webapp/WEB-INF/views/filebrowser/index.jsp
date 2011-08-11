@@ -97,7 +97,7 @@
 		<br>
 		Select folders to be processed: <br>
 		<!-- The name attribute is used by tree.serializeArray()  -->
-		<div id="tree" id="selNodes"></div>
+		<div id="tree" id="selNodes" name="selNodes"></div>
 		<br> <input type="submit" value="Submit selection for processing" id="sipsub" />
 	</form>
 </div>
