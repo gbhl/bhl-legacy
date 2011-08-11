@@ -24,8 +24,8 @@ public class VirusscanService extends ProcessbuilderService {
 		commands = new ArrayList<String>();
 		commands.add((new java.net.URL(Configuration.getString("VirusscanService.0"))).getPath()); //$NON-NLS-1$	
 		commands.add(pkg.getSubmittedFile().getAbsolutePath());		
-		String tmpfile = ConfigUtils.getTmpFileName(pkg.getSubmittedFile(),".scan.log.txt");
-		File output = new File(tmpfile);
+		File output = ConfigUtils.getAipFile(pkg.getPrefs().getBasedirectoryFile(),
+				pkg.getSubmittedFile(),".scan.log.txt");
 		if (!output.exists()) {
 			logger.debug("starting scan on " + pkg.getSubmittedFile().getName());
 			process(commands);

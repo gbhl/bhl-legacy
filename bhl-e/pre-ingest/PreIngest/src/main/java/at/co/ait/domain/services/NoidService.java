@@ -30,10 +30,10 @@ public class NoidService {
 
 	public InformationPackageObject enrich(InformationPackageObject pkg)
 			throws InterruptedException, ExecutionException, TimeoutException, IOException {
-		String tmpfile = ConfigUtils.getTmpFileName(pkg.getSubmittedFile(),".guid.txt");
 		String identifier = null;
 		
-		File out = new File(tmpfile);
+		File out = ConfigUtils.getAipFile(pkg.getPrefs().getBasedirectoryFile(),
+				pkg.getSubmittedFile(),".guid.txt");
 		if (out.exists()) {
 			logger.debug("reading identifier from file");
 			identifier = FileUtils.readFileToString(out);

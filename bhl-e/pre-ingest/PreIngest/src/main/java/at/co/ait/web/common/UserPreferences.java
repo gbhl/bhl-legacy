@@ -1,5 +1,8 @@
 package at.co.ait.web.common;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,7 +11,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 public class UserPreferences implements UserDetails {
+
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
 	private String basedirectory;
@@ -51,6 +57,15 @@ public class UserPreferences implements UserDetails {
 	}
 	public String getBasedirectory() {
 		return basedirectory;
+	}	
+	public File getBasedirectoryFile() {
+		URI u;
+		try {
+			u = new URI(basedirectory);
+		} catch (URISyntaxException e) {
+			throw new RuntimeException("Configuration error in option 'basedirectory'", e);
+		}
+		return new File(u);
 	}	
 	public void setBasedirectory(String basedirectory) {
 		this.basedirectory = basedirectory;

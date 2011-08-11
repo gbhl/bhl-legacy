@@ -171,8 +171,8 @@ public class JHOVE1Service {
     public DigitalObject enrich(DigitalObject obj) throws Exception {
     	try {
     		logger.debug("JHOVE starting on " + obj.getSubmittedFile().getName());
-			String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".jhove.xml");
-			File output = new File(tmpfile);
+			File output = ConfigUtils.getAipFile(obj.getPrefs().getBasedirectoryFile(),
+					obj.getSubmittedFile(),".jhove.xml");
 			if (!output.exists()) {
 				FileUtils.writeStringToFile(output, this.getDocument(obj.getSubmittedFile()), "UTF-8");
 				logger.debug("JHOVE successful on " + obj.getSubmittedFile().getName());

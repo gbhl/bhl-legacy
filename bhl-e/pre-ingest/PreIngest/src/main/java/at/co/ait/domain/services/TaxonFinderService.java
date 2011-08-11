@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
@@ -20,12 +19,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import at.co.ait.domain.integration.ITaxonFinderGateway;
 import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.utils.ConfigUtils;
-import at.co.ait.web.FileBrowser;
 
 public class TaxonFinderService {
 
@@ -86,9 +83,8 @@ public class TaxonFinderService {
 			NodeList nodes = (NodeList) o;
 			// if ANY names are in the taxon finder's reply, save it to file
 			if (nodes.getLength() > 0) {
-				String tmpfile = ConfigUtils.getTmpFileName(
+				File output = ConfigUtils.getAipFile(obj.getPrefs().getBasedirectoryFile(),
 						obj.getSubmittedFile(), ".taxa.xml");
-				File output = new File(tmpfile);
 				if (!output.exists()) {
 					
 					try {

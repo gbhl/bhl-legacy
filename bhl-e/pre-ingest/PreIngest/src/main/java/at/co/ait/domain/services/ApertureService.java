@@ -38,8 +38,9 @@ public class ApertureService {
         // start crawling and exit afterwards		
         doCrawling(obj.getSubmittedFile());
         String nfo = baos.toString("UTF-8");
-		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),".nfo.rdf.xml");
-		File output = new File(tmpfile);
+        
+		File output = ConfigUtils.getAipFile(obj.getPrefs().getBasedirectoryFile(),
+				obj.getSubmittedFile(),".nfo.rdf.xml");
 		FileUtils.writeStringToFile(output, nfo, "UTF-8");
         obj.setNepomukFileOntology(output);        
         return obj;

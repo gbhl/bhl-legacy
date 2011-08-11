@@ -13,27 +13,20 @@ public class ConfigUtils {
 	private static final String DATA_ROOT = Configuration
 	.getString("DataRoot"); //$NON-NLS-1$
 
-	public static String getTmpFileName(File file, String postfix) {
-		String name = null;
-		if (file.isFile()) {
-			File parent = file.getParentFile();
-			if(parent.getName().equals(TMP_PROCESSING)) {
-				name = file.getAbsolutePath() + postfix;
-			} else {
-				name = file.getParent() + File.separator + TMP_PROCESSING
-						+ File.separator + file.getName() + postfix;
+	
+	public static File getAipFile(File basedir, File file, String postfix) {
+		String outprefix = file.getName();
+		File indir = file.isDirectory()? file : file.getParentFile();
+		if(file.isDirectory()) {
+			// add parent folder to name.
+			for(File parentdir = indir.getParentFile();
+					parentdir != null && !parentdir.equals(basedir);
+					parentdir = parentdir.getParentFile()) {
+				outprefix = parentdir.getName() + "_" + outprefix;
 			}
 		}
-		if (file.isDirectory()) {
-			if(file.getName().equals(TMP_PROCESSING) 
-					|| file.getParentFile().getName().equals(TMP_PROCESSING)) {
-				name = file.getAbsolutePath() + File.separator + postfix;
-			} else {
-				name = file.getAbsolutePath() + File.separator + TMP_PROCESSING
-				+ File.separator + file.getName() + postfix;
-			}
-		}
-		return name;
+		File basename = new File(new File(indir, TMP_PROCESSING), outprefix + postfix);
+		return basename;
 	}
 	
 	public static String createFileURL(File file) throws IOException {

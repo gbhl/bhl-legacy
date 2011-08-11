@@ -69,6 +69,7 @@ public class FileBrowser {
 	public @ResponseBody String sendNodes(
 			@RequestParam(value = "selNodes", required = true) List<String> keys,
 			@RequestParam(value = "lang", required = false) String language) {
+		logger.info("Received nodes to process: " + keys.size());
 		// create new map with optional user input to add to the message header
 		HashMap<String, String> options = new HashMap<String,String>();
 		options.put("lang", language);

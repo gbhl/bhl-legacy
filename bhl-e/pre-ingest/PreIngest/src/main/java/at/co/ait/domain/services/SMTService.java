@@ -26,8 +26,8 @@ public class SMTService extends ProcessbuilderService {
 	public DigitalObject map(DigitalObject obj, String params)
 			throws MalformedURLException, IOException, InterruptedException {
 
-		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),
-				Configuration.getString("SMTService.tmpfilepostifx")); //$NON-NLS-1$
+		String tmpfile = ConfigUtils.getAipFile(obj.getPrefs().getBasedirectoryFile(), obj.getSubmittedFile(),
+				Configuration.getString("SMTService.tmpfilepostifx")).getAbsolutePath(); //$NON-NLS-1$
 		String srcfile = obj.getSubmittedFile().getAbsolutePath();
 		URL smtexec = new URL(Configuration.getString("SMTService.smt")); //$NON-NLS-1$
 

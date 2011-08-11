@@ -13,6 +13,8 @@ import org.apache.commons.io.FileUtils;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.DOMOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -43,6 +45,8 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 public class FedoraMetsMarshallerService {
 
+	private static final Logger logger = LoggerFactory.getLogger(MetsMarshallerService.class);
+	
 	private METS mets = null;
 
 	private METSWrapper createMETS(InformationPackageObject obj,
@@ -239,10 +243,11 @@ public class FedoraMetsMarshallerService {
 			UserPreferences prefs) throws JDOMException,
 			ParserConfigurationException, IOException, METSException,
 			SAXException {
+		logger.info("Fedora METS Marshaller");
+		
 		obj.setMets(createMETS(obj, prefs));
-		String tmpfile = ConfigUtils.getTmpFileName(obj.getSubmittedFile(),
-				".mets.xml"); //$NON-NLS-1$
-		File metsfile = new File(tmpfile);
+		File metsfile = ConfigUtils.getAipFile(prefs.getBasedirectoryFile(),
+				obj.getSubmittedFile(), ".mets.xml"); //$NON-NLS-1$
 		obj.setMetsfileurl(ConfigUtils.createFileURL(metsfile));
 		Document doc = obj.getMets().getMETSDocument();
 
