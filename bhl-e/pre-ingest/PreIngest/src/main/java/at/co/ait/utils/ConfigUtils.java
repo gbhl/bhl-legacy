@@ -25,7 +25,15 @@ public class ConfigUtils {
 				outprefix = parentdir.getName() + "_" + outprefix;
 			}
 		}
-		File basename = new File(new File(indir, TMP_PROCESSING), outprefix + postfix);
+		// check if we are already in the aip directory.
+		File aip;
+		if(indir.getName().equals(TMP_PROCESSING)) {
+			aip = indir;
+		} else {
+			aip = new File(indir, TMP_PROCESSING);
+		}
+		
+		File basename = new File(aip, outprefix + postfix);
 		return basename;
 	}
 	
