@@ -43,7 +43,7 @@
 			expression="@loading_file.prepare(payload,headers.PREFERENCES)" />
 			
 	<!-- Extract TIF / OCR from PDF -->
-	<bean id="pdfbox_service" class="at.co.ait.domain.services.PDFBoxService" />
+	<bean id="pdfbox_service" class="at.co.ait.domain.services.PDFBoxShellService" />
 	<si:chain input-channel="pdfpreprocess" output-channel="techmetadata">
 		<si:service-activator method="extract" ref="pdfbox_service" />
 		<si:splitter method="filter">
