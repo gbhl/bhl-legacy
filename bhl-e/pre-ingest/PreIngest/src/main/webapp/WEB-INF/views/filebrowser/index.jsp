@@ -33,8 +33,10 @@
 		//attribute "foo":
 		YUI().use('node-base', function(Y) {
 			var foo = Y.one("#sipsub");
+			var foo2 = Y.one("#sipsub2");
 			var disableBtn = function() {
 				foo.set('disabled','disabled');
+				foo2.set('disabled','disabled');
 			};
 			var enableBtn = function(e) {	
 				e.removeAttribute('disabled');
@@ -42,8 +44,10 @@
 		    var handleClick = function(e, arg1) {
 		        disableBtn();
 				Y.later(2500,this,enableBtn,[foo],false);
+				Y.later(2500,this,enableBtn,[foo2],false);
 		    };			
 			foo.on("click", handleClick);
+			foo2.on("click", handleClick);
 		});
 		$(document).ready(function() {
 			$('#fbSelectLang').change(function() {
@@ -94,10 +98,10 @@
 </select>
 <input type="checkbox" id="fbDetectOnOff" checked="checked" value="true"/><label for="fbDetectOnOff">detect</label>
 <span id="fbDetectLangHint"></span>
-		<br>
-		Select folders to be processed: <br>
+		<div><input type="submit" value="Submit selection for processing" id="sipsub2" /></div>
+		<div>Select folders to be processed: </div>
 		<!-- The name attribute is used by tree.serializeArray()  -->
 		<div id="tree" id="selNodes" name="selNodes"></div>
-		<br> <input type="submit" value="Submit selection for processing" id="sipsub" />
+		<div><input type="submit" value="Submit selection for processing" id="sipsub" /></div>
 	</form>
 </div>
