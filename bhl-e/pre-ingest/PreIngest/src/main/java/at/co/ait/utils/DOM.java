@@ -3,6 +3,7 @@
  */
 package at.co.ait.utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -99,6 +100,21 @@ public class DOM {
 			logger.warn(content.getAbsolutePath() + " XML error: " + e.getMessage());
 		} catch (IOException e) {
 			logger.warn(content.getAbsolutePath() + " read error: " + e.getMessage());
+		}
+		return null;
+	}
+	/** Errors will be logged.
+	 * 
+	 * @param content XML string.
+	 * @return null when an error occured
+	 */
+	public static Document parse(byte[] content) {
+		try {
+			return getDocBuilder().parse(new ByteArrayInputStream(content));
+		} catch (SAXException e) {
+			logger.warn(content + " XML error: " + e.getMessage());
+		} catch (IOException e) {
+			logger.warn(content + " read error: " + e.getMessage());
 		}
 		return null;
 	}
