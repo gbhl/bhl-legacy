@@ -16,7 +16,8 @@ public class Configuration {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
-			return '!' + key + '!';
+			throw new RuntimeException("Option '" + key + "' is missing in "
+					+BUNDLE_NAME.replace('.', '/') + ".properties");
 		}
 	}
 }
