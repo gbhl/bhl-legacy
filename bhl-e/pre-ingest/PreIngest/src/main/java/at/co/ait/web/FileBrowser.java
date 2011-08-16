@@ -91,10 +91,10 @@ public class FileBrowser {
 		marcLang2TesseractLang.put("cat", "cat");
 		marcLang2TesseractLang.put("cze", "ces");
 		marcLang2TesseractLang.put("dan", "dan");
-		marcLang2TesseractLang.put("", "dan-frak");
-		marcLang2TesseractLang.put("", "data");
+		//marcLang2TesseractLang.put("", "dan-frak"); // not in marc
+		//marcLang2TesseractLang.put("", "data");
 		marcLang2TesseractLang.put("ger", "deu");
-		marcLang2TesseractLang.put("", "deu-f");
+		//marcLang2TesseractLang.put("", "deu-f"); // not in marc
 		marcLang2TesseractLang.put("grc", "ell"); // antike till 1453
 		marcLang2TesseractLang.put("gre", "ell"); // modern age since 1453
 		marcLang2TesseractLang.put("eng", "eng");
