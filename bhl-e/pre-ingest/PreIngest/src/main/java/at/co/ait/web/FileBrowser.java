@@ -1,7 +1,10 @@
 package at.co.ait.web;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FilenameFilter;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +13,11 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 
-import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.marc4j.MarcReader;
+import org.marc4j.MarcStreamReader;
+import org.marc4j.MarcWriter;
+import org.marc4j.MarcXmlWriter;
+import org.marc4j.marc.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,30 +147,58 @@ public class FileBrowser {
 			return "ERROR - see log";
 		}
 		do {
-			for(File inspect : file.listFiles((FilenameFilter) 
-					FileFilterUtils.suffixFileFilter(".xml"))) {
+			for(File inspect : file.listFiles()) {
 				logger.debug(inspect.getAbsolutePath());
 				try {
-					Document doc = DOM.parse(inspect);
-					NodeList nl = (NodeList) getCtrlFld8
-						.evaluate(doc, XPathConstants.NODESET);
-					logger.debug("008: " +nl.getLength());
-					for(int i = 0; i < nl.getLength(); ++i) {
-						Element e = (Element) nl.item(i);
-						String val = e.getTextContent();
-						if(val.length() > 37) {
-							String marcLangCode = val.substring(35, 38).trim();
-							String tessLang = marcLang2TesseractLang.get(marcLangCode);
-							return tessLang == null? "" : tessLang;
+					Document doc = null;
+					String fnlc = inspect.getName().toLowerCase(); 
+					if(fnlc.endsWith(".xml")) {
+						doc = DOM.parse(inspect);
+					} else if(fnlc.endsWith(".mrc")) {
+						doc = readMarcBinary(inspect);
+					}
+					if(doc != null) {
+						NodeList nl = (NodeList) getCtrlFld8
+							.evaluate(doc, XPathConstants.NODESET);
+						logger.debug("008: " +nl.getLength());
+						for(int i = 0; i < nl.getLength(); ++i) {
+							Element e = (Element) nl.item(i);
+							String val = e.getTextContent();
+							if(val.length() > 37) {
+								String marcLangCode = val.substring(35, 38).trim();
+								String tessLang = marcLang2TesseractLang.get(marcLangCode);
+								return tessLang == null? "" : tessLang;
+							}
 						}
 					}
 				} catch (XPathExpressionException e) {
 					logger.error(file.getAbsolutePath() + " XPath eval error.", e);
+				} catch (IOException e) {
+					logger.error(file.getAbsolutePath() + " read error.", e);
 				}
 			}
 			file = file.getParentFile();
 		} while(file != null);
 		return "";
+	}
+	
+	private Document readMarcBinary(File marcBinary) throws IOException {
+
+		InputStream input = new FileInputStream(marcBinary);
+	    MarcReader reader = new MarcStreamReader(input);
+
+	    // FIXME Transformation directly into DOM without byte[] did not work.
+    	ByteArrayOutputStream bout = new ByteArrayOutputStream();
+    	MarcWriter writer = new MarcXmlWriter(bout, "UTF-8");
+
+	    while (reader.hasNext()) {
+	        Record record = reader.next();
+	        writer.write(record);
+        }
+        writer.close();
+        
+        return DOM.parse(bout.toByteArray());
+
 	}
 
 }
