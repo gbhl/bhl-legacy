@@ -78,6 +78,8 @@ public class PDFBoxShellService {
 						SystemCommandExecutor convert = new SystemCommandExecutor(Arrays.asList(
 								new String[] {
 										 new URL(Configuration.getString("PDFConvert.convert")).getPath(),
+										 Configuration.getString("PDFConvert.convert.compressionSwitch"),
+										 Configuration.getString("PDFConvert.convert.compression"),
 										 ppm.getAbsolutePath(),
 										 tifName.getAbsolutePath(),
 								}));
