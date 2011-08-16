@@ -58,8 +58,8 @@ public class FedoraMetsMarshallerService {
 		mw = new METSWrapper();
 
 		mets = mw.getMETSObject();
-//		mets.setObjID(String.valueOf(StringUtils.replace(obj.getIdentifier(),
-//				"/", ":")));
+		//FIXME BHLE in config file.
+		mets.setObjID("BHLE" + obj.getIdentifier().replace('/', ':'));
 		mets.setProfile("http://www.bhl-europe.eu/profiles/bhle-mets-profile-1.0"); //$NON-NLS-1$
 		mets.setType("FedoraObject"); //$NON-NLS-1$		
 		mets.setLabel("External ID: " + obj.getExternalIdentifier() + 
