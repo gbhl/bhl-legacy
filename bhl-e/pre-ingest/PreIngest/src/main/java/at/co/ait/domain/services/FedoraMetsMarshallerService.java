@@ -3,11 +3,16 @@ package at.co.ait.domain.services;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.io.FileUtils;
 import org.jdom.JDOMException;
@@ -25,6 +30,7 @@ import at.co.ait.domain.oais.DigitalObject;
 import at.co.ait.domain.oais.DigitalObjectType;
 import at.co.ait.domain.oais.InformationPackageObject;
 import at.co.ait.utils.ConfigUtils;
+import at.co.ait.utils.DOM;
 import at.co.ait.utils.TikaUtils;
 import at.co.ait.web.common.UserPreferences;
 import au.edu.apsr.mtk.base.Agent;
@@ -45,7 +51,7 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 public class FedoraMetsMarshallerService {
 
-	private static final Logger logger = LoggerFactory.getLogger(MetsMarshallerService.class);
+	private static final Logger logger = LoggerFactory.getLogger(FedoraMetsMarshallerService.class);
 	
 	private METS mets = null;
 
@@ -83,10 +89,25 @@ public class FedoraMetsMarshallerService {
 
 		// create dmd entry for each METADATA file
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
-			if (digobj.getObjecttype().equals(DigitalObjectType.METADATA)) {
-				dmd = newDmdEntry(digobj.getOrder(), "OTHER", "derivative", //$NON-NLS-1$ //$NON-NLS-2$
+			if (digobj.getObjecttype() == DigitalObjectType.METADATA) {
+				String label = "derivative";
+				dmd = newDmdEntry(digobj.getOrder(), "OTHER", label, //$NON-NLS-1$ //$NON-NLS-2$
 						digobj.getSmtoutput());
 				mets.addDmdSec(dmd);
+				File marc = digobj.getSubmittedFile();
+				File dublinCore = ConfigUtils.getAipFile(digobj.getPrefs().getBasedirectoryFile(),
+						marc, "_dc.xml"); 
+				extractDublinCore(marc, dublinCore);
+				if(dublinCore.exists()) {
+					DmdSec dmdDC = mets.newDmdSec();
+					dmdDC.setID(label + "-" + digobj.getOrder() + "-DC"); //$NON-NLS-1$
+					MdWrap mdw = dmdDC.newMdWrap();
+					mdw.setMDType("DC");
+					mdw.setLabel(label + "-DC");
+					mdw.setXmlData(DOM.parse(dublinCore).getDocumentElement());
+					dmdDC.setMdWrap(mdw);
+					mets.addDmdSec(dmdDC);
+				}
 			}
 		}
 
@@ -198,9 +219,30 @@ public class FedoraMetsMarshallerService {
 
 		mets.addStructMap(sm);
 
+		logger.debug(DOM.docToString(mw.getMETSDocument()));
 		mw.validate();
 
 		return mw;
+	}
+
+	private void extractDublinCore(File marc21File, File output) {
+		Document marc21 = DOM.parse(marc21File);
+		if(marc21 == null) {
+			logger.warn(marc21File.getAbsolutePath() + " is no valid XML");
+			return;
+		}
+		try {
+			Transformer marc21ToDC = DOM.getTransformer(new File(
+					this.getClass().getResource("/gov/loc/MARC21slim2RDFDC.xsl").toURI()));
+			marc21ToDC.transform(new DOMSource(marc21), new StreamResult(output));
+			Document dc = DOM.parse(output);
+			
+		} catch (TransformerException e) {
+			logger.warn("Transformation of " + marc21File.getAbsolutePath()
+					+ " to DC failed: " + e.getMessage());
+		} catch (URISyntaxException e) {
+			logger.error("Missing XSL file " + e.getMessage());
+		}
 	}
 
 	private DmdSec newDmdEntry(int id, String type, String lbl, File metadata)

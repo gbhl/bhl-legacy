@@ -4,8 +4,10 @@
 package at.co.ait.utils;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,6 +16,13 @@ import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
@@ -105,6 +114,21 @@ public class DOM {
 	}
 	/** Errors will be logged.
 	 * 
+	 * @param content XML File.
+	 * @return null when an error occured
+	 */
+	public static Document parse(InputStream content) {
+		try {
+			return getDocBuilder().parse(content);
+		} catch (SAXException e) {
+			logger.warn("(stream) XML error: " + e.getMessage());
+		} catch (IOException e) {
+			logger.warn("(stream) read error: " + e.getMessage());
+		}
+		return null;
+	}
+	/** Errors will be logged.
+	 * 
 	 * @param content XML string.
 	 * @return null when an error occured
 	 */
@@ -117,5 +141,28 @@ public class DOM {
 			logger.warn(content + " read error: " + e.getMessage());
 		}
 		return null;
+	}
+	
+	public static Transformer getTransformer(File xsl) {
+		TransformerFactory tf = TransformerFactory.newInstance();
+		try {
+			return tf.newTransformer(new StreamSource(xsl));
+		} catch (TransformerConfigurationException e) {
+			logger.warn("XSLT error: " + e.getMessage());
+		}
+		return null;
+	}
+
+	public static String docToString(Document metsDocument) {
+		TransformerFactory tf = TransformerFactory.newInstance();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try {
+			tf.newTransformer().transform(new DOMSource(metsDocument), new StreamResult(out));
+		} catch (TransformerConfigurationException e) {
+			logger.warn("transform error: " + e.getMessage());
+		} catch (TransformerException e) {
+			logger.warn("transform error: " + e.getMessage());
+		}
+		return out.toString();
 	}
 }
