@@ -86,7 +86,7 @@ public class PDFBoxShellService {
 						
 						int convertRet = convert.executeCommand();
 						if(convertRet != 0) {
-							logger.warn("convert " + Configuration.getString("PDFConvert.pdftoppm")
+							logger.warn("convert " + Configuration.getString("PDFConvert.convert")
 									+ " exits with status " + convertRet 
 									+ " stderr: " + convert.getStandardErrorFromCommand());
 						}
@@ -111,7 +111,7 @@ public class PDFBoxShellService {
 						
 					}
 				} catch (InterruptedException e) {
-					logger.warn("PDFBoxShellSerivce was interupted.", e);
+					logger.warn("PDFBoxShellService was interrupted.", e);
 				}
 					
 			} else {
