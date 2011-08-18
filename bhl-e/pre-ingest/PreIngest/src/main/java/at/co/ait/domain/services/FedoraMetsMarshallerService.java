@@ -62,7 +62,7 @@ public class FedoraMetsMarshallerService {
 		mets.setObjID("BHLE" + obj.getIdentifier().replace('/', ':'));
 		mets.setProfile("http://www.bhl-europe.eu/profiles/bhle-mets-profile-1.0"); //$NON-NLS-1$
 		mets.setType("FedoraObject"); //$NON-NLS-1$		
-		mets.setLabel("External ID: " + obj.getExternalIdentifier() + 
+		mets.setLabel("External ID: " + obj.getExternalIdentifier() + ", " +
 				      "Collection: " + prefs.getOrganization() + ", " + 
 				      "ID: " + obj.getIdentifier());
 
@@ -208,7 +208,7 @@ public class FedoraMetsMarshallerService {
 		SAXBuilder parser = new SAXBuilder();
 		org.jdom.Document modsdoc = parser.build(metadata);
 		DmdSec dmd = mets.newDmdSec();
-		dmd.setID("DMD-" + id); //$NON-NLS-1$
+		dmd.setID(lbl + "-" + id); //$NON-NLS-1$
 		MdWrap mdw = dmd.newMdWrap();
 		mdw.setMDType(type);
 		mdw.setLabel(lbl);
