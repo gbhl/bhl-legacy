@@ -233,7 +233,7 @@ public class FedoraMetsMarshallerService {
 		}
 		try {
 			Transformer marc21ToDC = DOM.getTransformer(new File(
-					this.getClass().getResource("/gov/loc/MARC21slim2RDFDC.xsl").toURI()));
+					this.getClass().getResource("/gov/loc/MARC21slim2OAIDC.xsl").toURI()));
 			marc21ToDC.transform(new DOMSource(marc21), new StreamResult(output));
 			Document dc = DOM.parse(output);
 			
