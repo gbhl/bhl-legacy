@@ -24,6 +24,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
@@ -31,6 +32,8 @@ import javax.xml.xpath.XPathFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -41,12 +44,29 @@ public class DOM {
 	private static final Logger logger = LoggerFactory
 	.getLogger(DOM.class);
 
+	public enum NS {
+		marc("http://www.loc.gov/MARC21/slim"),
+		dc("http://purl.org/dc/elements/1.1/"),
+		rdf("http://www.w3.org/1999/02/22-rdf-syntax-ns#"),
+		xsl("http://www.w3.org/1999/XSL/Transform"),
+		oai_dc("http://www.openarchives.org/OAI/2.0/oai_dc/"),
+		;
+		public final String URI; 
+		public final String ALIAS; 
+		private NS(String uri) {
+			this.URI = uri;
+			this.ALIAS = name();
+		}
+	}
+	
 	public static final NamespaceContext GLOBAL_NS_CTX = new NamespaceContext() {
 		HashMap<String, String> aliasToURI = new HashMap<String, String>();
 		HashMap<String, ArrayList<String>> uriToAlias = 
 			new HashMap<String, ArrayList<String>>();
 		{
-			add("marc", "http://www.loc.gov/MARC21/slim");
+			for(NS ns : NS.values()) {
+				add(ns.name(), ns.URI);
+			}
 		}
 		private void add(String alias, String uri) {
 			aliasToURI.put(alias, uri);
@@ -164,5 +184,26 @@ public class DOM {
 			logger.warn("transform error: " + e.getMessage());
 		}
 		return out.toString();
+	}
+
+	public static void save(Document dc, File output) throws IOException {
+		TransformerFactory tf = TransformerFactory.newInstance();
+		try {
+			tf.newTransformer().transform(new DOMSource(dc), new StreamResult(output));
+		} catch (TransformerConfigurationException e) {
+			logger.warn("transform error: " + e.getMessage());
+		} catch (TransformerException e) {
+			if(e.getCause() instanceof IOException) {
+				throw (IOException) e.getCause();
+			}
+			logger.warn("transform error: " + e.getMessage());
+		}		
+	}
+
+	public static Node xpathSingle(String expression, Document source) throws XPathExpressionException {
+		XPath xp = getXPath();
+		NodeList nl = (NodeList) xp.evaluate(expression, source, XPathConstants.NODESET);
+		if(nl.getLength() > 0) return nl.item(0);
+		return null;
 	}
 }

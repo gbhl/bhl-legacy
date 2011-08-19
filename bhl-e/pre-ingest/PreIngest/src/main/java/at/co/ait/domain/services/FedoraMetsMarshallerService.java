@@ -13,6 +13,9 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.commons.io.FileUtils;
 import org.jdom.JDOMException;
@@ -88,25 +91,28 @@ public class FedoraMetsMarshallerService {
 		DmdSec dmd = null;
 
 		// create dmd entry for each METADATA file
+		boolean addDC = true;
 		for (DigitalObject digobj : obj.getDigitalobjects()) {
 			if (digobj.getObjecttype() == DigitalObjectType.METADATA) {
 				String label = "derivative";
+				File marc = digobj.getSubmittedFile();
 				dmd = newDmdEntry(digobj.getOrder(), "OTHER", label, //$NON-NLS-1$ //$NON-NLS-2$
 						digobj.getSmtoutput());
 				mets.addDmdSec(dmd);
-				File marc = digobj.getSubmittedFile();
-				File dublinCore = ConfigUtils.getAipFile(digobj.getPrefs().getBasedirectoryFile(),
-						marc, "_dc.xml"); 
-				extractDublinCore(marc, dublinCore);
-				if(dublinCore.exists()) {
-					DmdSec dmdDC = mets.newDmdSec();
-					dmdDC.setID(label + "-" + digobj.getOrder() + "-DC"); //$NON-NLS-1$
-					MdWrap mdw = dmdDC.newMdWrap();
-					mdw.setMDType("DC");
-					mdw.setLabel(label + "-DC");
-					mdw.setXmlData(DOM.parse(dublinCore).getDocumentElement());
-					dmdDC.setMdWrap(mdw);
-					mets.addDmdSec(dmdDC);
+				if(addDC) {
+					File dublinCore = ConfigUtils.getAipFile(digobj.getPrefs().getBasedirectoryFile(),
+							marc, "_dc.xml"); 
+					extractDublinCore(digobj, dublinCore);
+					if(dublinCore.exists()) {
+						DmdSec dmdDC = mets.newDmdSec();
+						dmdDC.setID(label + "-" + digobj.getOrder() + "-DC"); //$NON-NLS-1$
+						MdWrap mdw = dmdDC.newMdWrap();
+						mdw.setMDType("DC");
+						mdw.setLabel(label + "-DC");
+						mdw.setXmlData(DOM.parse(dublinCore).getDocumentElement());
+						dmdDC.setMdWrap(mdw);
+						mets.addDmdSec(dmdDC);
+					}
 				}
 			}
 		}
@@ -219,13 +225,14 @@ public class FedoraMetsMarshallerService {
 
 		mets.addStructMap(sm);
 
-		logger.debug(DOM.docToString(mw.getMETSDocument()));
+		//logger.debug(DOM.docToString(mw.getMETSDocument()));
 		mw.validate();
 
 		return mw;
 	}
 
-	private void extractDublinCore(File marc21File, File output) {
+	private void extractDublinCore(DigitalObject digobj, File output) {
+		File marc21File = digobj.getSubmittedFile();
 		Document marc21 = DOM.parse(marc21File);
 		if(marc21 == null) {
 			logger.warn(marc21File.getAbsolutePath() + " is no valid XML");
@@ -235,13 +242,55 @@ public class FedoraMetsMarshallerService {
 			Transformer marc21ToDC = DOM.getTransformer(new File(
 					this.getClass().getResource("/gov/loc/MARC21slim2OAIDC.xsl").toURI()));
 			marc21ToDC.transform(new DOMSource(marc21), new StreamResult(output));
-			Document dc = DOM.parse(output);
-			
+			if(output.exists()) {
+				Document dc = DOM.parse(output);
+				if(dc == null ||dc.getDocumentElement() == null 
+						|| !dc.getDocumentElement().hasChildNodes()) {
+					output.delete();
+				} else {
+					// set collection
+					File basedir = digobj.getPrefs().getBasedirectoryFile();
+					// look for .dataprovider subdir in all parent folder of marc file.
+					XPathExpression findIdentifier = DOM.getXPath("//dc:identifier");
+					
+					search_dp_info:
+					for(File folder = marc21File; (folder = folder.getParentFile()) != null; ) {
+						File dp = new File(folder, ".dataprovider");
+						if(dp.isDirectory()) {
+							for(File dpInfo : dp.listFiles()) {
+								if(!dpInfo.getName().toLowerCase().endsWith(".xml")) continue;
+								
+								Document dpDC = DOM.parse(dpInfo);
+								if(dpDC == null) continue;
+								
+								NodeList ids = (NodeList) findIdentifier.evaluate(dpDC, XPathConstants.NODESET);
+								if(ids.getLength() == 0) continue;
+								
+								Node insPos = DOM.xpathSingle("//dc:*[position()=last()]", dc);
+								for(int ofs = ids.getLength(); ofs-- > 0 ;) {
+									Element dpIdentifier = (Element) ids.item(0);
+									Node insertee = dc.createElementNS(DOM.NS.dc.URI, "dc:relation");
+									insertee.appendChild(dc.createTextNode(dpIdentifier.getTextContent()));
+									insPos.getParentNode().insertBefore(insertee, insPos.getNextSibling());
+								}
+								break search_dp_info;
+							}
+						}
+						if(folder.equals(basedir)) break;
+					}
+					DOM.save(dc, output);
+				}
+			}
 		} catch (TransformerException e) {
 			logger.warn("Transformation of " + marc21File.getAbsolutePath()
 					+ " to DC failed: " + e.getMessage());
 		} catch (URISyntaxException e) {
 			logger.error("Missing XSL file " + e.getMessage());
+		} catch(IOException e) {
+			logger.warn("Transformation of " + marc21File.getAbsolutePath()
+					+ " to DC failed: " + e.getMessage());
+		} catch (XPathExpressionException e) {
+			logger.error("XPath invalid: " + e.getMessage());
 		}
 	}
 
@@ -273,7 +322,7 @@ public class FedoraMetsMarshallerService {
 	/**
 	 * Enriches the information package object by adding METS metadata
 	 * 
-	 * @param obj
+	 * @param infPkg
 	 * @return
 	 * @throws ParserConfigurationException
 	 * @throws JDOMException
@@ -281,25 +330,25 @@ public class FedoraMetsMarshallerService {
 	 * @throws SAXException
 	 * @throws METSException
 	 */
-	public InformationPackageObject marshal(InformationPackageObject obj,
+	public InformationPackageObject marshal(InformationPackageObject infPkg,
 			UserPreferences prefs) throws JDOMException,
 			ParserConfigurationException, IOException, METSException,
 			SAXException {
 		logger.info("Fedora METS Marshaller");
 		
-		obj.setMets(createMETS(obj, prefs));
+		infPkg.setMets(createMETS(infPkg, prefs));
 		File metsfile = ConfigUtils.getAipFile(prefs.getBasedirectoryFile(),
-				obj.getSubmittedFile(), ".mets.xml"); //$NON-NLS-1$
-		obj.setMetsfileurl(ConfigUtils.createFileURL(metsfile));
-		Document doc = obj.getMets().getMETSDocument();
+				infPkg.getSubmittedFile(), ".mets.xml"); //$NON-NLS-1$
+		infPkg.setMetsfileurl(ConfigUtils.createFileURL(metsfile));
+		Document doc = infPkg.getMets().getMETSDocument();
 
-		Element element = (Element) doc.getElementsByTagName("mets").item(0);
-		element.setAttribute("EXT_VERSION", "1.1");
-		element.setAttribute("xmlns", "http://www.loc.gov/METS/");
-		element.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
-		element.setAttribute("xmlns:xsi",
+		Element metsRoot =doc.getDocumentElement();
+		metsRoot.setAttribute("EXT_VERSION", "1.1");
+		metsRoot.setAttribute("xmlns", "http://www.loc.gov/METS/");
+		metsRoot.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
+		metsRoot.setAttribute("xmlns:xsi",
 				"http://www.w3.org/2001/XMLSchema-instance");
-		element.setAttribute(
+		metsRoot.setAttribute(
 				"xmlns:schemaLocation",
 				"http://www.loc.gov/METS/ http://www.fedora.info/definitions/1/0/mets-fedora-ext1-1.xsd");
 
@@ -308,20 +357,23 @@ public class FedoraMetsMarshallerService {
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1")); //$NON-NLS-1$
 		String currentTime = df.format(cal.getTime());
 
-		NodeList nodeList = doc.getElementsByTagName("dmdSec");
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node node = nodeList.item(i);			
-			Node content = node.getChildNodes().item(0).cloneNode(true);
-			Element add = doc.createElement("descMD");
-			add.setAttribute("ID", "DESC." + String.valueOf(i));
-			node.replaceChild(add, node.getChildNodes().item(0));
-			add.appendChild(content);
+		int idNum = 0;
+		for (Node node = metsRoot.getFirstChild(); node != null; node = node.getNextSibling()) {
+			if(!"dmdSec".equals(node.getNodeName())) continue;
+			
+			Element descMD = doc.createElement("descMD");
+			descMD.setAttribute("ID", "DESC." + String.valueOf(idNum++));
+			
+			for(Node ch = node.getFirstChild(); ch != null; ch = ch.getNextSibling()) {
+				descMD.appendChild(ch);
+			}
+			node.appendChild(descMD);
 			doc.renameNode(node, "", "dmdSecFedora");
 		}
 		
 		String remElement = "structMap";		
-		element = (Element)doc.getElementsByTagName(remElement).item(0);
-		element.getParentNode().removeChild(element);
+		Element structMap = (Element)doc.getElementsByTagName(remElement).item(0);
+		structMap.getParentNode().removeChild(structMap);
 		doc.normalize();
 
 		OutputFormat format = new OutputFormat(doc);
@@ -332,7 +384,7 @@ public class FedoraMetsMarshallerService {
 		XMLSerializer serializer = new XMLSerializer(out, format);
 		serializer.serialize(doc);
 		out.close();
-		return obj;
+		return infPkg;
 	}
 
 }
