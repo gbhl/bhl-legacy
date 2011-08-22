@@ -105,13 +105,14 @@ public class FedoraMetsMarshallerService {
 					extractDublinCore(digobj, dublinCore);
 					if(dublinCore.exists()) {
 						DmdSec dmdDC = mets.newDmdSec();
-						dmdDC.setID(label + "-" + digobj.getOrder() + "-DC"); //$NON-NLS-1$
+						dmdDC.setID("DC"); //$NON-NLS-1$
 						MdWrap mdw = dmdDC.newMdWrap();
 						mdw.setMDType("DC");
 						mdw.setLabel(label + "-DC");
 						mdw.setXmlData(DOM.parse(dublinCore).getDocumentElement());
 						dmdDC.setMdWrap(mdw);
 						mets.addDmdSec(dmdDC);
+						addDC = false;
 					}
 				}
 			}
@@ -360,9 +361,15 @@ public class FedoraMetsMarshallerService {
 		int idNum = 0;
 		for (Node node = metsRoot.getFirstChild(); node != null; node = node.getNextSibling()) {
 			if(!"dmdSec".equals(node.getNodeName())) continue;
+			Element dmdSec = (Element) node;
+			
 			
 			Element descMD = doc.createElement("descMD");
-			descMD.setAttribute("ID", "DESC." + String.valueOf(idNum++));
+			if("DC".equals(dmdSec.getAttribute("ID"))) {
+				descMD.setAttribute("ID", "DC1.0");
+			} else {
+				descMD.setAttribute("ID", "DESC." + String.valueOf(idNum++));
+			}
 			
 			for(Node ch = node.getFirstChild(); ch != null; ch = ch.getNextSibling()) {
 				descMD.appendChild(ch);
