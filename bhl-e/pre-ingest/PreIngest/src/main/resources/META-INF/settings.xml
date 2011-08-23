@@ -185,5 +185,19 @@
 				<smtparams>-m c -cm 5</smtparams>
 			</at.co.ait.web.common.UserPreferences>
 		</entry>
+		<entry>
+			<string>gfbs</string>
+			<at.co.ait.web.common.UserPreferences>
+				<username>gfbs</username>
+				<password>gfbs</password>
+				<roles>
+					<string>ROLE_USER</string>
+				</roles>
+				<basedirectory>file:/mnt/nfs-demeter/upload/providers/de-gfbs</basedirectory>
+				<workdirectory>file:/mnt/nfs-demeter/ingest/de-gfbs</workdirectory>
+				<organization>GfBS</organization>
+				<smtparams>-m c -cm 5</smtparams>
+			</at.co.ait.web.common.UserPreferences>
+		</entry>
 	</userprefs>
 </at.co.ait.web.common.Settings>
