@@ -644,6 +644,7 @@ abhandlungenzurg1493preu
 abhandlungenzurg1593preu
 abhandlungenzurg1695preu
 abhandlungenzurg1803preu
+abhandlungenzurg1883preu
 abhandlungenzurg1891preu
 abhandlungenzurg1892preu
 abhandlungenzurg1893preu
@@ -654,12 +655,20 @@ abhandlungenzurg2094preu
 abhandlungenzurg2196preu
 abhandlungenzurg2297preu
 abhandlungenzurg2697preu
+abhandlungenzurg2797preu
+abhandlungenzurg2897preu
 abhandlungenzurg2999preu
 abhandlungenzurg3100preu
 abhandlungenzurg3200preu
 abhandlungenzurg3401preu
+abhandlungenzurg3501preu
+abhandlungenzurg3601preu
 abhandlungenzurg3702preu
+abhandlungenzurg3803preu
 abhandlungenzurg51892preu
+abhandlungenzurg71892preu
+abhandlungenzurg81892preu
+abhandlungenzurg8587preu
 abhandlungenzurg8589preu
 abhandlungvonder00bloc
 abiologicalsurve01sumn
@@ -5246,6 +5255,7 @@ annualrepor1012185759newy
 annualrepor1119197886west
 annualrepor2028198795west
 annualrepor2425187071newy
+annualrepor2830187577newy
 annualrepor2931199698west
 annualreport00flor
 annualreport00geol
@@ -6037,6 +6047,7 @@ annualreportofpe72penn
 annualreportofqu1317soci
 annualreportofqu16soci
 annualreportofqu711soci
+annualreportofr211867newy
 annualreportofr221868newy
 annualreportofre23statuoft
 annualreportofre61853newy
@@ -7380,6 +7391,8 @@ archivfranatom1872leip
 archivfranatom1874berl
 archivfranatom1875berl
 archivfranatom1876leip
+archivfranatomie1835leip
+archivfranatomie1850leip
 archivfrbionto10607gese
 archivfrbionto209gese
 archivfrdiebot02rm
@@ -9224,6 +9237,7 @@ beitragzurmonogr00hoen
 beitragzurosteol00oort
 beitragzurpalo00rich
 beitragzurschmet00lede
+BeitraYgezurken00Kirs
 beitrgekenntni11912rich
 beitrgezu1418791882stei
 beitrgezueiner00neum
@@ -9921,6 +9935,8 @@ beytrgezueiner00stud
 beytrgezurbeschr00west
 beytrgezurgesc00jacq
 beytrgezurnatu00eich
+BHLAU000011821674NAMU01
+BHLAU000011821674NAMU02
 bi2004ologicalintegrbahlrich
 biasbuoymeasurem00sing
 bibleofnaturefiv00thom
@@ -15655,6 +15671,7 @@ bulletinofgeol321921geol
 bulletinofgeolo221911geol
 bulletinofgeolo30geol
 bulletinofgeolo311920geol
+bulletinofgeolo341923geol
 bulletinofgeolog01geol
 bulletinofgeolog03geol
 bulletinofgeolog04geol
@@ -18544,7 +18561,6 @@ catalogueofcolle04britrich
 catalogueofcolle05brit
 catalogueofcolle05briti
 catalogueofcolle05britrich
-catalogueofcolle08elli
 catalogueofcolle12elli
 catalogueofcolle13dear
 catalogueofcolle14dear
@@ -18583,8 +18599,6 @@ catalogueofechin01aust
 catalogueofecono00bombrich
 catalogueofecono00saunrich
 catalogueofecono00wins
-catalogueofedwar161edwa
-catalogueofedwar162edwa
 catalogueofelect00mawsrich
 catalogueofentri01bays
 catalogueofentri02bays
@@ -23636,6 +23650,7 @@ continuouscroppi00wibbrich
 continuousmassre37sura
 continuousrecord00barurich
 contractsinfores00unit
+contribl1316188990loca
 contribtogeology00learich
 contribucinalc00dono
 contribucinalc00liss
@@ -23655,6 +23670,8 @@ contribucionlafa00aran
 contribucionlama00gund
 contribuiesparab00lfgr
 contribuiparaoco00amar
+contribul912188889loca
+contributiol18188189loca
 contribution00falc
 contribution3fimill
 contributionales00pazo
@@ -24514,6 +24531,7 @@ crustaceamacrura152schm
 crustaceamalacos02hans
 crustaceamalacos11mein
 crustaceamalacos12hans
+crustaceamalacos3419161920hans
 crustaceanorway01sarsrich
 crustaceans00corn
 crustaceaofdevon00norm
@@ -32495,6 +32513,7 @@ faunedesvertbr03fati
 faunedesvertdela01dubo
 faunedesvertdela02dubo
 faunedupaysdelux00dela
+Fauneentomologi00Bois
 fauneentomologi01bois
 fauneentomologi02bois
 fauneentomologiq00bois
@@ -40628,6 +40647,24 @@ historyofberwick00berwrich
 historyofberwick01berw
 historyofberwick02berw
 historyofberwick03berw
+historyofberwick06berw
+historyofberwick07berw
+historyofberwick08berw
+historyofberwick09berw
+historyofberwick10berw
+historyofberwick11berw
+historyofberwick12berw
+historyofberwick14berw
+historyofberwick15berw
+historyofberwick17berw
+historyofberwick20berw
+historyofberwick21berw
+historyofberwick37berw
+historyofberwick38berw
+historyofberwick39berw
+historyofberwick50berw
+historyofberwick56berw
+historyofberwick63berw
 historyofbiology00mial
 historyofbiology00mialrich
 historyofbiology00mialuoft
@@ -45787,6 +45824,7 @@ journalmitchel36elis
 journalofaca25186263acad
 journalofacad26186669acad
 journalofacade212190204ac
+journalofacademy01acad
 journalofacademy01acaduoft
 journalofacademy02acad
 journalofacademy03acaduoft
@@ -45956,6 +45994,7 @@ journalofcincinn14cinc
 journalofcincinn20cinc
 journalofcincinn21cinc
 journalofcincinn22cinc
+journalofco2819101911toky
 journalofcol118861887toky
 journalofcoll08toky
 journalofcoll36191315toky
@@ -46040,6 +46079,7 @@ journalofcompara33wist
 journalofcompara34wist
 journalofconchol10190103conc
 journalofconchol11190406conc
+journalofconchol111conc
 journalofconchol12190709conc
 journalofconchol13191012conc
 journalofconchol14191315conc
@@ -47585,6 +47625,7 @@ lagronomeoudicti02alle
 laguadelouperens00ball
 laguyanefranai00bouy
 laintroduccind00chil
+lairdleesstandar00hall
 lakebonneville00gilb
 lakebonneville01gilb
 lakeforestasihav00bark
@@ -50520,6 +50561,7 @@ magazinfrdiena02hp
 magazinfrdiena03hp
 magazinfrdiena04hp
 magazinfrinsek06illi
+magicmirrororart00byrn
 magicplantsbeing00heuc
 magnersabcguidet00magn
 magnersstoryoftw00magn
@@ -52725,6 +52767,7 @@ memoirsonphysiol00burduoft
 memoirspresented01cali
 memoirspro41018959640manc
 memoirsproc4418909134manc
+memoirsproc4918949539manc
 memoirsproc6465191921manc
 memoirsproce43189033manc
 memoirsproce43189899manc
@@ -58154,6 +58197,8 @@ neuesjahrbuchfer1837stut
 neuesjahrbuchfer1850stut
 neuesjahrbuchfer1851stut
 neuesjahrbuchfer1862stut
+neuesjahrbuchfrm1841leon
+neuesjahrbuchfrm1845leon
 neuesmagazinfr01fues
 neuesmagazinfr02fues
 neuessystematisc1017871788mart
@@ -59750,6 +59795,7 @@ nouvelleicono00gour
 nouvelleiconogr00gour
 nouvelleiconogra00gour
 nouvellemthode00juri
+nouvellesannales01mus
 nouvellesannales02muse
 nouvellesannales03musn
 nouvellesannales04musn
@@ -63149,8 +63195,10 @@ palaeontographic56cass
 palaeontographic5759199196pale
 palaeontographic60pale
 palaeontographic612pale
+palaeontographic61cass
 palaeontographic63841196870pale
 palaeontographic63cass
+palaeontographic64cass
 palaeontographic74246197073pale
 palaeontographic9521980pale
 palaeontographic9531981pale
@@ -69337,6 +69385,7 @@ puresaddlehorses01curr
 purificationpart00baum
 purificationplan00wisc
 purificationprop00jonerich
+pussywantscorner00leff
 putnamsgardenhan00croyrich
 putnamsvegetable00croyrich
 pycnogonida00hodg
@@ -70507,6 +70556,7 @@ remarksupontwosp17elli
 remarquessurlafa00vlai
 remarquessurlana00gerv
 remarquessurless00sauv
+Remarquessurlor1Dubo
 remarquesurlades00nett
 remarqvesnecessa00mori
 remediesforhogch00keny
@@ -75004,7 +75054,6 @@ shellfishcontami00stilrich
 shellfishindustr00kell
 shellfishindustr00kellrich
 shellfishindustr01kell
-shelllifeintrod00step
 shelllifeintrodu00step
 shellsalessonson00mayorich
 shellsasevidence00jack
@@ -84323,10 +84372,6 @@ unitedstatescens398unit
 unitedstatescens399unit
 unitedstatesdepa38wanluoft
 unitedstatesexpl01unitrich
-unitedstatesexpl02unitrich
-unitedstatesexpl03unitrich
-unitedstatesexpl04unitrich
-unitedstatesexpl05unitrich
 unitedstatesexpl06unitrich
 unitedstatesexpl07unitrich
 unitedstatesexpl10unitrich
@@ -88605,6 +88650,7 @@ zootomiederpalud00spey
 zortmanlanduskym00mitcrich
 zosteropidae15fins
 zprvyozasednkrlo1890knig
+zprvyozasednkrlo1891knig
 zprvyozasednkrlo1893knig
 zprvyozasednkrlo1896knig
 zprvyozasednkrlo1913knig
