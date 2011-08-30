@@ -424,12 +424,15 @@ class DataHandlerModsController extends DataHandlerModel
 	
 	  foreach ($relatedItems as $relatedItem) {
 	
-			if ($relatedItem->getAttribute('type') == 'host' && $this->data_type == $biblioTypes['article']) {
+			// added per request 2011 08 30
+			if (($relatedItem->getAttribute('type') == 'series' || $relatedItem->getAttribute('type') == 'host') && $this->data_type == $biblioTypes['article']) {
+			//if ($relatedItem->getAttribute('type') == 'host' && $this->data_type == $biblioTypes['article']) {
 				// Get journal title
 				$journalTitleInfo = $relatedItem->getElementsByTagName('titleInfo');
 	
 				if ($journalTitleInfo->length > 0) {
-					$this->data_secondary_title = $journalTitleInfo->item(0)->getElementsByTagName('title')->item(0)->nodeValue;		
+					//$this->data_secondary_title = $journalTitleInfo->item(0)->getElementsByTagName('title')->item(0)->nodeValue;	 // changed per request 2011 08 30
+					$this->data_original_publication = $journalTitleInfo->item(0)->getElementsByTagName('title')->item(0)->nodeValue;
 				}
 			
 				// Get volume/issue/pages
