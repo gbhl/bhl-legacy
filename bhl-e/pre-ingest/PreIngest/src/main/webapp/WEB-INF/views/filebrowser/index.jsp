@@ -76,8 +76,6 @@
 <option value="hun">hun</option>
 <option value="ind">ind</option>
 <option value="ita">ita</option>
-<option value="lang">lang</option>
-<option value="language">language</option>
 <option value="lav">lav</option>
 <option value="lit">lit</option>
 <option value="nld">nld</option>
