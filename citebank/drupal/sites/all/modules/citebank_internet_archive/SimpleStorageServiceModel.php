@@ -322,7 +322,11 @@ class SimpleStorageServiceModel
 			$rest->setHeader('Content-Type', 'application/xml');
 		}
 		
+		$msg = 'SEND ' . print_r($rest);
+		$this->watchdog($msg);
 		$rest = $rest->getResponse();
+		$msg = 'RCVD ' . print_r($rest);
+		$this->watchdog($msg);
 
 		if ($rest->error === false && $rest->code !== 200 && $rest->code !== 201) {
 			$rest->error = array('code' => $rest->code, 'message' => 'Unexpected HTTP status');
@@ -512,6 +516,9 @@ class SimpleStorageServiceModel
 			$rest->setAmzHeader('x-archive-meta-mediatype', 'texts');
 			$rest->setAmzHeader('x-archive-ignore-preexisting-bucket', '1');  // supposed to ignore a preexisting bucket
 			$rest->setAmzHeader('x-archive-meta-language', 'eng');
+			
+			//x-archive-queue-derive:0
+			$rest->setAmzHeader('x-archive-queue-derive', '0');
 
 			$msg = 'size hint: (' . $rest->size . ')';
 			$this->watchdog($msg);
