@@ -44,6 +44,7 @@ class InternetArchiveModel
 	public $publicationNames;
 	public $publicationKeys;
 	public $listFlag;
+	public $fileMissing;
 
 	const CLASS_NAME    = 'InternetArchiveModel';
 	// in the database, has a drupal front end to change them
@@ -65,6 +66,9 @@ class InternetArchiveModel
 	const PATH_MODULE          = 'all/modules/citebank_internet_archive';
 	const PATH_FIX             = 'default/files';
 
+//	const OVERSIZE_THRESHOLD = 110;  //160
+	const OVERSIZE_THRESHOLD = 69;  //160
+
 	/**
 	 * _construct - constructor
 	 */
@@ -78,6 +82,8 @@ class InternetArchiveModel
 	 */
 	function initDefaults()
 	{
+		$this->fileMissing = false;
+		
 		$configs = $this->getConfig();
 		$this->configs = $configs;
 		$this->loggingFlag = $configs['loggingFlag'];
@@ -179,6 +185,49 @@ class InternetArchiveModel
 	}
 
 	/**
+	 * watchdog - logging
+	 */
+	function watchdogtime($msg)
+	{
+		if ($this->loggingFlag) {
+			$msg = date('YmdHis') . ' ' . $msg;
+			watchdog('IATime', $msg);
+		}
+	}
+
+	/**
+	 * curl_get_file_contents - curl replacement for file_get_contents
+	 */
+	function curl_get_file_contents($URL)
+	{
+		$c = curl_init();
+		
+		curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($c, CURLOPT_URL, $URL);
+
+		$contents = curl_exec($c);
+
+		curl_close($c);
+		
+		if ($contents) {
+			return $contents;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * watchdog - logging
+	 */
+	function watchdogtimer($msg)
+	{
+		if ($this->loggingFlag) {
+			$msg = date('YmdHis') . ' ' . $msg;
+			watchdog('IATimeTotals', $msg);
+		}
+	}
+
+	/**
 	 * process - check if set up (if not perform setup - handled in constructor initilization)
 	 */
 	function process()
@@ -207,6 +256,8 @@ class InternetArchiveModel
 	function runExternalCronProcess()
 	{
 		$statusInfo = 1;
+		
+		$this->watchdogtime('runExternalCronProcess start');
 
 		if ($this->isRunning()) {
 			// continue 
@@ -224,6 +275,8 @@ class InternetArchiveModel
 			$this->watchdog('runExternalCronProcess done');
 		}
 
+		$this->watchdogtime('runExternalCronProcess done');
+		
 		return $statusInfo;
 	}
 
@@ -255,6 +308,67 @@ class InternetArchiveModel
 	}
 	
 	/**
+	 * sizeCheck - check if size of file, given a size, is beyond a threshold size
+	 */
+	function sizeCheck($size, $threshold = self::OVERSIZE_THRESHOLD)
+	{
+		if ($size > $threshold) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+		
+	/**
+	 * getRemoteSizeCheck - get remote file size, reduce to number to whole number in megs (any below a meg is zero)
+	 */
+	function getRemoteSizeCheck($url)
+	{
+		return $this->convertMeg($this->getRemoteSize($url));
+	}
+		
+	/**
+	 * isOverSized - check if external file is beyond a threshold size
+	 */
+	function isOverSized($url, $threshold = self::OVERSIZE_THRESHOLD)
+	{
+		if ($this->convertMeg($this->getRemoteSize($url)) > $threshold) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+		
+	/**
+	 * convertMeg - reduce size number to integer megs
+	 */
+	function convertMeg($size)
+	{
+		if ($size > 0) {
+			return round(($size) / (1024 * 1024));
+		} else {
+			return 0;
+		}
+	}
+	
+	/**
+	 * getRemoteSize - get size of a remote file without downloading it
+	 */
+	function getRemoteSize($url)
+	{
+		// http://php.net/manual/en/function.filesize.php
+		// Josh Finlay <josh at glamourcastle dot com> 12-Nov-2006 08:22
+		$headers = get_headers($url, 1);
+		
+		if ((!array_key_exists("Content-Length", $headers))) { 
+			$this->fileMissing = true;
+			return false; 
+		}
+		
+		return $headers["Content-Length"];
+	}
+
+	/**
 	 * processInternetArchiveRecords - check if set up (if not perform setup), look for items to send, and send them.  this does the heavy lifting.
 	 */
 	function processInternetArchiveRecords()
@@ -266,6 +380,9 @@ class InternetArchiveModel
 		$title  = 'title';
 		$year   = 'biblio_year';
 		$url    = 'biblio_url';
+		
+		$this->watchdogtime('process IA start');
+
 			
 		$nidList = $this->getAllReadyNids();
 		
@@ -326,9 +443,14 @@ class InternetArchiveModel
 		
 			$flagString = false;
 			
+			$timerStart = date('YmdHis');
+			$this->watchdogtime('nidList start' . $nid);
+
 			$this->watchdog('get item nid: ' . $nid);
 			// process
 			$fileToSend = $this->getItem($nid);
+			
+			$this->watchdogtime('file to send ' . $nid);
 			
 			$msg = 'url: ['.$url.']';
 			$this->watchdog($msg);
@@ -344,7 +466,40 @@ class InternetArchiveModel
 				// bhl article pdf
 				// use remote file
 				$fileToSend = '';
+				
+				// check files over a threshold size, skip if too large, mark them to find later
+				$this->fileMissing = false;
+				$this->watchdogtime('remote to send S ' . $nid);
+				$remoteFileMegs = $this->getRemoteSizeCheck($url);
+				// if too large, note and skip
+				if ($this->sizeCheck($remoteFileMegs) || $this->fileMissing) {
+					$archive_status = -5;  // too big
+
+					$msg = 'remote file is over sized: ['.$remoteFileMegs.'] megs';
+					
+					if ($this->fileMissing) {
+						$archive_status = -4;  // file missing
+						$msg = 'remote file is missing';
+					}
+					
+					$this->updateArchiveRecordStatus($nid, $archive_status);
+					$this->watchdog($msg);
+					
+					continue;
+					//$statusInfo[] = array('nid' => $nid, 'status' => 0);
+					//return $statusInfo;
+				}
+				$this->watchdogtime('remote to send E ' . $nid);
+				
 				$fileToSend = file_get_contents($url);  // get the remote file data
+				//$fileToSend = $this->curl_get_file_contents($url);  // get the remote file data
+				
+				if ($fileToSend === false) {
+					$msg = 'remote fileToSend FALSE: ['.$url.']';
+					$this->watchdog($msg);
+					$this->watchdogtime('file_get_contents FALSE ' . $nid);
+				}
+				$this->watchdogtime('file_get_contents E ' . $nid . ' size:' . $remoteFileMegs . ' x:' . strlen($fileToSend));
 
 				$msg = 'remote fileToSend: ['.$url.']';
 				$this->watchdog($msg);
@@ -354,10 +509,12 @@ class InternetArchiveModel
 
 			$msg = 'fileToSend: ['. ($flagString ? $url : $fileToSend) .']';
 			$this->watchdog($msg);
+			$this->watchdogtime('fileToSend ' . $nid . ' ' . $msg);
 
 			// no file name, then we best mark it so not to process and get out 
 			if (empty($fileToSend)) {
 				$archive_status = -2;  // TODO: maybe use the define, or make another one, for this case where we don't have files but should?
+				$this->watchdogtime('empty file ' . $nid . ' ' . $fileToSend);
 				$this->updateArchiveRecordStatus($nid, $archive_status);
 
 				$msg = 'Cannot process. No file to send. ('.$nid.')';
@@ -370,15 +527,29 @@ class InternetArchiveModel
 			// build the IA (Internet Archive) name, the meta data, and send it over to IA
 			$msg = 'bucket';
 			$this->watchdog($msg);
+			$this->watchdogtime('makeIARecordName S ' . $nid);
 			$bucket     = $this->makeIARecordName($nid, $title, $year);
+			$this->watchdogtime('makeIARecordName E ' . $nid);
+			//$bucket = str_replace('/', '', $bucket);  // no slashes in the name, for crying out loud.  stupid titles.
+			//$bucket = str_replace('?', '', $bucket);  // no slashes in the name, for crying out loud.  stupid titles.
+
 			$msg = 'metadata';
 			$this->watchdog($msg);
+			$this->watchdogtime('makeIARecordMetaData S ' . $nid);
 			$metaData   = $this->makeIARecordMetaData($nid);
+			$this->watchdogtime('makeIARecordMetaData E ' . $nid);
 
 			$msg = 'putitem';
 			$this->watchdog($msg);
+
+			$this->watchdogtime('putItem S ' . $nid);
 			$status     = $this->putItem($fileToSend, $bucket, $metaData, $flagString);
+			$this->watchdogtime('putItem E ' . $nid . ' status:' . $status);
 			$msg = 'putitem status ' . $status;
+			$this->watchdog($msg);
+
+			$msg = 'fileToSend: ['. ($flagString ? $url : $fileToSend) .']';
+			//$msg = 'fileToSend: ' . $fileToSend;
 			$this->watchdog($msg);
 
 			// check off our item in the queue, preserve the original link, note the IA name
@@ -387,11 +558,11 @@ class InternetArchiveModel
 				$this->watchdog($msg);
 				$this->markSentToIA($nid);
 				$this->updateBiblioUrl($nid, $bucket, $url);  // change biblio_url to www.archive.org/details/cbarchive_$nid_$bucket
+				// enhancement, directly link to the pdf at IA instead of the IA bucket, change biblio_url to www.archive.org/download/cbarchive_$nid_$bucket/ root filename of $fileToSend
 			} else if ($status == -1) {
 				// failed put file
 				// log entry?
-				$msg = 'status -1';
-				$this->watchdog($msg);
+				$msg = 'status -1';				$this->watchdog($msg);
 
 			} else if ($status == -3) {
 				// failed put file
@@ -414,8 +585,13 @@ class InternetArchiveModel
 			$statusInfo[] = array('nid' => $nid, 'status' => $status);
 			$msg = 'statusinfo: ' . print_r($statusInfo, 1);
 			$this->watchdog($msg);
+			
+			$timerEnd = date('YmdHis');
+			$this->watchdogtimer('timer total ('.$nid.'):' . ((0 + $timerEnd) - (0 + $timerStart)));
 		}
+		$this->watchdogtime('nidList end' . $nid);
 
+		$this->watchdogtime('process IA done');
 		$this->watchdog('done');
 
 		return $statusInfo;
@@ -526,6 +702,8 @@ class InternetArchiveModel
 		$bucketName = $bucket;  // basically must be a unique identifier, like a serial number, that will be the IA entry name link
 		// like so: http://www.archive.org/details/cbarchive_123456_booktitlegoeshere2011
 		// bucketName = cbarchive_123456_booktitlegoeshere2011
+		//$bucketName = str_replace('/', '', $bucketName);  // no slashes in the name, for crying out loud.  stupid titles.  todo: clean out all wacky chars in the name.
+		$this->watchdog('bucket name: ' . $bucketName);
 
 		if (!$bucket) {  // where's mah bucket?
 			return $status;
@@ -554,11 +732,13 @@ class InternetArchiveModel
 			// string item, cut up the bucket name and peel out a reasonable file name (remember it is title and year)
 			// uriName: the name of the item that is put in the bucket, ie "test.pdf"
 			$namePieces = explode('_', $bucketName);
-
 			$basename = $namePieces[2] . '.pdf';  
+			
+			//$basename = baseName($uploadFile);
+
 			$uriName = $this->filterSymbols($basename);
 		}
-
+		
 		// make an Internet Archive bucket, put the file and it's metadata there
 		if ($this->s3Model->putBucket($bucketName)) {
 
@@ -573,7 +753,7 @@ class InternetArchiveModel
 		} else {
 			// bucket exists? retry and just send the data to it.
 			// check if bucket exists, then just put the data
-			$this->watchdog('bucket exists, retry to send data');
+			$this->watchdog('bucket exists, retry to send data: ' . $bucketName);
 
 			$list = $this->listBuckets();
 			
@@ -769,25 +949,35 @@ class InternetArchiveModel
 		$prefix = $this->prefix;
 		
 		$title = $this->cleanTitle($title);
+		$title = $this->filterAllSymbols($title);
 		
 		$author = $this->cleanAuthor($author);
+
+		//$title = str_replace('/', '', $title);  // no slashes in the name, for crying out loud.  stupid titles.
+		//$title = str_replace('?', '', $title);  // no question marks in the name
 
 		// cbarchive_12345_bookofbutterfli1876
 		$recordName = strtolower($prefix . '_' . $nid . '_' . $title . $year);
 		//$recordName = strtolower($prefix . '_' . $nid . '_' . $title . $year . 'xtest120');  // FIXME: testing.  put back to normal
+
+		// remove stray dashes
+		$recordName = $this->filterOddChars($recordName);
 		
 		return $recordName;
 	}
 
 	/**
 	 * updateBiblioUrl - change biblio_url to www.archive.org/details/cbarchive_$nid_$bucket and remember old url
+	 *  enhancement, directly link to the pdf at IA instead of the IA bucket, change biblio_url to www.archive.org/download/cbarchive_$nid_$bucket/ root filename of $fileToSend
 	 */
+	//function updateBiblioUrl($nid, $bucket, $url, $fileToSend)
 	function updateBiblioUrl($nid, $bucket, $url)
 	{
 		$table = self::ARCHIVE_TABLE;
 		$ret = false;
 		
 		$bucketUrl = 'http://www.archive.org/details/' . $bucket . '';
+		//$bucketUrl = 'http://www.archive.org/download/' . $bucket . '/' . $this->getRootFileName($url); //$fileToSend;
 
 		// set url and ia title in our queue table
 		$sql = 'UPDATE ' . $table . ' SET biblio_url = ' . "'"  . $url . "'" . ', ia_title = ' . "'" . $bucket . "'" . ' WHERE nid = ' . $nid . '';
@@ -802,6 +992,22 @@ class InternetArchiveModel
 		$ret = ($ret ? true : false);  // make if data, true else false
 
 		return $ret;
+	}
+
+	/**
+	 * getRootFileName - get the root file name from the url 
+	 *   http://www.biodiversitylibrary.org/pdf1/000100700037171.pdf  becomes  000100700037171.pdf
+	 *   http://citebank.org/sites/default/files/MN_V38_N3_P422.pdf   becomes  MN_V38_N3_P422.pdf
+	 */
+	function getRootFileName($url)
+	{
+		$filename = '';
+	
+		$pos = strrpos($url, '/') + 1; // position past last slash
+		
+		$filename = substr($url, $pos); // extract the root file name
+		
+		return $filename;
 	}
 
 	/**
@@ -1301,7 +1507,8 @@ class InternetArchiveModel
 		// strip out for IA (Internet Archive) unwanted chars
 		// * ( ) { } [ ] / \ $ % @ # ^ & | < > ' ~ ` ! ? +
 		// and other odd chars, and take out spaces to compress into nice useable string
-		$search = array('*', '(', ')', '{', '}', '[', ']', '/', '\\', '$', '%', '@', '#', '^', '&', '|', '<', '>', "'", '~', '`', '!', '?', '+', '"', ':', '.', '-', ' ', ',');
+		//$search = array('*', '(', ')', '{', '}', '[', ']', '/', '\\', '$', '%', '@', '#', '^', '&', '|', '<', '>', "'", '~', '`', '!', '?', '+', '"', ':', '.', '-', ' ', ',');
+		$search = array('*', '(', ')', '{', '}', '[', ']', '/', '\\', '$', '%', '@', '#', '^', '&', '|', '<', '>', "'", '~', '`', '!', '?', '+', '"', ':', '.', '-', ' ', ',', '=');
 
 		$text = str_replace($search, '', $giventext);
 		
@@ -1559,7 +1766,8 @@ class InternetArchiveModel
 	 */
 	function getNidsBhlArticles()
 	{
-		$sql = "SELECT n.nid FROM biblio AS b JOIN node AS n ON n.nid = b.nid JOIN biblio_contributor AS bc ON b.nid = bc.nid JOIN biblio_contributor_data AS bcd ON bc.cid = bcd.cid WHERE b.biblio_label = 'Biodiversity' AND b.biblio_url LIKE '%.pdf' AND n.title != '' ORDER BY n.nid";
+		//$sql = "SELECT n.nid FROM biblio AS b JOIN node AS n ON n.nid = b.nid JOIN biblio_contributor AS bc ON b.nid = bc.nid JOIN biblio_contributor_data AS bcd ON bc.cid = bcd.cid WHERE b.biblio_label = 'Biodiversity' AND b.biblio_url LIKE '%.pdf' AND n.title != '' ORDER BY n.nid";
+		$sql = "SELECT n.nid FROM biblio AS b JOIN node AS n ON n.nid = b.nid WHERE b.biblio_label = 'Biodiversity' AND b.biblio_url LIKE '%.pdf' AND n.title != '' ORDER BY n.nid";
 
 		$records = array();
 
