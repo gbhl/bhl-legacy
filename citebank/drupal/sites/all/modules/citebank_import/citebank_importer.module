@@ -84,6 +84,9 @@ function processCiteBankImport()
 	// this will pick up nodes that for some reason may not get handled by their respective modules, such as OAI importing.
 	// if we do not want this extra behavoir, comment out this line.  leave the touchSolr after the addCiteBankRecord though.
 	$solrHandler->addNewNodesToSolr();
+
+$msg = 'biblios count: [' . count($biblios) . ']';
+watchmen($msg);
 	
 	// if no data, report error and get out
 	if (count($biblios) == 0) {
@@ -123,14 +126,54 @@ function processCiteBankImport()
 			$x->biblioNode->filename = trim($biblioPlus['biblio_url'], '"');
 			$x->biblioNode->dirPath  = $dirPath;
 			$x->biblioNode->linkPath = $linkPath;
-
+			
+			/* 20110921 logic change */
+			/* 
+				1) if we have a local pdf file, we construct the biblio_url
+				2) if we have 'http: or https:' in the data_url, that is an external link, and we do not do the work of adding the file as above requires
+				3) if we have data_url as blank, then it is a citation only, we do not need to perform unique identifier checking, the biblio_url becomes the node link itself
+				  item 3 here will not occur until sometime months later from now or longer.  when we create citation only capability.
+				  citation only items may exist for items that have url links elsewhere but that are under copyright and we cannot link to them for legal reasons,
+				  but at a future point may be allowed to, and then we can add the link, which will tie into our local Citebank PDF link and unique identifier system, to be
+				  developed soon.
+			*/
+			
+			$urlImportType = 1; // 1 = local file, 2 = http, 3 = blank and make citation only
+			
+			if (substr_count($x->biblioNode->data_url, 'http:') > 0) {
+				$urlImportType = 2;
+			} else if (substr_count($x->biblioNode->data_url, 'https:') > 0) {
+				$urlImportType = 2;
+			} else if (trim($x->biblioNode->data_url) == '') {
+				$urlImportType = 3;
+			} else {
+				$urlImportType = 1;
+			}
+			
 			// create the link path url  basically the filename combined with the host path
 			// updates the biblio url
 			// our source csv file, does not know a link path url, it only knows the actual filename, 
 			//   which is buried in the csv under the "data_url" or 'biblio_url' associated field name
 			// so, we hook our link path to the name of the data file
 			// for an IA Internet Archive site, we will need to change the page link logic.
-			$x->biblioNode->data_url = $x->biblioNode->linkPath . $x->biblioNode->data_url;
+			switch ($urlImportType)
+			{
+				case 1:
+					$x->biblioNode->data_url = $x->biblioNode->linkPath . $x->biblioNode->data_url;
+					break;
+				
+				case 2:
+					//$x->biblioNode->data_url = $x->biblioNode->data_url;
+					// it is already a link we want
+					break;
+				
+				case 3:
+					$x->biblioNode->data_url = 'CitationONLY' . '_' . rand(9999,999999) . '_' . date('YmdHis'); // or something, TBD, until we fill in the node id
+					break;
+				
+				default:
+					break;
+			}
 			
 			// make node array
 			$biblioPlus = $x->biblioNode->processNode(null);
@@ -141,9 +184,11 @@ function processCiteBankImport()
 			$title = $biblioPlus['biblio_title'];
 			//$filename = $biblioPlus['biblio_url'];
 			$filename = trim($x->biblioNode->filename, '"');
-//echo '<br>' . "\n"; print_r($x->biblioNode->node); echo '<br>' . "\n";
+
 			// fix the node.  we need to do this... why. 
 			$x->biblioNode->node['biblio_url'] = $x->biblioNode->data_url;
+
+			watchmen('CB import type ' . $urlImportType . ' [' . $x->biblioNode->data_url . ']');
 
 //			echo '<br>' . "\n";
 //			echo 'Title:[' . $title . ']' . '<br>' . "\n";
@@ -161,14 +206,44 @@ function processCiteBankImport()
 	
 			// ***** Write the record *****
 			// check for a duplicate record
-			$duplicate = $x->checkDuplicate($x->biblioNode->data_url);
+			$duplicate = false;
+			if ($urlImportType != 3) {
+				$duplicate = $x->checkDuplicate($x->biblioNode->data_url);
+			}
+			
 			if (!$duplicate) {
 				// write data
 				//$node_save($x->biblioNode->node);
 				
-				$nid = $x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
-				$solrHandler->touchSolr($nid);
-				$importUndo->makeUndoNid($nid, $importFileName);
+				$nid = 0;
+				watchmen('to add ' . ' [' . $title . '] [' . $x->biblioNode->data_url . ']');
+				
+				switch ($urlImportType)
+				{
+					case 1:  // file
+						//watchmen('addCiteBankRecord ' . $nid . ' [' . $title . '] [' . $x->biblioNode->data_url . ']');
+						$nid = $x->addCiteBankRecord($title, $filename, $x->biblioNode->node, $uid);
+						watchmen('Record ' . $nid . ' [' . $title . '] [' . $x->biblioNode->data_url . ']');
+						break;
+
+					case 2:  // link
+						//watchmen('addCiteBankRecordLink ' . $nid . ' [' . $title . '] [' . $x->biblioNode->data_url . ']');
+						$nid = $x->addCiteBankRecordLink($title, $x->biblioNode->data_url, $x->biblioNode->node, $uid);  // citation using a web link instead of a file
+						watchmen('Link ' . $nid . ' [' . $title . '] [' . $x->biblioNode->data_url . ']');
+						break;
+
+					case 3:  // citation only
+						//watchmen('addCiteBankRecordCitation ' . $nid . ' [' . $title . '] [' . $x->biblioNode->data_url . ']');
+						$nid = $x->addCiteBankRecordCitation($title, '', $x->biblioNode->node, $uid);  // citation ONLY, no link, no file
+						watchmen('Citation ' . $nid . ' [' . $title . '] [' . $x->biblioNode->data_url . ']');
+						break;
+				}
+				
+				if ($nid) {
+					$solrHandler->touchSolr($nid);
+					$importUndo->makeUndoNid($nid, $importFileName);
+				}
+				
 				//echo '****[' . 'Write the record here' . ']****' . '<br>' . "\n";
 			} else {
 				//echo '****[' . 'Skip the duplicate record here' . ']****' . '<br>' . "\n";

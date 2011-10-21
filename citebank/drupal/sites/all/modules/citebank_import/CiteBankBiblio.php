@@ -16,9 +16,14 @@ $includePath = dirname(__FILE__) . '/';
 require_once($includePath . 'DrupalNode.php');
 require_once($includePath . 'BiblioNode.php');
 require_once($includePath . 'BiblioAuthorHandler.php');
-//require_once($includePath . 'DBInterfaceController.php');
-require_once($includePath . 'DBInterfaceController_3.php');
+require_once($includePath . 'DBInterfaceController.php');
+//require_once($includePath . 'DBInterfaceController_3.php');
+require_once($includePath . 'ImportErrorLog.php');
 
+class DBInterfaceController_3 extends DBInterfaceController
+{
+
+}
 
 /** 
  * class CiteBankBiblio - holds a drupal node data item
@@ -33,6 +38,7 @@ class CiteBankBiblio
 	public $vid = 0;
 	public $fid = 0;
 	public $node = null;
+	public $importErrorLog = null;
 	
 	const CLASS_NAME    = 'CiteBankBiblio';
 
@@ -61,6 +67,8 @@ class CiteBankBiblio
 		$this->dbi = new DBInterfaceController_3();
 		$this->drupalNode = new DrupalNode();
 		$this->biblioNode = new BiblioNode();
+		$this->importErrorLog = new ImportErrorLog();
+		$this->importErrorLog->setDb($this->dbi);
 	}
 
 	/**
@@ -457,12 +465,22 @@ class CiteBankBiblio
 		if (strlen($filename) == 0) {
 			$errmsg = 'error: no filename ' . $filename;
 			watchdog('CiteBankBiblio', $errmsg);  // drupal system call
+
+			$msg = 'no filename for [' . $filename . '] ' . $title . '';
+			watchmen($msg);
+			$this->importErrorLog->importErrorLog(0, $msg, $filename, $title);
+
 			return;
 		}
 
 		if (strlen($title) == 0) {
 			$errmsg = 'error: no title ' . $filename;
 			watchdog('CiteBankBiblio', $errmsg);  // drupal system call
+
+			$msg = 'no title for [' . $filename . '] ' . $title . '';
+			watchmen($msg);
+			$this->importErrorLog->importErrorLog(0, $msg, $filename, $title);
+
 			return;
 		}
 
@@ -486,6 +504,68 @@ class CiteBankBiblio
 		
 		// add the attachment
 		$this->createAttachment($title, $uid, $filename, $filesize, $this->nid);
+		
+		// add the author(s)
+		$this->makeBiblioAuthorRecord($biblio['biblio_contributors']);
+		
+		return $this->nid;
+	}
+
+	/**
+	 * addCiteBankRecordLink - add using a link or without a link, also adds a drupal node
+	 */
+	function addCiteBankRecordLink($title, $link, $biblio, $uid = 0)
+	{
+		$foundRemoteFileLength = false;
+		$nid = 0;
+		// bulletproofing ****
+		// dead link prevention
+		if ($link) {
+			$foundRemoteLink = $this->checkRemoteFileExists($link);
+		}
+		
+		if ($uid == 0) {
+			;//
+		}
+
+		// bulletproofing ****
+
+		// if link has a size then add the citation
+		if ($foundRemoteLink != false) {
+
+			// make a node
+			$this->makeNodeRecord($title, $uid);
+			$this->makeNodeAccessRecord($this->nid);
+			$this->makeNodeRevisionsRecord($this->nid, $this->vid, trim($title, '"'), $uid);
+			
+			// make a biblio record
+			$this->makeBiblioRecord($biblio);
+			
+			// add the author(s)
+			$this->makeBiblioAuthorRecord($biblio['biblio_contributors']);
+			
+			$nid = $this->nid;
+		} else {
+			$msg = 'Link not available for [' . $link . '] ' . $title . '';
+			watchmen($msg);
+			$this->importErrorLog->importErrorLog($nid, $msg, $link, $title);
+		}
+		
+		return $nid;
+	}
+
+	/**
+	 * addCiteBankRecordLink - add using a link or without a link, also adds a drupal node
+	 */
+	function addCiteBankRecordCitation($title, $link, $biblio, $uid = 0)
+	{
+		// make a node
+		$this->makeNodeRecord($title, $uid);
+		$this->makeNodeAccessRecord($this->nid);
+		$this->makeNodeRevisionsRecord($this->nid, $this->vid, trim($title, '"'), $uid);
+		
+		// make a biblio record
+		$this->makeBiblioRecord($biblio);
 		
 		// add the author(s)
 		$this->makeBiblioAuthorRecord($biblio['biblio_contributors']);
@@ -526,6 +606,116 @@ class CiteBankBiblio
 //		// make an uploads record (to complete the attachement)
 //		$this->createNodeAndAttachment($title, $uid, $filename, $filesize);
 //	}
+
+	/**
+	 * getRemoteSize - get size of a remote file without downloading it
+	 */
+	function getRemoteSize($url)
+	{
+		// http://php.net/manual/en/function.filesize.php
+		// Josh Finlay <josh at glamourcastle dot com> 12-Nov-2006 08:22
+		$headers = get_headers($url, 1);
+		
+		if ((!array_key_exists('Content-Length', $headers))) { 
+			return false; 
+		}
+		
+		return $headers['Content-Length'];
+	}
+
+	/**
+	 * checkRemoteFileLength - given url, see if a remote file is there without downloading it
+	 */
+	function checkRemoteFileLength($url)
+	{
+		// http://php.net/manual/en/function.filesize.php
+		// Josh Finlay <josh at glamourcastle dot com> 12-Nov-2006 08:22
+		$headers = get_headers($url, 1);
+		
+		if ((!array_key_exists('Content-Length', $headers))) { 
+			return false; 
+		}
+		
+		$len = $headers['Content-Length'];
+		$len = ($len > 0 ? $len : false);  // a number or false, we want false instead of zero
+		
+		// find:
+		// [1] => HTTP/1.1 200 OK 
+		if (array_key_exists("0", $headers) ) {
+			$responseCode = $headers[0];
+			
+			if (substr_count($responseCode, '200 OK')) {
+				return $len;
+			}
+		}
+
+		if (array_key_exists("1", $headers) ) {
+			$responseCode = $headers[1];
+			
+			if (substr_count($responseCode, '200 OK')) {
+				return $len;
+			}
+		}
+	
+		return false;
+	}
+
+	/**
+	 * checkRemoteFileExists - given url, see if a remote file is there without downloading it
+	 */
+	function checkRemoteFileExists($url)
+	{
+		// http://php.net/manual/en/function.filesize.php
+		// Josh Finlay <josh at glamourcastle dot com> 12-Nov-2006 08:22
+		//$headers = get_headers($url, 1);
+		$headers = $this->getHeadersCurl($url);
+		
+		// find:
+		// [1] => HTTP/1.1 200 OK 
+		if (array_key_exists("0", $headers) ) {
+			$responseCode = $headers[0];
+			
+			if (substr_count($responseCode, '200 OK')) {
+				return true;
+			}
+		}
+
+		if (array_key_exists("1", $headers) ) {
+			$responseCode = $headers[1];
+			
+			if (substr_count($responseCode, '200 OK')) {
+				return true;
+			}
+		}
+	
+		return false;
+	}
+
+	/**
+	 * getHeadersCurl - given url, see if a remote file is there without downloading it
+	 */
+	function getHeadersCurl($url) 
+	{ 
+	    $ch = curl_init(); 
+	
+	    // see: http://www.merchantos.com/2007/08/scraping-links-with-php/
+	    //$useragent = 'http://www.googlebot.com/bot.html';
+	    // some sites will reject an automated process calling, so look like a browser so we get a useful answer
+	    $useragent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6';
+			curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
+			
+	    curl_setopt($ch, CURLOPT_URL,            $url); 
+	    curl_setopt($ch, CURLOPT_HEADER,         true); 
+	    curl_setopt($ch, CURLOPT_NOBODY,         true); 
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+	    curl_setopt($ch, CURLOPT_TIMEOUT,        15); 
+	
+	    $r = curl_exec($ch); 
+	    //$r = split("\n", $r); 
+	    $r = explode("\n", $r);
+	    
+	    return $r; 
+	} 
 
 	/**
 	 * checkDuplicate - 
