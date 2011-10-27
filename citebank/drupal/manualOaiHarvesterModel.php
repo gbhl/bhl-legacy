@@ -536,12 +536,14 @@ class manualOaiHarvesterModel
 					// a resumption token will take precedence over a date 
 					if ($lastResumption) {
 						$flagResumption = true;
-						$params = array('resumptionToken' => $lastResumption);
+						//$params = array('resumptionToken' => $lastResumption);
+			      $params = array('set' => $set, 'metadataPrefix' => $metadataPrefix, 'resumptionToken' => $lastResumption);
 					}
 				}
 	      
 	    } else {
-	      $params = array('resumptionToken' => $oai['ListRecords']['resumptionToken']['text']);
+	      //$params = array('resumptionToken' => $oai['ListRecords']['resumptionToken']['text']);
+	      $params = array('set' => $set, 'metadataPrefix' => $metadataPrefix, 'resumptionToken' => $oai['ListRecords']['resumptionToken']['text']);
 	      $flagResumption = true;
 	
 	      $this->myOaiLogMsg('token:[' . $oai['ListRecords']['resumptionToken']['text'] . ']');
