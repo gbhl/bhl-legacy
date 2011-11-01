@@ -111,13 +111,33 @@ watchmen($msg);
 			$biblioPlus = $x->biblioNode->processNode(null);
 			
 			// assign more data
+//			if (@strlen($biblioPlus['biblio_remote_db_provider']) == 0) {
+//				$x->biblioNode->data_source_org = 'CiteBank';
+//				$x->biblioNode->data_source_prj = 'Import';
+//				$x->biblioNode->data_source_url = 'Internal Import';
+//			} else {
+//				$x->biblioNode->data_source_org = $biblioPlus['biblio_remote_db_provider'];
+//				$x->biblioNode->data_source_prj = $biblioPlus['biblio_label'];
+//				$x->biblioNode->data_source_url = $biblioPlus['biblio_remote_db_name'];
+//			}
+
+
+			// assign source, org, url.  default to empty
 			if (@strlen($biblioPlus['biblio_remote_db_provider']) == 0) {
-				$x->biblioNode->data_source_org = 'CiteBank';
-				$x->biblioNode->data_source_prj = 'Import';
-				$x->biblioNode->data_source_url = 'Internal Import';
+				$x->biblioNode->data_source_org = '';
 			} else {
 				$x->biblioNode->data_source_org = $biblioPlus['biblio_remote_db_provider'];
+			}
+
+			if (@strlen($biblioPlus['biblio_label']) == 0) {
+				$x->biblioNode->data_source_prj = '';
+			} else {
 				$x->biblioNode->data_source_prj = $biblioPlus['biblio_label'];
+			}
+
+			if (@strlen($biblioPlus['biblio_remote_db_name']) == 0) {
+				$x->biblioNode->data_source_url = '';
+			} else {
 				$x->biblioNode->data_source_url = $biblioPlus['biblio_remote_db_name'];
 			}
 
