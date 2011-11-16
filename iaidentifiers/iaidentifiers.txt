@@ -30,16 +30,25 @@
 1957divingprogra00rech
 1958nianxiaomaif00nong
 1959nianbeijingd00beij
+1965condensedins01965urba
 1965condensedins1965urba
 1965condensedins71965urba
 1965condensedins91965urba
+1972suggestedins01972urba
 1974montanaagricultuunitrich
+1978insectpestma01978univ
+1979insectpestma01979univ
 1980celmooringdy00palo
+1980insectpestma01980univ
 1980intermountai1981interich
 1982censusofagri01unit
 1982censusofagri02unit
 1982censusofagri09unit
+1982insectpestma01982univ
 1982unitednation82iucn
+1983insectpestma01983univ
+1984insectpestma01984univ
+1985insectpestma01985univ
 1985monitoringsu00park
 1985unitednation85inte
 1986iucnredlisto86iucn
@@ -100,6 +109,7 @@
 1987censusofagri54unit
 1987censusofagri55unit
 1987censusofagri56unit
+1987insectpestma01987rand
 1987montanaarche00montrich
 1988annualreporttogopoplrich
 1988iucnredlisto88wilc
@@ -5587,6 +5597,7 @@ annualreporto401886newy
 annualreporto411887newy
 annualreporto441891newy
 annualreporto46185052newy
+annualreporto5121897newy
 annualreporto79185456newy
 annualreportoes1903unit
 annualreportoes1905unit
@@ -7339,11 +7350,13 @@ archivesdesmissi06fran
 archivesdesmissi07fran
 archivesdesmissi08fran
 archivesdesmissi23186fran
+archivesdesmissi2418fran
 archivesdesmissi25186fran
 archivesdesmissi26187fran
 archivesdesmissi2718fran
 archivesdesmissi31187fran
 archivesdesmissi31218fran
+archivesdesmissi32187fran
 archivesdesmissi39188fran
 archivesdesscien10genv
 archivesdesscien11genv
@@ -7574,6 +7587,7 @@ archivfrdiena16191519prag
 archivfrdienat0202obak
 archivfrdienat05obak
 archivfrdienat08obak
+archivfrdienat15191120pr
 archivfrdienat3187484prag
 archivfrdienat6188791prag
 archivfrdiephy02hall
@@ -8167,6 +8181,7 @@ armyremountprobl00rommrich
 armyveterinaryco00roya
 armyworm10flin
 armyworm14flin
+aromatumetsimpli00orta
 aroundoldhomeste00hustiala
 aroundworldviain00senn
 aroundyearingard00rock
@@ -8604,13 +8619,20 @@ attidellasociet05soci
 attidellasociet06soci
 attidellasociet07soci
 attidellasociet08soci
+attidellasociet101889soci
 attidellasociet10soci
+attidellasociet111891soci
 attidellasociet115soci
 attidellasociet11soci
 attidellasociet121893soci
+attidellasociet131894soci
 attidellasociet13soci
+attidellasociet141895soci
 attidellasociet14soci
 attidellasociet15soci
+attidellasociet171900soci
+attidellasociet201904soci
+attidellasociet211905soci
 attidellasociet21876soci
 attidellasociet231907soci
 attidellasociet241908soci
@@ -8633,6 +8655,7 @@ attidellasociet41218991900soci
 attidellasociet41315191113soci
 attidellasociet479190507soci
 attidellasociet514191418soci
+attidellasociet518808soci
 attidellasociet556191921soci
 attidellasocieta01inco
 attidellasocieta01soci
@@ -8653,6 +8676,7 @@ attidellasociett07soci
 attidellasociett08soci
 attidellasociett12soci
 attidellasociett14soci
+attidellasociett15161soci
 attidellasociett16soci
 attidellasociett19soci
 attidellasociett33soci
@@ -9423,6 +9447,7 @@ beitragzueinermo00winn
 beitragzueinermo10winn
 beitragzumkapite00krau
 beitragzurbotani00fisc
+beitragzurembryo00mlle
 beitragzurentwic00kroh
 beitragzurentwic00naeg
 beitragzurfaunac00fins
@@ -9456,6 +9481,7 @@ beitrgezuranat00nass
 beitrgezuranat00nits
 beitrgezuranat00rs
 beitrgezuranat00wagn
+beitrgezuranato00frai
 beitrgezuranatom00khle
 beitrgezurbean00koppuoft
 beitrgezurbiolog01berl
@@ -21951,6 +21977,11 @@ cihm_91951
 cihm_92015
 cihm_92069
 cihm_92090
+cihm_92159
+cihm_92232
+cihm_92233
+cihm_92249
+cihm_92363
 cihm_92405
 cihm_92422
 cihm_92445
@@ -23824,7 +23855,9 @@ condensedcatalog00bethuoft
 condensedcompend00grayuoft
 condensedmilkmil00hunzrich
 conditiondoing1864bost
+conditionexten00moor
 conditionextent00moor
+conditionextent01moor
 conditionextento00moor
 conditionextento01moor
 conditionextento02moor
@@ -27465,6 +27498,7 @@ dieelementederwe00dietuoft
 dieembryonalentw00heym
 dieenglischeagra00stil
 dieenteropneuste01spen
+dieenteropneuste02spen
 dieentfaltungsbe00goeb
 dieenthauptungde00loesuoft
 dieentomostraken00brehuoft
@@ -29134,6 +29168,7 @@ drhgbronnsklasse04bron
 drhgbronnsklasse060301bron
 drhgbronnsklasse060402bron
 drhgbronnsklasse131111221bron
+drhgbronnsklasse1312bron
 drhgbronnsklasse21bron
 drhgbronnsklasse31bron
 drhgbronnsklasse52bron
@@ -29304,6 +29339,7 @@ earlydevonianver3717deni
 earlydevonichist92clarrich
 earlyembryologyo00pattrich
 earlyembryologyo00pattuoft
+earlyexpeditions00dall
 earlygeologicalh07nich
 earlygeophysical00soci
 earlyherdsmen00dopp
@@ -32200,6 +32236,7 @@ experimentalphys00shar
 experimentalphys00sharrich
 experimentalplan00macdrich
 experimentalpoll00clem
+experimentalrese00barr
 experimentalrese00browrich
 experimentalrese00ehrlrich
 experimentalrese00ehrluoft
@@ -33289,9 +33326,6 @@ favoritefliesthe01marb
 favoritefliesthe02marb
 favoriteforeignb00greerich
 favoritepetshowt00vand
-favouriteflowers01steprich
-favouriteflowers02steprich
-favouriteflowers03steprich
 fazhanlinye00zhon
 feasibilityofina00norv
 feasibilityofsea00grav
@@ -33898,6 +33932,7 @@ fisheriesofjapan00kita
 fisheriesofkeywe00schr
 fisheriesofnorth00greerich
 fisheriesofnorth00nort
+fisheriesoforien00wood
 fisheriesofprovi00chamrich
 fisheriesofstate00wash
 fisheriesofunite00unit
@@ -35622,6 +35657,9 @@ foragecropsinden00faberich
 foragecropsother00shaw
 foragecropsother00shawrich
 foragecropsother01shaw
+foragecropvariet2002univ
+foragecropvariet2003univ
+foragecropvariet2005univ
 foragefibercrops00huntrich
 forageorhaycrops00whit
 forageplantsofau00newsrich
@@ -42054,6 +42092,7 @@ hithertounpublis00cope
 hivehoneybeewith00rich
 hiveofthebeehunt00thor
 hiveofthebeehunt01thor
+hkuhlphdracconsp00kuhl
 hlfvonhelmholtz00mckeiala
 hmiptrespuna00fair
 hnapomologist00hoffrich
@@ -42893,6 +42932,7 @@ howwomenshouldri00dehu
 howwomenshouldri00dehurich
 howwomenshouldri01dehu
 hr3060antarctice00unit
+hrnantonstorcksb00strc
 htrocresno01dogn
 htrocresno02dogn
 htrocresno03dogn
@@ -46936,6 +46976,7 @@ journalofacademy05acaduoft
 journalofacademy06acaduoft
 journalofacademy07acaduoft
 journalofacademy08acaduoft
+journalofacademy21821acad
 journalofagricul03unit
 journalofagricul04unit
 journalofagricul06unit
@@ -47227,6 +47268,7 @@ journalofderbysh23derb
 journalofderbysh26derb
 journalofderbysh28derb
 journalofeastafr16194142east
+journalofeastafr18198east
 journalofeconomi01ento
 journalofeconomi02ento
 journalofeconomi03ento
@@ -50350,6 +50392,7 @@ letterspapersona06bath
 letterspapersona07bath
 letterspapersona08bath
 letterspapersona09bath
+lettersrecollec00agas
 lettersrecollect00agasuoft
 letterstobrother00johniala
 letterstofriendw00muir
@@ -50452,7 +50495,6 @@ lietuvostsrmoksl48liet
 lietuvostsrmoksl50liet
 lietuvostsrmoksl56liet
 lietuvostsrmoksl60liet
-lietuvostsrmoksl76liet
 lifeandworkofejp00lewiuoft
 lifeandworkofrev00lewiiala
 lifeandworkofrev00lewirich
@@ -54244,6 +54286,7 @@ memoriedellareal11isti
 memoriedellareal222real
 memoriedellareal2231real
 memoriedellareal223real
+memoriedellareal224real
 memoriedellareal226real
 memoriedellareal2291878real
 memoriedellareal230187818651878real
@@ -62638,6 +62681,7 @@ oesterreichische67wien
 oesterreichische72wien
 oestudodasilvicu00unit
 oeuvresagronomiq00leduuoft
+oeuvrescompletes00buff
 oeuvrescompletesd021775buff
 oeuvrescompletesd031775buff
 oeuvrescompletesd041775buff
@@ -63333,6 +63377,7 @@ onsomeremarkable00sarsrich
 onsomeremarkable00trim
 onsomeremarkable02sars
 onsomesmallcolle3435haas
+onsoundsestuarie00drak
 onsourcesofnitro00lawe
 onspecialforamin00edmu
 onspecificcharac00will
@@ -71125,6 +71170,7 @@ quarterlyjourn221866geol
 quarterlyjourn281872geol
 quarterlyjourn301874geol
 quarterlyjourn371881geol
+quarterlyjourn571901geol
 quarterlyjourna101854geol
 quarterlyjourna111855geol
 quarterlyjourna121856geol
@@ -81155,6 +81201,7 @@ subalpinogiornal02suba
 subalpinogiornal02tori
 subantarcticisla01philuoft
 subantarcticisla11phil
+subantarcticisla12phil
 subcellularparti00haya
 subjectcatalogue00aberuoft
 subjectregistero00ameruoft
@@ -81310,6 +81357,7 @@ summaryofprincip00julirich
 summaryofrecenti00grif
 summaryofreporto00unit
 summaryofstudies00mars
+summaryofsurvey00usco
 summaryofsurveyo00usco
 summaryoftempera00nati
 summaryoftheoryo00wash
@@ -81484,6 +81532,7 @@ surveyofnaturala00nifo
 surveyofnaturalatyrrell
 surveyofneurobio00nati
 surveyofoceanogr00seli
+surveyofoysterb00unit
 surveyofoysterb00usco
 surveyofoysterba00unit
 surveyofoysterba00usco
@@ -85210,9 +85259,12 @@ transactionspro27bota
 transactionspro30newz
 transactionspro331909roya
 transactionspro341910roya
+transactionspro351911roya
+transactionspro381914roya
 transactionspro391915roya
 transactionspro401916roya
 transactionspro411917roya
+transactionspro421918roya
 transactionspro461922roya
 transactionsproc00newz
 transactionsproc0140newz
@@ -88545,6 +88597,7 @@ weedbookindiana00blatrich
 weedcontrol97ball
 weedfloraofiowa00pamm
 weedfloraofiowa01pamm
+weedmanagementgu1986urba
 weedshowtoeradic00shaw
 weedshowtoeradic01shaw
 weedsoffarmgarde00pammrich
