@@ -49,6 +49,7 @@ class CiteBankBiblio
 
 	const DIR_HOST_PATH         = 'wamp/www/';
 	const DIR_HOST_PATH_ACTUAL  = 'www/';
+	const ID_TABLE             = 'citebank_unique_identifier';
 
 	/**
 	 * _construct - constructor
@@ -720,7 +721,7 @@ class CiteBankBiblio
 	/**
 	 * checkDuplicate - 
 	 */
-	function checkDuplicate($biblio_url)
+	function checkDuplicateOLD($biblio_url)
 	{
 		$duplicateFlag = false;
 
@@ -733,6 +734,79 @@ class CiteBankBiblio
 		}
 		
 		return $duplicateFlag;
+	}
+
+	/**
+	 * checkDuplicate - 
+	 */
+	function checkDuplicate($biblio_url)
+	{
+		$duplicateFlag = false;
+
+		if ($this->flag) {
+			$sql = 'SELECT count(*) AS total FROM ' . self::ID_TABLE . ' WHERE link = ' . "'". $biblio_url . "'";
+			$rows = $this->dbi->fetch($sql);
+			
+			if (count($rows) > 0) {
+				$total = $rows[0]['total'];
+				if ($total >= 1) {
+					$duplicateFlag = true;
+				}
+			}
+		}
+		
+//		// extra check, for pensoft DOI issue
+//		if ($duplicateFlag == false) {
+//			$duplicateFlag = isDoiUrlCheck($url, $title)
+//		}
+		
+		// check biblio as a last 
+		if ($duplicateFlag == false) {
+			$duplicateFlag = isRecordBiblio($url);
+		}
+
+		return $duplicateFlag;
+	}
+
+	/*
+	 *  isDoiUrlCheck - is there a record 
+	 */
+	function isDoiUrlCheck($url, $title) 
+	{
+		if (substr_count($url, 'http://dx.doi.org/')) {
+			$sql = "SELECT count(*) AS total FROM {node} WHERE title = '".$title."'";
+			 // "select nid, title from node where title = 'Outcomes of the 2011 Botanical Nomenclature Section at the XVIII International Botanical Congress';"
+			
+			$rows = $this->dbi->fetch($sql);
+			
+			if ($rows) {
+				$count = $rows[0]['total'];
+	
+				if ($count > 0) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/*
+	 *  isRecordBiblio - is there a record, true = yes, false = no
+	 */
+	function isRecordBiblio($url) 
+	{
+		$sql = "SELECT count(*) as total FROM {biblio} where biblio_url = '".$url."'";
+	
+		$rows = $this->dbi->fetch($sql);
+		
+		if ($row) {
+			$count = $rows[0]['total'];
+			
+			return true;
+		}
+		
+		return false;
 	}
 
 }  // end class
