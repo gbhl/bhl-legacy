@@ -440,6 +440,8 @@ class InternetArchiveModel
 			$title          = $n['title'];
 			$year           = $n['year'];
 			$url            = $n['biblio_url'];
+			
+			$year = $this->filterOddChars($year);  // no neg years please
 		
 			$flagString = false;
 			
@@ -1158,6 +1160,8 @@ class InternetArchiveModel
 			$metaData['place_published']       = $biblio_place_published;
 		}
 
+		$biblio_year = $this->filterOddChars($biblio_year);  // no neg years please
+		
 		if ($biblio_year != 9999) {
 			$metaData['year']                  = $biblio_year;
 		}
