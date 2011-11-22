@@ -167,7 +167,7 @@ function _biblio_oai_xc_insert($node)
 
   // See if we already have an entry for this item
 	$biblio_md5 = md5($biblio_url);
-	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url);
+	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url, $node['title']);
 
 	if ($isRecordFlag) { // it is a duplicate
 		// Retrieve the existing node so that we can do an update instead of an insert
@@ -430,7 +430,7 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record)
 
   // See if we already have an entry for this item
 	$biblio_md5 = md5($biblio_url);
-	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url);
+	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url, $node['title']);
 
 	if ($isRecordFlag) { // it is a duplicate
 		// Retrieve the existing node so that we can do an update instead of an insert
@@ -501,7 +501,7 @@ function biblio_oai_xc_oaiharvester_process_record_mods_new($record)
 
   // See if we already have an entry for this item
 	$biblio_md5 = md5($biblio_url);
-	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url);
+	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url, $node['title']);
 
 	if ($isRecordFlag) { // it is a duplicate
 		// Retrieve the existing node so that we can do an update instead of an insert
@@ -1081,7 +1081,7 @@ function biblio_oai_xc_oaiharvester_process_record_marc($record)
 
   // See if we already have an entry for this item
 	$biblio_md5 = md5($biblio_url);
-	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url);
+	$isRecordFlag = biblio_oai_xc_isRecord($biblio_url, $node['title']);
 
 	if ($isRecordFlag) { // it is a duplicate
 		// Retrieve the existing node so that we can do an update instead of an insert
@@ -1609,7 +1609,7 @@ biblio_md5
 /*
  *  biblio_oai_xc_isRecord - is there a record, true = yes, false = no
  */
-function biblio_oai_xc_isRecord($field) 
+function biblio_oai_xc_isRecord_OLD($field, $title = '') 
 {
 	$sql = "SELECT count(*) as total FROM {biblio} where biblio_url = '".$field."'";
 	
@@ -1623,8 +1623,78 @@ function biblio_oai_xc_isRecord($field)
 		return true;
 	}
 	
-	// extra check, when we move a record to Internet Archive, we need to check the preserved original url
-	if(isRecordInternetArchived($field)) {
+	return false;
+}
+
+/*
+ *  biblio_oai_xc_isRecord - is there a record, true = yes, false = no
+ */
+function biblio_oai_xc_isRecord($url, $title = '') 
+{
+	$flag = false;
+
+	$sql = 'SELECT count(*) AS total FROM ' . '{citebank_unique_identifier}' . ' WHERE link = ' . "'". $url . "'";
+	$result = db_query($sql);
+	$rows = db_fetch_object($result);
+	
+	if ($rows) {
+		$total = $rows->total;
+		if ($total >= 1) {
+			$flag = true;
+		}
+	}
+
+	// extra check, for pensoft DOI issue
+	if ($flag == false) {
+		$flag = isDoiUrlCheck($url, $title);
+	}
+	
+	// check biblio as a last 
+	if ($flag == false) {
+		$flag = isRecordBiblio($url);
+	}
+		
+	return $flag;
+}
+
+/*
+ *  isDoiUrlCheck - is there a record 
+ */
+function isDoiUrlCheck($url, $title) 
+{
+	if (substr_count($url, 'http://dx.doi.org/')) {
+		$sql = "SELECT count(*) AS total FROM {node} WHERE title = '".$title."'";
+		 // "select nid, title from node where title = 'Outcomes of the 2011 Botanical Nomenclature Section at the XVIII International Botanical Congress';"
+		
+		$result = db_query($sql);
+		$row = db_fetch_object($result);
+		
+		if ($row) {
+			$count = $row->total;
+
+			if ($count > 0) {
+				return true;
+			}
+		}
+	}
+	
+	return false;
+}
+
+/*
+ *  isRecordBiblio - is there a record, true = yes, false = no
+ */
+function isRecordBiblio($url) 
+{
+	$sql = "SELECT count(*) as total FROM {biblio} where biblio_url = '".$url."'";
+	
+	$result = db_query($sql);
+	
+	$row = db_fetch_object($result);
+	
+	if ($row) {
+		$count = $row->total;
+		
 		return true;
 	}
 	
