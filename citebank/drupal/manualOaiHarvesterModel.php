@@ -500,6 +500,12 @@ class manualOaiHarvesterModel
 		$flagFromUntil = $this->checkFromUntil($from_date, $until_date);
 		$lastResumption = $this->getLastResumption($this->harvestId);
 		
+		// fast fix for stuck AMNH
+		$flagUseResOpts = true;
+		if ($schedule_id == 17) {
+			$flagUseResOpts = false;
+		}
+		
 		// if no resumption
 		// if no from until
 		//  check for the date or resumption token, and flag the item
@@ -537,13 +543,21 @@ class manualOaiHarvesterModel
 					if ($lastResumption) {
 						$flagResumption = true;
 						//$params = array('resumptionToken' => $lastResumption);
-			      $params = array('set' => $set, 'metadataPrefix' => $metadataPrefix, 'resumptionToken' => $lastResumption);
+						if($flagUseResOpts){
+				      $params = array('set' => $set, 'metadataPrefix' => $metadataPrefix, 'resumptionToken' => $lastResumption);
+						} else {
+				      $params = array('resumptionToken' => $lastResumption);
+						}
 					}
 				}
 	      
 	    } else {
 	      //$params = array('resumptionToken' => $oai['ListRecords']['resumptionToken']['text']);
-	      $params = array('set' => $set, 'metadataPrefix' => $metadataPrefix, 'resumptionToken' => $oai['ListRecords']['resumptionToken']['text']);
+				if($flagUseResOpts){
+		      $params = array('set' => $set, 'metadataPrefix' => $metadataPrefix, 'resumptionToken' => $oai['ListRecords']['resumptionToken']['text']);
+				} else {
+		      $params = array('resumptionToken' => $oai['ListRecords']['resumptionToken']['text']);
+				}
 	      $flagResumption = true;
 	
 	      $this->myOaiLogMsg('token:[' . $oai['ListRecords']['resumptionToken']['text'] . ']');
