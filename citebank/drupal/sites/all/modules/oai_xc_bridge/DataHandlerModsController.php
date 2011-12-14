@@ -219,8 +219,10 @@ class DataHandlerModsController extends DataHandlerModel
 	
 				if (!$date->hasAttribute('encoding')) {
 					$this->data_date = $date->nodeValue;
+					$this->data_year = $date->nodeValue;
 				} elseif ($date->getAttribute('encoding') == 'iso8601') {
 					$this->data_date = $date->nodeValue;
+					$this->data_year = $date->nodeValue;
 				} elseif ($date->getAttribute('encoding') == 'marc') {
 	
 					if (!$date->hasAttribute('point')) {
@@ -402,6 +404,14 @@ class DataHandlerModsController extends DataHandlerModel
 			$this->data_type = $typeCode;
 			// note: biblio.biblio_type = biblio_types.tid  see biblio.install  _add_publication_types()
 		}
+		
+		// a bad kludge.  FIXME: ideally this would be some db table ref lookup that could be admin configured and be universal but we are out of time for such complexities
+		// if we are a Pensoft source, force the type to Article.  they have Resource Article and a long list that resolves mostly to this anyhow.
+		if (substr_count($this->data_publisher, 'Pensoft')) {
+			$typeName = 'article';
+			$typeCode = (isset($biblioTypes[$typeName]) ? $biblioTypes[$typeName] :  $biblioTypes['article']);
+			$this->data_type = $typeCode;
+		} 
 	}
 
 	/**
@@ -638,7 +648,7 @@ class DataHandlerModsController extends DataHandlerModel
 
 		// BIBLIO_FIELD: custom_field2   accessCondition   useAndReproduction
 		$this->parseValue_Rights();
-
+		
 		return $this->info;
 	}
 
