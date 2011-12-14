@@ -978,8 +978,9 @@ class InternetArchiveModel
 		$table = self::ARCHIVE_TABLE;
 		$ret = false;
 		
-		$bucketUrl = 'http://www.archive.org/details/' . $bucket . '';
-		//$bucketUrl = 'http://www.archive.org/download/' . $bucket . '/' . $this->getRootFileName($url); //$fileToSend;
+		//$bucketUrl = 'http://www.archive.org/details/' . $bucket . '';
+		$bucketUrl = 'http://www.archive.org/download/' . $bucket . '/' . $this->getRootFileName($url); //$fileToSend;
+		// made active 2011 12 05.
 
 		// set url and ia title in our queue table
 		$sql = 'UPDATE ' . $table . ' SET biblio_url = ' . "'"  . $url . "'" . ', ia_title = ' . "'" . $bucket . "'" . ' WHERE nid = ' . $nid . '';
