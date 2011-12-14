@@ -328,6 +328,10 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
     	if ($fields) {
     		$nid = $fields['nid'];
     		$vid = $fields['vid'];
+
+    		// remember the existing fields for an update, we want to preserve the tiny urls and other_number values, and NOT overwrite them.
+    		$node['biblio_url'] = $fields['biblio_url'];
+    		$node['biblio_other_number'] = $fields['biblio_other_number'];
     	}
 
     	if ($nid) {
@@ -447,6 +451,10 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record)
     	if ($fields) {
     		$nid = $fields['nid'];
     		$vid = $fields['vid'];
+
+    		// remember the existing fields for an update, we want to preserve the tiny urls and other_number values, and NOT overwrite them.
+    		$node['biblio_url'] = $fields['biblio_url'];
+    		$node['biblio_other_number'] = $fields['biblio_other_number'];
     	}
 
     	if ($nid) {
@@ -521,6 +529,10 @@ function biblio_oai_xc_oaiharvester_process_record_mods_new($record)
     	if ($fields) {
     		$nid = $fields['nid'];
     		$vid = $fields['vid'];
+    		
+    		// remember the existing fields for an update, we want to preserve the tiny urls and other_number values, and NOT overwrite them.
+    		$node['biblio_url'] = $fields['biblio_url'];
+    		$node['biblio_other_number'] = $fields['biblio_other_number'];
     	}
 
     	if ($nid) {
@@ -1027,6 +1039,10 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
     	if ($fields) {
     		$nid = $fields['nid'];
     		$vid = $fields['vid'];
+
+    		// remember the existing fields for an update, we want to preserve the tiny urls and other_number values, and NOT overwrite them.
+    		$node['biblio_url'] = $fields['biblio_url'];
+    		$node['biblio_other_number'] = $fields['biblio_other_number'];
     	}
 
     	if ($nid) {
@@ -1102,6 +1118,10 @@ function biblio_oai_xc_oaiharvester_process_record_marc($record)
     	if ($fields) {
     		$nid = $fields['nid'];
     		$vid = $fields['vid'];
+
+    		// remember the existing fields for an update, we want to preserve the tiny urls and other_number values, and NOT overwrite them.
+    		$node['biblio_url'] = $fields['biblio_url'];
+    		$node['biblio_other_number'] = $fields['biblio_other_number'];
     	}
 
     	if ($nid) {
@@ -1637,21 +1657,28 @@ function biblio_oai_xc_isRecord($url, $title = '')
 	$result = db_query($sql);
 	$rows = db_fetch_object($result);
 	
+	log_info('isRecord', $sql);   // FIXME: remove logging  
+	
 	if ($rows) {
 		$total = $rows->total;
 		if ($total >= 1) {
 			$flag = true;
+			log_info('isRecord', 'Found CBUID link');   // FIXME: remove logging  
 		}
 	}
 
 	// extra check, for pensoft DOI issue
 	if ($flag == false) {
 		$flag = isDoiUrlCheck($url, $title);
+
+		log_info('isRecord', ($flag ? 'Found DOI check' : 'No DOI link'));   // FIXME: remove logging  
 	}
 	
 	// check biblio as a last 
 	if ($flag == false) {
 		$flag = isRecordBiblio($url);
+
+		log_info('isRecord', ($flag ? 'Found dBiblio check' : 'No dBiblio link'));   // FIXME: remove logging  
 	}
 		
 	return $flag;
@@ -1665,6 +1692,8 @@ function isDoiUrlCheck($url, $title)
 	if (substr_count($url, 'http://dx.doi.org/')) {
 		$sql = "SELECT count(*) AS total FROM {node} WHERE title = '".$title."'";
 		 // "select nid, title from node where title = 'Outcomes of the 2011 Botanical Nomenclature Section at the XVIII International Botanical Congress';"
+
+		log_info('isDoiUrlCheck', $sql);   // FIXME: remove logging  
 		
 		$result = db_query($sql);
 		$row = db_fetch_object($result);
@@ -1673,6 +1702,7 @@ function isDoiUrlCheck($url, $title)
 			$count = $row->total;
 
 			if ($count > 0) {
+				log_info('isDoiUrlCheck', 'count: ' . $count);   // FIXME: remove logging  
 				return true;
 			}
 		}
@@ -1687,6 +1717,7 @@ function isDoiUrlCheck($url, $title)
 function isRecordBiblio($url) 
 {
 	$sql = "SELECT count(*) as total FROM {biblio} where biblio_url = '".$url."'";
+	log_info('isRecordBiblio', $sql);   // FIXME: remove logging  
 	
 	$result = db_query($sql);
 	
@@ -1694,6 +1725,7 @@ function isRecordBiblio($url)
 	
 	if ($row) {
 		$count = $row->total;
+		log_info('isRecordBiblio', 'count: ' . $count);   // FIXME: remove logging  
 		
 		return true;
 	}
@@ -1754,7 +1786,7 @@ function biblio_oai_xc_check_md5($field)
 /*
  *  biblio_oai_xc_getNid - using the md5 of an url find the record and return the nid (node ID) if found
  */
-function biblio_oai_xc_getNid($field) 
+function biblio_oai_xc_getNid_OLD($field) 
 {
 	$sql = "SELECT nid, vid, biblio_md5, biblio_url FROM {biblio} where biblio_url = '".$field."'";
 
@@ -1765,6 +1797,56 @@ function biblio_oai_xc_getNid($field)
   if ($row) {
   	$fields['nid'] = $row->nid;
   	$fields['vid'] = $row->vid;
+  	
+  	return $fields;
+  }
+
+	return 0;
+}
+
+/*
+ *  biblio_oai_xc_getNid - using the md5 of an url find the record and return the nid (node ID) if found
+ */
+function biblio_oai_xc_getNid($field) 
+{
+	// big note: drupals node_save eventually gets called.  if the nid is empty, drupals function will INSERT a record.
+	//           if the nid has a value, drupal will UPDATE the existing node.  
+	//           with an empty nid, you will make a new record, and create duplicates, despite various other flagging going on.
+	//           biblio_save_node will call drupals core function node_save.    http://api.drupal.org/api/drupal/modules--node--node.module/function/node_save/6
+	//           what really should happen, is you explicitely set or clear an update/insert flag.  sheesh, drupal!
+	//
+	// hunt for the nid vid using the old way first, then....
+	//$sql = "SELECT nid, vid, biblio_md5, biblio_url FROM {biblio} where biblio_url = '".$field."'";
+	$sql = "SELECT nid, vid, biblio_md5, biblio_url, biblio_other_number FROM {biblio} where biblio_url = '".$field."'";
+
+  $result = db_query($sql);
+	
+  $row = db_fetch_object($result);
+  
+  if ($row) {
+  	$fields['nid'] = $row->nid;
+  	$fields['vid'] = $row->vid;
+
+  	$fields['biblio_url'] = $row->biblio_url;
+  	$fields['biblio_other_number'] = $row->biblio_other_number;
+  	
+  	return $fields;
+  }
+
+	// hunt for the nid vid searching the new system.
+	//$sql = "SELECT b.nid as nid, b.vid as vid, b.biblio_md5 as biblio_md5, b.biblio_url as biblio_url, c.link as link FROM biblio AS b JOIN citebank_unique_identifier AS c ON (b.nid = c.nid) WHERE c.link = '".$field."'";
+	$sql = "SELECT b.nid as nid, b.vid as vid, b.biblio_md5 as biblio_md5, b.biblio_url as biblio_url, b.biblio_other_number as biblio_other_number, c.link as link FROM biblio AS b JOIN citebank_unique_identifier AS c ON (b.nid = c.nid) WHERE c.link = '".$field."'";
+
+  $result = db_query($sql);
+	
+  $row = db_fetch_object($result);
+  
+  if ($row) {
+  	$fields['nid'] = $row->nid;
+  	$fields['vid'] = $row->vid;
+
+  	$fields['biblio_url'] = $row->biblio_url;
+  	$fields['biblio_other_number'] = $row->biblio_other_number;
   	
   	return $fields;
   }
