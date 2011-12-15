@@ -579,6 +579,13 @@ class DataHandlerModsController extends DataHandlerModel
 		//watchdog($type, $msg); 
 
 		$this->data_custom2 = $accessConditionData;
+
+
+	  $abstract = $this->xpath->query('/x:mods/x:abstract');
+	  if ($abstract->length > 0) {
+	  	$this->data_abst_e = $abstract->item(0)->nodeValue;
+	  }
+
 	}
 
 	/**
