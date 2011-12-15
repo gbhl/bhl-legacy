@@ -54,6 +54,13 @@ class DataHandlerModsController extends DataHandlerModel
 				switch ($identifier->getAttribute('type'))
 				{
 					case 'uri':
+						if ($this->data_url) {
+							// we already have one, so, we try to keep both.
+							$this->data_other_number = $this->data_url;
+							// caveat, we are relying on, in this case, Pensofts two identifiers, to be in order, doi one first then other as second.
+							// we want the other number field to hold the doi link, which allows a citation search to find the link
+						}
+						
 						$this->data_url = $identifier->nodeValue;
 						break;
 	
@@ -219,10 +226,18 @@ class DataHandlerModsController extends DataHandlerModel
 	
 				if (!$date->hasAttribute('encoding')) {
 					$this->data_date = $date->nodeValue;
-					$this->data_year = $date->nodeValue;
+
+					// encoded formats are of form YYYY-MM-DD  or YYYYMMDD, regardless we want only the first four, stripping wild spaces and a leading minus or dash
+					$year = substr(ltrim(trim($date->nodeValue), '-'), 0, 4);
+					$this->data_year = $year;
+
 				} elseif ($date->getAttribute('encoding') == 'iso8601') {
 					$this->data_date = $date->nodeValue;
-					$this->data_year = $date->nodeValue;
+
+					// encoded formats are of form YYYY-MM-DD  or YYYYMMDD, regardless we want only the first four, stripping wild spaces and a leading minus or dash
+					$year = substr(ltrim(trim($date->nodeValue), '-'), 0, 4);
+					$this->data_year = $year;
+
 				} elseif ($date->getAttribute('encoding') == 'marc') {
 	
 					if (!$date->hasAttribute('point')) {
@@ -408,9 +423,44 @@ class DataHandlerModsController extends DataHandlerModel
 		// a bad kludge.  FIXME: ideally this would be some db table ref lookup that could be admin configured and be universal but we are out of time for such complexities
 		// if we are a Pensoft source, force the type to Article.  they have Resource Article and a long list that resolves mostly to this anyhow.
 		if (substr_count($this->data_publisher, 'Pensoft')) {
-			$typeName = 'article';
-			$typeCode = (isset($biblioTypes[$typeName]) ? $biblioTypes[$typeName] :  $biblioTypes['article']);
-			$this->data_type = $typeCode;
+			//$typeName = 'article';
+			//$typeCode = (isset($biblioTypes[$typeName]) ? $biblioTypes[$typeName] :  $biblioTypes['article']);
+			//$this->data_type = $typeCode;
+			$this->data_type = $biblioTypes['article'];
+			
+			if (strtolower($pubTypeName) == 'monograph') {
+				$this->data_type = $biblioTypes['book'];
+			}
+			/*
+					Journal article=
+					
+					research article 
+					review article 
+					forum paper
+					editorial
+					checklist
+					catalogue 
+					corrigenda 
+					in memoriam 
+					book review
+					short communication 
+					data paper 
+					letter to the editor
+					research articles 
+					review articles 
+					forum papers
+					editorials
+					checklists
+					catalogues 
+					corrigendas 
+					in memoriams 
+					book reviews
+					short communications 
+					data papers 
+					letter to the editors
+					
+					book=monograph
+			*/
 		} 
 	}
 
@@ -453,7 +503,7 @@ class DataHandlerModsController extends DataHandlerModel
 					
 					$details = $part->getElementsByTagName('detail');
 					$text = $part->getElementsByTagName('text');
-	
+
 					if ($details->length > 0) {
 	
 						foreach ($details as $detail) {
@@ -480,8 +530,18 @@ class DataHandlerModsController extends DataHandlerModel
 					$extents = $part->getElementsByTagName('extent');
 	
 					if ($extents->length > 0) {
-						$this->data_section = $extents->item(0)->getElementsByTagName('start')->item(0)->nodeValue;
-						$this->data_pages = $extents->item(0)->getElementsByTagName('list')->item(0)->nodeValue;
+						//$this->data_section = $extents->item(0)->getElementsByTagName('start')->item(0)->nodeValue;
+						//$this->data_pages = $extents->item(0)->getElementsByTagName('list')->item(0)->nodeValue;
+
+						// new added 2011 12 15
+						$this->data_pages = $extents->item(0)->getElementsByTagName('start')->item(0)->nodeValue;
+						$endpages = '';
+						$endpages = $extents->item(0)->getElementsByTagName('end')->item(0)->nodeValue;
+						if ($endpages) {
+							$this->data_pages .= '-';
+							$this->data_pages .= $extents->item(0)->getElementsByTagName('end')->item(0)->nodeValue;
+						}
+
 					}
 					
 					$partDates = $part->getElementsByTagName('date');
