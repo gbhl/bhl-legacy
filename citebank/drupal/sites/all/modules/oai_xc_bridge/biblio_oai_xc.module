@@ -331,7 +331,9 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc($record)
 
     		// remember the existing fields for an update, we want to preserve the tiny urls and other_number values, and NOT overwrite them.
     		$node['biblio_url'] = $fields['biblio_url'];
-    		$node['biblio_other_number'] = $fields['biblio_other_number'];
+    		if ($fields['biblio_other_number'] != '') {
+    			$node['biblio_other_number'] = $fields['biblio_other_number'];
+    		}
     	}
 
     	if ($nid) {
@@ -454,7 +456,9 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record)
 
     		// remember the existing fields for an update, we want to preserve the tiny urls and other_number values, and NOT overwrite them.
     		$node['biblio_url'] = $fields['biblio_url'];
-    		$node['biblio_other_number'] = $fields['biblio_other_number'];
+    		if ($fields['biblio_other_number'] != '') {
+    			$node['biblio_other_number'] = $fields['biblio_other_number'];
+    		}
     	}
 
     	if ($nid) {
@@ -532,7 +536,9 @@ function biblio_oai_xc_oaiharvester_process_record_mods_new($record)
     		
     		// remember the existing fields for an update, we want to preserve the tiny urls and other_number values, and NOT overwrite them.
     		$node['biblio_url'] = $fields['biblio_url'];
-    		$node['biblio_other_number'] = $fields['biblio_other_number'];
+    		if ($fields['biblio_other_number'] != '') {
+    			$node['biblio_other_number'] = $fields['biblio_other_number'];
+    		}
     	}
 
     	if ($nid) {
@@ -1042,7 +1048,9 @@ function biblio_oai_xc_oaiharvester_process_record_mods($record)
 
     		// remember the existing fields for an update, we want to preserve the tiny urls and other_number values, and NOT overwrite them.
     		$node['biblio_url'] = $fields['biblio_url'];
-    		$node['biblio_other_number'] = $fields['biblio_other_number'];
+    		if ($fields['biblio_other_number'] != '') {
+    			$node['biblio_other_number'] = $fields['biblio_other_number'];
+    		}
     	}
 
     	if ($nid) {
@@ -1121,7 +1129,9 @@ function biblio_oai_xc_oaiharvester_process_record_marc($record)
 
     		// remember the existing fields for an update, we want to preserve the tiny urls and other_number values, and NOT overwrite them.
     		$node['biblio_url'] = $fields['biblio_url'];
-    		$node['biblio_other_number'] = $fields['biblio_other_number'];
+    		if ($fields['biblio_other_number'] != '') {
+    			$node['biblio_other_number'] = $fields['biblio_other_number'];
+    		}
     	}
 
     	if ($nid) {
