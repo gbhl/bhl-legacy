@@ -69,6 +69,12 @@ class Attribution
 		if (substr_count($hay, 'nature_conservation')) {
 			$hay = 'pensoft';
 		}
+		if (substr_count($hay, 'neobiota')) {
+			$hay = 'pensoft';
+		}
+		if (substr_count($hay, 'mycokeys')) {
+			$hay = 'pensoft';
+		}
 
 		return $hay;
 	}
