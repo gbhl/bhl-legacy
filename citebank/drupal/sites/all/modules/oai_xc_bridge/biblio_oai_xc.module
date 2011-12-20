@@ -1679,11 +1679,13 @@ function biblio_oai_xc_isRecord($url, $title = '')
 		}
 	}
 
-	// extra check, for pensoft DOI issue
-	if ($flag == false) {
-		$flag = isDoiUrlCheck($url, $title);
-
-		log_info('isRecord', ($flag ? 'Found DOI check' : 'No DOI link'));   // FIXME: remove logging  
+	if (date('Ymd') < '20111231') {  // expire this type of checking
+		// extra check, for pensoft DOI issue
+		if ($flag == false) {
+			$flag = isDoiUrlCheck($url, $title);
+	
+			log_info('isRecord', ($flag ? 'Found DOI check' : 'No DOI link'));   // FIXME: remove logging  
+		}
 	}
 	
 	// check biblio as a last 
@@ -1693,11 +1695,13 @@ function biblio_oai_xc_isRecord($url, $title = '')
 		log_info('isRecord', ($flag ? 'Found dBiblio check' : 'No dBiblio link'));   // FIXME: remove logging  
 	}
 	
-	if ($flag == false) {
-		if ($title) {
-			$flag = isCheckTitle($title);
-
-			log_info('isRecord', ($flag ? 'Found checkTitle check' : 'No title found'));   // FIXME: remove logging  
+	if (date('Ymd') < '20111231') {  // expire this type of checking
+		if ($flag == false) {
+			if ($title) {
+				$flag = isCheckTitle($title);
+	
+				log_info('isRecord', ($flag ? 'Found checkTitle check' : 'No title found'));   // FIXME: remove logging  
+			}
 		}
 	}
 		
