@@ -449,7 +449,8 @@ function biblio_oai_xc_oaiharvester_process_record_oai_dc_new($record)
 	    biblio_save_node($node);
     } else {
     	// else it's an update, set the nid and maybe the revision.
-    	$fields = biblio_oai_xc_getNid($biblio_url);
+    	//$fields = biblio_oai_xc_getNid($biblio_url);
+    	$fields = biblio_oai_xc_getNid($biblio_url, $node['title']);
     	if ($fields) {
     		$nid = $fields['nid'];
     		$vid = $fields['vid'];
@@ -529,7 +530,8 @@ function biblio_oai_xc_oaiharvester_process_record_mods_new($record)
     	biblio_save_node($node);
     } else {
     	// else it's an update, set the nid.
-    	$fields = biblio_oai_xc_getNid($biblio_url);
+    	//$fields = biblio_oai_xc_getNid($biblio_url);
+    	$fields = biblio_oai_xc_getNid($biblio_url, $node['title']);
     	if ($fields) {
     		$nid = $fields['nid'];
     		$vid = $fields['vid'];
@@ -1122,7 +1124,7 @@ function biblio_oai_xc_oaiharvester_process_record_marc($record)
 //log_info('marcxml', 'INSERT: ' . print_r($node, true));   // FIXME: remove logging
     } else {
     	// else it's an update, set the nid.
-    	$fields = biblio_oai_xc_getNid($biblio_url);
+    	$fields = biblio_oai_xc_getNid($biblio_url, $node['title']);
     	if ($fields) {
     		$nid = $fields['nid'];
     		$vid = $fields['vid'];
@@ -1690,6 +1692,14 @@ function biblio_oai_xc_isRecord($url, $title = '')
 
 		log_info('isRecord', ($flag ? 'Found dBiblio check' : 'No dBiblio link'));   // FIXME: remove logging  
 	}
+	
+	if ($flag == false) {
+		if ($title) {
+			$flag = isCheckTitle($title);
+
+			log_info('isRecord', ($flag ? 'Found checkTitle check' : 'No title found'));   // FIXME: remove logging  
+		}
+	}
 		
 	return $flag;
 }
@@ -1700,6 +1710,7 @@ function biblio_oai_xc_isRecord($url, $title = '')
 function isDoiUrlCheck($url, $title) 
 {
 	if (substr_count($url, 'http://dx.doi.org/')) {
+		$title = mysql_real_escape_string($title);
 		$sql = "SELECT count(*) AS total FROM {node} WHERE title = '".$title."'";
 		 // "select nid, title from node where title = 'Outcomes of the 2011 Botanical Nomenclature Section at the XVIII International Botanical Congress';"
 
@@ -1715,6 +1726,32 @@ function isDoiUrlCheck($url, $title)
 				log_info('isDoiUrlCheck', 'count: ' . $count);   // FIXME: remove logging  
 				return true;
 			}
+		}
+	}
+	
+	return false;
+}
+
+/*
+ *  isCheckTitle - is there a record 
+ */
+function isCheckTitle($title) 
+{
+	$title = mysql_real_escape_string($title);
+	$sql = "SELECT count(*) AS total FROM {node} WHERE title = '".$title."'";
+	 // "select nid, title from node where title = 'Outcomes of the 2011 Botanical Nomenclature Section at the XVIII International Botanical Congress';"
+
+	log_info('isCheckTitle', $sql);   // FIXME: remove logging  
+	
+	$result = db_query($sql);
+	$row = db_fetch_object($result);
+	
+	if ($row) {
+		$count = $row->total;
+
+		if ($count > 0) {
+			log_info('isCheckTitle', 'count: ' . $count);   // FIXME: remove logging  
+			return true;
 		}
 	}
 	
@@ -1817,7 +1854,7 @@ function biblio_oai_xc_getNid_OLD($field)
 /*
  *  biblio_oai_xc_getNid - using the md5 of an url find the record and return the nid (node ID) if found
  */
-function biblio_oai_xc_getNid($field) 
+function biblio_oai_xc_getNid($field, $title = '') 
 {
 	// big note: drupals node_save eventually gets called.  if the nid is empty, drupals function will INSERT a record.
 	//           if the nid has a value, drupal will UPDATE the existing node.  
@@ -1839,7 +1876,7 @@ function biblio_oai_xc_getNid($field)
 
   	$fields['biblio_url'] = $row->biblio_url;
   	$fields['biblio_other_number'] = $row->biblio_other_number;
-  	
+  	log_info('getNid', '1 nid: ' . $fields['nid'] . 'url: ' . $fields['biblio_url']);   // FIXME: remove logging  
   	return $fields;
   }
 
@@ -1857,9 +1894,32 @@ function biblio_oai_xc_getNid($field)
 
   	$fields['biblio_url'] = $row->biblio_url;
   	$fields['biblio_other_number'] = $row->biblio_other_number;
+  	log_info('getNid', '2 nid: ' . $fields['nid'] . 'url: ' . $fields['biblio_url']);   // FIXME: remove logging  
   	
   	return $fields;
   }
+  
+  if ($title) {
+  	$title = mysql_real_escape_string($title);
+		$sql = "SELECT b.nid as nid, b.vid as vid, b.biblio_url as biblio_url, b.biblio_other_number as biblio_other_number FROM biblio AS b JOIN node AS n ON (b.nid = n.nid) WHERE n.title = '".$title."' ORDER BY n.nid LIMIT 1";
+	
+	  $result = db_query($sql);
+		
+	  $row = db_fetch_object($result);
+	  
+	  if ($row) {
+	  	$fields['nid'] = $row->nid;
+	  	$fields['vid'] = $row->vid;
+	
+	  	$fields['biblio_url'] = $row->biblio_url;
+	  	$fields['biblio_other_number'] = $row->biblio_other_number;
+	  	log_info('getNid', '3 nid: ' . $fields['nid'] . 'url: ' . $fields['biblio_url']);   // FIXME: remove logging  
+	  	
+	  	return $fields;
+	  }
+  }
+
+ 	log_info('getNid', 'not found: ' . $field);   // FIXME: remove logging  
 
 	return 0;
 }
