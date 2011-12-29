@@ -53,10 +53,17 @@ $msg = '	* BHL Digitized Titles (All): ';
 $sql = "SELECT COUNT(*) AS total FROM biblio WHERE biblio_label LIKE '%biodiversity%'";
 getStat($dbi, $msg, $sql);
 
+//	* Citations from BHL xxx: 
+$msg = '	* BHL Digitized Titles (books and journals): ';
+$sql = "SELECT COUNT(*) AS total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid) JOIN citebank_unique_identifier as c ON (b.nid = c.nid) WHERE n.type = 'biblio' AND c.link LIKE '%biodiversitylibrary.org/bibliography%' AND biblio_remote_db_provider > ''";
+getStat($dbi, $msg, $sql);
+
+
+
 $msg = '	* BHL Digitized Titles (Book records): ';
 $sql = "SELECT COUNT(*) AS total FROM biblio WHERE biblio_label LIKE '%biodiversity%' AND biblio_type = 100";getStat($dbi, $msg, $sql);
 
-$msg = '	* BHL Digitized Titles (Journal Article records) Citations with PDFs from BHL: ';
+$msg = '	* BHL Digitized Articles (Journal Article records)(via PDF Generator): ';
 $sql = "SELECT COUNT(*) AS total FROM biblio WHERE biblio_label LIKE '%biodiversity%' AND biblio_type = 102";
 getStat($dbi, $msg, $sql);
 
@@ -86,7 +93,14 @@ getStat($dbi, $msg, $sql);
 
 //	* Citations from Zookeys: 
 $msg = '	* Citations from Zookeys: ';
-$sql = "SELECT COUNT(*) AS total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid) JOIN citebank_unique_identifier as c ON (b.nid = c.nid) WHERE n.type = 'biblio' AND c.link LIKE '%zookey%' AND b.biblio_label LIKE '%pensof%'";
+//$sql = "SELECT COUNT(*) AS total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid) JOIN citebank_unique_identifier as c ON (b.nid = c.nid) WHERE n.type = 'biblio' AND (c.link LIKE '%zookey%' OR b.biblio_url LIKE '%zookey%') AND b.biblio_label LIKE '%pensof%'";
+$sql = "SELECT COUNT(*) AS total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid) WHERE n.type = 'biblio' AND b.biblio_url LIKE '%zookeys%' AND b.biblio_label LIKE '%pensof%'";
+getStat($dbi, $msg, $sql);
+
+//	* Citations from Phytokeys: 
+$msg = '	* Citations from Phytokeys: ';
+//$sql = "SELECT COUNT(*) AS total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid) JOIN citebank_unique_identifier as c ON (b.nid = c.nid) WHERE n.type = 'biblio' AND (c.link LIKE '%phytokeys%' OR b.biblio_url LIKE '%phytokeys%') AND b.biblio_label LIKE '%pensof%'";
+$sql = "SELECT COUNT(*) AS total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid) WHERE n.type = 'biblio' AND b.biblio_url LIKE '%phytokeys%' AND b.biblio_label LIKE '%pensof%'";
 getStat($dbi, $msg, $sql);
 
 //	* Citations from Journal of the American Mosquito Control Association: 
@@ -99,19 +113,6 @@ $msg = '	* Citations from AMNH (American Museum of Natural History): ';
 $sql = "SELECT COUNT(*) AS total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid) JOIN citebank_unique_identifier as c ON (b.nid = c.nid) WHERE n.type = 'biblio' AND b.biblio_label LIKE '%AMNH%'";
 getStat($dbi, $msg, $sql);
 
-//	* Citations from AMNH: 
-$msg = '	* Citations from AMNH (Journal of the American Mosquito Control Association): ';
-$sql = "SELECT COUNT(*) AS total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid) JOIN citebank_unique_identifier as c ON (b.nid = c.nid) WHERE n.type = 'biblio' AND b.biblio_label LIKE '%AMNH%'";
-getStat($dbi, $msg, $sql);
-
-//	* Citations from AMNH: 
-$msg = '	* Citations from AMNH (AMNH Scientific Publications Library): ';
-$sql = "SELECT COUNT(*) AS total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid) JOIN citebank_unique_identifier as c ON (b.nid = c.nid) WHERE n.type = 'biblio' AND b.biblio_label LIKE '%Scientific Publications Library%'";
-getStat($dbi, $msg, $sql);
-
-
-//SELECT COUNT(*) AS total FROM biblio WHERE biblio_remote_db_provider LIKE '%CSIC%';
-//	* Citations from Biblioteca Digital del Real Jardín Botánico de Madrid - CSIC: 
 $msg = '	* Citations from Biblioteca Digital del Real Jardín Botánico de Madrid - CSIC: ';
 $sql = "SELECT COUNT(*) AS total FROM node AS n JOIN biblio AS b ON (n.nid = b.nid) JOIN citebank_unique_identifier as c ON (b.nid = c.nid) WHERE n.type = 'biblio' AND b.biblio_remote_db_provider LIKE '%CSIC%'";
 getStat($dbi, $msg, $sql);
@@ -121,18 +122,27 @@ statsEchoLine();
 
 //	* Registerered CiteBank users: 
 $msg = '	* Registerered CiteBank users: ';
-$sql = "SELECT COUNT(*) AS total FROM users WHERE STATUS = 1";
-getStat($dbi, $msg, $sql);
+$sql = "SELECT COUNT(*) AS total FROM users";
+$numTotalUsers = getStat($dbi, $msg, $sql);
 
 //	* Registerered CiteBank users: 
-$msg = '	* Active Registerered CiteBank users: ';
+$msg = '	active: ';
+$sql = "SELECT COUNT(*) AS total FROM users WHERE STATUS = 1";
+$numUsersActive = getStat($dbi, $msg, $sql);
+
+//	* Registerered CiteBank users: 
+$msg = '	active (that have accessed site): ';
 $sql = "SELECT COUNT(*) AS total FROM users WHERE STATUS = 1 AND access > 0 AND login > 0";
-getStat($dbi, $msg, $sql);
+$numUsersActive = getStat($dbi, $msg, $sql);
+
+$msg = '	blocked: ';
+$sql = "SELECT COUNT(*) AS total FROM users WHERE STATUS = 0";
+$numUsersBlocked = getStat($dbi, $msg, $sql);
 
 statsEchoLine();
 
 // total citations sent to IA
-$msg = '	* Total citations sent to IA (Citebank hosted data): ';
+$msg = '	* Total citations sent to IA (Citations in CB (internally hosted content files)): ';
 $sql = "SELECT COUNT(DISTINCT nid) AS total FROM citebank_internet_archive_records WHERE archive_status > 0";
 $totalIACitations = getStat($dbi, $msg, $sql);
 
@@ -151,9 +161,14 @@ $msg = '	* Total citations on hold for IA: ';
 $sql = "SELECT COUNT(DISTINCT nid) AS total FROM citebank_internet_archive_records WHERE archive_status < -1";
 getStat($dbi, $msg, $sql);
 
+// total citations on ignored for IA
+$msg = '	* Total citations ignored for IA: ';
+$sql = "SELECT COUNT(DISTINCT nid) AS total FROM citebank_internet_archive_records WHERE archive_status = -1";
+getStat($dbi, $msg, $sql);
+
 $totalCitationsExternallyHosted = $totalCitations - $totalIACitations;
 echo '<br>';
-$msg = '	* Total Citations Externally Hosted: ';
+$msg = '	* Citations in CB (externally hosted content files): ';
 echo $msg . $totalCitationsExternallyHosted;
 
 // ****************************************
@@ -210,8 +225,6 @@ function statsEchoDate()
 	//citestats - CiteBank stats updated Thu Nov 17 01:01:01 CST 2011	
 	echo '<br>';
 	echo 'citestats - CiteBank stats updated ' .  date('D M d Y H:i:s T') . ' 	';
-	echo '<br>';
-	echo 'note: numbers are not currently entirely accurate, work in progress';
 	echo '<br>';
 
 	
