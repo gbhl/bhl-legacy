@@ -233,6 +233,7 @@ class BiblioNode extends BiblioNodeData
 		$this->data_keywords                    = (isset($node['biblio_keywords']) ? $node['biblio_keywords'] : array());
 		$this->data_label                       = (isset($node['biblio_label']) ? $node['biblio_label'] : ''); //$node['biblio_label']
 		$this->data_lang                        = (isset($node['biblio_lang']) ? $node['biblio_lang'] : '');
+		$this->data_lang = $this->filterLang($this->data_lang);
 		$this->data_notes                       = (isset($node['biblio_notes']) ? $node['biblio_notes'] : '');
 		$this->data_number                      = (isset($node['biblio_number']) ? $node['biblio_number'] : '');
 		$this->data_number_of_volumes           = (isset($node['biblio_number_of_volumes']) ? $node['biblio_number_of_volumes'] : '');
@@ -301,6 +302,7 @@ class BiblioNode extends BiblioNodeData
 		$this->data_keywords                    = (isset($node['data_keywords']) ? $node['data_keywords'] : array());
 		$this->data_label                       = (isset($node['data_label']) ? $node['data_label'] : ''); //$node['data_label']
 		$this->data_lang                        = (isset($node['data_lang']) ? $node['data_lang'] : '');
+		$this->data_lang = $this->filterLang($this->data_lang);
 		$this->data_notes                       = (isset($node['data_notes']) ? $node['data_notes'] : '');
 		$this->data_number                      = (isset($node['data_number']) ? $node['data_number'] : '');
 		$this->data_number_of_volumes           = (isset($node['data_number_of_volumes']) ? $node['data_number_of_volumes'] : '');
@@ -333,6 +335,212 @@ class BiblioNode extends BiblioNodeData
 		$this->data_remote_db_provider          = (isset($node['data_remote_db_provider']) ? $node['data_remote_db_provider'] : '');
 		$this->data_label                       = (isset($node['data_label']) ? $node['data_label'] : '');
 		$this->data_remote_db_name              = (isset($node['data_remote_db_name']) ? $node['data_remote_db_name'] : '');
+	}
+
+	/*
+	http://www.loc.gov/marc/languages/language_code.html
+	http://www.i18nguy.com/unicode/language-identifiers.html
+	http://www.loc.gov/standards/iso639-2/php/code_list.php
+	?? Multiple
+	
+	ca Catalan
+	zh Chinese
+	hr Croation
+	cs Czech
+	da Danish
+	nl Dutch
+	en English
+	fi Finnish
+	fr French
+	de German
+	gu Gujarati
+	hu Hungarian
+	id Indonesian
+	it Italian
+	ja Japanese
+	la Latin
+	nl Dutch
+	no Norwegian
+	pl Polish
+	pt Portugese 
+	ro Romanian
+	ru Russian
+	es Spanish
+	sv Swedish
+
+	cat  Catalan
+	chi  Chinese
+	hrv  Croation
+	cze  Czech
+	dan  Danish
+	dut  Dutch
+	nid  Dutch
+	eng  English
+	fin  Finnish
+	fre  French
+	fra  French
+	ger  German
+	guj  Gujarati
+	hun  Hungarian
+	ind  Indonesian
+	ita  Italian
+	jpn  Japanese
+	lat  Latin
+	nor  Norwegian
+	pol  Polish
+	por  Portugese 
+	rum  Romanian
+	ron  Romanian
+	rup  Romanian
+	rus  Russian
+	spa  Spanish
+	swe  Swedish
+	*/			
+
+	/**
+	 * filterLang - standardize the language value
+	 */
+	function filterLang($lang)
+	{
+		$originalLang = $lang;
+		$lang = strtolower(trim($lang));
+		$language = $lang;
+
+		// filter languages
+		switch ($lang)
+		{
+			case 'ca':
+			case 'cat':
+				$language = 'Catalan';
+				break;
+
+			case 'zh':
+			case 'chi':
+			case 'zho':
+				$language = 'Chinese';
+				break;
+
+			case 'hr':
+			case 'hrv':
+				$language = 'Croation';
+				break;
+
+			case 'cs':
+			case 'cze':
+				$language = 'Czech';
+				break;
+
+			case 'da':
+			case 'dan':
+				$language = 'Danish';
+				break;
+
+			case 'nl':
+			case 'dut':
+			case 'nid':
+				$language = 'Dutch';
+				break;
+
+			case 'en_US':
+			case 'en_us':
+			case 'en-us':
+			case 'eng':
+			case 'en':
+				$language = 'English';
+				break;
+
+			case 'fi':
+			case 'fin':
+				$language = 'Finnish';
+				break;
+
+			case 'fr':
+			case 'fre':
+			case 'fra':
+				$language = 'French';
+				break;
+
+			case 'de':
+			case 'ger':
+				$language = 'German';
+				break;
+
+			case 'gu':
+			case 'guj':
+				$language = 'Gujarati';
+				break;
+
+			case 'hu':
+			case 'hun':
+				$language = 'Hungarian';
+				break;
+
+			case 'id':
+			case 'ind':
+				$language = 'Indonesian';
+				break;
+
+			case 'it':
+			case 'ita':
+				$language = 'Italian';
+				break;
+
+			case 'ja':
+			case 'jpn':
+				$language = 'Japanese';
+				break;
+
+			case 'la':
+			case 'lat':
+				$language = 'Latin';
+				break;
+
+			case 'no':
+			case 'nor':
+				$language = 'Norwegian';
+				break;
+
+			case 'pl':
+			case 'pol':
+				$language = 'Polish';
+				break;
+
+			case 'pt':
+			case 'por':
+				$language = 'Portuese';
+				break;
+
+			case 'ro':
+			case 'rum':
+			case 'ron':
+			case 'rup':
+				$language = 'Romanian';
+				break;
+
+			case 'ru':
+			case 'rus':
+				$language = 'Russian';
+				break;
+
+			case 'es':
+			case 'spa':
+				$language = 'Spanish';
+				break;
+
+			case 'sv':
+			case 'swe':
+				$language = 'Swedish';
+				break;
+
+			// en;es
+			// en, es
+
+			default:
+				$language = $originalLang;
+				break;
+		}
+		
+		return $language;
 	}
 
 	/**

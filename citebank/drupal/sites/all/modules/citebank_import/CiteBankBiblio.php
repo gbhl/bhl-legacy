@@ -40,6 +40,14 @@ class CiteBankBiblio
 	public $node = null;
 	public $importErrorLog = null;
 	
+	public $numExpectedCitations = 0;
+	public $numCitationsUploaded = 0;
+	public $numCitationsNoPdfs   = 0;
+	public $numCitationsWithPdfs = 0;
+	public $numCitationsItemsProcessed = 0;
+	public $listCitationsNoPdfs  = array();
+	public $errorMsgsList  = array();
+	
 	const CLASS_NAME    = 'CiteBankBiblio';
 
 	// FIXME: this will need further work really, to make it more dynamic
@@ -179,10 +187,82 @@ class CiteBankBiblio
 		$this->biblioNode->setDataByNodeX($biblio);
 		$biblio = $this->biblioNode->processNode(null);
 		
+		$this->checkRequiredFields($biblio);
+		
 		$sql = $this->biblioNode->makeSql($biblio);
 		$this->dbi->insert($sql);
 		//echo $sql;  echo '<br>'."\n";  // FIXME: remove
 	}
+
+	/**
+	 * checkRequiredFields - 
+	 */
+	function checkRequiredFields($biblio)
+	{
+		$title = $biblio['title'];
+		$year = $biblio['biblio_year'];
+		
+		if (strlen(trim($title)) == 0) {
+			$msg = 'Title is empty';
+			watchmen($msg);
+		}
+
+		if (strlen(trim($title)) == 1) {
+			$msg = 'Title is ONE character long';
+			watchmen($msg);
+		}
+
+		if (strlen(trim($year)) < 4) {
+			$msg = 'Year is too short';
+			watchmen($msg);
+		}
+
+		if (strlen(trim($year)) > 4) {
+			$msg = 'Year is too long';
+			watchmen($msg);
+		}
+
+		if ($year == 9999) {
+			$msg = 'Year is default blank year';
+			watchmen($msg);
+		}
+
+		if (substr_count($year, '-') > 4) {
+			$msg = 'Year has dash or minus';
+			watchmen($msg);
+		}
+
+		if ($this->checkIllegalIASymbols(trim($title))) {
+			$msg = 'Title has one or more Illegal symbols for IA';
+			watchmen($msg);
+		}
+
+	}
+
+	/**
+	 * checkIllegalIASymbols - does text have characters that are IA problematic
+	 */
+	function checkIllegalIASymbols($giventext)
+	{
+		// take out " - : . space ( ) #
+		
+		// IA (Internet Archive) unwanted chars
+		// * ( ) { } [ ] / \ $ % @ # ^ & | < > ' ~ ` ! ? +
+		// and other odd chars, and take out spaces to compress into nice useable string
+		$search = array('*', '(', ')', '{', '}', '[', ']', '/', '\\', '$', '%', '@', '#', '^', '&', '|', '<', '>', "'", '~', '`', '!', '?', '+');
+		
+		$foundAny = 0;
+		
+		foreach ($search as $key => $val) {
+			$foundAny = substr_count($giventext, $val);
+			if ($foundAny) {
+				break;
+			}
+		}
+
+		return $foundAny;
+	}
+
 
 //	function testBAR($author, $nid)
 //	{
@@ -463,7 +543,7 @@ class CiteBankBiblio
 	function addCiteBankRecord($title, $filename, $biblio, $uid = 0, $filesize = 0)
 	{
 		// bulletproofing ****
-		if (strlen($filename) == 0) {
+		if (strlen(trim($filename)) == 0) {
 			$errmsg = 'error: no filename ' . $filename;
 			watchdog('CiteBankBiblio', $errmsg);  // drupal system call
 
@@ -474,7 +554,7 @@ class CiteBankBiblio
 			return;
 		}
 
-		if (strlen($title) == 0) {
+		if (strlen(trim($title)) == 0) {
 			$errmsg = 'error: no title ' . $filename;
 			watchdog('CiteBankBiblio', $errmsg);  // drupal system call
 
@@ -492,6 +572,16 @@ class CiteBankBiblio
 		if ($filesize == 0) {
 			// get the files size
 			$filesize = $this->getFileSize($filename);
+			
+			if ($filesize == 0) {
+				$this->numCitationsNoPdfs++;  // NO pdf
+				$this->listCitationsNoPdfs[] = 'Title:' . $title . ' File:' .$filename;
+				$msg = 'File size is ZERO for [' . $filename . '] ' . $title . '';
+				watchmen($msg);
+			} else {
+				$this->numCitationsWithPdfs++;  // WITH pdf
+			}
+
 		}
 		// bulletproofing ****
 
@@ -737,32 +827,37 @@ class CiteBankBiblio
 	}
 
 	/**
+	 * isCbuid - 
+	 */
+	function isCbuid($url)
+	{
+		$flag = false;
+	
+		$sql = 'SELECT count(*) AS total FROM ' . self::ID_TABLE . ' WHERE link = ' . "'". $url . "'";
+		$rows = $this->dbi->fetch($sql);
+		
+		if (count($rows) > 0) {
+			$total = $rows[0]['total'];
+			if ($total >= 1) {
+				$flag = true;
+			}
+		}
+		
+		return $flag;
+	}
+	
+	/**
 	 * checkDuplicate - 
 	 */
 	function checkDuplicate($biblio_url)
 	{
 		$duplicateFlag = false;
 
-		if ($this->flag) {
-			$sql = 'SELECT count(*) AS total FROM ' . self::ID_TABLE . ' WHERE link = ' . "'". $biblio_url . "'";
-			$rows = $this->dbi->fetch($sql);
-			
-			if (count($rows) > 0) {
-				$total = $rows[0]['total'];
-				if ($total >= 1) {
-					$duplicateFlag = true;
-				}
-			}
-		}
-		
-//		// extra check, for pensoft DOI issue
-//		if ($duplicateFlag == false) {
-//			$duplicateFlag = isDoiUrlCheck($url, $title)
-//		}
+		$duplicateFlag = $this->isCbuid($biblio_url);
 		
 		// check biblio as a last 
 		if ($duplicateFlag == false) {
-			$duplicateFlag = isRecordBiblio($url);
+			$duplicateFlag = $this->isRecordBiblio($biblio_url);
 		}
 
 		return $duplicateFlag;
@@ -803,11 +898,69 @@ class CiteBankBiblio
 		if ($row) {
 			$count = $rows[0]['total'];
 			
-			return true;
+			if ($count > 0) {
+				return true;
+			}
 		}
 		
 		return false;
 	}
+
+	/**
+	 * addErrorMsg - add error message
+	 */
+	function addErrorMsg($msg)
+	{
+		$item['msg'] = $msg;
+		
+		$this->errorMsgsList[] = $item;
+	}
+	
+	/**
+	 * _toString - stringify
+	 */
+	function __toString()
+	{
+		$reportStats = '';
+
+		$reportStats .= 'Expected Citations: ' . $this->numExpectedCitations;
+		$reportStats .= PHP_EOL;
+
+		$reportStats .= 'Citations Uploaded: ' . $this->numCitationsUploaded;
+		$reportStats .= PHP_EOL;
+
+		$reportStats .= 'Citations No Pdfs: ' . $this->numCitationsNoPdfs;
+		$reportStats .= PHP_EOL;
+
+		$reportStats .= 'Citations WITH Pdfs: ' . $this->numCitationsWithPdfs;
+		$reportStats .= PHP_EOL;
+
+		$reportStats .= 'Citations Processed: ' . $this->numCitationsItemsProcessed;
+		$reportStats .= PHP_EOL;
+
+		//$reportStats .= 'Citations Listing No Pdfs: ' . $this->listCitationsNoPdfs;
+		//$reportStats .= PHP_EOL;
+		if (count($this->listCitationsNoPdfs)) {
+			$reportStats .= 'Citations Listing No Pdfs';
+			$reportStats .= PHP_EOL;
+			foreach ($this->listCitationsNoPdfs as $keyNoPdfs => $listCitationsNoPdf) {
+				//$reportStats .= 'Error Msgs list: ' . $this->errorMsgsList;
+				$reportStats .= 'Citation No PDF: ' . $listCitationsNoPdf;
+				$reportStats .= PHP_EOL;
+			}
+		}
+
+		if (count($this->errorMsgsList)) {
+			foreach ($this->errorMsgsList as $key => $errMsgItem) {
+				//$reportStats .= 'Error Msgs list: ' . $this->errorMsgsList;
+				$reportStats .= 'Error Msgs list: ' . $errMsgItem['msg'];
+				$reportStats .= PHP_EOL;
+			}
+		}
+
+		return $reportStats;
+	}
+
 
 }  // end class
 // ****************************************

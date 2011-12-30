@@ -87,6 +87,8 @@ function processCiteBankImport()
 
 $msg = 'biblios count: [' . count($biblios) . ']';
 watchmen($msg);
+$msg = 'Total number of citations to process: [' . count($biblios) . ']';
+watchmen($msg);
 	
 	// if no data, report error and get out
 	if (count($biblios) == 0) {
@@ -96,6 +98,8 @@ watchmen($msg);
 
 	$x = new CiteBankBiblio();
 	$importUndo = new ImportUndoHandler();
+	
+	$x->numExpectedCitations = count($biblios);  // note expected number of citations
 	
 	//$uid      = 242;
 	$uid      = 0;
@@ -238,6 +242,14 @@ watchmen($msg);
 				$nid = 0;
 				watchmen('to add ' . ' [' . $title . '] [' . $x->biblioNode->data_url . ']');
 				
+				$x->numCitationsItemsProcessed++;
+
+				// log that item missing a title
+				if (strlen(trim($title)) == 0) {
+					$msg = 'no title for [' . $filename . '] ' . $title . '';
+					watchmen($msg);
+				}
+				
 				switch ($urlImportType)
 				{
 					case 1:  // file
@@ -262,6 +274,8 @@ watchmen($msg);
 				if ($nid) {
 					$solrHandler->touchSolr($nid);
 					$importUndo->makeUndoNid($nid, $importFileName);
+					
+					$x->numCitationsUploaded++;  // if it was given a nid, it should have been added
 				}
 				
 				//echo '****[' . 'Write the record here' . ']****' . '<br>' . "\n";
@@ -275,6 +289,34 @@ watchmen($msg);
 	
 		}
 	}
+	
+	// Report Final Results information
+	// ******
+
+	$msg = '' . $x;  // get string msg report
+	watchmen($msg);
+
+
+//	$expectedNumberOfCitations = $x->numExpectedCitations;
+//	$msg = 'Number of Expected Citations: ' . $expectedNumberOfCitations;
+//	watchmen($msg);
+//	
+//	$numCitationsUploaded = $x->numCitationsUploaded;
+//	$msg = 'Number of Uploaded Citations: ' . $numCitationsUploaded;
+//	watchmen($msg);
+//	
+//	$numCitationsItemsProcessed = $x->numCitationsItemsProcessed;
+//	$msg = 'Count of Processed Citations: ' . $numCitationsItemsProcessed;
+//	watchmen($msg);
+//	
+//	$numCitationsNoPdfs = $x->numCitationsNoPdfs;
+//	$msg = 'Number of Not Found PDFs: ' . $numCitationsNoPdfs;
+//	watchmen($msg);
+//	
+//	$listOfNoPdfs = $x->listCitationsNoPdfs;
+//	foreach ($listOfNoPdfs as $keyList => $valList) {
+//		;
+//	}
 }
 
 /**
@@ -361,6 +403,7 @@ function importProcess($n, &$importFileName)
 			//echo '<br>' . "\n";
 		} else {
 			//echo 'Error - filename not found: ' . $dataFile . '';
+			watchmen('Error - filename not found: ' . $dataFile . '');
 			return;
 		}
 	}
@@ -468,12 +511,25 @@ function docRootPath()
  */
 function watchmen($msg, $watchFlag = true, $type = 'CiteBankImp', $addDate = true)
 {
+	static $reportLogger = null;
+	
 	if ($watchFlag) {
 		if ($addDate) {
 			$msg .= ' ' . date('YmdHis');
 		}
 		
 		watchdog($type, $msg);  // drupal system call
+		
+		if ($reportLogger) {
+			$reportLogger->writeReportMsg($msg);
+		} else {
+			$includePath = dirname(__FILE__) . '/';
+			require_once($includePath . 'ReportLogger.php');
+
+			$reportLogger = new ReportLogger();
+
+			$reportLogger->writeReportMsg($msg);
+		}
 	}
 }
 
