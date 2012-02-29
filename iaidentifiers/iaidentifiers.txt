@@ -717,6 +717,7 @@ abhandlungenderc07chur
 abhandlungenderc08chur
 abhandlungenderc09chur
 abhandlungenderc10chur
+abhandlungenderg20geol
 abhandlungenderk01kn
 abhandlungenderk02kn
 abhandlungenderk03kn
@@ -9481,6 +9482,7 @@ australianzoolog51927roya
 australianzoolog61929roya
 australianzoolog7193roya
 australianzoolog8193roya
+australianzoolog91937roya
 authentichistori00miln
 authentichistory00inmomb
 authentichistory00momb
@@ -17983,6 +17985,7 @@ butterfliesofriv00bromrich
 butterfliesofswi00whee
 butterfliesofwes00wrig
 butterfliestheir00scudrich
+butterfliesvolii00bing
 butterfliesworth00weed
 butterfliesworth1923weed
 butterflybookpo00holl
@@ -21020,6 +21023,7 @@ choixdeplantesde02bouv
 chongqingcaoyaod00chon
 chongshenghaicao00dizh
 chongxiuzhenheji00song
+choniostomatida00hans
 choniostomatidae00hans
 choniostomatidae1897hans
 choosingorchard00lewi
@@ -21791,7 +21795,6 @@ cihm_18042
 cihm_18055
 cihm_18068
 cihm_18081
-cihm_18082
 cihm_18093
 cihm_18141
 cihm_18173
@@ -22895,6 +22898,7 @@ cihm_95041
 cihm_95089
 cihm_95090
 cihm_95185
+cihm_95330
 cihm01316
 cihm01317
 cillybugsalvaget00montrich
@@ -25463,7 +25467,9 @@ copeognatha00ende
 copepodacalanoid00norm
 copepodaigymople00gies
 copepodaigymople06gies
+copepodaofsiboga11scot
 copepoden00bree
+copepodiparassit00bria
 copepodparasites00wils
 coperationinag00poweuoft
 copiadodecretode00port
@@ -34126,6 +34132,7 @@ dizhiwuyanjiuzho00beij
 djacobchristians11sch
 djacobchristians223sch
 djofridblvmenbac00blum
+djohanndavidschp00schp
 djohannpetereber00eber
 dmarcuselieserbl00bloc
 dmarcuselieserbl02bloc
@@ -41985,6 +41992,7 @@ furbearinganimal00coue
 furbearinganimal00pola
 furbearinganimal00polarich
 furbearinganimal00polauoft
+furesstudierenba00wese
 furfacts00aher
 furfacts00aherrich
 furfarmingbookof00hard
@@ -42254,6 +42262,7 @@ gaelicnamesofpla00cameuoft
 gaitofamericantr00jord
 gaitofamericantr00jordrich
 gaitsexteriorpro00duho
+galapagostortois00garm
 galatheadeepseae00dans
 galeriedesmollus02mus
 galeriedesmollus11mus
@@ -47506,6 +47515,7 @@ historypresentpo00gilbrich
 historypresentpo00gilbuoft
 historypresentst00gibs
 historypresentst00marcrich
+historyprogenylo02jeff
 historyprogresso00wild
 historyprogresso1878wild
 historypublicati00samp
@@ -53799,6 +53809,7 @@ kerndeelingensyn00stom
 ketosisindomesti00samp
 kewgardens00monciala
 keyfloranorthern00berguoft
+keylargocoralree00nati
 keystofishesofwa00schu
 keystoinsectsofe34bykh
 keystomarineinve00smit
@@ -55782,6 +55793,7 @@ lesjardinsdevers00nolhuoft
 leslacsdeshautsp00neve
 leslamellibranch00daut
 leslescanaries00pita
+leslichenstudesu00aclo
 leslimitesdelabi00gras
 lesloisdelagn00gouruoft
 lesloisirsduncam00pizzuoft
@@ -58675,6 +58687,7 @@ massentafelnzurb00stahuoft
 masseysgardenboo01mass
 massspectrometri00bern
 mastcells00rile
+masteringspringc00shew
 masterlandscapep00bost
 mastermindsofmod00brid
 masterofgameo00edwa
@@ -59425,6 +59438,10 @@ MemoirsNational00NatiA
 MemoirsNational10Nati
 MemoirsNational11Nati
 MemoirsNational12Nati
+MemoirsNational14Memo
+MemoirsNational14Nati
+MemoirsNational15Memo
+MemoirsNational16Nati
 MemoirsNational18Memo
 Memoirsnational1Nati
 MemoirsNational2Nati
@@ -59450,6 +59467,7 @@ memoirsofameric161959amer
 memoirsofameric171960amer
 memoirsofameric181963amer
 memoirsofameric201966amer
+memoirsofameric211966amer
 memoirsofameric221967amer
 memoirsofameric231967amer
 memoirsofameric241968amer
@@ -61391,6 +61409,7 @@ mllersoperativ00ml
 mmittereportofco00calirich
 mmoireinstruct00turg
 mmoirepourserv310ecke
+mmoirepourservir00tula
 mmoireprsent00lafi
 mmoires101903soci
 mmoires111903soci
@@ -63204,6 +63223,12 @@ mobot31753002152947
 mobot31753002152954
 mobot31753002152962
 mobot31753002152970
+mobot31753002152996
+mobot31753002153002
+mobot31753002153010
+mobot31753002153028
+mobot31753002153036
+mobot31753002153044
 mobot31753002153051
 mobot31753002153226
 mobot31753002153234
@@ -65791,6 +65816,9 @@ mobot31753003506588
 mobot31753003506596
 mobot31753003506604
 mobot31753003514863
+mobot31753003514954
+mobot31753003514970
+mobot31753003514988
 mobot31753003514996
 mobot31753003515001
 mobot31753003515019
@@ -65803,7 +65831,9 @@ mobot31753003515076
 mobot31753003515084
 mobot31753003515092
 mobot31753003515282
+mobot31753003515357
 mobot31753003515365
+mobot31753003515373
 mobot31753003519813
 mobot31753003519821
 mobot31753003519839
@@ -66993,6 +67023,7 @@ mollusquesterres01germ
 mollusquesterres02germ
 mollusquesterres03germ
 mollusquesterres1881bour
+mollusquestertia00pere
 mollusquestestac11loca
 mollusquestestac12loca
 mollusquesvivant00orbi
@@ -68122,6 +68153,7 @@ mostlymammalszoo00lydeuoft
 mothbookpopularg00holla
 mothbookpopularg00holliala
 mothbookpopularg00holluoft
+moths03hamp
 mothsbritind01hamprich
 mothsbritind02hamprich
 mothsbritind03hamprich
@@ -84706,6 +84738,8 @@ reportonscientif22grea
 reportonscientif26grea
 reportonscientif30grea
 reportonscientif30great
+reportonscientif31berg
+reportonscientif32berg
 reportonscientifz31grea
 reportonseafishe00muririch
 reportonsealilie00clar
@@ -85313,6 +85347,7 @@ revisionofastaci00faxo
 revisionofastaci11faxo
 revisionofaustri00hedl
 revisionofbembic00park
+revisionofbritis00brad
 revisionofbritis00hadd
 revisionofbritis00whit
 revisionofcaddis00park
@@ -85363,6 +85398,7 @@ revisionoflizard00boul
 revisionoflongip00mcgo
 revisionofnewzea00brou
 revisionofnewzea00brouuoft
+revisionofnorth00mars
 revisionofnortha00braurich
 revisionofnortha00coul
 revisionofnortha00john
@@ -94986,6 +95022,7 @@ timefactorsofdif3310wood
 timehrijournalo311911roya
 timehrijournalo351918roya
 timehrijournalo371921roya
+timehrijournalof32191roya
 timinglocationpo1988sheprich
 timinglocationpo1989sheprich
 tineinaofnortham00clem
@@ -96544,6 +96581,7 @@ transactionspro30newz
 transactionspro331909roya
 transactionspro341910roya
 transactionspro351911roya
+transactionspro361912roya
 transactionspro381914roya
 transactionspro391915roya
 transactionspro401916roya
@@ -99696,6 +99734,7 @@ voyagetosouthame02ullo
 voyagetospitzber00lainrich
 voyagetowardsnor00mulg
 voyageupriverama00edwa
+voyageupriverama02edwa
 vseobshchaiaflor12roma
 vskhromchenkosco64khro
 vuephilosophiqu00robi
