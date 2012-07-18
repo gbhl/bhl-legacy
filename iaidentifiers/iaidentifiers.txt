@@ -3835,6 +3835,7 @@ analysisofcondit00jenk
 analysisofcotton00summ
 analysisofcultur365rina
 analysisofcupane00spil
+analysisofdataob00voel
 analysisofdepart01newy
 analysisofdepart02newy
 analysisofdepart03newy
@@ -4411,8 +4412,10 @@ animalmicrologyp00guye
 animalmindtextbo00washrich
 animalpaintersof01gilb
 animalpaintersof02gilb
+animalparasites00chan
 animalparasitesh00chanrich
 animalparasitesh00chanuoft
+animalparasiteshe2chan
 animalparasitesm00bene
 animalparasiteso00braurich
 animalparasiteso00curt
@@ -5798,6 +5801,13 @@ annalsofscottish17edin
 annalsofscottish18edin
 annalsofscottish19edin
 annalsofscottish20edin
+annalsofsmithson1994smit
+annalsofsmithson1995smit
+annalsofsmithson1996smit
+annalsofsmithson1997smit
+annalsofsmithson1998smit
+annalsofsmithson1999smit
+annalsofsmithson2000smit
 annalsofsouth14191524sout
 annalsofsouthafr01sout
 annalsofsouthafr03sout
@@ -6020,6 +6030,8 @@ annualregisteror58lond
 annualregisteror59lond
 annualregisteror60lond
 annualrep1969mont
+annualrep283218961900amer
+annualrep333719011905amer
 annualrepo1314186061newy
 annualrepo1517186264newy
 annualrepo3134187982newy
@@ -6294,6 +6306,7 @@ annualreportof5431900newy
 annualreportof5441900newy
 annualreportof551901newy
 annualreportof6189919newy
+annualreportofa1909amer
 annualreportofag1119021903univ
 annualreportofag1890corn
 annualreportofag1893corn
@@ -7111,6 +7124,7 @@ annualreportofstentno35mont
 annualreportofstentno36mont
 annualreportofsu00newy
 annualreportofsu00unit
+annualreportoft511919amer
 annualreportoftr39newyuoft
 annualreportoftr43newyuoft
 annualreportofun00hayd
@@ -9239,8 +9253,11 @@ atolloffunafutie00austiala
 atolloffunafutie217219aust
 atollresear3473541991smit
 atollresearc223232197smit
+atollresearch11419511smit
+atollresearch15181953smit
 atollresearch26027219smit
 atollresearch27328119smit
+atollresearch37471955smit
 atollresearch86941962smit
 atollresearchb1491501smit
 atollresearchb1751861smit
@@ -9259,9 +9276,11 @@ atollresearchbu128148smit
 atollresearchbu151164smit
 atollresearchbu171174smit
 atollresearchbu181271smit
+atollresearchbu187190smit
 atollresearchbu193219smit
 atollresearchbu252259smit
 atollresearchbu282292smit
+atollresearchbu283619smit
 atollresearchbu312329smit
 atollresearchbu355364smit
 atollresearchbu365389smit
@@ -23645,6 +23664,11 @@ cihm_61174
 cihm_61175
 cihm_61357
 cihm_61530
+cihm_61692
+cihm_61753
+cihm_61800
+cihm_61895
+cihm_62032
 cihm_88829
 cihm_88858
 cihm_88861
@@ -25068,6 +25092,8 @@ comparisonofmeth00carpiala
 comparisonofmeth00carpuoft
 comparisonofmeth00russrich
 comparisonofmito00thor
+comparisonofmome00drey
+comparisonofnume00sala
 comparisonofocea00bake
 comparisonofocea00shep
 comparisonofocea00solu
@@ -43118,6 +43144,7 @@ freshwatersponge00pott
 freshwaterturtle00clar
 freshwoodspastur00marsrich
 fresnoarea00powerich
+friedbergerfrhne02frie
 friendlyarcticst00stef
 friendlyarcticst00stefuoft
 friendsangler00akerrich
@@ -44240,13 +44267,21 @@ gartenflora59russ
 gartenflora65russ
 gartenflora66russ
 gartenflorazeit101861berl
+gartenflorazeit111862berl
+gartenflorazeit131864berl
 gartenflorazeit151866berl
 gartenflorazeit221873berl
 gartenflorazeit231874berl
+gartenflorazeit241875berl
+gartenflorazeit251876berl
+gartenflorazeit281879berl
 gartenflorazeit291880berl
 gartenflorazeit341885berl
+gartenflorazeit421893berl
 gartenflorazeit491900berl
+gartenflorazeits110berl
 gartenflorazeits61857berl
+gartenflorazeits71858berl
 gartenflorazeits81859berl
 gartenflorazeits91860berl
 gartenzeitung01vere
@@ -44329,6 +44364,7 @@ gayana6412000univ
 gayana6422000univ
 gayana6512001univ
 gayana6522001univ
+gayanaoceanologi01univ
 gazetteerofantar00unit
 gazetteerofsikhi00beng
 gazetteerofunder00unit
@@ -45602,6 +45638,7 @@ goviernogeneralm00fer
 goviernogeneralm1696ferr
 gracefulridingpo00wayt
 gradesforcommerc00duve
+gradientanalysis00welc
 gradinglabelingo00bost
 grahamflourstudy00leclrich
 graingrowingappa00amer
@@ -45643,6 +45680,7 @@ grapeculturisttr00fullrich
 grapeculturisttr00fulluoft
 grapegrowersguid00keec
 grapeinkansas00barnrich
+grapephylloxerap00davi
 graperootwormfid00john
 grapesofnewyor00hedr
 grapesofnewyork00hedr
@@ -50404,6 +50442,7 @@ hydrodynamicsofc00sand
 hydroelectricpow00rushrich
 hydrogenbubblefl00matt
 hydrogenionconce00mich
+hydrographicacou00wrig
 hydrographicalbi02nord
 hydrographicalsu00whar
 hydrographicmanu00jeff
@@ -50663,6 +50702,8 @@ iconesofjapanese04okam
 iconesorchidearu01bolu
 iconesorchidearu02bolu
 iconesorchidearu03bolu
+IconesornithoptIIRipp
+IconesornithoptIRipp
 iconespictaespec00pers
 iconespisciumind00kiel
 Iconesplantarum1Grif
@@ -58906,6 +58947,7 @@ livestockcontagi00mary
 livestockcyclope00bake
 livestockdairyfa00gardrich
 livestockfarming00flor
+livestockindustr00burk
 livestocklawsoft00newm
 livestockoffarm00jone
 livestockoffarm00prin
@@ -60353,6 +60395,8 @@ manualofgardenin01bail
 manualofgenerala00bayl
 manualofgenerala00terr
 manualofgenerala00terrrich
+manualofgeolog00dana
+manualofgeology00dana
 manualofgeologyt01philrich
 manualofgrasseso00hitc
 manualofgrasseso00hitcrich
@@ -60949,6 +60993,7 @@ masticatoryappar294sich
 masticatoryappar372davi
 mastitisofcow00wall
 mastitisofcow01wall
+mastodonmammoth00macl
 mastodonmammothm00macl
 mastodonttoothfr1012hooi
 matabelelandvic00oate
@@ -61299,6 +61344,7 @@ mededeelingenvan1923proe
 mededeelingenvan2737labo
 medianneurotomyi00pell
 medicalappliedan00johnrich
+medicalbacteriol00rodd
 medicalbacteriol00roddrich
 medicalbacteriol00rodduoft
 medicalbotanyord00grif
@@ -62197,6 +62243,13 @@ MemoirsQueensla37Quee
 MemoirsQueensla38Quee
 MemoirsQueensla38QueeA
 MemoirsQueensla39Quee
+MemoirsQueensla39QueeA
+MemoirsQueensla39QueeB
+MemoirsQueensla40Quee
+MemoirsQueensla41Quee
+MemoirsQueensla41QueeA
+MemoirsQueensla41QueeB
+MemoirsQueensla42Quee
 memoirsreadbefor01bost
 memoirsreadbefor02bost
 memoirsrelatingt00walp
@@ -66858,11 +66911,14 @@ mobot31753002489786
 mobot31753002489794
 mobot31753002489802
 mobot31753002489810
+mobot31753002489828
 mobot31753002489836
 mobot31753002489877
 mobot31753002489885
 mobot31753002489893
+mobot31753002489919
 mobot31753002489927
+mobot31753002490198
 mobot31753002494521
 mobot31753002494562
 mobot31753002494570
@@ -67710,6 +67766,7 @@ mobot31753002820014
 mobot31753002820071
 mobot31753002820089
 mobot31753002821699
+mobot31753002822333
 mobot31753002822358
 mobot31753002828744
 mobot31753002832555
@@ -67816,7 +67873,6 @@ mobot31753003013296
 mobot31753003013304
 mobot31753003013312
 mobot31753003013320
-mobot31753003013338
 mobot31753003013346
 mobot31753003013353
 mobot31753003013361
@@ -69159,6 +69215,7 @@ mobot31753003759203
 mobot31753003759211
 mobot31753003759229
 mobot31753003759252
+mobot31753003759328
 mobot31753003759385
 mobot31753003759393
 mobot31753003759476
@@ -74406,6 +74463,7 @@ norwegiannorthpo06nans
 norwegiannorthpo13nans
 norwegiannorthpo15nans
 nosbatraciens00conr
+nosemadisease00whit
 nosmaeslesoiseau00pari
 nosoiseaux01soci
 nosoiseaux02soci
@@ -82465,6 +82523,7 @@ prizepugsofameri00crye
 prjevalskyshorse00zale
 pro4126951320192324cali
 probabilitydensi00cald
+probabledistribu00rina
 probadasfloresro00madr
 problematicasilu00fria
 problemofadmitti114
@@ -88962,6 +89021,7 @@ revuezoologiquep48soci
 reynoldssunivers00reynrich
 ReYsultatsdesca00Albe
 ReYsultatsdesca00AlbeA
+ReYsultatsdesca58Albe
 ReYsultatsdesca65Albe
 ReYsultatsdescaLXIIAlbe
 rflexionsdunvi00laig
@@ -92109,6 +92169,7 @@ skadeligeinsekte00boas
 skandanaviskfaun01nils
 skandinaviensfog00holm
 skandinaviensfrn00smit
+Skandinaviensfu00Kjar
 skandinaviensfug00kj
 skandinaviensins00thom
 skandinaviskfaun02nils
@@ -92621,6 +92682,13 @@ smithsonianyeara2000smit
 smithsonianyeara8587smit
 smithsonianyeara8890smit
 smithsonianyeara9197smit
+smithsonianyears1985smit
+smithsonianyears1986smit
+smithsonianyears1987smit
+smithsonianyears1989smit
+smithsonianyears1990smit
+smithsonianyears1991smit
+smithsonianyears1992smit
 smithsoninstitut00smitrich
 smithsonstheoryo00smit
 smithsphystables00smitrich
@@ -95535,6 +95603,7 @@ studyofdorsalgil11spring
 studyofeffective00unit
 studyofeffectofi00burc
 studyofeffectofi00lied
+studyofeffectofi02mina
 studyofeffectsof00webbiala
 studyofeffectsof304webb
 studyofelegantti3138cono
@@ -96035,6 +96104,7 @@ surfacewindanaly00garc
 surficialpattern1614nite
 surfzonecurrents01basc
 surfzonecurrents02basc
+surfzonewavekine00bubf
 surgicalaapplied00trevrich
 surgicalanatomyo01shar
 surgicalanatomyo02shar
@@ -97293,6 +97363,7 @@ temperaturepress00hass
 temperaturerelat00fawc
 temperaturesalin00birc
 temperaturesdens00canarich
+temperaturevaria00moom
 temperaturundleb00kani
 templeofnatureor00darwrich
 temporalorganiza00good
@@ -101008,6 +101079,7 @@ turkeyraising00lamorich
 turkeysallvariet00reli
 turkeysallvariet01reli
 turkeysducksgees00nour
+turkeyshowtogrow00myri
 turkeyshowtogrow00myririch
 turkishtobaccocu366clar
 turneronbirds00turnrich
@@ -103508,6 +103580,7 @@ wavebreakingoncu00smit
 waveenergyextrac00liuc
 waveheightdistri00long
 wavehindcastproj00bunt
+waveinducedwater00krap
 waveloadingonver00wegg
 waverefractionan00fors
 waveresistanceof00wein
