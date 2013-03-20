@@ -1282,6 +1282,13 @@ actahortibergian618berg
 actahortibergiani9091berg
 actaphysicomedic11727acad
 actaphysicomedic21730acad
+actaphysicomedic31733acad
+actaphysicomedic41737acad
+actaphysicomedic51740acad
+actaphysicomedic61742acad
+actaphysicomedic71744acad
+actaphysicomedic81748acad
+actaphysicomedic91752acad
 actasocietatispr27soci
 actasocietatisre02soci
 actasocietatisre03soci
@@ -6387,6 +6394,7 @@ annualregisteror60lond
 annualrep1969mont
 annualrep283218961900amer
 annualrep333719011905amer
+annualrepo06mas
 annualrepo1314186061newy
 annualrepo1517186264newy
 annualrepo3134187982newy
@@ -6397,6 +6405,7 @@ annualrepor2028198795west
 annualrepor2425187071newy
 annualrepor2830187577newy
 annualrepor2931199698west
+annualrepor9192mass
 annualreport0026illi
 annualreport00flor
 annualreport00geol
@@ -6413,9 +6422,11 @@ annualreport131415190newy
 annualreport1314geol
 annualreport13fiel
 annualreport16190910newy
+annualreport1623mass
 annualreport187099ento
 annualreport1872187477ento
 annualreport1873main
+annualreport18741883mass
 annualreport188489ento
 annualreport1886main
 annualreport1887main
@@ -6427,24 +6438,32 @@ annualreport1891main
 annualreport1892main
 annualreport1893main
 annualreport1894main
+annualreport18951896mass
 annualreport1895main
 annualreport189699ent
 annualreport189699ento
 annualreport1896main
+annualreport18971899mass
 annualreport1898main
+annualreport18991900mass
 annualreport1899main
 annualreport190004ento
 annualreport1900main
 annualreport1901main
+annualreport19021903mass
 annualreport1902main
 annualreport1903main
 annualreport1904main
+annualreport1904mass
 annualreport190508ento
 annualreport1905main
+annualreport1905mass
+annualreport190607mass
 annualreport1906main
 annualreport1906mass
 annualreport1907main
 annualreport1907mass
+annualreport19081916mass
 annualreport1908mass
 annualreport1908newy
 annualreport190911ento
@@ -6462,6 +6481,7 @@ annualreport191719ento
 annualreport1917albeuoft
 annualreport1918albeuoft
 annualreport1919albeuoft
+annualreport1919mass
 annualreport192023ento
 annualreport1920albeuoft
 annualreport1921flor
@@ -6530,6 +6550,7 @@ annualreport6331909newy
 annualreport6341909newy
 annualreport6411910newy
 annualreport6421910newy
+annualreport6474mass
 annualreport6611912newy
 annualreport6621912newy
 annualreport6631912newy
@@ -6541,6 +6562,7 @@ annualreport710197477west
 annualreport71newy
 annualreport72newy
 annualreport8285main
+annualreport8494mass
 annualreport891901021newy
 annualreportag1889corn
 annualreportag1892corn
@@ -11014,6 +11036,7 @@ beitragzurkenntn00hant
 beitragzurkenntn00hart
 beitragzurkenntn00hilz
 beitragzurkenntn00krau
+beitragzurkenntn00schl
 beitragzurkenntn00stre
 beitragzurkenntn00winn
 beitragzurmonogr00hoen
@@ -11329,8 +11352,10 @@ beobachtungenb00clap
 beobachtungenb00roth
 beobachtungenber00baum
 beobachtungenber00jaeg
+beobachtungenber00prol
 beobachtungenber00titt
 beobachtungenlan00lehn
+berabnormewurzel00andr
 beraspidorhync00assm
 berattelseomfram00kung
 berattelseomfram01kung
@@ -11924,6 +11949,7 @@ bibliographyofno02binn
 bibliographyofno101irwi
 bibliographyofno135levi
 bibliographyofno90luck
+bibliographyofpl14barn
 bibliographyofpr00thomrich
 bibliographyofpr00thomuoft
 bibliographyofpu00marc
@@ -18220,7 +18246,13 @@ bulletinofessexiv7v8esse
 bulletinofessexiv9v10esse
 bulletinofessexv11v12esse
 bulletinofessexv13v14esse
+bulletinofessexv15v16esse
+bulletinofessexv17v18esse
+bulletinofessexv19v20esse
+bulletinofessexv21v22esse
 bulletinofessexv23v24esse
+bulletinofessexv25v26esse
+bulletinofessexv27v28esse
 bulletinofgeo13190102geol
 bulletinofgeo25141914geol
 bulletinofgeol271916geol
@@ -19090,6 +19122,7 @@ bulletinsofameri83334pale
 bulletinsofameri836pale
 bulletinsofameri93739pale
 bulletinsofameri95100pale
+bulletinsonfores00unit
 bulletinsonrubbe00unit
 bulletinstatege221916stat
 bulletinstatege341923stat
@@ -25010,7 +25043,6 @@ cihm_75119
 cihm_75140
 cihm_75293
 cihm_75471
-cihm_75684
 cihm_75726
 cihm_75744
 cihm_75747
@@ -25081,6 +25113,7 @@ cihm_80825
 cihm_80911
 cihm_80917
 cihm_81047
+cihm_81603
 cihm_88829
 cihm_88858
 cihm_88861
@@ -28553,6 +28586,7 @@ cro1997pproductionmontrich
 crocodilehunting15schm
 crocodiliangenus3921mede
 croftsfarmsinheb00argy
+CroisieYreoceYa00Gerl
 croonianlectures00jonerich
 cropgrowingcropf00mass
 cropgrowingcropf00massrich
@@ -34661,6 +34695,7 @@ designsforbulkfr490obri
 designsforgatewa00hunt
 designwindtunnel00mitc
 desjacintesdeleu00sain
+deskandinaviskal00arne
 deskandinaviskeo00boec
 deskandinaviskeo00boeck
 deskandinaviskeo1872boec
@@ -36066,6 +36101,7 @@ dienordischensch00zimm
 dienordwestdeuts00erdmuoft
 dienutzhlzerde01ratt
 dienutzpflanzenu00west
+dieoelkrperderle00kste
 dieoligochtend00mich
 dieontogenieder00bolk
 dieontogeniederp00bolk
@@ -36469,6 +36505,7 @@ diewirtswechseln00klebuoft
 diewirtwechselnd00kleb
 diewissenschaftl00schl
 diewissenschaftl00vega
+diewurzelhaarede00schw
 diewurzelpilzede1909burg
 diexenophyophore00schu
 diezeichnungderb00zenn
@@ -37820,6 +37857,7 @@ ediblemollusksof00love
 ediblepoisonousm00cook
 ediblepoisonousm00grov
 ediblepoisonousm00murr
+ediblepoisonousp00dahl
 edinburghencyclo03edinuoft
 edinburghencyclo04edinuoft
 edinburghencyclo05edinuoft
@@ -38613,6 +38651,7 @@ embryologievonph00wier
 embryologischest00metc
 embryologischestp00metc
 embryology00bart
+embryologydevelo00lewi
 embryologymetamo00broo
 embryologymetamo00brook
 embryologyofcrep00conk
@@ -41726,6 +41765,7 @@ faunalconnection00lind
 faunalinvestigat00dymo
 faunalinvestigat00roya
 faunalinvestigat00snyd
+Faunalittoralis00Sars
 Faunalittoralis3Sars
 faunalsurveyofce00hendrich
 faunamalacolgi00bofi
@@ -43252,6 +43292,7 @@ fivehundredquest01darr
 fivenewbirdsfrom3125rand
 fivenewspeciesof08plow
 fivethousandyear00mitc
+fiveyearcomprehe26unit
 fiveyearfishdist40west
 fiveyearfishdist41west
 fiveyearstatusre00mage
@@ -44278,6 +44319,8 @@ floristgardenmis50lond
 floristhorticult02phil
 floristhorticult03phil
 floristhorticult04phil
+floristhorticult21853phil
+floristhorticult31854phil
 floristickaistra00ross
 floristicstudyof00browrich
 floristischesaus00proc
@@ -44855,6 +44898,7 @@ forestsmoisture00brow
 forestsmoistureo00brow
 forestsnorthernr00browrich
 forestsofbaltimo00mary
+forestsofcontine18flic
 forestsofengland00brow
 forestsofengland00browiala
 forestsofeuropea00unit
@@ -44890,6 +44934,7 @@ ForeststreamXIX
 ForeststreamXV
 ForeststreamXVI
 ForeststreamXVII
+ForeststreamXVIIA
 ForeststreamXX
 ForeststreamXXI
 foreststrees00halerich
@@ -46005,6 +46050,7 @@ gamepreserversbi00morarich
 gamepreserving00carnrich
 gameshorewaterbi00leme
 gamespetsplayhow00fogl
+gametophyticrege00heal
 gamewildfurprodu00millrich
 gammaradiationof717bram
 gammarinidelgolf20pvall
@@ -48232,6 +48278,7 @@ grevillea12cook
 grevillea34cook
 greyhoundinbeing00walsrich
 greyhounditshist00dalzrich
+gri_000033125008455038
 gri_000033125008662344
 gri_000033125009310158
 gri_000033125009330909
@@ -48254,6 +48301,7 @@ gri_cataloguerai00c1ge
 gri_continuatioe00leeu
 gri_descriptions00stie
 gri_enquiryintot00rept
+gri_histoirenatu02vene
 gri_observatione00harv
 gri_plansetdessi00c1le
 gri_plansetdessi00c2le
@@ -48317,6 +48365,7 @@ growingofgold01sinn
 growingprizecorn00hold
 growingseaisland00unit
 growingsmallfrui935cour
+growingsumatrato20whit
 growingthreebale00turn
 growingtobaccose00dero
 growingtreesinca00cole
@@ -50072,6 +50121,7 @@ highfrequencytem00simr
 highgradesilicam00colorich
 highlandmigranti00stea
 highlandplantsen00lesirich
+highlandsofcent00fors
 highlandsofcentr00fors
 highlandsofcentr00forsrich
 highlyimportantt00barn
@@ -50448,6 +50498,8 @@ Histoirenaturel1LeVa
 Histoirenaturel3Webb
 HistoirenaturelIIILaCe
 HistoirenaturelIIIWebb
+HistoirenaturelIIIWebbA
+HistoirenaturelIIIWebbB
 HistoirenaturelIILeVa
 HistoirenaturelIIWebb
 HistoirenaturelIIWebbA
@@ -53961,6 +54013,7 @@ improvementoffar00lamoiala
 improvementofpla00sham
 improvementofpla00shamrich
 improvementofriv00thomuoft
+improvementofvir46mcne
 improvementofwhe00blan
 improvementsinag00ells
 improvementsinkn00waltrich
@@ -54268,6 +54321,7 @@ inewspeciesofcub00gree
 inewspeciesofcubfigree
 inexpensiveporta00fink
 infallibleguidet00bran
+infarthestburmar00ward
 infectandimmune00simorich
 infectionimmunit00rickrich
 infectionimmunit00simoiala
@@ -55722,6 +55776,7 @@ isisvonoken35oken
 isisvonoken381845oken
 isisvonoken67oken
 iskusstvennoeudo00niui
+islandbiology00carl
 islandgarden00thax
 islandgarden00thaxiala
 islandhomestudof00sava
@@ -58528,6 +58583,7 @@ keytofamiliesofn00brue
 keytofamiliesofn00brueiala
 keytogeneraofman1894hitc
 keytoimportantwo00haye
+keytok272dyar
 keytonorthameric00cou
 keytonorthameric00coue
 keytonorthameric00coues
@@ -65819,6 +65875,7 @@ metallicornament00beaurich
 metamorphismofpo00pacirich
 metamorphosedeum00ml
 metamorphosesofl00duki
+metamorphosesofm00quat
 Metamorphosisin00Meri
 metamorphosisnat03goed
 metaspermaeofmin00macm
@@ -69176,6 +69233,9 @@ mobot31753002156617
 mobot31753002156625
 mobot31753002156641
 mobot31753002156658
+mobot31753002156666
+mobot31753002156674
+mobot31753002156682
 mobot31753002156690
 mobot31753002156708
 mobot31753002158134
@@ -73637,6 +73697,7 @@ monographiedesco02laco
 monographiedesen00mars
 Monographiedesg00Bern
 monographiedesgu00saus
+monographiedesle00dunk
 monographiedeslo00bona
 monographiedesme00beauuoft
 monographiedesmy00chev
@@ -77587,6 +77648,7 @@ newspeciesoftoad3954inge
 newspeciesoftrip3115bais
 newspeciesofvinc22john
 newspeciesofxantfimill
+newspeciesorform00fosl
 newspecimenofdes142zang
 newspidersfromne00emer
 newstreettreesfo00bost
@@ -80809,6 +80871,7 @@ omlimfjordenstid00coll
 omlydorganerhosf00sr
 ommelkensbehandl00galt
 omosttilvirkning00galt
+omsekundraanatom00elia
 omskjvhedenhos00stee
 omslgtetsorexm00sund
 omsverigeshydrac00neum
@@ -83650,6 +83713,7 @@ phenologyofvario60unit
 phenomenaatomsmo00lang
 phenomenaofplant00grinrich
 phenomenonofloca00shwa
+philadelphia118521853phil
 philadelphiaflor01phil
 philadelphiamedi01phys
 philadelphiamedi02phys
@@ -86900,6 +86964,7 @@ proceedings8919761977biol
 proceedings9319801981biol
 proceedingsandan65holm
 proceedingsandan93holm
+proceedingsatann00natu
 proceedingsatba00camb
 proceedingsatban00camb
 proceedingsatope00corn
@@ -88609,6 +88674,7 @@ proceedingstr17190203live
 proceedingstr19190405live
 proceedingstr20190506live
 proceedingstr21190607live
+proceedingstr22190708live
 proceedingstr24190910live
 proceedingstr26191112live
 proceedingstr27191213live
@@ -92910,6 +92976,7 @@ reviewofinterrel00wing
 reviewoflecontvi00surguoft
 reviewofliteratu00hall
 reviewofliteratu00wilc
+reviewofliteratu09lomb
 reviewoflivingca142osgo
 reviewoflivingre00pete
 reviewoflocalisa00dona
@@ -100052,6 +100119,7 @@ structureofmanin00wiediala
 structureofphary00benhrich
 structureofupper00haml
 structureofverte00litt
+structurephysiol00mast
 structureregener00esterich
 struggleforexist00gauz
 strumelladisease00heal
@@ -100131,6 +100199,7 @@ studienzurvergle00rein
 studienzurvorges00schw
 studienzurzoogeo11897kobe
 studienzurzoogeo21898kobe
+studierfverbladm00rosa
 studierfverngras00clev
 studierfversters00sved
 studieroverdecap00boas
@@ -100224,6 +100293,7 @@ studiesinparasit00rennuoft
 studiesinpatholo00bulluoft
 studiesinphilipp00bezzrich
 studiesinphysiol00chituoft
+studiesinphysiol00hump
 studiesinphysiol00peabrich
 studiesinphysiol00smit
 studiesinplantor00michrich
@@ -100326,6 +100396,7 @@ studiesondecompo00mcberich
 studiesonembryol01gero
 studiesonfactors31zele
 studiesonferment00past
+studiesonflowere00camp
 studiesonfusariu00bisb
 studiesongermcel00stevrich
 studiesongermcel00stevuoft
@@ -100457,6 +100528,7 @@ studyofincubatio00bergiala
 studyofinfluence00smit
 studyofinvertebr00higl
 studyofissuesinc00sick
+studyofleaves00denn
 studyoflightatte00crew
 studyofmammalsof54layd
 studyofmarinefou00momm
@@ -104797,6 +104869,7 @@ transactionsofro3521890ro
 transactionsofro3531890ro
 transactionsofro3536roya
 transactionsofro3541890ro
+transactionsofro36189192r
 transactionsofro37189395r
 transactionsofro3738roya
 transactionsofro38189697r
@@ -106047,6 +106120,7 @@ tudesurlesmoll00ger
 tudesurlesmoll00germ
 tudesurlesnoms00bour
 tudesurlesoise00lesc
+tudesurlesprodui00plan
 tudesurloxyuri00fray
 tudesynonymiqu00bour
 tudeszoologiqu00miln
@@ -106850,6 +106924,8 @@ untersuchungenbe00clau
 untersuchungenbe00deit
 untersuchungenbe00gntz
 untersuchungenbe00panu
+untersuchungenbe00sche
+untersuchungenbe00schw
 untersuchungenie00rath
 Untersuchungenu00Tsch
 untersuchungenub00ehre
