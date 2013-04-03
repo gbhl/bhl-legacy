@@ -3745,6 +3745,7 @@ anadditionalchar00leco
 anaddressonpropr00whitrich
 anaerobiosisinin00vonb
 analectaadentomo00gors
+analectaalgologi01agar
 analectaalgologi02agar
 analectaalgologi04agar
 analectaalgologi05agar
@@ -5381,6 +5382,8 @@ annalesdesscienc20natu
 annalesdesscienc20pari
 annalesdesscienc20zool
 annalesdesscienc211830audo
+annalesdesscienc2191843pa
+annalesdesscienc2201843pa
 annalesdesscienc22natr
 annalesdesscienc22pari
 annalesdesscienc23natr
@@ -5395,7 +5398,29 @@ annalesdesscienc27natr
 annalesdesscienc28natr
 annalesdesscienc29natr
 annalesdesscienc30natr
+annalesdesscienc3101848pa
+annalesdesscienc311844pa
+annalesdesscienc3121849pa
+annalesdesscienc3131849pa
+annalesdesscienc3141850pa
+annalesdesscienc3151851pa
+annalesdesscienc3161851pa
+annalesdesscienc3171852pa
+annalesdesscienc3181852pa
+annalesdesscienc3191853pa
+annalesdesscienc3201853pa
+annalesdesscienc321844pa
 annalesdesscienc32pari
+annalesdesscienc331845pa
+annalesdesscienc341845pa
+annalesdesscienc351846pa
+annalesdesscienc361846pa
+annalesdesscienc371847pa
+annalesdesscienc381847pa
+annalesdesscienc391848pa
+annalesdesscienc411854pa
+annalesdesscienc421854pa
+annalesdesscienc431855pa
 annalesdesscienc46miln
 annalesdesscienc47pari
 annalesdesscienc511miln
@@ -8033,6 +8058,8 @@ aperugnral02clot
 aperusurlesesp00bour
 aperusurlesuni00bour
 apesmonkeystheir00garn
+apex14198689soci
+apex57199092soci
 apf7499.0001.001.umich.edu
 aphidesaffecting281quai
 aphididaeofformo01taka
@@ -14570,6 +14597,12 @@ botanicalgazette68hano
 botanicalgazette78hano
 botanicalguideth00gutt
 botanicallookero00lees
+botanicalma1218871888toky
+botanicalmagazi101896toky
+botanicalmagazi201906toky
+botanicalmagazi211907toky
+botanicalmagazi241910toky
+botanicalmagazi311917toky
 botanicalmagazin117toky
 botanicalmagazin16toky
 botanicalmagazin18toky
@@ -14579,6 +14612,7 @@ botanicalmagazin26toky
 botanicalmagazin30toky
 botanicalmagazin33toky
 botanicalmagazin35toky
+botanicalmagazin81894toky
 botanicalmicroch00poulrich
 botanicalmicroch00pouluoft
 botanicalmicrote00sass
@@ -20919,7 +20953,9 @@ carolilinnaeient04linn
 carolilinnaeiequ00linnc
 carolilinnaeiequ00linnca
 carolilinnaeigen01linn
+carolilinnaeime00linn
 carolilinnaeimed00linn
+carolilinnaeimed01linn
 carolilinnaeimet00linn
 carolilinnaeiope00linn
 carolilinnaeiopee00linn
@@ -22026,6 +22062,7 @@ catalogueplants00n
 cataloguepriceli00impl
 cataloguepriceli00nash
 cataloguepubsmit00smitrich
+catalogueraison00mntr
 catalogueraison46gass
 catalogueraisonn00bede
 catalogueraisonn00bonn
@@ -25131,6 +25168,13 @@ cihm_81668
 cihm_81678
 cihm_81679
 cihm_81711
+cihm_81761
+cihm_81802
+cihm_81871
+cihm_81873
+cihm_81882
+cihm_81894
+cihm_82009
 cihm_88829
 cihm_88858
 cihm_88861
@@ -25677,6 +25721,7 @@ classificationof00agasrich
 classificationof00ashm
 classificationof00batc
 classificationof00blac
+classificationof00clar
 classificationof00cope
 classificationof00deverich
 classificationof00frac
@@ -33957,6 +34002,7 @@ degraminibusunif1824trin
 degymnotoelectri00guis
 dehanlinyemingci00beij
 dehelminthibusac00west
+Dehistoriastirp00Fuch
 deholothuriis00j
 dehorningcattlec00haaf
 dehydrationnewsu00andr
@@ -34484,7 +34530,9 @@ descriptionduncr00chev
 descriptiondunfr00grat
 descriptiondunou00bour
 descriptiondunve00pict
+descriptionesan00fors
 descriptionesani00fors
+descriptionesani03fors
 DescriptiongeYo00Verb
 descriptiongol11verb
 descriptiongol12verb
@@ -41725,6 +41773,9 @@ faunaboicaoderge00reid
 faunaborealiamer01rich
 faunaborealiamer02rich
 faunaborealiamer03rich
+faunaborealiamer22rich
+faunaborealiamer31rich
+faunaborealiamer41rich
 faunabrasiliense04mira
 faunabrasiliense12mira
 faunabrasiliense17mira
@@ -48350,6 +48401,7 @@ gri_relationdunv02tour
 gri_tableauxdess00pail
 gri_voyagehistor01ullo
 gri_voyagehistor02ullo
+gri_westernworld00king
 griffinsaidedeca00blun
 griffinsaidedeca00blunrich
 grimaldielarifra00saveuoft
@@ -48426,6 +48478,7 @@ growthintrees00macduoft
 growthofbrainstu00dona
 growthofeucalypt380metc
 growthoffieldcor00arnd
+growthofgreenalg00chas
 growthofgroupsin00lloyiala
 growthofoakinoza00dunlrich
 growthofplantstw00croc
@@ -50110,6 +50163,7 @@ herrndelacepedes04lac
 herrndelacepedes05lac
 herrndelacepedes1lac
 herrndelacepedes2lac
+herrnjohannande00ande
 herrnjohannander00ande
 herrnjohannander01ande
 herrnkarlbonnets01bonn
@@ -52700,6 +52754,7 @@ howwomenshouldri00dehurich
 howwomenshouldri01dehu
 hr3060antarctice00unit
 hrnantonstorcksb00strc
+hrnjohannbaptist00bohc
 htrocresno01dogn
 htrocresno02dogn
 htrocresno03dogn
@@ -54236,6 +54291,8 @@ indexvictoriahist0doubuoft
 indexzoologicusa00zool
 indexzoologicusn00zool
 indexzulreichenb00meye
+India47LXVIIn
+India48XLVIIIn
 indianaweedbook00blatrich
 indianbirdsbeing00dewa
 indianconchturbi00horn
@@ -60269,6 +60326,7 @@ lejardin1901pari
 lejardin1902pari
 lejardin1903pari
 lejardin1904pari
+lejardindespl00boit
 lejardindespla00boit
 lejardindesplan00boit
 lejardindesplant00boit
@@ -69286,7 +69344,9 @@ mobot31753002156526
 mobot31753002156534
 mobot31753002156542
 mobot31753002156567
+mobot31753002156583
 mobot31753002156591
+mobot31753002156609
 mobot31753002156617
 mobot31753002156625
 mobot31753002156641
@@ -69296,6 +69356,7 @@ mobot31753002156674
 mobot31753002156682
 mobot31753002156690
 mobot31753002156708
+mobot31753002158126
 mobot31753002158134
 mobot31753002158142
 mobot31753002158159
@@ -70227,6 +70288,7 @@ mobot31753002428701
 mobot31753002428727
 mobot31753002430210
 mobot31753002430244
+mobot31753002430251
 mobot31753002430491
 mobot31753002430509
 mobot31753002430517
@@ -72485,14 +72547,17 @@ mobot31753003566632
 mobot31753003566640
 mobot31753003566657
 mobot31753003566665
+mobot31753003573737
 mobot31753003575997
 mobot31753003591929
 mobot31753003593958
 mobot31753003593990
 mobot31753003594006
 mobot31753003597892
+mobot31753003606776
 mobot31753003607170
 mobot31753003607337
+mobot31753003612022
 mobot31753003619381
 mobot31753003628960
 mobot31753003633788
@@ -73470,6 +73535,7 @@ monatssch2021191011neud
 monatssch2526191516neud
 monatssch2728191718neud
 monatssch3132192122neud
+monatsschr12018911910neud
 monatsschriftdes01mona
 monatsschriftdes01wiss
 monatsschriftdes02mona
@@ -74812,6 +74878,7 @@ MuseumCarlsoniaIISpar
 MuseumCarlsoniaISpar
 MuseumCarlsoniaIVSpar
 museumf1419141918
+museumleskeanumr11kars
 museumnormanianu00normrich
 museumofnaturalh01richiala
 museumofnaturalh21869rich
@@ -79738,7 +79805,10 @@ occasionalpaper06bern
 occasionalpaper070201bost
 occasionalpaper070202bost
 OccasionalPaper1Muse
+OccasionalPaper3Muse
+OccasionalPaper4Muse
 OccasionalPaper5Muse
+OccasionalPaper6Muse
 occasionalpapers00cali
 occasionalpapers00forbrich
 occasionalpapers01bern
@@ -83202,6 +83272,8 @@ parkstheirdesign00burnrich
 parksystemmtstat00montrich
 parlorgardenertr00rand
 parlorgardenertr00randrich
+ParrotsCaptivit1WTGr
+ParrotsCaptivit2WTGr
 ParrotscaptivitIGree
 ParrotscaptivitIIGree
 ParrotscaptivitIIIGree
@@ -83749,6 +83821,7 @@ pflgersarchivf196bonn
 pflgersarchivf197bonn
 pflgersarchivf71140bonn
 pfreports07canauoft
+pgasparisschotti00scho
 pghreports09canauoft
 pgreports08canauoft
 phalangidafromtr321good
@@ -90645,6 +90718,7 @@ RecordsSouthAus19Sout
 RecordsSouthAus20Sout
 RecordsSouthAus21Sout
 RecordsSouthAus22Sout
+RecordsSouthAus23Sout
 RecordsSouthAus24Sout
 RecordsSouthAus25Sout
 RecordsSouthAus26Sout
@@ -106571,6 +106645,7 @@ uebertaeniasoliu00horl
 uebertaenienmisb00jeld
 ueberverschieden00bert
 uebervorderasiat00mart
+ugandaprotector02john
 ugandaprotectora01john
 ugandaprotectora01johnfo
 ugandaprotectora02john
@@ -108094,6 +108169,7 @@ vertebrateembryo00marsuoft
 vertebrateeyeits00wall
 vertebratefaunao00boul
 vertebratefaunao00buckrich
+vertebratefaunao00macp
 vertebratefaunao01cowa
 vertebratefaunao02cowa
 vertebratefaunao31zang
@@ -111327,6 +111403,7 @@ zoogeographyofla432sole
 zoognosiatabulis11813fisc
 zoognosiatabulis21813fisc
 zoognosiatabulis31814fisc
+zoographiarossoa01pall
 zoographiarossoa11831pall
 zoographiarossoa22pall
 zoographiarossoa31831pall
