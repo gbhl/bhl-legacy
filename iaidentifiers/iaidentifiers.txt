@@ -1522,6 +1522,7 @@ acidificationofo00nearuoft
 acidificationofo02nearuoft
 acidityacidimetr00knig
 aciditygasinterc00richuoft
+acidlimefruitinh49pope
 acidminewasterev266farm
 acj0341.1902.001.umich.edu
 acj0341.1906.001.umich.edu
@@ -3472,6 +3473,8 @@ americanbotanis00wood
 americanbotanist00wood
 americanbotanist00woodrich
 americanbotanist00wooduoft
+americanbotanist01unse
+americanbotanist02unse
 americanbotanist1215clut
 americanbotanist1618clut
 americanbotanist2224clut
@@ -4369,6 +4372,7 @@ amherstmeetingof00amhe
 aminoacidcontent00neve
 aminoacidpoolsdi00symp
 ammassalikeskimo02thaluoft
+ammonificationni37kell
 ammoniumthiocyan308stew
 ammonoidfaunaofk00verm
 ammuseintro00amer
@@ -10558,6 +10562,7 @@ archivfrnaturges21berl
 archivfrnaturges2218unse
 archivfrnaturges32berl
 archivfrnaturges4211unse
+archivfrnaturges7956unse
 archivfrnaturges7978unse
 archivfrnaturges891berl
 archivfrnaturges892berl
@@ -14882,6 +14887,7 @@ biologieoderphil04trev
 biologieoderphil05trev
 biologieoderphil06trev
 biologieundsyste00mell
+biologischescent1718rose
 biologischescent1918rose
 biologischescent23rose
 biologischescent3919rose
@@ -17613,6 +17619,8 @@ breakingwavecrit00smit
 breakwaterrehabi00baum
 breathoflife00burrrich
 breathoflife00burruoft
+brebissoniarevue02soci
+brebissoniarevue03soci
 breedersportsma101887sanf
 breedersportsma111887sanf
 breedersportsma121888sanf
@@ -18376,6 +18384,7 @@ brooddiseasesofb279phil
 broodingcaringfo00tumb
 broodsowstheirli00hill
 brookbookfirstac00millrich
+brookesannualpri1895broo
 brookfieldstudhi00burd
 brooklynbotanicg00gage
 brookrivertrouti00edmorich
@@ -22933,7 +22942,6 @@ calcuttajournalo01mccl
 calcuttajournalo02mccl
 calcuttajournalo03dehruoft
 calcuttajournalo05
-calcuttajournalo05dehruoft
 calcuttajournalo06
 calcuttajournalo07
 calcuttajournalo08
@@ -23871,6 +23879,7 @@ capehorseitsorig00schr
 capercaillieinsc00harv
 capercaillieinsc00harvieb
 capercaillieinsc00harvrich
+capesableregiono00smal
 capillarymovemen00mcla
 capitalcoefficie42brem
 capitolcityseeds19fwbo
@@ -30223,6 +30232,7 @@ citizenbirdscenes00wrig
 citricolascale255quay
 citruscankeringu00berg
 citruscultureinc114cary
+citruscultureinh71pope
 citruscultureinw00germrich
 citrusfruitbelto00arizrich
 citrusfruitcultu138mill
@@ -31286,6 +31296,7 @@ commercialproduc00simm_1
 commercialproduc00simmrich
 commercialproduc00simmuoft
 commercialproduc00wattuoft
+commercialproduc335loga
 commercialproducsimm
 commercialrabbit00stah
 commercialrabbitraisingrich
@@ -31776,6 +31787,7 @@ compositionoffam86hers
 compositionofmai00unitrich
 compositionofroo395ketc
 compositionofsea00hill
+compositionofsom13shor
 compostinglitera00mmdiuoft
 compoundeyesincr00park
 comprehensivecat00bail
@@ -32157,6 +32169,7 @@ conardstarroses11924conr
 conardstarrosesa1923cona
 conardstarrosesa1924cona
 concadelllobrega00bofi
+Concealingcolor00Thay
 concentratedfeed00wyom
 concentratedorga1860coeg
 concentratespray00cana
@@ -34338,6 +34351,7 @@ cooperativefruit123unit
 cooperativegrass08will
 cooperativegulfo00dien
 cooperativegulfo00mcnu
+cooperativemarke13will
 cooperativeprocu14math
 cooperativerelat00mere
 cooperativesinfr93meye
@@ -38501,7 +38515,6 @@ cu31924057846150
 cu31924057853362
 cu31924058797063
 cu31924058809900
-cu31924058814348
 cu31924058864889
 cu31924058890298
 cu31924058934773
@@ -38750,7 +38763,6 @@ cu31924075180137
 cu31924075235113
 cu31924076512916
 cu31924076513468
-cu31924076539844
 cu31924078916651
 cu31924078916669
 cu31924078916677
@@ -38768,8 +38780,6 @@ cu31924080041233
 cu31924080041308
 cu31924080066537
 cu31924080071669
-cu31924080071834
-cu31924080071842
 cu31924080075181
 cu31924080075199
 cu31924080097847
@@ -38804,7 +38814,6 @@ cu31924083755763
 cu31924084294960
 cu31924084753122
 cu31924084753163
-cu31924084755044
 cu31924084757206
 cu31924084759624
 cu31924084798325
@@ -39676,6 +39685,7 @@ cultivationofsug00kerr
 cultivationofsug00stubrich
 cultivationoftob00brewrich
 cultivationoftob00dorsrich
+cultivationoftob15smit
 cultivationoftob58muld
 cultivationoftur00anth
 cultivationofvin00dupo
@@ -40934,6 +40944,7 @@ delorganizationd00mano
 delumbricisalvum00gabu
 demacrurisdecapo00schl
 demandforfarmrai993raul
+demandforselecte309kipe
 demedullaespinal00kupf
 demetamorphosie01schi
 demetamorphosie02schi
@@ -41012,8 +41023,10 @@ denkschriftender1204medi
 denkschriftender12knig
 denkschriftender12medi
 denkschriftender12schw
+denkschriftender13koni
 denkschriftender13medi
 denkschriftender14kais
+denkschriftender14koni
 denkschriftender14medi
 denkschriftender15kais
 denkschriftender15medi
@@ -42384,6 +42397,7 @@ deutscheexcursio00cles
 deutschefaunaode00bork
 deutscheflorapha00kars
 deutscheforstbot1874nr
+deutschegartenze01witt
 deutschesarchivf01meck
 deutschesarchivf02meck
 deutschesarchivf03meck
@@ -43519,6 +43533,7 @@ dieinsektenmitte03schr
 dieinsektenmitte03schruoft
 dieinsektennachi00tasc
 dieinsektenwelte00kars
+dieinsektenweltz00inte
 dieinselcypernih00unge
 dieinsellussinun00grub
 dieinternational00meituoft
@@ -46073,6 +46088,7 @@ economicentomolo00smit_0
 economicentomolo01smit
 economicenvir00gop
 economicevaluati22flor
+economicevaluati330sarh
 economicfactorsi00mumf
 economicfeasibil131drog
 economicgeology00richuoft
@@ -46326,6 +46342,7 @@ eersteontwikkeli00buss
 eestilooduseuuri1314eest
 eestilooduseuuri1516eest
 eestilooduseuuri2123eest
+eestilooduseuuri2428eest
 EF0D78E0-16DC-40CF-B45F-BC3E350455B9
 EF41DE80-3A08-45F8-8F46-4E227778B454
 effectivefarming00samp
@@ -48378,6 +48395,7 @@ ergebnissederind04mchens
 ergebnissederind04nhens
 ergebnissederind191202hens
 ergebnissederzwe1131deut
+ergebnissenaturw1188sara
 ergnzungenzude00bran
 erigeniajournalo111419911995sout
 erigeniajournalo151819972000sout
@@ -49812,6 +49830,7 @@ factagainstficti02berk
 factorsaffecting122lind
 factorsaffecting25finn
 factorsaffecting658jose
+factorsaffecting76edwa
 factorsgoverning00stub
 factorsinfluenci00boer
 factorsinfluenci00davi_0
@@ -51530,6 +51549,7 @@ fieldmuseumofnat59chic
 fieldmuseumofnat60chic
 fieldmuseumofnat6113chic
 fieldmuseumoxfor28fiel
+fieldnaturalistj1218trin
 fieldnaturalistr00renn
 fieldnaturalists00edin
 fieldnaturalists02edin
@@ -54141,6 +54161,7 @@ foreignagricultu183unit_0
 foreignagricultu184unit_0
 foreignagricultu185unit_0
 foreignagricultu186unit_0
+foreignagricultu272unit_0
 foreignagricultu273unit
 foreignagricultu274unit
 foreignagricultu275unit
@@ -58025,6 +58046,7 @@ georgicalessays05hunt
 georgicalessays06hunt
 georgickpapersfo1809mass
 georgiiagricolae00agri
+georgiiforsterme00fors
 georgimarcgravid00marg
 georgiusagricola00agri
 georgiusagricola00agririch
@@ -58755,6 +58777,7 @@ grassesforagepla00flinuoft
 grassesforagepla00killrich
 grassesforagepla01flin
 grassesforagepla1899kill
+grassesforagepla36mccl
 grassesforageplants00fliniala
 grassesgrainsfor19pete
 grassesgrainsfor19pete_0
@@ -59435,6 +59458,7 @@ guanyuwuzhongyuw21bhsu
 guanyuxibaogetif00wusu
 guanyuzhongneizh01zhou
 guanyuzhongneizh02bafu
+guatemalanavocad51pope
 guatemalansalama2017schm
 guayulepartheniu00lloy
 guayulerubberpla00lloyiala
@@ -59556,6 +59580,7 @@ guidetoelephants00britrich
 guidetoexhibite00brit
 guidetoexhibited00brit
 guidetoexhibited00britrich
+guidetoexhibitio00brit_0
 guidetoexhibitio00cinc
 guidetoexhibits00illi
 guidetoexperimen00rothrich
@@ -60995,9 +61020,11 @@ hawaiianforester1718hawa
 hawaiianforester34hawa
 hawaiianforester910hawa
 Hawaiianguidebo00Whit
+hawaiianhoneys17vand
 hawaiianotherpac00clar
 hawaiianpittfisher
 hawaiianpittospofisher
+hawaiiantreefern53ripp
 hawaiiitsagricul00wilcrich
 hawaiishiddentre00rams
 hawkeye11621918881889cres
@@ -61302,6 +61329,7 @@ henryhillgoodell00goodrich
 henryhillgoodell00steb
 henryjamesclark100mass
 henrymichelsannu1874henr
+henryphilippsse1895henr_0
 henryphilippssee1895henr
 henrysystemforra00kohl
 Henslow1837xc79C
@@ -63676,6 +63704,7 @@ horaeentomologic00char
 horaeentomologic112macl
 horaeichthyologi0102ml
 horaeichthyologi03ml
+horaesocietatise1818russ
 horaezoologicaez00leyd
 horentomologic01macl
 horituculturalgu18curr
@@ -66155,6 +66184,7 @@ importanceoftimb76maki
 importanceprogre00wild
 importanciadealg00lpez
 importantamerica00forb
+Importantbirdar00Benn
 importantforestt223unit
 importantinsecti00marl
 importantinsects61unit
@@ -66269,6 +66299,7 @@ inchristmaswoods00knaprich
 incidentsofcolle00dentrich
 incidentsofforei00pollrich
 incidentsoftrave11841step
+incidentsoftrave11843step
 incidentsoftrave21841step
 incidentsoftrave21843step
 incodicembotanic00linn
@@ -66970,6 +67001,7 @@ insectenemiesofe657crai
 insectenemiesofp26chan
 insectenemiesofp32hopk
 insectenemiesofs28hopk
+insectenemiesoft10vand
 insectenemiesofw273keen
 insectenemiesofw273keen_0
 insectenemiesofw273keen_1
@@ -67174,6 +67206,7 @@ insectsintheirre2129hopk
 insectsliabletod2165holl
 insectsmanaccoun00ealarich
 insectsmitesmold1595losc
+insectsofcottoni18full
 insectsofeastern1426unit
 insectsofeconom00herr
 insectsofeconomi00herr
@@ -69127,6 +69160,7 @@ japanischem23187175lisc
 japanischemeduse00maas
 japanischemeeres11lisc
 japanspecialcat00japa
+jarbcherfrwissen8leip
 JardindelaMalmaIIVent
 JardindelaMalmaIVent
 jardinduRoytres00Vall
@@ -69995,6 +70029,7 @@ journalofapplied02baus
 journalofapplied04baus
 journalofapplied05baus
 journalofapplied06baus
+journalofarnolda01arno
 journalofasi401871unse
 journalofasi421873unse
 journalofasi431874unse
@@ -70216,6 +70251,7 @@ journalofceylonb16roya
 journalofceylonb17roya
 journalofceylonb19roya
 journalofceylonb20roya
+journalofceylonb2184roya
 journalofceylonb21roya
 journalofceylonb45roya
 journalofci1918961901cinc
@@ -71044,6 +71080,7 @@ journalofroyalho11roya
 journalofroyalho12roya
 journalofroyalho13roya
 journalofroyalho16roya
+journalofroyalho17roya
 journalofroyalho19roya
 journalofroyalho20roya
 journalofroyalho2186roya
@@ -71411,6 +71448,9 @@ Journalsdateboo00DeanE
 Journalsdateboo00DeanF
 Journalsdateboo00DeanG
 Journalsdateboo00DeanH
+Journalsdateboo00DeanI
+Journalsdateboo00DeanJ
+Journalsdateboo00DeanK
 Journalsecondvo00Parr
 journalsoftravel1184grif
 JournalsWilliam00Brew
@@ -71486,6 +71526,7 @@ jtsmithsonsillus1873jtsm
 jtsmithsonsillus1874jtsm
 jtsmithsonsillus1875jtsm
 jtsmithsonsillus1876jtsm
+jubileesouvenir11953bour
 judgingfarmanima00plumrich
 judginglivestoc00crai
 judginglivestock00crai
@@ -73027,6 +73068,7 @@ laterraaicontadi00pratuoft
 laterreavantled00figu
 laterreavantlhi00perr
 laterreavantlhis00perr
+laterreetlavie2018soci
 laterreetlavie3821soci
 laterreetlavie4218soci
 laterreetlavie4518soci
@@ -76298,6 +76340,9 @@ madrasfisheriesb13madr
 madrasfisheriesb14madr
 madrasfisheriesb15madr
 madrasfisheriesb16madr
+madrasjournalofl02madr
+madrasjournalofl04madr
+madrasjournalofl31madr
 MadreYporairesp00Grav
 madroowest11319161922cali
 magasindezoolog00metc
@@ -79337,6 +79382,7 @@ memoirsofindianm57111indi
 memoirsoflifeofd00sewarich
 memoirsoflifeofj00hamiuoft
 memoirsoflifeofl00nimr
+memoirsoflifewor00carp
 memoirsoflit35187625manc
 memoirsoflite31186221manc
 memoirsoflite32186522man
@@ -80764,6 +80810,7 @@ minetunneldogtra00unit
 minganenseofbo00achurich
 mingjianshuiguoj00dier
 miniaturefruitg00rive
+miniaturefruitg00Rivers
 miniaturefruitga00rive
 miniaturefruitga00riverich
 miniaturefruitga01rive
@@ -82685,6 +82732,7 @@ mobot31753000141371
 mobot31753000141769
 mobot31753000141777
 mobot31753000144052
+mobot31753000144060
 mobot31753000144979
 mobot31753000145497
 mobot31753000145505
@@ -82700,6 +82748,7 @@ mobot31753000148384
 mobot31753000152519
 mobot31753000158698
 mobot31753000158706
+mobot31753000159860
 mobot31753000174885
 mobot31753000177433
 mobot31753000179496
@@ -84364,7 +84413,9 @@ mobot31753002245378
 mobot31753002245386
 mobot31753002245394
 mobot31753002245402
+mobot31753002246335
 mobot31753002246467
+mobot31753002247028
 mobot31753002247143
 mobot31753002247390
 mobot31753002247481
@@ -84485,6 +84536,7 @@ mobot31753002267539
 mobot31753002271572
 mobot31753002271598
 mobot31753002271671
+mobot31753002271747
 mobot31753002274303
 mobot31753002274311
 mobot31753002274329
@@ -84752,6 +84804,7 @@ mobot31753002325642
 mobot31753002326475
 mobot31753002327622
 mobot31753002327721
+mobot31753002331095
 mobot31753002331236
 mobot31753002347455
 mobot31753002347463
@@ -86584,8 +86637,10 @@ mobot31753003380158
 mobot31753003381925
 mobot31753003392021
 mobot31753003393748
+mobot31753003393870
 mobot31753003393888
 mobot31753003393904
+mobot31753003393912
 mobot31753003393920
 mobot31753003393979
 mobot31753003399117
@@ -87909,9 +87964,12 @@ mobot31753003814453
 mobot31753003814479
 mobot31753003814487
 mobot31753003826341
+mobot31753003827075
 mobot31753003827091
 mobot31753003827117
 mobot31753003827125
+mobot31753003827133
+mobot31753003827141
 mobot31753003827166
 mobot31753003827174
 mobot31753003827190
@@ -87931,7 +87989,10 @@ mobot31753003838486
 mobot31753003845598
 mobot31753003845663
 mobot31753003845697
+mobot31753003845705
 mobot31753003846992
+mobot31753003847008
+mobot31753003847115
 mobot31753003848188
 mobot31753003857437
 mobot31753003859417
@@ -88324,6 +88385,7 @@ mobot31753004038003
 mobot31753004038029
 mobot31753004046758
 mobot31753004046774
+mobot31753004046964
 mobot31753004047194
 mobot31753004047202
 mobot31753004047210
@@ -88337,6 +88399,7 @@ mobot31753004049117
 mobot31753004049125
 mobot31753004049166
 mobot31753004049505
+mobot31753004051733
 mobot31753004059736
 mobot31753004059744
 mobot31753004059751
@@ -88852,7 +88915,6 @@ mobot31753004080229
 mobot31753004080237
 mobot31753004080245
 mobot31753004080252
-mobot31753004080260
 mobot31753004080278
 mobot31753004080286
 mobot31753004080294
@@ -88910,6 +88972,8 @@ mobot31753004080815
 mobot31753004080823
 mobot31753004080831
 mobot31753004080849
+mobot31753004095920
+mobot31753004095938
 mobot32044072180227
 mobot32044072180615
 mobot32044072190838
@@ -90771,6 +90835,7 @@ mosquitoesorculi00theorich
 mosquitolifehabi00mitcfo
 mosquitoormancon00boycuoft
 mosquitorepellen00mass
+mosquitosinhawai06vand
 mosquitosurveyat00butt
 mosses00brit
 mosseslichenscol00brge
@@ -94523,6 +94588,7 @@ newsletter06unit
 newsletter06unit_0
 newsletter07harv
 newsletter07unit
+newsletter07unit_0
 newsletter08harv
 newsletter08unit
 newsletter08unit_0
@@ -96867,6 +96933,7 @@ observationsonha00hart
 observationsonin18farr
 observationsonli00mors
 observationsonli0508mors
+observationsonli80alic
 observationsonli817rans
 observationsonll00crag
 observationsonna00conf
@@ -98930,6 +98997,7 @@ orchardsprayinge212mors
 orchardsvineyard00slsn
 orchfarm114sanf
 orchfarm11sanf
+orchfarm19221923sanf
 orchfarm1924sanf
 orchfarm24sanf
 orchfarm25sanf
@@ -98939,6 +99007,7 @@ orchfarm28sanf
 orchfarm29sanf
 orchfarm31sanf
 orchfarm32sanf
+orchfarm33sanf
 orchfarm34sanf
 orchidaceaeillus01ames
 orchidaceaeillus02ames
@@ -100974,6 +101043,7 @@ peachculture01fult
 peachesofnewyor00hedr
 peachesofnewyork00hedr
 peachesofnewyork00hedruoft
+peachesotherfrui01unit
 peachesproductio00goul
 peachgrowing00goul
 peachgrowing1918goul
@@ -101240,6 +101310,7 @@ periozoolo03soci
 perishableagricu51unit
 peritheciaofthie00mcco
 perkins59680848
+perkins67089437
 perlasolenneinau00vinc
 permanenceevolut00bouvrich
 permanentpasture1895farm
@@ -101267,8 +101338,16 @@ personalappearan00couprich
 personalityofins00dixo
 personalityofpla00dixo
 personallifeof00blai
+personalnarrat121822humb
+personalnarrati121822humb
+personalnarrati31822humb
+personalnarrati511821humb
+personalnarrati521821humb
+personalnarrati611826humb
 personalnarrativ02humbuoft
 personalnarrativ03humbuoft
+personalnarrativ31822humb
+personalnarrativ41819humb
 personalrecollec00siemrich
 personalrecollec00someuoft
 personfrteckni00svenuoft
@@ -109279,6 +109358,7 @@ randomnotesonnat31886prov
 randomrecollecti00spor
 range1977inventorystfunkrich
 rangegrassesofca430samp
+rangegrassesofha65ripp
 rangeimprovement04grif
 rangelandprogram03unit
 rangelandprogram38unit
@@ -110883,6 +110963,7 @@ reportofbotanist1868peck
 reportofbotanist1878peck
 reportofbotanist214clin
 reportofbotanist35newyuoft
+reportofbournemo1904bour
 reportofbritisha00adva
 reportofbritisha00brit
 reportofbritisha00scie
@@ -113442,6 +113523,7 @@ revuedeszoophyte00duch
 revuedeviticult1189vial_2
 revuedeviticultu1018vial
 revuedeviticultu2519vial
+revuedeviticultu2619vial
 revuedeviticultu2719vial
 revuedeviticultu2819vial
 revuedeviticultu2919vial
@@ -114295,6 +114377,7 @@ rosemanualcontai01buis
 rosemanualcontai51buis
 rosemontnurserie1942rose
 rosenundsommerbl00mt
+roses00Jama
 roses1888kuil
 roses1925henr
 roses1925henr_0
@@ -117114,6 +117197,7 @@ shinnihonsenchuz04mats
 shinsennihonshok12maki
 shipboardvibrati00noon
 shipmotionsdragr00symp
+shippingtestswit172gerh
 shipsinfluenceon00wisn
 shipsofnoaafleet00rock
 shipsofusmerchan00farr
@@ -118783,6 +118867,7 @@ someforestwildli06aldo
 someformsoffooda00bigerich
 somefoundersofch00alleuoft
 somefreshwaterfi00dymo
+somefruitsofhawa77mill
 somefundamentalp00oste
 somefungousdisea171patt
 somegoodthingsfo1915harr
@@ -123258,6 +123343,7 @@ sverigesochnorge11lill
 sverigespoduride00tull
 svobodnozhivushc00rylo
 swampfeverinhors02vane
+swampoverflowedl76unit
 swamprootalmanac1916kilm
 swampsofoswegoco00rowl
 swanhercreworadv00davirich
@@ -125874,6 +125960,7 @@ tobaccohowtorais00ragl
 tobaccohumaneffic00pack
 tobaccoinontario200davi
 tobaccoinsanityn00brem
+tobaccoinsectsin34full
 tobaccoinsongsto00bain
 tobaccoinsongsto00bainuoft
 tobaccoinuniteds867doub
@@ -128063,6 +128150,7 @@ travelsinengland00fauj
 travelsinengland02fauj
 travelsinfrancei00younuoft
 travelsinhungary00beudiala
+travelsiniceland00egge
 travelsininter00mawe
 travelsininterio00moll
 travelsininterio01chap
@@ -128753,6 +128841,7 @@ tropicalyamst31976495mart
 tropicalyamst41977502mart
 tropicalyamst51978522mart
 tropicalyamst61978538mart
+tropicalyamsthei2197mart
 tropicdays00banfiala
 tropicdays00banfuoft
 tropicsagricult00willrich
@@ -132365,6 +132454,7 @@ voyagedansla218391843orbi
 voyagedanslameri41orbi
 voyagedanslameri42orbi
 voyagedanslameri43orbi
+voyagedanslamr3121844orbi
 voyagedanslamr3341844orbi
 voyagedanslamr51847orbi
 voyagedanslamr91847orbi
@@ -132758,16 +132848,21 @@ watsonia1319801981bota
 watsonia1419821983bota
 watsonia1511984bota
 watsonia1521984bota
+watsonia1534bota
+watsonia1613bota
 watsonia161950bota
 watsonia1641987bota
 watsonia1711988bota
 watsonia1721988bota
+watsonia173bota
 watsonia1741989bota
+watsonia18bota
 watsonia1921992bota
 watsonia1931993bota
 watsonia1941993bota
 watsonia201994bota
 watsonia2111996bota
+watsonia212bota
 watsonia2131997bota
 watsonia2141997bota
 watsonia219511963bota
@@ -132784,6 +132879,7 @@ watsonia419571961bota
 watsonia519611963bota
 watsonia619641968bota
 watsonia71969bota
+watsonia819701971bota
 watsonia919721973bota
 wattlebarkreport00victrich
 wattleswattlebar00maidrich
@@ -132889,6 +132985,7 @@ weedcontrolforco1277mcgl
 weedcontrolforco1989mcgl
 weedcontrolinwes3414timm
 weedcontrolsyste1306knak
+weedcontroltrial1983
 weedfactorincult257cate
 weedfloraofiowa00pamm
 weedfloraofiowa01pamm
@@ -133090,6 +133187,19 @@ westerngrazinggr00barnrich
 westerngrazinggr00barnuoft
 westernheadquart1895geoj
 westernhemlock00alle
+westernlumberman1911
+westernlumberman1912
+westernlumberman1913
+westernlumberman1914
+westernlumberman1915
+westernlumberman1916
+westernlumberman1917
+westernlumberman1918
+westernlumberman1919
+westernlumberman1920
+westernlumberman1921
+westernlumberman1922
+westernlumberman1923
 westernmontanatr00montrich
 westernpinebeetl864whit
 westernpolypores00murr
@@ -135582,6 +135692,7 @@ zeitschri242519591960deut
 zeitschri262719611962deut
 zeitschri282919631964deut
 zeitschrift1219261929deut
+zeitschrift1219371938deut
 zeitschrift1319381939deut
 zeitschrift1419391942deut
 zeitschrift1519401943deut
@@ -135921,6 +136032,7 @@ zeitschriftfrsu411976deut
 zeitschriftfrsu421977deut
 zeitschriftfrsu431978deut
 zeitschriftfrsu451980deut
+zeitschriftfrsu461981deut
 zeitschriftfrsu471982deut
 zeitschriftfrsu481983deut
 zeitschriftfrsu491984deut
@@ -137227,6 +137339,7 @@ zutrgezursammlun00hbne
 zutrgezursammlun01hbne
 zutrgezursammlun02hbne
 zweifallevonherm00gart
+zweipflanzengeog00dreg
 zygadenusordeath00marsrich
 zygnemataceaefre00tran
 zygobothrianidic1088mues
